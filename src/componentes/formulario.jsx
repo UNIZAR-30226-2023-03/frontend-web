@@ -10,7 +10,7 @@ const Formulario = () => {
     }
 
     return <div>
-        <h2>Inicial Sesion</h2>
+        <h2>Iniciar Sesion</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="pregunta">
                 <div className="tex-form">Correo electronico</div>
