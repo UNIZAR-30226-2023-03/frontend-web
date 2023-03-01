@@ -17,6 +17,7 @@ const photos = [
 ];
 
 //Prueba1
+//Prueba 2
 function DiceRoll() {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
