@@ -16,8 +16,7 @@ const photos = [
   { id:6, name: "Foto 6", url: cara6 },
 ];
 
-//Prueba1
-//Prueba 2
+
 function DiceRoll() {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
