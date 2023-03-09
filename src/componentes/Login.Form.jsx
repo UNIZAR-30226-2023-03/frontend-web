@@ -14,7 +14,8 @@ function LoginForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    console.log(username, password);
+    
     // Validar la entrada del usuario aquí
 
     // Enviar datos al servidor aquí
