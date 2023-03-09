@@ -1,11 +1,12 @@
 
 import './App.css';
-import Formulario from './componentes/formulario';
+import LoginForm from './componentes/Login.Form';
 
 function App() {
   return(
-    <div className='formul'>
-      <Formulario/>
+    <div className="App">
+      <h1>Formulario de inicio de sesión</h1>
+      <LoginForm />
     </div>
     
   )
