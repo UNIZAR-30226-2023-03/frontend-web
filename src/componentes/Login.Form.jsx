@@ -17,12 +17,10 @@ function LoginForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(login, password);
-    try{
-      const response = await axios.post("https://backend-sy93.onrender.com/usuarios/login", {login, password});
-      console.log(response.data);
-    }catch(error){
-      console.error(error);
-    }
+    
+    const response = await axios.post("https://backend-sy93.onrender.com/usuarios/login", {login, password});
+    console.log(response.data);
+    
     // Validar la entrada del usuario aquí
 
     // Enviar datos al servidor aquí
@@ -41,7 +39,7 @@ function LoginForm() {
         Contraseña:
         <input type="password" value={password} onChange={handlePasswordChange} />
       </label>
-      <h2>Inicio de sesion</h1>
+      Aun no tienes cuenta?
       <Link to='/registrarse'>Registrarse</Link>
       <br/>
       <button type="submit">Iniciar sesión</button>
