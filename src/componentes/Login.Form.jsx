@@ -16,32 +16,6 @@ function LoginForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(login, password);
-    
-    // fetch('https://backend-sy93.onrender.com/usuarios/login', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   }
-    // })
-    // fetch('/usuarios/login', {
-    //   method: 'POST',
-    //   body: JSON.stringify({login, password}),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   }
-    // })
-
-    // //.then (res=> res.json())
-    // .then(response => {
-    //   if (response) {
-    //     console.log('Correcto');
-    //   }
-    //   else {
-    //     console.log('Mal');
-    //   }
-    //  })
-    // .catch(error => console.error('Error',error))
-    //.then(response => console.log(response))
     try{
       const response = await axios.post("https://backend-sy93.onrender.com/usuarios/login", {login, password});
       console.log(response.data);
