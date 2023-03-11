@@ -20,7 +20,6 @@ function LoginForm() {
     
     const response = await axios.post("https://backend-sy93.onrender.com/usuarios/login", {login, password});
     console.log(response.data);
-    
     // Validar la entrada del usuario aquí
 
     // Enviar datos al servidor aquí
@@ -32,15 +31,16 @@ function LoginForm() {
       <h1>Inicio de sesion</h1>
       <label>
         Usuario:
-        <input type="text" value={login} onChange={handleUsernameChange} />
+        <input type="text" placeholder="correo electronico o nombre de usuario"
+          value={login} required onChange={handleUsernameChange} />
       </label>
       <br/>
       <label>
         Contraseña:
-        <input type="password" value={password} onChange={handlePasswordChange} />
+        <input type="password" placeholder='contraseña' required value={password} onChange={handlePasswordChange} />
       </label>
-      Aun no tienes cuenta?
-      <Link to='/registrarse'>Registrarse</Link>
+      ¿Aún no tienes cuenta?
+      <Link to='/registrarse'>Regístrate aquí</Link>
       <br/>
       <button type="submit">Iniciar sesión</button>
     </form>
