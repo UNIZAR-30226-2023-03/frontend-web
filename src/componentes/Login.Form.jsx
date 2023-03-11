@@ -26,9 +26,17 @@ function LoginForm() {
       }
     })
 
-    .then (res=> res.json())
+    //.then (res=> res.json())
+    .then(response => {
+      if (response) {
+        console.log('Correcto');
+      }
+      else {
+        console.log('Mal');
+      }
+     })
     .catch(error => console.error('Error',error))
-    .then(response => console.log(response))
+    //.then(response => console.log(response))
     // try{
     //   const response = await axios.post("/api/login", {
     //     username: username,
