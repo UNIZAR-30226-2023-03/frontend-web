@@ -46,12 +46,12 @@ function LoginForm() {
     <form onSubmit={handleSubmit}>
       <label>
         Usuario:
-        <input type="text" value={login} onChange={handleUsernameChange} />
+        <input type="text" name="login" value={login} onChange={handleUsernameChange} />
       </label>
       <br />
       <label>
         Contraseña:
-        <input type="password" value={password} onChange={handlePasswordChange} />
+        <input type="password" name="password" value={password} onChange={handlePasswordChange} />
       </label>
       <br />
       <button type="submit">Iniciar sesión</button>
