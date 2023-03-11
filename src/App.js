@@ -10,7 +10,7 @@ function App() {
   return(
     <BrowserRouter>
     <Routes>
-        <Route  path='/' component={LoginForm}>
+        <Route  path='/' Component={LoginForm}>
         </Route>
     </Routes>
     </BrowserRouter>
