@@ -17,25 +17,30 @@ function LoginForm() {
     event.preventDefault();
     console.log(login, password);
     
-
-    fetch('/usuarios/login', {
+    fetch('/usuarios/eliminar/5', {
       method: 'POST',
-      body: JSON.stringify({login, password}),
       headers: {
         'Content-Type': 'application/json',
       }
     })
+    // fetch('/usuarios/login', {
+    //   method: 'POST',
+    //   body: JSON.stringify({login, password}),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   }
+    // })
 
-    //.then (res=> res.json())
-    .then(response => {
-      if (response) {
-        console.log('Correcto');
-      }
-      else {
-        console.log('Mal');
-      }
-     })
-    .catch(error => console.error('Error',error))
+    // //.then (res=> res.json())
+    // .then(response => {
+    //   if (response) {
+    //     console.log('Correcto');
+    //   }
+    //   else {
+    //     console.log('Mal');
+    //   }
+    //  })
+    // .catch(error => console.error('Error',error))
     //.then(response => console.log(response))
     // try{
     //   const response = await axios.post("/api/login", {
