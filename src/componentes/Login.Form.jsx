@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom'
 
 function LoginForm() {
   const [login, setLogin] = useState('');
@@ -28,7 +29,9 @@ function LoginForm() {
   };
 
   return (
+    
     <form onSubmit={handleSubmit}>
+      <h1>Inicio de sesion</h1>
       <label>
         Usuario:
         <input type="text" value={login} onChange={handleUsernameChange} />
@@ -38,6 +41,8 @@ function LoginForm() {
         Contraseña:
         <input type="password" value={password} onChange={handlePasswordChange} />
       </label>
+      <h2>Inicio de sesion</h1>
+      <Link to='/registrarse'>Registrarse</Link>
       <br/>
       <button type="submit">Iniciar sesión</button>
     </form>
