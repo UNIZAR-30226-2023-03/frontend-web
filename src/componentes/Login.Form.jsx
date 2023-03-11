@@ -26,7 +26,7 @@ function LoginForm() {
       }
     })
 
-    .then (res=> res.jsnon())
+    .then (res=> res.json())
     .catch(error => console.error('Error',error))
     .then(response => console.log(response))
     // try{
@@ -48,12 +48,12 @@ function LoginForm() {
         Usuario:
         <input type="text" name="login" value={login} onChange={handleUsernameChange} />
       </label>
-      <br />
+      <br/>
       <label>
         Contraseña:
         <input type="password" name="password" value={password} onChange={handlePasswordChange} />
       </label>
-      <br />
+      <br/>
       <button type="submit">Iniciar sesión</button>
     </form>
   );
