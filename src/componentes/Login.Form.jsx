@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 //import axios from "axios";
 
 function LoginForm() {
-  const [username, setUsername] = useState('');
+  const [login, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleUsernameChange = (event) => {
@@ -15,12 +15,12 @@ function LoginForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(username, password);
+    console.log(login, password);
     
 
-    fetch('/usuarios', {
+    fetch('/usuarios/login', {
       method: 'POST',
-      body: JSON.stringify({username, password}),
+      body: JSON.stringify({login, password}),
       headers: {
         'Content-Type': 'application/json',
       }
@@ -46,7 +46,7 @@ function LoginForm() {
     <form onSubmit={handleSubmit}>
       <label>
         Usuario:
-        <input type="text" value={username} onChange={handleUsernameChange} />
+        <input type="text" value={login} onChange={handleUsernameChange} />
       </label>
       <br />
       <label>
