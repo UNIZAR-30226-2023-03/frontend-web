@@ -17,7 +17,7 @@ function LoginForm() {
     event.preventDefault();
     console.log(login, password);
     
-    fetch('/usuarios/eliminar/5', {
+    fetch('/usuarios/eliminar/6', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
