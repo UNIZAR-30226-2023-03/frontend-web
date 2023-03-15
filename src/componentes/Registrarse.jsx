@@ -29,6 +29,9 @@ function Registrarse() {
     try{
       const response = await axios.post("https://backend-sy93.onrender.com/usuarios/registrarse", {username, email, password_1});
       console.log(response.data);
+      if (response.data){
+        
+      }
     }catch(error){
       console.error(error);
     }
@@ -52,6 +55,7 @@ function Registrarse() {
         Contraseña:
         <input type="password" value={password_1} onChange={handlePassword1Change} />
       </label>
+      <br/>
       <label>
         Repite la contraseña:
         <input type="password" value={password_2} onChange={handlePassword2Change} />

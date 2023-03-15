@@ -16,8 +16,6 @@ function LoginForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(login, password);
-    
     const response = await axios.post("https://backend-sy93.onrender.com/usuarios/login", {login, password});
     console.log(response.data);
     // Validar la entrada del usuario aquí
