@@ -20,7 +20,7 @@ function LoginForm() {
     const response = await axios.post("https://backend-sy93.onrender.com/usuarios/login", {login, password});
     console.log(response.data);
     if (response.data){
-      window.location.href = `/principal?s=${Principal}`;
+      window.location.href = `/principal=${Principal}`;
     }
     // Validar la entrada del usuario aquí
 
