@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Registrarse() {
+  const navigate = useNavigate();
   const [username, setLogin] = useState('');
   const [password_1, setPassword1] = useState('');
   const [password_2, setPassword2] = useState('');
@@ -30,7 +32,7 @@ function Registrarse() {
       const response = await axios.post("https://backend-sy93.onrender.com/usuarios/registrarse", {username, email, password_1});
       console.log(response.data);
       if (response.data){
-        
+        navigate(process.env.PUBLIC_URL+'/principal');
       }
     }catch(error){
       console.error(error);

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 
 function LoginForm() {
+  const navigate = useNavigate();
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
@@ -20,15 +22,12 @@ function LoginForm() {
     const response = await axios.post("https://backend-sy93.onrender.com/usuarios/login", {login, password});
     console.log(response.data);
     if (response.data){
-      this.props.history.push('/principal');
+      navigate(process.env.PUBLIC_URL+'/principal');
     }
-    // Validar la entrada del usuario aquí
 
-    // Enviar datos al servidor aquí
   };
 
   return (
-    
     <form onSubmit={handleSubmit}>
       <h1>Inicio de sesion</h1>
       <label>
