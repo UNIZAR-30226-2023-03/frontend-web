@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
+import Principal from './Principal';
 
 function LoginForm() {
   const [login, setLogin] = useState('');
@@ -18,6 +19,9 @@ function LoginForm() {
     event.preventDefault();
     const response = await axios.post("https://backend-sy93.onrender.com/usuarios/login", {login, password});
     console.log(response.data);
+    if (response.data){
+      window.location.href = `/principal?s=${Principal}`;
+    }
     // Validar la entrada del usuario aquí
 
     // Enviar datos al servidor aquí
