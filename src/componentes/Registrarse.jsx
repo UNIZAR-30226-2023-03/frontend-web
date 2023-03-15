@@ -31,9 +31,9 @@ function Registrarse() {
     try{
       const response = await axios.post("https://backend-sy93.onrender.com/usuarios", {username, email, password_1});
       console.log(response.data);
-      //if (response.data){
+      if (response.data){
         navigate(process.env.PUBLIC_URL+'/principal');
-      //}
+      }
     }catch(error){
       console.error(error);
     }
