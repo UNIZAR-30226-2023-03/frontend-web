@@ -19,7 +19,7 @@ function LoginForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await axios.post("usuarios/login", {login, password});
+    const response = await axios.post("https://lamesa-backend.azurewebsites.net/usuarios/login", {login, password});
     console.log(response.data);
     if (response.data){
       navigate(process.env.PUBLIC_URL+'/principal');
