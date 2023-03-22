@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
-
+import "../styles/InicioSesion.css";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -28,24 +28,26 @@ function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Inicio de sesion</h1>
-      <label>
-        Usuario:
-        <input type="text" placeholder="correo electronico o nombre de usuario"
-          value={login} required onChange={handleUsernameChange} />
-      </label>
-      <br/>
-      <label>
-        Contraseña:
-        <input type="password" placeholder='contraseña' required value={password} onChange={handlePasswordChange} />
-      </label>
-      ¿Aún no tienes cuenta?
-      {/* <Link to='/registrarse'>Regístrate aquí</Link> */}
-      <Link to='/registrarse'>Regístrate aquí</Link>
-      <br/>
-      <button type="submit">Iniciar sesión</button>
-    </form>
+    <div className="container">
+      <form onSubmit={handleSubmit} className="form-container">
+        <h1>Inicio de sesión</h1>
+        <label>
+          Usuario:
+          <input type="text" placeholder="correo electrónico o nombre de usuario"
+            value={login} required onChange={handleUsernameChange} />
+        </label>
+        <br/>
+        <label>
+          Contraseña:
+          <input type="password" placeholder='contraseña' required value={password} onChange={handlePasswordChange} />
+        </label>
+        ¿Aún no tienes cuenta?
+        <Link to='/registrarse'>Regístrate aquí</Link>
+        <br/>
+        <button type="submit">Iniciar sesión</button>
+      </form>
+    </div>
+  
   );
 }
 
