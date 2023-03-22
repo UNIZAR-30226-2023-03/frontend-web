@@ -35,3 +35,26 @@ button {
 button:hover {
   background-color: #3e8e41;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.big-button {
+  background-color: blue;
+  color: white;
+  font-size: 24px;
+  padding: 20px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
