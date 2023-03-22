@@ -1,10 +1,13 @@
-
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Principal(){
     const [nombre, setNombre] = useState('');
     const [password, setPassword] = useState('');
     const [configuracion, setConfig] = useState('');
     const [jugador, setJugador] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -15,7 +18,7 @@ function Principal(){
         const response = await axios.get("https://lamesa-backend.azurewebsites.net/partida/conectar", {nombre, password,jugador,configuracion});
         console.log(response.data);
         if (response.data){
-        navigate(process.env.PUBLIC_URL+'/carga');
+            navigate(process.env.PUBLIC_URL+'/carga');
         }
 
     };
