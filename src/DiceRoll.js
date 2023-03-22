@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-import cara1 from './caras/uno.PNG';
-import cara2 from './caras/dos.PNG';
-import cara3 from './caras/tres.PNG';
-import cara4 from './caras/cuatro.PNG';
-import cara5 from './caras/cinco.PNG';
-import cara6 from './caras/seis.PNG';
+import cara1 from './/imagenes/caras dado/uno.PNG';
+import cara2 from './/imagenes/caras dado/dos.PNG';
+import cara3 from './/imagenes/caras dado/tres.PNG';
+import cara4 from './/imagenes/caras dado/cuatro.PNG';
+import cara5 from './/imagenes/caras dado/cinco.PNG';
+import cara6 from './/imagenes/caras dado/seis.PNG';
 
 const photos = [
   { id:1, name: "Foto 1", url: cara1 },
@@ -50,8 +50,12 @@ function DiceRoll() {
     return Math.floor(Math.random() * 2000) + 2000;
   };
 
+  const onClick = () => {
+    handleStart();
+  };
+
   return (
-    <div>
+    <div className="dado">
       {photos.map((photo, index) => (
         <img
           key={photo.name}
@@ -61,7 +65,7 @@ function DiceRoll() {
         />
       ))
       }
-      <button onClick={handleStart} disabled={isPlaying}>
+      <button onClick={onClick} disabled={isPlaying}>
         Tirar dado
       </button>
       <p>Numero obtenido: {currentPhotoIndex+1}</p>
@@ -69,5 +73,5 @@ function DiceRoll() {
   );
 
 }
-
+export { photos };
 export default DiceRoll;

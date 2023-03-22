@@ -8,6 +8,7 @@ import LoginForm from './componentes/Login.Form';
 import Registrarse from './componentes/Registrarse';
 import Principal from './componentes/Principal';
 import Carga from './componentes/Carga';
+// import Partida from './componentes/Partida';
 function App() {
   return(
     <BrowserRouter>
@@ -16,6 +17,7 @@ function App() {
         <Route path='/registrarse' Component={Registrarse}/>
         <Route path='/principal' Component={Principal}/>
         <Route path='/carga' Component={Carga}/>
+        {/* <Route path='/partida' Component={Partida}/> */}
     </Routes>
     </BrowserRouter>
     

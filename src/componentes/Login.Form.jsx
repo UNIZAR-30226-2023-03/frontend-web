@@ -41,6 +41,7 @@ function LoginForm() {
         <input type="password" placeholder='contraseña' required value={password} onChange={handlePasswordChange} />
       </label>
       ¿Aún no tienes cuenta?
+      {/* <Link to='/registrarse'>Regístrate aquí</Link> */}
       <Link to='/registrarse'>Regístrate aquí</Link>
       <br/>
       <button type="submit">Iniciar sesión</button>
