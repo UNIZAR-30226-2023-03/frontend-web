@@ -29,7 +29,7 @@ function Registrarse() {
     event.preventDefault();
     console.log(username, email, password_1, password_2);
     try{
-      const response = await axios.post("https://backend-sy93.onrender.com/usuarios/registrarse", {username, email, password_1});
+      const response = await axios.post("https://lamesa-backend.azurewebsites.net/usuarios", {username, email, password_1});
       console.log(response.data);
       if (response.data){
         navigate(process.env.PUBLIC_URL+'/principal');
