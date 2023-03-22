@@ -14,6 +14,7 @@ function App() {
         <Route  path='/' Component={LoginForm}/>
         <Route path='/registrarse' Component={Registrarse}/>
         <Route path='/principal' Component={Principal}/>
+        <Route path='/carga' Component={carga}/>
     </Routes>
     </BrowserRouter>
     

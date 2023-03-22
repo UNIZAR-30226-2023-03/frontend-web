@@ -1,14 +1,30 @@
 
 
 function Principal(){
+    const [nombre, setNombre] = useState('');
+    const [password, setPassword] = useState('');
+    const [configuracion, setConfig] = useState('');
+    const [jugador, setJugador] = useState('');
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setNombre('nombre usuario');
+        setPassword('contraseña');
+        setConfig('configuracion');
+        setJugador(0);
+        const response = await axios.get("https://lamesa-backend.azurewebsites.net/partida/conectar", {nombre, password,jugador,configuracion});
+        console.log(response.data);
+        if (response.data){
+        navigate(process.env.PUBLIC_URL+'/carga');
+        }
+
+    };
     return(
-        <div className="container">
-        <h1>¡Bienvenido!</h1>
-        <div className="button-container">
-          <button className="big-button">JUGAR PARTIDA PUBLICA</button>
-          <button className="big-button">CREAR PARTIDA PRIVADA</button>
-        </div>
-      </div>
+        
+        <form onSubmit={handleSubmit}>
+            <h1>Bienvenido</h1>
+            <button type="submit">Jugar partida pública</button>
+        </form>
 
     );
 
