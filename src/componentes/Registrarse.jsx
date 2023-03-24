@@ -69,3 +69,4 @@ function Registrarse() {
 }
 
 export default Registrarse;
+

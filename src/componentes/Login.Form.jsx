@@ -33,13 +33,13 @@ function LoginForm() {
         <h1>Inicio de sesión</h1>
         <label>
           Usuario:
-          <input type="text" placeholder="correo electrónico o nombre de usuario"
+          <input type="text" placeholder="Correo electrónico o nombre de usuario"
             value={login} required onChange={handleUsernameChange} />
         </label>
         <br/>
         <label>
           Contraseña:
-          <input type="password" placeholder='contraseña' required value={password} onChange={handlePasswordChange} />
+          <input type="password" placeholder='Contraseña' required value={password} onChange={handlePasswordChange} />
         </label>
         ¿Aún no tienes cuenta?
         <Link to='/registrarse'>Regístrate aquí</Link>

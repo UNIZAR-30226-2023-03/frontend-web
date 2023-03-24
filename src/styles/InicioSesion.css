@@ -33,7 +33,7 @@ body {
   
   /* Botón naranja con borde blanco */
   .form-container button[type="submit"] {
-    background-color: #ff7f50;
+    background-color: #ff7700;
     border: 2px solid #ffffff;
     color: #ffffff;
     padding: 10px 20px;
