@@ -20,22 +20,6 @@ input {
   width: 300px;
 }
 
-button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  width: 150px;
-  margin-top: 20px;
-}
-
-button:hover {
-  background-color: #3e8e41;
-}
-
 .container {
   display: flex;
   flex-direction: column;
@@ -48,13 +32,3 @@ button:hover {
   margin-top: 50px;
 }
 
-.big-button {
-  background-color: blue;
-  color: white;
-  font-size: 24px;
-  padding: 20px;
-  margin: 0 10px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}

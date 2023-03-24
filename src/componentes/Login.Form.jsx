@@ -28,7 +28,7 @@ function LoginForm() {
   };
 
   return (
-    <div className="container">
+    <div className="containerinicioSesion">
       <form onSubmit={handleSubmit} className="form-container">
         <h1>Inicio de sesión</h1>
         <label>

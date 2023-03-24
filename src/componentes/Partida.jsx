@@ -62,19 +62,25 @@ function Partida() {
   return (  
     
     <div>
-      {photos.map((photo, index) => (
-        <img
-          key={photo.name}
-          src={photo.url}
-          alt={photo.name}
-          style={{ display: index === currentPhotoIndex ? "block" : "none" }}
-        />
-      ))
-      }
-      <button onClick={onClick} disabled={isPlaying}>
+      <div class="containerPartida">
+      <img src="../imagenes/tablero/tablero.png"/>
+      </div>
+      <div className="partidaDado">
+        {photos.map((photo, index) => (
+          <img
+            key={photo.name}
+            src={photo.url}
+            alt={photo.name}
+            style={{ display: index === currentPhotoIndex ? "block" : "none" }}
+          />
+        ))
+        }
+      </div>
+      <button class="button-partida" onClick={onClick} disabled={isPlaying}>
         Tirar dado
       </button>
-      <p>Numero obtenido: {currentPhotoIndex+1}</p>
+      {/* <p>Numero obtenido: {currentPhotoIndex+1}</p> */}
+      <button class="fichaRoja"></button>
     </div>
   );
 
