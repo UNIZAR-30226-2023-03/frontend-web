@@ -1,7 +1,7 @@
 .containerPartida {
     background-image: url("..//imagenes/tablero/tablero.png");
     background-position: center;
-    background-size: 1000px;
+    background-size: 969px;
     background-repeat: no-repeat;
     height: 100vh;
     width: 100vw;
@@ -27,13 +27,13 @@
     transform: scale(3);
   }
   .fichaRoja {
-    position: absolute;
+    position: fixed;
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    bottom: 740px;
+    bottom: 348px;
     left: 770px;
-    z-index: 9999;
+    z-index: 9998;
     background-color: red;
     border: none;
     outline: none;
@@ -46,9 +46,9 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    bottom: 740px;
-    left: 825px;
-    z-index: 9999;
+    bottom: 330px;
+    left: 832px;
+    z-index: 9998;
     background-color: blue;
     border: none;
     outline: none;
@@ -56,11 +56,42 @@
     cursor: pointer;
     transition: transform 0.1s ease-out;
   }
-  
-  .fichaRoja:hover, .fichaAzul:hover {
-    transform: scale(1.1);
+  .fichaVerde {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    bottom: 348px;
+    left: 770px;
+    z-index: 9998;
+    background-color: green;
+    border: none;
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.1s ease-out;
+  }
+  .fichaAmarilla {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    bottom: 390px;
+    left: 770px;
+    z-index: 9998;
+    background-color: yellow;
+    border: none;
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.1s ease-out;
   }
   
-  .fichaRoja:active ,.fichaAzul:active {
+  .fichaRoja:hover, .fichaAzul:hover, .fichaAmarilla:hover, .fichaVerde:hover {
+    transform: scale(1.1);
+    z-index: 9999;
+  }
+  
+  .fichaRoja:active ,.fichaAzul:active, .fichaAmarilla:active, .fichaVerde:active {
     transform: scale(0.9);
   }

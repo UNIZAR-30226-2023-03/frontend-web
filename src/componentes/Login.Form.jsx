@@ -32,19 +32,19 @@ function LoginForm() {
       <form onSubmit={handleSubmit} className="form-container">
         <h1>Inicio de sesión</h1>
         <label>
-          Usuario:
+        <p class="textoIniciarSesion">Usuario:</p>
           <input type="text" placeholder="Correo electrónico o nombre de usuario"
             value={login} required onChange={handleUsernameChange} />
         </label>
         <br/>
         <label>
-          Contraseña:
+        <p class="textoIniciarSesion">Contraseña:</p>
           <input type="password" placeholder='Contraseña' required value={password} onChange={handlePasswordChange} />
         </label>
-        ¿Aún no tienes cuenta?
+        <button type="submit">Iniciar sesión</button>
+        <p class="textoSinIniciarSesion">¿Aún no tienes cuenta?</p>
         <Link to='/registrarse'>Regístrate aquí</Link>
         <br/>
-        <button type="submit">Iniciar sesión</button>
       </form>
     </div>
   

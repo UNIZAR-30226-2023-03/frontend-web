@@ -2,7 +2,17 @@
 body {
     background-color: #ffc957;
   }
-  
+  h1{
+    font-size: 45px;
+  }
+  .textoIniciarSesion{
+    color: #ffffff;
+    font-size: 25px;
+  }
+  .textoSinIniciarSesion{
+    color: #ffffff;
+    font-size: 18px;
+  }
   /* Imagen de fondo centrada y difuminada */
   .containerinicioSesion {
     background-image: url("..//imagenes/tablero/tablero.png");
@@ -24,6 +34,7 @@ body {
     border-radius: 10px;
     width: 400px;
     text-align: center;
+    box-shadow: 20px 8px 7px rgba(0, 0, 0, 0.75);
   }
   
   /* Texto blanco */
@@ -33,12 +44,16 @@ body {
   
   /* Botón naranja con borde blanco */
   .form-container button[type="submit"] {
-    background-color: #ff7700;
-    border: 2px solid #ffffff;
+    background-color: #ee7206;
+    border: 3px solid #ffffff;
     color: #ffffff;
     padding: 10px 20px;
     font-size: 1.2rem;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
     margin-top: 10px;
+  }
+  
+  .form-container button:hover {
+    background-color: #c14700;
   }

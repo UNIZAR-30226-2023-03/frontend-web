@@ -81,6 +81,9 @@ function Partida() {
       </button>
       {/* <p>Numero obtenido: {currentPhotoIndex+1}</p> */}
       <button class="fichaRoja"></button>
+      {/* <button class="fichaAzul"></button>
+      <button class="fichaVerde"></button>
+      <button class="fichaAmarilla"></button> */}
     </div>
   );
 
