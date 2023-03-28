@@ -1,21 +1,10 @@
-.containerPartida {
-    background-image: url("..//imagenes/tablero/tablero.png");
-    background-position: center;
-    background-size: 969px;
-    background-repeat: no-repeat;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
-
   .partidaDado {
-    position: fixed;
+    position: absolute;
     bottom: 150px;
     right: 10px;
     transform: scale(0.6);
+    left:1390px;
+    z-index:999;
   }
 
   .button-partida {
@@ -25,9 +14,11 @@
     right: 160px;
     z-index: 1;
     transform: scale(3);
+    left:1550px;
+    display:inline-block ;
   }
   .fichaRoja {
-    position: fixed;
+    position: absolute;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -87,11 +78,1197 @@
     transition: transform 0.1s ease-out;
   }
   
-  .fichaRoja:hover, .fichaAzul:hover, .fichaAmarilla:hover, .fichaVerde:hover {
+  .ficha1:hover,.ficha2:hover,.ficha3:hover,.ficha4:hover,.fichab1:hover,.fichab2:hover,.fichab3:hover,.fichab4:hover,.fichac1:hover,.fichac2:hover,.fichac3:hover,.fichac4:hover,.fichad1:hover,.fichad2:hover,.fichad3:hover,.fichad4:hover {
     transform: scale(1.1);
     z-index: 9999;
   }
   
-  .fichaRoja:active ,.fichaAzul:active, .fichaAmarilla:active, .fichaVerde:active {
+  .ficha1:active,.ficha2:active,.ficha3:active,.ficha4:active,.fichab1:active,.fichab2:active,.fichab3:active,.fichab4:active,.fichac1:active,.fichac2:active,.fichac3:active,.fichac4:active,.fichad1:active,.fichad2:active,.fichad3:active,.fichad4:active {
     transform: scale(0.9);
   }
+
+
+  .all{
+  
+ }
+ .lamesa{
+    width:900px;
+    height:900px;
+    left:50vh;
+    top:5vh;
+    position:absolute ;
+    background:#fff;
+    border-radius:20px;
+ }
+ 
+ 
+ /*Casillas de casa*/
+ .azul{
+     width:300px;
+     height:300px;
+     position:absolute ;
+     background:blue;
+     border-radius:10px 0px 0px 0px;
+ }
+ .rojo{
+     width:300px;
+     height:300px;
+     position:absolute ;
+     background:red;
+     top:600px;
+     border-radius:0px 0px 0px 10px;
+     z-index: 1;
+ }
+ .amarillo{
+     width:300px;
+     height:300px;
+     position:absolute ;
+     background:yellow;
+     top:600px;
+     left:600px;
+     border-radius:0px 0px 10px 0px;
+     z-index: 1;
+ }
+ .verde{
+     width:300px;
+     height:300px;
+     position:absolute ;
+     background:green;
+     left:600px;
+     border-radius:0px 10px 0px 0px;
+     z-index: 1;
+ }
+ 
+ 
+ /*Ultimas casillas coloreadas para llegar al final*/
+ .azulb{
+     width:99.9px;
+     height:300px;
+     position:absolute ;
+     background:blue;
+     left:399.9px;
+     top:42px;
+ }
+ 
+ .rojob{
+     width:300px;
+     height:99.9px;
+     position:absolute ;
+     background:red;
+     top:399.9px;
+     left:42px;
+ }
+ 
+ .amarillob{
+     width:99.9px;
+     height:300px;
+     position:absolute ;
+     background:yellow;
+     top:558px;
+     left:399.9px;
+ }
+ 
+ .verdeb{
+     width:300px;
+     height:99.9px;
+     position:absolute ;
+     background:green;
+     left:558px;
+     top:399.9px;
+ }
+ 
+ 
+ /*Fondo oscuro dentro de la casilla casa*/
+ .azulc{
+     width:180px;
+     height:180px;
+     position:absolute ;
+     background:#000;
+     left:60px;
+     top:60px;
+     opacity:0.3;
+     border-radius:30px;
+     z-index: 2;
+ }
+ .rojoc{
+     width:180px;
+     height:180px;
+     position:absolute ;
+     background:#000;
+     left:60px;
+     top:660px;
+     opacity:0.3;
+     border-radius:30px;
+     z-index: 2;
+ }
+ .amarilloc{
+     width:180px;
+     height:180px;
+     position:absolute ;
+     background:#000;
+     left:660px;
+     top:660px;
+     opacity:0.3;
+     border-radius:30px;
+     z-index: 2;
+ }
+ .verdec{
+     width:180px;
+     height:180px;
+     position:absolute ;
+     background:#000;
+     left:660px;
+     top:60px;
+     opacity:0.3;
+     border-radius:30px;
+     z-index: 2;
+ }
+ 
+ /*Triangulos para las casillas finales*/
+ .azuld {
+   width: 2px;
+   height: 4px;
+   position: absolute;
+   border: 114px solid transparent;
+   left: 335px;
+   top: 336px;
+   border-right: 114px solid blue;
+   transform: rotate(-90deg);
+ }
+ 
+ .rojod {
+   width: 50px;
+   height: 4px;
+   position: absolute;
+   border: 114px solid transparent;
+   left: 336px;
+   top: 336px;
+   border-right: 114px solid red;
+   transform: rotate(180deg);
+ }
+ 
+ .verded {
+   width: 199.8px;
+   height: 4px;
+   position: absolute;
+   border: 114px solid transparent;
+   left: 137px;
+   top: 336px;
+   border-right: 114px solid green;
+ }
+ 
+ .amarillod {
+   width: 3px;
+   height: 4.5px;
+   position: absolute;
+   border: 114px solid transparent;
+   left: 337px;
+   top: 333px;
+   border-right: 114px solid yellow;
+   transform: rotate(90deg);
+ }
+ 
+ /*Fichas azules*/
+ .ficha1{
+     position:absolute ;
+     border:1px solid #000;
+     background:blue;
+     top:25px;
+     left:25px;
+     width:48px;
+     height:48px;
+     border-radius:50%;
+     border: none;
+     outline: none;
+     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     cursor: pointer;
+     transition: transform 0.1s ease-out;
+ }
+ .ficha2{
+     position:absolute ;
+     border:1px solid #000;
+     background:blue;
+     top:85px;
+     left:25px;
+     width:48px;
+     height:48px;
+     border-radius:50%;
+     border: none;
+     outline: none;
+     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     cursor: pointer;
+     transition: transform 0.1s ease-out;
+ }
+ 
+ .ficha3{
+     position:absolute ;
+     border:1px solid #000;
+     background:blue;
+     top:25px;
+     left:85px;
+     width:48px;
+     height:48px;
+     border-radius:50%;
+     border: none;
+     outline: none;
+     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     cursor: pointer;
+     transition: transform 0.1s ease-out;
+ }
+ 
+ .ficha4{
+     position:absolute ;
+     border:1px solid #000;
+     background:blue;
+     top:85px;
+     left:85px;
+     width:48px;
+     height:48px;
+     border-radius:50%;
+     border: none;
+     outline: none;
+     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     cursor: pointer;
+     transition: transform 0.1s ease-out;
+ }
+ 
+ /*Fichas rojas*/
+ .fichab1{
+     position:absolute ;
+     border:1px solid #000;
+     background:red;
+     top:225px;
+     left:25px;
+     width:48px;
+     height:48px;
+     border-radius:50%;
+     z-index: 9998;
+     background-color: red;
+     border: none;
+     outline: none;
+     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     cursor: pointer;
+     transition: transform 0.1s ease-out;
+ }
+ .fichab2{
+     position:absolute ;
+     border:1px solid #000;
+     background:red;
+     top:255px;
+     left:25px;
+     width:48px;
+     height:48px;
+     border-radius:50%;
+     z-index: 9998;
+     background-color: red;
+     border: none;
+     outline: none;
+     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     cursor: pointer;
+     transition: transform 0.1s ease-out;
+ }
+ .fichab3{
+     position:absolute ;
+     border:1px solid #000;
+     background:red;
+     top:255px;
+     left:55px;
+     width:48px;
+     height:48px;
+     border-radius:50%;
+     z-index: 9998;
+     background-color: red;
+     border: none;
+     outline: none;
+     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     cursor: pointer;
+     transition: transform 0.1s ease-out;
+ }
+ .fichab4{
+     position:absolute ;
+     border:1px solid #000;
+     background:red;
+     top:225px;
+     left:55px;
+     width:48px;
+     height:48px;
+     border-radius:50%;
+     z-index: 9998;
+     background-color: red;
+     border: none;
+     outline: none;
+     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     cursor: pointer;
+     transition: transform 0.1s ease-out;
+ }
+ 
+ 
+ /*Fichas amarillas*/
+ .fichac1{
+     position:absolute ;
+     border:1px solid #000;
+     background:yellow;
+     top:255px;
+     left:225px;
+     width:48px;
+     height:48px;
+     border-radius:50%;
+     z-index: 9998;
+     border: none;
+     outline: none;
+     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     cursor: pointer;
+     transition: transform 0.1s ease-out;
+ }
+ 
+ .fichac2{
+     position:absolute ;
+     border:1px solid #000;
+     background:yellow;
+     top:255px;
+     left:255px;
+     width:48px;
+     height:48px;
+     border: none;
+     outline: none;
+     border-radius:50%;
+     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     cursor: pointer;
+     transition: transform 0.1s ease-out;
+ }
+ .fichac3{
+     position:absolute ;
+     border:1px solid #000;
+     background:yellow;
+     top:225px;
+     left:255px;
+     width:48px;
+     height:48px;
+     border: none;
+     outline: none;
+     border-radius:50%;
+     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     cursor: pointer;
+     transition: transform 0.1s ease-out;
+ }
+ 
+ .fichac4{
+     position:absolute ;
+     border:1px solid #000;
+     background:yellow;
+     top:225px;
+     left:225px;
+     width:48px;
+     height:48px;
+     border-radius:50%;
+     border: none;
+     outline: none;
+     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     cursor: pointer;
+     transition: transform 0.1s ease-out;
+ }
+ 
+ /*Fichas verdes*/
+ .fichad1{
+     position:absolute ;
+     border:1px solid #000;
+     background:green;
+     top:55px;
+     left:255px;
+     width:48px;
+     height:48px;
+     border-radius:50%;
+     border: none;
+     outline: none;
+     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     cursor: pointer;
+     transition: transform 0.1s ease-out;
+ }
+ .fichad2{
+     position:absolute ;
+     border:1px solid #000;
+     background:green;
+     top:55px;
+     left:225px;
+     width:48px;
+     height:48px;
+     border-radius:50%;
+     border: none;
+     outline: none;
+     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     cursor: pointer;
+     transition: transform 0.1s ease-out;
+ }
+ 
+ .fichad3{
+     position:absolute ;
+     border:1px solid #000;
+     background:green;
+     top:25px;
+     left:255px;
+     width:48px;
+     height:48px;
+     border-radius:50%;
+     border: none;
+     outline: none;
+     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     cursor: pointer;
+     transition: transform 0.1s ease-out;
+ }
+ .fichad4{
+     position:absolute ;
+     border:1px solid #000;
+     background:green;
+     top:25px;
+     left:225px;
+     width:48px;
+     height:48px;
+     border-radius:50%;
+     border: none;
+     outline: none;
+     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     cursor: pointer;
+     transition: transform 0.1s ease-out;
+ }
+ 
+ .filas{
+     width:300px;
+     height:2px;
+     background:#000;
+     position:absolute ;
+     left:300px;
+     top:294px;
+ }
+ 
+ .f1{
+     top:42px;
+     position:absolute ;
+ }
+ .f2{
+     top:84px;
+     position:absolute ;
+ }
+ .f3{
+     top:126px;
+     position:absolute ;
+ }
+ .f4{
+     top:168px;
+     position:absolute ;
+ }
+ .f5{
+     top:210px;
+     position:absolute ;
+ }
+ .f6{
+     top:252px;
+     position:absolute ;
+ }
+ /*Cuadrado del medio, lado azul*/
+ .f7{
+     top:336px;
+     position:absolute ;
+     width:228px;
+     left:336px;
+ }
+ 
+ .filab{
+     height:300px;
+     width:2px;
+     background:#000;
+     position:absolute ;
+     left:42px;
+     top:300px;
+ }
+ 
+ .f8{
+     position:absolute ;
+     left:84px;
+ }
+ .f9{
+     position:absolute ;
+     left:126px;
+ }
+ .f10{
+     position:absolute ;
+     left:168px;
+ }
+ 
+ .f11{
+     position:absolute ;
+     left:210px;
+ }
+ .f12{
+     position:absolute ;
+     left:252px;
+ }
+ 
+ .f13{
+     position:absolute ;
+     left:294px;
+ }
+ /*Cuadrado del medio, lado verde*/
+ .f14{
+     position:absolute ;
+     left:563px;
+     height:225px;
+     width:1px;
+     top:337px;
+ }
+ 
+ .filac{
+     width:300px;
+     height:2px;
+     background:#000;
+     position:absolute ;
+     top:858px;
+     left:300px;
+ }
+ 
+ .f16{
+     position:absolute ;
+     top:606px;
+ }
+ .f17{
+     position:absolute ;
+     top:648px;
+ }
+ .f19{
+     position:absolute ;
+     top:690px;
+ }
+ .f20{
+     position:absolute ;
+     top:732px;
+ }
+ .f21{
+     position:absolute ;
+     top:774px;
+ }
+ .f22{
+     position:absolute ;
+     top:816px;
+ }
+ /*Cuadrado del medio, lado amarillo*/
+ .f23{
+     position:absolute ;
+     top:563px;
+     width:228px;
+     left:336px;
+ }
+ .f25{
+     position:absolute ;
+     left:860px;
+ }
+ .filad{
+     height:300px;
+     width:2px;
+     background:#000;
+     position:absolute ;
+     top:300px;
+     left:856px;
+ }
+ .f25{
+     position:absolute ;
+     left:814px;
+ }
+ 
+ .f26{
+     position:absolute ;
+     left:772px;
+ }
+ .f27{
+     position:absolute ;
+     left:730px;
+ }
+ 
+ .f28{
+     position:absolute ;
+     left:688px;
+ }
+ .f29{
+     position:absolute ;
+     left:646px;
+ }
+ .f30{
+     position:absolute ;
+     left:604px;
+ }
+ 
+ /*Cuadrado del medio, lado rojo*/
+ .f31{
+     position:absolute ;
+     left:336px;
+     height:225px;
+     width:2px;
+     top:338px;
+ }
+ 
+ .filae{
+     width:55px;
+     height:2px;
+     background:#000;
+     position:absolute ;
+     transform:rotate(45deg);
+     top:390px;
+     left:315px;
+ }
+ 
+ /*Diagonal casa azul*/
+ .incli1{
+     position:absolute ;
+     top:317px;
+     left:291px;
+     transform:rotate(45deg);
+ }
+ 
+ /*Diagonal casa rojo*/
+ .incli2{
+     position:absolute ;
+     top:582px;
+     left:290px;
+     transform:rotate(-45deg);
+ }
+ /*Diagonal casa amarillo*/
+ .incli3{
+     position:absolute ;
+     top:582px;
+     left:555px;
+     transform:rotate(45deg);
+ }
+ /*Diagonal casa verde*/
+ .incli4{
+     position:absolute ;
+     top:317px;
+     left:555px;
+     transform:rotate(-45deg);
+ }
+ 
+ /*Casilla seguro azul final*/
+ .star{
+     width:100px;
+     height:42px;
+     position:absolute ;
+     background:gray;
+     left:400px;
+     text-align:center ;
+     color:#282828;
+ }
+ /*Casilla seguro casa de azul*/
+ .s2{
+     position:absolute ;
+     top:170px;
+     left:300px;
+     
+ }
+ 
+ /*Casilla seguro después de casa de azul*/
+ .s3{
+     position:absolute ;
+     top:300px;
+     left:168px;
+     width:42px;
+     height:100px;
+     background:gray;
+     text-align:text-bottom ;
+ }
+ /*Estrella de para lo anterior*/
+ .ss3{
+     top:10px;
+     position:absolute ;
+     z-index:1000;
+ }
+ /*Casilla seguro rojo final*/
+ .s4{
+     position:absolute ;
+     top:400px;
+     left:0px;
+     width:42px;
+     height:100px;
+     background:gray;
+ }
+ .ss4{
+     top:10px;
+     position:absolute ;
+ }
+ 
+ /*Casilla seguro casa de rojo*/
+ .s5{
+     position:absolute ;
+     top:500px;
+     left:168px;
+     width:42px;
+     height:100px;
+     background:gray;
+ }
+ .ss5{
+     top:10px;
+     position:absolute ;
+ }
+ /*Casilla seguro después de casa de rojo*/
+ .s6{
+     position:absolute ;
+     top:690px;
+     left:300px;
+ }
+ /*Casilla seguro amarillo final*/
+ .s7{
+     position:absolute ;
+     top:858px;
+     left:400px;
+ }
+ 
+ /*Casilla seguro casa de amarillo*/
+ .s8{
+     position:absolute ;
+     top:690px;
+     left:500px;
+ }
+ 
+ /*Casilla seguro después de casa de amarillo*/
+ .s9{
+     position:absolute ;
+     top:500px;
+     left:688px;
+     width:42px;
+     height:100px;
+     background:gray;
+ }
+ .ss9{
+     top:10px;
+     position:absolute ;
+ }
+ 
+ /*Casilla seguro final de verde*/
+ .s10{
+     position:absolute ;
+     top:400px;
+     left:858px;
+     width:42px;
+     height:100px;
+     background:gray;
+ }
+ .ss10{
+     top:10px;
+     position:absolute ;
+ }
+ 
+ /*Casilla seguro casa de verde*/
+ .s11{
+     position:absolute ;
+     top:300px;
+     left:688px;
+     width:42px;
+     height:100px;
+     background:gray;
+ }
+ .ss11{
+     top:10px;
+     position:absolute ;
+ }
+ /*Casilla seguro después de casa de verde*/
+ .s12{
+     position:absolute ;
+     top:170px;
+     left:500px;
+ }  
+ 
+ .numeros{
+     font-size:20px;
+     position:absolute ;
+ }
+ .n1{
+     position:absolute ;
+     left:505px;
+     top:865px;
+ }
+ 
+ .n2{
+     position:absolute ;
+     left:505px;
+     top:823px;
+ }
+ .n3{
+     position:absolute ;
+     left:505px;
+     top:781px;
+ }
+ .n4{
+     position:absolute ;
+     left:505px;
+     top:739px;
+ }
+ .n5{
+     position:absolute ;
+     left:505px;
+     top:697px;
+ }
+ .n6{
+     position:absolute ;
+     left:505px;
+     top:655px;
+ }
+ .n7{
+     position:absolute ;
+     left:505px;
+     top:613px;
+ }
+ .n8{
+     position:absolute ;
+     left:505px;
+     top:571px;
+ }
+ 
+ .numerosb{
+     font-size:20px;
+     transform:rotate(-90deg);
+ }
+ 
+ .n9{
+     top:500px;
+     left:575px;
+     position:absolute ;
+ }
+ 
+ .n10{
+     top:500px;
+     left:617px;
+     position:absolute ;
+ }
+ .n11{
+     top:500px;
+     left:659px;
+     position:absolute ;
+ }
+ 
+ .n12{
+     top:500px;
+     left:701px;
+     position:absolute ;
+ }
+ 
+ .n13{
+     top:500px;
+     left:743px;
+     position:absolute ;
+ }
+ .n14{
+     top:500px;
+     left:785px;
+     position:absolute ;
+ }
+ 
+ .n15{
+     top:500px;
+     left:827px;
+     position:absolute ;
+ }
+ .n16{
+     top:500px;
+     left:869px;
+     position:absolute ;
+ }
+ .n17{
+     top:440px;
+     left:869px;
+     position:absolute ;
+ }
+ .n18{
+     top:375px;
+     left:869px;
+     position:absolute ;
+ }
+ .n19{
+     top:375px;
+     left:827px;
+     position:absolute ;
+ }
+ .n20{
+     top:375px;
+     left:785px;
+     position:absolute ;
+ }
+ 
+ .n21{
+     top:375px;
+     left:743px;
+     position:absolute ;
+ }
+ .n22{
+     top:375px;
+     left:701px;
+     position:absolute ;
+ }
+ .n23{
+     top:375px;
+     left:659px;
+     position:absolute ;
+ }
+ .n24{
+     top:375px;
+     left:617px;
+     position:absolute ;
+ }
+ .n25{
+     top:375px;
+     left:575px;
+     position:absolute ;
+ }
+ .n26{
+     top:300px;
+     left:505px;
+     position:absolute ;
+ }
+ .n27{
+     top:258px;
+     left:505px;
+     position:absolute ;
+ }
+ 
+ .n28{
+     top:216px;
+     left:505px;
+     position:absolute ;
+
+ }
+ .n29{
+     top:174px;
+     left:505px;
+     position:absolute ;
+
+ }
+ .n30{
+     top:132px;
+     left:505px;
+     position:absolute ;
+
+ }
+ .n31{
+     top:90px;
+     left:505px;
+     position:absolute ;
+
+ }
+ .n32{
+     top:48px;
+     left:505px;
+     position:absolute ;
+
+ }
+ .n33{
+     top:6px;
+     left:505px;
+     position:absolute ;
+
+ }
+ .n34{
+     top:6px;
+     left:440px;
+     position:absolute ;
+  
+ }
+ .n35{
+     top:6px;
+     left:375px;
+     position:absolute ;
+
+ }
+ .n36{
+     top:48px;
+     left:375px;
+     position:absolute ;
+ 
+ }
+ .n37{
+     top:90px;
+     left:375px;
+     position:absolute ;
+
+ }
+ 
+ .n38{
+     top:132px;
+     left:375px;
+     position:absolute ;
+ }
+ .n39{
+     top:174px;
+     left:375px;
+     position:absolute ;
+ }
+ .n40{
+     top:216px;
+     left:375px;
+     position:absolute ;
+ }
+ .n41{
+     top:258px;
+     left:375px;
+     position:absolute ;
+ }
+ .n42{
+     top:300px;
+     left:375px;
+     position:absolute ;
+ } 
+ 
+ .n43{
+     top:375px;
+     left:310px;
+     position:absolute ;
+     transform:rotate(-270deg);
+ } 
+ .n44{
+     top:375px;
+     left:268px;
+     position:absolute ;
+     transform:rotate(-270deg);
+ } 
+ 
+ .n45{
+     top:375px;
+     left:226px;
+     position:absolute ;
+     transform:rotate(-270deg);
+ }
+ 
+ .n46{
+     top:375px;
+     left:184px;
+     position:absolute ;
+     transform:rotate(-270deg);
+ }
+ .n47{
+     top:375px;
+     left:142px;
+     position:absolute ;
+     transform:rotate(-270deg);
+ }  
+ .n48{
+     top:375px;
+     left:100px;
+     position:absolute ;
+     transform:rotate(-270deg);
+ }  
+ 
+ .n49{
+     top:375px;
+     left:58px;
+     position:absolute ;
+     transform:rotate(-270deg);
+ }  
+ 
+ .n50{
+     top:375px;
+     left:16px;
+     position:absolute ;
+     transform:rotate(-270deg);
+ }  
+ .n51{
+     top:440px;
+     left:10px;
+     position:absolute ;
+     transform:rotate(-270deg);
+ } 
+ 
+ .n52{
+     top:500px;
+     left:16px;
+     position:absolute ;
+     transform:rotate(-270deg);
+ }  
+ .n53{
+     top:500px;
+     left:58px;
+     position:absolute ;
+     transform:rotate(-270deg);
+ }  
+ .n54{
+     top:500px;
+     left:100px;
+     position:absolute ;
+     transform:rotate(-270deg);
+ }  
+ 
+ .n55{
+     top:500px;
+     left:142px;
+     position:absolute ;
+     transform:rotate(-270deg);
+ }  
+ 
+ .n56{
+     top:500px;
+     left:184px;
+     position:absolute ;
+     transform:rotate(-270deg);
+ } 
+ 
+ .n57{
+     top:500px;
+     left:226px;
+     position:absolute ;
+     transform:rotate(-270deg);
+ }
+ .n58{
+     top:500px;
+     left:268px;
+     position:absolute ;
+     transform:rotate(-270deg);
+ }
+ .n59{
+     top:500px;
+     left:310px;
+     position:absolute ;
+     transform:rotate(-270deg);
+ }
+ .n60{
+     top:571px;
+     left:375px;
+     position:absolute ;
+ }
+ .n61{
+     top:613px;
+     left:375px;
+     position:absolute ;
+ }
+ .n62{
+     top:655px;
+     left:375px;
+     position:absolute ;
+ }
+ .n63{
+     top:697px;
+     left:375px;
+     position:absolute ;
+ }
+ .n64{
+     top:739px;
+     left:375px;
+     position:absolute ;
+ }
+ .n65{
+     top:781px;
+     left:375px;
+     position:absolute ;
+ }
+ .n66{
+     top:823px;
+     left:375px;
+     position:absolute ;
+ }
+ .n67{
+     top:865px;
+     left:375px;
+     position:absolute ;
+ }
+ .n68{
+     top:865px;
+     left:440px;
+     position:absolute ;
+ }
+ 
+ .fa{
+     color:#404040;
+ }
+ 
