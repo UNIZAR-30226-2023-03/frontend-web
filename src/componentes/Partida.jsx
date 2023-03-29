@@ -27,8 +27,8 @@ const casillas = [
   {id:4, left:'62%', top:'82%'},
   {id:5, left:'62%', top:'77%'},
   {id:6, left:'62%', top:'72.5%'},
-  {id:7, left:'62%', top:'68%'},
-  {id:8, left:'0%', top:'63%'},
+  {id:7, left:'62%', top:'63%'},
+  {id:8, left:'60.7%', top:'63%'},
   {id:9, left:'63%', top:'60%'},
   {id:10, left:'67.5%', top:'62%'},
   {id:11, left:'72.5%', top:'62%'},
@@ -37,7 +37,7 @@ const casillas = [
   {id:14, left:'86.5%', top:'62%'},
   {id:15, left:'91%', top:'62%'},
   {id:16, left:'95.7%', top:'62%'},
-  {id:17, left:'95.7%', top:'28.5%'},
+  {id:17, left:'95.7%', top:'45%'},
   {id:18, left:'95.7%', top:'34%'},
   {id:19, left:'91%', top:'34%'},
   {id:20, left:'86.5%', top:'34%'},
@@ -89,12 +89,82 @@ const casillas = [
   {id:66, left:'34%', top:'91%'},
   {id:67, left:'34%', top:'96%'},
   {id:68, left:'45%', top:'96%'},
+
+  {id:1-2, left:'56%', top:'96%'},
+  {id:2-2, left:'56%', top:'91%'},
+  {id:3-2, left:'56%', top:'86.6%'},
+  {id:4-2, left:'56%', top:'82%'},
+  {id:5-2, left:'56%', top:'77%'},
+  {id:6-2, left:'56%', top:'72.5%'},
+  {id:7-2, left:'56%', top:'68%'},
+  {id:8-2, left:'56%', top:'63%'},
+  {id:9-2, left:'63%', top:'55.7%'},
+  {id:10-2, left:'67.5%', top:'57%'},
+  {id:11-2, left:'72.5%', top:'57%'},
+  {id:12-2, left:'77%', top:'57%'},
+  {id:13-2, left:'81.5%', top:'57%'},
+  {id:14-2, left:'86.5%', top:'57%'},
+  {id:15-2, left:'91%', top:'57%'},
+  {id:16-2, left:'95.7%', top:'57%'},
+  {id:17-2, left:'95.7%', top:'51%'},
+  {id:18-2, left:'95.7%', top:'39%'},
+  {id:19-2, left:'91%', top:'39%'},
+  {id:20-2, left:'86.5%', top:'39%'},
+  {id:21-2, left:'81.5%', top:'39%'},
+  {id:22-2, left:'77%', top:'39%'},
+  {id:23-2, left:'72.5%', top:'39%'},
+  {id:24-2, left:'67.5%', top:'39%'},
+  {id:25-2, left:'63%', top:'40.5%'},
+  {id:26-2, left:'56%', top:'33%'},
+  {id:27-2, left:'56%', top:'28.5%'},
+  {id:28-2, left:'56%', top:'24%'},
+  {id:29-2, left:'56%', top:'19%'},
+  {id:30-2, left:'56%', top:'14.5%'},
+  {id:31-2, left:'56%', top:'10%'},
+  {id:32-2, left:'56%', top:'5%'},
+  {id:33-2, left:'56%', top:'0.25%'},
+  {id:34-2, left:'51%', top:'0.25%'},
+  {id:35-2, left:'39%', top:'0.25%'},
+  {id:36-2, left:'39%', top:'5%'},
+  {id:37-2, left:'39%', top:'10%'},
+  {id:38-2, left:'39%', top:'14.5%'},
+  {id:39-2, left:'39%', top:'19%'},
+  {id:40-2, left:'39%', top:'24%'},
+  {id:41-2, left:'39%', top:'28.5%'},
+  {id:42-2, left:'40%', top:'33%'},
+  {id:43-2, left:'33%', top:'40.3%'},
+  {id:44-2, left:'28.5%', top:'39%'},
+  {id:45-2, left:'24%', top:'39%'},
+  {id:46-2, left:'19%', top:'39%'},
+  {id:47-2, left:'14.5%', top:'39%'},
+  {id:48-2, left:'10%', top:'39%'},
+  {id:49-2, left:'5%', top:'39%'},
+  {id:50-2, left:'0.25%', top:'39%'},
+  {id:51-2, left:'0.25%', top:'51%'},
+  {id:52-2, left:'0.25%', top:'57%'},
+  {id:53-2, left:'5%', top:'57%'},
+  {id:54-2, left:'10%', top:'57%'},
+  {id:55-2, left:'14.5%', top:'57%'},
+  {id:56-2, left:'19%', top:'57%'},
+  {id:57-2, left:'24%', top:'57%'},
+  {id:58-2, left:'28.5%', top:'57%'},
+  {id:59-2, left:'33%', top:'55.5%'},
+  {id:60-2, left:'40%', top:'63%'},
+  {id:61-2, left:'39%', top:'68%'},
+  {id:62-2, left:'39%', top:'72.5%'},
+  {id:63-2, left:'39%', top:'77%'},
+  {id:64-2, left:'39%', top:'82%'},
+  {id:65-2, left:'39%', top:'86.6%'},
+  {id:66-2, left:'39%', top:'91%'},
+  {id:67-2, left:'39%', top:'96%'},
+  {id:68-2, left:'51%', top:'96%'}
 ]
 
 function Partida() {
   
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  //const [numeroObtenidoDado, setnumeroObtenidoDado] = useState(0);
 
   useEffect(() => {
     let intervalId = null;
@@ -108,6 +178,9 @@ function Partida() {
           return newIndex;
         });
       }, 190);
+    }
+    else{
+      //setnumeroObtenidoDado(currentPhotoIndex+1);
     }
     return () => clearInterval(intervalId);
   }, [isPlaying]);
@@ -128,6 +201,11 @@ function Partida() {
   const onClick = () => {
     handleStart();
   };
+
+  // const casilla = casillas.find(c => c.id === numeroObtenidoDado);
+  // const ficha1 = document.querySelector('.ficha1');
+  // ficha1.style.left = casilla.left;
+  // ficha1.style.top = casilla.top;
 
   return (  
     
