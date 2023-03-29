@@ -46,13 +46,13 @@ const casillas = [
   {id:23, left:'72.5%', top:'34%'},
   {id:24, left:'67.5%', top:'34%'},
   {id:25, left:'63%', top:'36%'},
-  {id:26, left:'62%', top:'0%'},
-  {id:27, left:'62%', top:'33%'},
-  {id:28, left:'62%', top:'28.5%'},
-  {id:29, left:'62%', top:'24%'},
-  {id:30, left:'62%', top:'19%'},
-  {id:31, left:'62%', top:'14.5%'},
-  {id:32, left:'62%', top:'10%'},
+  {id:26, left:'61%', top:'33%'},
+  {id:27, left:'62%', top:'28.5%'},
+  {id:28, left:'62%', top:'24%'},
+  {id:29, left:'62%', top:'19%'},
+  {id:30, left:'62%', top:'14.5%'},
+  {id:31, left:'62%', top:'10%'},
+  {id:32, left:'62%', top:'5%'},
   {id:33, left:'62%', top:'0.25%'},
   {id:34, left:'45%', top:'0.25%'},
   {id:35, left:'34%', top:'0.25%'},
@@ -88,9 +88,7 @@ const casillas = [
   {id:65, left:'34%', top:'86.6%'},
   {id:66, left:'34%', top:'91%'},
   {id:67, left:'34%', top:'96%'},
-  {id:68, left:'0%', top:'0%'},
-
-
+  {id:68, left:'45%', top:'96%'},
 ]
 
 function Partida() {
