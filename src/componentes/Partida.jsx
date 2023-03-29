@@ -20,6 +20,78 @@ const photos = [
   { id:6, name: "Foto 6", url: seis },
 ];
 
+const casillas = [
+  {id:1, left:'62%', top:'96%'},
+  {id:2, left:'62%', top:'91%'},
+  {id:3, left:'62%', top:'86.6%'},
+  {id:4, left:'62%', top:'82%'},
+  {id:5, left:'62%', top:'77%'},
+  {id:6, left:'62%', top:'72.5%'},
+  {id:7, left:'62%', top:'68%'},
+  {id:8, left:'0%', top:'63%'},
+  {id:9, left:'63%', top:'60%'},
+  {id:10, left:'67.5%', top:'62%'},
+  {id:11, left:'72.5%', top:'62%'},
+  {id:12, left:'77%', top:'62%'},
+  {id:13, left:'81.5%', top:'62%'},
+  {id:14, left:'86.5%', top:'62%'},
+  {id:15, left:'91%', top:'62%'},
+  {id:16, left:'95.7%', top:'62%'},
+  {id:17, left:'95.7%', top:'28.5%'},
+  {id:18, left:'95.7%', top:'34%'},
+  {id:19, left:'91%', top:'34%'},
+  {id:20, left:'86.5%', top:'34%'},
+  {id:21, left:'81.5%', top:'34%'},
+  {id:22, left:'77%', top:'34%'},
+  {id:23, left:'72.5%', top:'34%'},
+  {id:24, left:'67.5%', top:'34%'},
+  {id:25, left:'63%', top:'36%'},
+  {id:26, left:'62%', top:'0%'},
+  {id:27, left:'62%', top:'33%'},
+  {id:28, left:'62%', top:'28.5%'},
+  {id:29, left:'62%', top:'24%'},
+  {id:30, left:'62%', top:'19%'},
+  {id:31, left:'62%', top:'14.5%'},
+  {id:32, left:'62%', top:'10%'},
+  {id:33, left:'62%', top:'0.25%'},
+  {id:34, left:'45%', top:'0.25%'},
+  {id:35, left:'34%', top:'0.25%'},
+  {id:36, left:'34%', top:'5%'},
+  {id:37, left:'34%', top:'10%'},
+  {id:38, left:'34%', top:'14.5%'},
+  {id:39, left:'34%', top:'19%'},
+  {id:40, left:'34%', top:'24%'},
+  {id:41, left:'34%', top:'28.5%'},
+  {id:42, left:'35%', top:'33%'},
+  {id:43, left:'33%', top:'36%'},
+  {id:44, left:'28.5%', top:'34%'},
+  {id:45, left:'24%', top:'34%'},
+  {id:46, left:'19%', top:'34%'},
+  {id:47, left:'14.5%', top:'34%'},
+  {id:48, left:'10%', top:'34%'},
+  {id:49, left:'5%', top:'34%'},
+  {id:50, left:'0.25%', top:'34%'},
+  {id:51, left:'0.25%', top:'45%'},
+  {id:52, left:'0.25%', top:'62%'},
+  {id:53, left:'5%', top:'62%'},
+  {id:54, left:'10%', top:'62%'},
+  {id:55, left:'14.5%', top:'62%'},
+  {id:56, left:'19%', top:'62%'},
+  {id:57, left:'24%', top:'62%'},
+  {id:58, left:'28.5%', top:'62%'},
+  {id:59, left:'33%', top:'60%'},
+  {id:60, left:'35%', top:'63%'},
+  {id:61, left:'34%', top:'68%'},
+  {id:62, left:'34%', top:'72.5%'},
+  {id:63, left:'34%', top:'77%'},
+  {id:64, left:'34%', top:'82%'},
+  {id:65, left:'34%', top:'86.6%'},
+  {id:66, left:'34%', top:'91%'},
+  {id:67, left:'34%', top:'96%'},
+  {id:68, left:'0%', top:'0%'},
+
+
+]
 
 function Partida() {
   
@@ -63,6 +135,10 @@ function Partida() {
     
     <div class="all">
       <div class="lamesa">
+      <div class="ficha1"></div>
+      <div class="ficha2"></div>
+      <div class="ficha3"></div>
+      <div class="ficha4"></div>
         <div class="azul"></div>
         <div class="rojo"></div>
         <div class="amarillo"></div>
@@ -79,12 +155,7 @@ function Partida() {
         <div class="rojod"></div>
         <div class="amarillod"></div>
         <div class="verded"></div>
-        <div class="azule">
-          <div class="ficha1"></div>
-          <div class="ficha2"></div>
-          <div class="ficha3"></div>
-          <div class="ficha4"></div>
-        </div>
+
         <div class="rojoe">
           <div class="fichab1"></div>
           <div class="fichab2"></div>
@@ -247,13 +318,12 @@ function Partida() {
         Tirar dado
       </button>
       {/* <p>Numero obtenido: {currentPhotoIndex+1}</p> */}
-      <button class="fichaRoja"></button>
+      {/* <button class="fichaRoja"></button> */}
       {/* <button class="fichaAzul"></button>
       <button class="fichaVerde"></button>
       <button class="fichaAmarilla"></button> */}
       
     </div>
   );
-
 }
 export default Partida;

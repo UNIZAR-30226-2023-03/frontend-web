@@ -272,11 +272,12 @@
  .ficha1{
      position:absolute ;
      border:1px solid #000;
-     background:blue;
-     top:25px;
-     left:25px;
-     width:48px;
-     height:48px;
+     background:black;
+     top:0.25%;
+     left:62%;
+     width:35px;
+     height:35px;
+     z-index:9999;
      border-radius:50%;
      border: none;
      outline: none;
@@ -287,11 +288,12 @@
  .ficha2{
      position:absolute ;
      border:1px solid #000;
-     background:blue;
-     top:85px;
-     left:25px;
-     width:48px;
-     height:48px;
+     background:yellowgreen;
+     top:60%;
+     left:33%;
+     width:35px;
+     height:35px;;
+     z-index:9999;
      border-radius:50%;
      border: none;
      outline: none;
