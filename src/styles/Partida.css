@@ -17,7 +17,10 @@
     left:1550px;
     display:inline-block ;
   }
-
+  .icono{
+    position: fixed;
+    z-index:9999;
+  }
   
   .ficha1:hover,.ficha2:hover,.ficha3:hover,.ficha4:hover,.fichab1:hover,.fichab2:hover,.fichab3:hover,.fichab4:hover,.fichac1:hover,.fichac2:hover,.fichac3:hover,.fichac4:hover,.fichad1:hover,.fichad2:hover,.fichad3:hover,.fichad4:hover {
     transform: scale(1.1);
@@ -30,7 +33,6 @@
 
 
   .all{
-  
  }
  .lamesa{
     width:900px;
@@ -41,7 +43,14 @@
     background:#fff;
     border-radius:20px;
  }
- 
+ .icono{
+    position:absolute ;
+    left:380px;
+    top:375px;
+    height: 150px;
+    width: 150px;
+    content: url("..//imagenes/iconos/lamesa.png");
+ }
  
  /*Casillas de casa*/
  .rojo{
@@ -172,7 +181,7 @@
    height: 4px;
    position: absolute;
    border: 114px solid transparent;
-   left: 335px;
+   left: 336px;
    top: 336px;
    border-right: 114px solid red;
    transform: rotate(-90deg);
@@ -184,7 +193,7 @@
    position: absolute;
    border: 114px solid transparent;
    left: 336px;
-   top: 336px;
+   top: 335px;
    border-right: 114px solid green;
    transform: rotate(180deg);
  }
@@ -195,7 +204,7 @@
    position: absolute;
    border: 114px solid transparent;
    left: 137px;
-   top: 336px;
+   top: 335px;
    border-right: 114px solid blue;
  }
  
@@ -204,7 +213,7 @@
    height: 4.5px;
    position: absolute;
    border: 114px solid transparent;
-   left: 337px;
+   left: 335px;
    top: 333px;
    border-right: 114px solid yellow;
    transform: rotate(90deg);
@@ -519,6 +528,7 @@
      width:228px;
      left:336px;
      z-index:99;
+     height: 3px;
  }
  
  .filab{
@@ -566,10 +576,10 @@
  /*Cuadrado del medio, lado verde*/
  .f14{
      position:absolute ;
-     left:563px;
-     height:225px;
-     width:1px;
-     top:337px;
+     left:564px;
+     height:230px;
+     width:3px;
+     top:336px;
      z-index:99;
  }
  
@@ -619,6 +629,7 @@
      top:563px;
      width:228px;
      left:336px;
+     height: 3px;
      z-index:99;
  }
  .f25{
@@ -673,7 +684,7 @@
      position:absolute ;
      left:336px;
      height:225px;
-     width:2px;
+     width:3px;
      top:338px;
      z-index:99;
  }
@@ -713,6 +724,38 @@
     z-index:150;
     width: 337px;
 }
+.arrpasazul{
+    position:absolute ;
+    top:400px;
+    left:564px;
+    transform:rotate(180deg);
+    z-index:150;
+    width: 337px;
+}
+.debpasazul{
+    position:absolute ;
+    top:498px;
+    left:564px;
+    transform:rotate(180deg);
+    z-index:150;
+    width: 337px;
+}
+.debpasverde{
+    position:absolute ;
+    top:498px;
+    left:0px;
+    transform:rotate(180deg);
+    z-index:150;
+    width: 337px;
+}
+.arrpasverde{
+    position:absolute ;
+    top:400px;
+    left:0px;
+    transform:rotate(180deg);
+    z-index:150;
+    width: 337px;
+}
 .derpasrojo{
     position:absolute ;
     top:168px;
@@ -721,7 +764,7 @@
     z-index:150;
     width: 337px;
 }
- /*Diagonal casa azul*/
+ /*Diagonal casa rojo*/
  .incli1{
      position:absolute ;
      top:317px;
@@ -730,7 +773,7 @@
      z-index:99;
  }
  
- /*Diagonal casa rojo*/
+ /*Diagonal casa verde*/
  .incli2{
      position:absolute ;
      top:582px;
@@ -746,7 +789,7 @@
      transform:rotate(45deg);
      z-index:99;
  }
- /*Diagonal casa verde*/
+ /*Diagonal casa azul*/
  .incli4{
      position:absolute ;
      top:317px;

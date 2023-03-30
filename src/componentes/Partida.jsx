@@ -293,16 +293,17 @@ function Partida() {
     handleStart();
   };
 
-
+//"..//imagenes/iconos/lamesa.png"
 
   return (  
     
     <div class="all">
       <div class="lamesa">
-      <div class="ficha1"></div>
-      <div class="ficha2"></div>
-      <div class="ficha3"></div>
-      <div class="ficha4"></div>
+        <div class="icono"></div>
+        <div class="ficha1"></div>
+        <div class="ficha2"></div>
+        <div class="ficha3"></div>
+        <div class="ficha4"></div>
         <div class="azul"></div>
         <div class="rojo"></div>
         <div class="amarillo"></div>
@@ -376,7 +377,11 @@ function Partida() {
           <div class="filae derpasamarillo"></div>  
           <div class="filae izqpasamarillo"></div>
           <div class="filae derpasrojo"></div>  
-          <div class="filae izqpasrojo"></div>      
+          <div class="filae izqpasrojo"></div>
+          <div class="filae debpasazul"></div>  
+          <div class="filae arrpasazul"></div>     
+          <div class="filae debpasverde"></div>  
+          <div class="filae arrpasverde"></div>    
           <i class="star s1 fa fa-star"></i>
           <i class="star s2 fa fa-star"></i>   
           <div class="s3">
