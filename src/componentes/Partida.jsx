@@ -21,143 +21,217 @@ const photos = [
 ];
 
 const casillas = [
-  {id:1, left:'62%', top:'96%'},
-  {id:2, left:'62%', top:'91%'},
-  {id:3, left:'62%', top:'86.6%'},
-  {id:4, left:'62%', top:'82%'},
-  {id:5, left:'62%', top:'77%'},
-  {id:6, left:'62%', top:'72.5%'},
-  {id:7, left:'62%', top:'63%'},
-  {id:8, left:'60.7%', top:'63%'},
-  {id:9, left:'63%', top:'60%'},
-  {id:10, left:'67.5%', top:'62%'},
-  {id:11, left:'72.5%', top:'62%'},
-  {id:12, left:'77%', top:'62%'},
-  {id:13, left:'81.5%', top:'62%'},
-  {id:14, left:'86.5%', top:'62%'},
-  {id:15, left:'91%', top:'62%'},
-  {id:16, left:'95.7%', top:'62%'},
-  {id:17, left:'95.7%', top:'45%'},
-  {id:18, left:'95.7%', top:'34%'},
-  {id:19, left:'91%', top:'34%'},
-  {id:20, left:'86.5%', top:'34%'},
-  {id:21, left:'81.5%', top:'34%'},
-  {id:22, left:'77%', top:'34%'},
-  {id:23, left:'72.5%', top:'34%'},
-  {id:24, left:'67.5%', top:'34%'},
-  {id:25, left:'63%', top:'36%'},
-  {id:26, left:'61%', top:'33%'},
-  {id:27, left:'62%', top:'28.5%'},
-  {id:28, left:'62%', top:'24%'},
-  {id:29, left:'62%', top:'19%'},
-  {id:30, left:'62%', top:'14.5%'},
-  {id:31, left:'62%', top:'10%'},
-  {id:32, left:'62%', top:'5%'},
-  {id:33, left:'62%', top:'0.25%'},
-  {id:34, left:'45%', top:'0.25%'},
-  {id:35, left:'34%', top:'0.25%'},
-  {id:36, left:'34%', top:'5%'},
-  {id:37, left:'34%', top:'10%'},
-  {id:38, left:'34%', top:'14.5%'},
-  {id:39, left:'34%', top:'19%'},
-  {id:40, left:'34%', top:'24%'},
-  {id:41, left:'34%', top:'28.5%'},
-  {id:42, left:'35%', top:'33%'},
-  {id:43, left:'33%', top:'36%'},
-  {id:44, left:'28.5%', top:'34%'},
-  {id:45, left:'24%', top:'34%'},
-  {id:46, left:'19%', top:'34%'},
-  {id:47, left:'14.5%', top:'34%'},
-  {id:48, left:'10%', top:'34%'},
-  {id:49, left:'5%', top:'34%'},
-  {id:50, left:'0.25%', top:'34%'},
-  {id:51, left:'0.25%', top:'45%'},
-  {id:52, left:'0.25%', top:'62%'},
-  {id:53, left:'5%', top:'62%'},
-  {id:54, left:'10%', top:'62%'},
-  {id:55, left:'14.5%', top:'62%'},
-  {id:56, left:'19%', top:'62%'},
-  {id:57, left:'24%', top:'62%'},
-  {id:58, left:'28.5%', top:'62%'},
-  {id:59, left:'33%', top:'60%'},
-  {id:60, left:'35%', top:'63%'},
-  {id:61, left:'34%', top:'68%'},
-  {id:62, left:'34%', top:'72.5%'},
-  {id:63, left:'34%', top:'77%'},
-  {id:64, left:'34%', top:'82%'},
-  {id:65, left:'34%', top:'86.6%'},
-  {id:66, left:'34%', top:'91%'},
-  {id:67, left:'34%', top:'96%'},
-  {id:68, left:'45%', top:'96%'},
+  {id:1, left:'62%', top:'96%',numfichas:0},
+  {id:2, left:'62%', top:'91%',numfichas:0},
+  {id:3, left:'62%', top:'86.6%',numfichas:0},
+  {id:4, left:'62%', top:'82%',numfichas:0},
+  {id:5, left:'62%', top:'77%',numfichas:0},
+  {id:6, left:'62%', top:'72.5%',numfichas:0},
+  {id:7, left:'62%', top:'63%',numfichas:0},
+  {id:8, left:'60.7%', top:'63%',numfichas:0},
+  {id:9, left:'63%', top:'60%',numfichas:0},
+  {id:10, left:'67.5%', top:'62%',numfichas:0},
+  {id:11, left:'72.5%', top:'62%',numfichas:0},
+  {id:12, left:'77%', top:'62%',numfichas:0},
+  {id:13, left:'81.5%', top:'62%',numfichas:0},
+  {id:14, left:'86.5%', top:'62%',numfichas:0},
+  {id:15, left:'91%', top:'62%',numfichas:0},
+  {id:16, left:'95.7%', top:'62%',numfichas:0},
+  {id:17, left:'95.7%', top:'45%',numfichas:0},
+  {id:18, left:'95.7%', top:'34%',numfichas:0},
+  {id:19, left:'91%', top:'34%',numfichas:0},
+  {id:20, left:'86.5%', top:'34%',numfichas:0},
+  {id:21, left:'81.5%', top:'34%',numfichas:0},
+  {id:22, left:'77%', top:'34%',numfichas:0},
+  {id:23, left:'72.5%', top:'34%',numfichas:0},
+  {id:24, left:'67.5%', top:'34%',numfichas:0},
+  {id:25, left:'63%', top:'36%',numfichas:0},
+  {id:26, left:'61%', top:'33%',numfichas:0},
+  {id:27, left:'62%', top:'28.5%',numfichas:0},
+  {id:28, left:'62%', top:'24%',numfichas:0},
+  {id:29, left:'62%', top:'19%',numfichas:0},
+  {id:30, left:'62%', top:'14.5%',numfichas:0},
+  {id:31, left:'62%', top:'10%',numfichas:0},
+  {id:32, left:'62%', top:'5%',numfichas:0},
+  {id:33, left:'62%', top:'0.25%',numfichas:0},
+  {id:34, left:'45%', top:'0.25%',numfichas:0},
+  {id:35, left:'34%', top:'0.25%',numfichas:0},
+  {id:36, left:'34%', top:'5%',numfichas:0},
+  {id:37, left:'34%', top:'10%',numfichas:0},
+  {id:38, left:'34%', top:'14.5%',numfichas:0},
+  {id:39, left:'34%', top:'19%',numfichas:0},
+  {id:40, left:'34%', top:'24%',numfichas:0},
+  {id:41, left:'34%', top:'28.5%',numfichas:0},
+  {id:42, left:'35%', top:'33%',numfichas:0},
+  {id:43, left:'33%', top:'36%',numfichas:0},
+  {id:44, left:'28.5%', top:'34%',numfichas:0},
+  {id:45, left:'24%', top:'34%',numfichas:0},
+  {id:46, left:'19%', top:'34%',numfichas:0},
+  {id:47, left:'14.5%', top:'34%',numfichas:0},
+  {id:48, left:'10%', top:'34%',numfichas:0},
+  {id:49, left:'5%', top:'34%',numfichas:0},
+  {id:50, left:'0.25%', top:'34%',numfichas:0},
+  {id:51, left:'0.25%', top:'45%',numfichas:0},
+  {id:52, left:'0.25%', top:'62%',numfichas:0},
+  {id:53, left:'5%', top:'62%',numfichas:0},
+  {id:54, left:'10%', top:'62%',numfichas:0},
+  {id:55, left:'14.5%', top:'62%',numfichas:0},
+  {id:56, left:'19%', top:'62%',numfichas:0},
+  {id:57, left:'24%', top:'62%',numfichas:0},
+  {id:58, left:'28.5%', top:'62%',numfichas:0},
+  {id:59, left:'33%', top:'60%',numfichas:0},
+  {id:60, left:'35%', top:'63%',numfichas:0},
+  {id:61, left:'34%', top:'68%',numfichas:0},
+  {id:62, left:'34%', top:'72.5%',numfichas:0},
+  {id:63, left:'34%', top:'77%',numfichas:0},
+  {id:64, left:'34%', top:'82%',numfichas:0},
+  {id:65, left:'34%', top:'86.6%',numfichas:0},
+  {id:66, left:'34%', top:'91%',numfichas:0},
+  {id:67, left:'34%', top:'96%',numfichas:0},
+  {id:68, left:'45%', top:'96%',numfichas:0},
 
-  {id:1-2, left:'56%', top:'96%'},
-  {id:2-2, left:'56%', top:'91%'},
-  {id:3-2, left:'56%', top:'86.6%'},
-  {id:4-2, left:'56%', top:'82%'},
-  {id:5-2, left:'56%', top:'77%'},
-  {id:6-2, left:'56%', top:'72.5%'},
-  {id:7-2, left:'56%', top:'68%'},
-  {id:8-2, left:'56%', top:'63%'},
-  {id:9-2, left:'63%', top:'55.7%'},
-  {id:10-2, left:'67.5%', top:'57%'},
-  {id:11-2, left:'72.5%', top:'57%'},
-  {id:12-2, left:'77%', top:'57%'},
-  {id:13-2, left:'81.5%', top:'57%'},
-  {id:14-2, left:'86.5%', top:'57%'},
-  {id:15-2, left:'91%', top:'57%'},
-  {id:16-2, left:'95.7%', top:'57%'},
-  {id:17-2, left:'95.7%', top:'51%'},
-  {id:18-2, left:'95.7%', top:'39%'},
-  {id:19-2, left:'91%', top:'39%'},
-  {id:20-2, left:'86.5%', top:'39%'},
-  {id:21-2, left:'81.5%', top:'39%'},
-  {id:22-2, left:'77%', top:'39%'},
-  {id:23-2, left:'72.5%', top:'39%'},
-  {id:24-2, left:'67.5%', top:'39%'},
-  {id:25-2, left:'63%', top:'40.5%'},
-  {id:26-2, left:'56%', top:'33%'},
-  {id:27-2, left:'56%', top:'28.5%'},
-  {id:28-2, left:'56%', top:'24%'},
-  {id:29-2, left:'56%', top:'19%'},
-  {id:30-2, left:'56%', top:'14.5%'},
-  {id:31-2, left:'56%', top:'10%'},
-  {id:32-2, left:'56%', top:'5%'},
-  {id:33-2, left:'56%', top:'0.25%'},
-  {id:34-2, left:'51%', top:'0.25%'},
-  {id:35-2, left:'39%', top:'0.25%'},
-  {id:36-2, left:'39%', top:'5%'},
-  {id:37-2, left:'39%', top:'10%'},
-  {id:38-2, left:'39%', top:'14.5%'},
-  {id:39-2, left:'39%', top:'19%'},
-  {id:40-2, left:'39%', top:'24%'},
-  {id:41-2, left:'39%', top:'28.5%'},
-  {id:42-2, left:'40%', top:'33%'},
-  {id:43-2, left:'33%', top:'40.3%'},
-  {id:44-2, left:'28.5%', top:'39%'},
-  {id:45-2, left:'24%', top:'39%'},
-  {id:46-2, left:'19%', top:'39%'},
-  {id:47-2, left:'14.5%', top:'39%'},
-  {id:48-2, left:'10%', top:'39%'},
-  {id:49-2, left:'5%', top:'39%'},
-  {id:50-2, left:'0.25%', top:'39%'},
-  {id:51-2, left:'0.25%', top:'51%'},
-  {id:52-2, left:'0.25%', top:'57%'},
-  {id:53-2, left:'5%', top:'57%'},
-  {id:54-2, left:'10%', top:'57%'},
-  {id:55-2, left:'14.5%', top:'57%'},
-  {id:56-2, left:'19%', top:'57%'},
-  {id:57-2, left:'24%', top:'57%'},
-  {id:58-2, left:'28.5%', top:'57%'},
-  {id:59-2, left:'33%', top:'55.5%'},
-  {id:60-2, left:'40%', top:'63%'},
-  {id:61-2, left:'39%', top:'68%'},
-  {id:62-2, left:'39%', top:'72.5%'},
-  {id:63-2, left:'39%', top:'77%'},
-  {id:64-2, left:'39%', top:'82%'},
-  {id:65-2, left:'39%', top:'86.6%'},
-  {id:66-2, left:'39%', top:'91%'},
-  {id:67-2, left:'39%', top:'96%'},
-  {id:68-2, left:'51%', top:'96%'}
+
+  //amarillo
+  {id:69, left:'51%', top:'91%',numfichas:0},
+  {id:70, left:'51%', top:'86.5%',numfichas:0},
+  {id:71, left:'51%', top:'82%',numfichas:0},
+  {id:72, left:'51%', top:'77%',numfichas:0},
+  {id:73, left:'51%', top:'72.5%',numfichas:0},
+  {id:74, left:'51%', top:'68%',numfichas:0},
+  {id:75, left:'51%', top:'63%',numfichas:0},
+  //amarillo IZQ
+  {id:'69-2', left:'45%', top:'91%',numfichas:0},
+  {id:'70-2', left:'45%', top:'86.5%',numfichas:0},
+  {id:'71-2', left:'45%', top:'82%',numfichas:0},
+  {id:'72-2', left:'45%', top:'77%',numfichas:0},
+  {id:'73-2', left:'45%', top:'72.5%',numfichas:0},
+  {id:'74-2', left:'45%', top:'68%',numfichas:0},
+  {id:'75-2', left:'45%', top:'63%',numfichas:0},
+
+  //azul
+  {id:76, left:'45%', top:'45%',numfichas:0},
+  {id:77, left:'86.5%', top:'45%',numfichas:0},
+  {id:78, left:'81.5%', top:'45%',numfichas:0},
+  {id:79, left:'77%', top:'45%',numfichas:0},
+  {id:80, left:'72.5%', top:'45%',numfichas:0},
+  {id:81, left:'67.5%', top:'45%',numfichas:0},
+  {id:82, left:'63%', top:'45%',numfichas:0},
+
+  //azul IZQ
+  {id:'76-2', left:'91%', top:'51%',numfichas:0},
+  {id:'77-2', left:'86.5%', top:'51%',numfichas:0},
+  {id:'78-2', left:'81.5%', top:'51%',numfichas:0},
+  {id:'79-2', left:'77%', top:'51%',numfichas:0},
+  {id:'80-2', left:'72.5%', top:'51%',numfichas:0},
+  {id:'81-2', left:'67.5%', top:'51%',numfichas:0},
+  {id:'82-2', left:'63%', top:'51%',numfichas:0},
+
+  //rojo
+  {id:83, left:'51%', top:'5%',numfichas:0},
+  {id:84, left:'51%', top:'10%',numfichas:0},
+  {id:85, left:'51%', top:'14.5%',numfichas:0},
+  {id:86, left:'51%', top:'19%',numfichas:0},
+  {id:87, left:'51%', top:'24%',numfichas:0},
+  {id:88, left:'51%', top:'28.5%',numfichas:0},
+  {id:89, left:'51%', top:'33%',numfichas:0},
+  
+  //rojo iZQ
+  {id:'83-2', left:'45%', top:'5%',numfichas:0},
+  {id:'84-2', left:'45%', top:'10%',numfichas:0},
+  {id:'85-2', left:'45%', top:'14.5%',numfichas:0},
+  {id:'86-2', left:'45%', top:'19%',numfichas:0},
+  {id:'87-2', left:'45%', top:'24%',numfichas:0},
+  {id:'88-2', left:'45%', top:'28.5%',numfichas:0},
+  {id:'89-2', left:'45%', top:'33%',numfichas:0},
+
+  //verde
+  {id:90, left:'5%', top:'45%',numfichas:0},
+  {id:91, left:'10%', top:'45%',numfichas:0},
+  {id:92, left:'14.5%', top:'45%',numfichas:0},
+  {id:93, left:'19%', top:'45%',numfichas:0},
+  {id:94, left:'24%', top:'45%',numfichas:0},
+  {id:95, left:'28.5%', top:'45%',numfichas:0},
+  {id:96, left:'33%', top:'45%',numfichas:0},
+  
+  //verde iZQ
+  {id:'90-2', left:'5%', top:'51%',numfichas:0},
+  {id:'91-2', left:'10%', top:'51%',numfichas:0},
+  {id:'92-2', left:'14.5%', top:'51%',numfichas:0},
+  {id:'93-2', left:'19%', top:'51%',numfichas:0},
+  {id:'94-2', left:'24%', top:'51%',numfichas:0},
+  {id:'95-2', left:'28.5%', top:'51%',numfichas:0},
+  {id:'96-2', left:'33%', top:'51%',numfichas:0},
+
+
+
+  {id:'1-2', left:'56%', top:'96%', numfichas:0},
+  {id:'2-2', left:'56%', top:'91%', numfichas:0},
+  {id:'3-2', left:'56%', top:'86.6%', numfichas:0},
+  {id:'4-2', left:'56%', top:'82%', numfichas:0},
+  {id:'5-2', left:'56%', top:'77%', numfichas:0},
+  {id:'6-2', left:'56%', top:'72.5%', numfichas:0},
+  {id:'7-2', left:'56%', top:'68%', numfichas:0},
+  {id:'8-2', left:'56%', top:'63%', numfichas:0},
+  {id:'9-2', left:'63%', top:'55.7%', numfichas:0},
+  {id:'10-2', left:'67.5%', top:'57%', numfichas:0},
+  {id:'11-2', left:'72.5%', top:'57%', numfichas:0},
+  {id:'12-2', left:'77%', top:'57%', numfichas:0},
+  {id:'13-2', left:'81.5%', top:'57%', numfichas:0},
+  {id:'14-2', left:'86.5%', top:'57%', numfichas:0},
+  {id:'15-2', left:'91%', top:'57%', numfichas:0},
+  {id:'16-2', left:'95.7%', top:'57%', numfichas:0},
+  {id:'17-2', left:'95.7%', top:'51%', numfichas:0},
+  {id:'18-2', left:'95.7%', top:'39%', numfichas:0},
+  {id:'19-2', left:'91%', top:'39%', numfichas:0},
+  {id:'20-2', left:'86.5%', top:'39%', numfichas:0},
+  {id:'21-2', left:'81.5%', top:'39%', numfichas:0},
+  {id:'22-2', left:'77%', top:'39%', numfichas:0},
+  {id:'23-2', left:'72.5%', top:'39%', numfichas:0},
+  {id:'24-2', left:'67.5%', top:'39%', numfichas:0},
+  {id:'25-2', left:'63%', top:'40.5%', numfichas:0},
+  {id:'26-2', left:'56%', top:'33%', numfichas:0},
+  {id:'27-2', left:'56%', top:'28.5%', numfichas:0},
+  {id:'28-2', left:'56%', top:'24%', numfichas:0},
+  {id:'29-2', left:'56%', top:'19%', numfichas:0},
+  {id:'30-2', left:'56%', top:'14.5%', numfichas:0},
+  {id:'31-2', left:'56%', top:'10%', numfichas:0},
+  {id:'32-2', left:'56%', top:'5%', numfichas:0},
+  {id:'33-2', left:'56%', top:'0.25%', numfichas:0},
+  {id:'34-2', left:'51%', top:'0.25%', numfichas:0},
+  {id:'35-2', left:'39%', top:'0.25%', numfichas:0},
+  {id:'36-2', left:'39%', top:'5%', numfichas:0},
+  {id:'37-2', left:'39%', top:'10%', numfichas:0},
+  {id:'38-2', left:'39%', top:'14.5%', numfichas:0},
+  {id:'39-2', left:'39%', top:'19%', numfichas:0},
+  {id:'40-2', left:'39%', top:'24%', numfichas:0},
+  {id:'41-2', left:'39%', top:'28.5%', numfichas:0},
+  {id:'42-2', left:'40%', top:'33%', numfichas:0},
+  {id:'43-2', left:'33%', top:'40.3%', numfichas:0},
+  {id:'44-2', left:'28.5%', top:'39%', numfichas:0},
+  {id:'45-2', left:'24%', top:'39%', numfichas:0},
+  {id:'46-2', left:'19%', top:'39%', numfichas:0},
+  {id:'47-2', left:'14.5%', top:'39%', numfichas:0},
+  {id:'48-2', left:'10%', top:'39%', numfichas:0},
+  {id:'49-2', left:'5%', top:'39%', numfichas:0},
+  {id:'50-2', left:'0.25%', top:'39%', numfichas:0},
+  {id:'51-2', left:'0.25%', top:'51%', numfichas:0},
+  {id:'52-2', left:'0.25%', top:'57%', numfichas:0},
+  {id:'53-2', left:'5%', top:'57%', numfichas:0},
+  {id:'54-2', left:'10%', top:'57%', numfichas:0},
+  {id:'55-2', left:'14.5%', top:'57%', numfichas:0},
+  {id:'56-2', left:'19%', top:'57%', numfichas:0},
+  {id:'57-2', left:'24%', top:'57%', numfichas:0},
+  {id:'58-2', left:'28.5%', top:'57%', numfichas:0},
+  {id:'59-2', left:'33%', top:'55.5%', numfichas:0},
+  {id:'60-2', left:'40%', top:'63%', numfichas:0},
+  {id:'61-2', left:'39%', top:'68%', numfichas:0},
+  {id:'62-2', left:'39%', top:'72.5%', numfichas:0},
+  {id:'63-2', left:'39%', top:'77%', numfichas:0},
+  {id:'64-2', left:'39%', top:'82%', numfichas:0},
+  {id:'65-2', left:'39%', top:'86.6%', numfichas:0},
+  {id:'66-2', left:'39%', top:'91%', numfichas:0},
+  {id:'67-2', left:'39%', top:'96%', numfichas:0},
+  {id:'68-2', left:'51%', top:'96%', numfichas:0}
 ]
 
 function Partida() {
@@ -180,10 +254,27 @@ function Partida() {
       }, 190);
     }
     else{
-      //setnumeroObtenidoDado(currentPhotoIndex+1);
+      
+      const casilla = casillas.find(c => c.id === currentPhotoIndex+1);
+      const ficha1 = document.querySelector('.ficha1');
+      if (casilla.numfichas==0){
+        console.log(casilla.id);
+        casilla.numfichas = 1; 
+        ficha1.style.left = casilla.left;
+        ficha1.style.top = casilla.top;
+      }
+      else{
+        const nuevaCasilla = casillas.find(c => c.id === casilla.id+'-2');
+        console.log(casilla.id);
+        console.log(nuevaCasilla.left);
+        ficha1.style.left = nuevaCasilla.left;
+        ficha1.style.top = nuevaCasilla.top;
+        
+      }
+     
     }
     return () => clearInterval(intervalId);
-  }, [isPlaying]);
+  }, [isPlaying, currentPhotoIndex]);
 
 
   const handleStart = () => {
@@ -202,10 +293,7 @@ function Partida() {
     handleStart();
   };
 
-  // const casilla = casillas.find(c => c.id === numeroObtenidoDado);
-  // const ficha1 = document.querySelector('.ficha1');
-  // ficha1.style.left = casilla.left;
-  // ficha1.style.top = casilla.top;
+
 
   return (  
     
@@ -284,7 +372,11 @@ function Partida() {
           <div class="filae incli1"></div>
           <div class="filae incli2"></div>
           <div class="filae incli3"></div>
-          <div class="filae incli4"></div>        
+          <div class="filae incli4"></div>   
+          <div class="filae derpasamarillo"></div>  
+          <div class="filae izqpasamarillo"></div>
+          <div class="filae derpasrojo"></div>  
+          <div class="filae izqpasrojo"></div>      
           <i class="star s1 fa fa-star"></i>
           <i class="star s2 fa fa-star"></i>   
           <div class="s3">

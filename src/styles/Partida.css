@@ -17,66 +17,7 @@
     left:1550px;
     display:inline-block ;
   }
-  .fichaRoja {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    bottom: 348px;
-    left: 770px;
-    z-index: 9998;
-    background-color: red;
-    border: none;
-    outline: none;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    transition: transform 0.1s ease-out;
-  }
-  .fichaAzul {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    bottom: 330px;
-    left: 832px;
-    z-index: 9998;
-    background-color: blue;
-    border: none;
-    outline: none;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    transition: transform 0.1s ease-out;
-  }
-  .fichaVerde {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    bottom: 348px;
-    left: 770px;
-    z-index: 9998;
-    background-color: green;
-    border: none;
-    outline: none;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    transition: transform 0.1s ease-out;
-  }
-  .fichaAmarilla {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    bottom: 390px;
-    left: 770px;
-    z-index: 9998;
-    background-color: yellow;
-    border: none;
-    outline: none;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    transition: transform 0.1s ease-out;
-  }
+
   
   .ficha1:hover,.ficha2:hover,.ficha3:hover,.ficha4:hover,.fichab1:hover,.fichab2:hover,.fichab3:hover,.fichab4:hover,.fichac1:hover,.fichac2:hover,.fichac3:hover,.fichac4:hover,.fichad1:hover,.fichad2:hover,.fichad3:hover,.fichad4:hover {
     transform: scale(1.1);
@@ -103,21 +44,22 @@
  
  
  /*Casillas de casa*/
- .azul{
-     width:300px;
-     height:300px;
-     position:absolute ;
-     background:blue;
-     border-radius:10px 0px 0px 0px;
- }
  .rojo{
      width:300px;
      height:300px;
      position:absolute ;
      background:red;
+     border-radius:10px 0px 0px 0px;
+     z-index:100;
+ }
+ .verde{
+     width:300px;
+     height:300px;
+     position:absolute ;
+     background:green;
      top:600px;
      border-radius:0px 0px 0px 10px;
-     z-index: 1;
+     z-index:100;
  }
  .amarillo{
      width:300px;
@@ -127,34 +69,34 @@
      top:600px;
      left:600px;
      border-radius:0px 0px 10px 0px;
-     z-index: 1;
+     z-index: 100;
  }
- .verde{
+ .azul{
      width:300px;
      height:300px;
      position:absolute ;
-     background:green;
+     background:blue;
      left:600px;
      border-radius:0px 10px 0px 0px;
-     z-index: 1;
+     z-index: 100;
  }
  
  
  /*Ultimas casillas coloreadas para llegar al final*/
- .azulb{
+ .rojob{
      width:99.9px;
      height:300px;
      position:absolute ;
-     background:blue;
+     background:red;
      left:399.9px;
      top:42px;
  }
  
- .rojob{
+ .verdeb{
      width:300px;
      height:99.9px;
      position:absolute ;
-     background:red;
+     background:green;
      top:399.9px;
      left:42px;
  }
@@ -168,11 +110,11 @@
      left:399.9px;
  }
  
- .verdeb{
+ .azulb{
      width:300px;
      height:99.9px;
      position:absolute ;
-     background:green;
+     background:blue;
      left:558px;
      top:399.9px;
  }
@@ -188,7 +130,7 @@
      top:60px;
      opacity:0.3;
      border-radius:30px;
-     z-index: 2;
+     z-index: 100;
  }
  .rojoc{
      width:180px;
@@ -199,7 +141,7 @@
      top:660px;
      opacity:0.3;
      border-radius:30px;
-     z-index: 2;
+     z-index: 100;
  }
  .amarilloc{
      width:180px;
@@ -210,7 +152,7 @@
      top:660px;
      opacity:0.3;
      border-radius:30px;
-     z-index: 2;
+     z-index: 100;
  }
  .verdec{
      width:180px;
@@ -221,40 +163,40 @@
      top:60px;
      opacity:0.3;
      border-radius:30px;
-     z-index: 2;
+     z-index: 100;
  }
  
  /*Triangulos para las casillas finales*/
- .azuld {
+ .rojod {
    width: 2px;
    height: 4px;
    position: absolute;
    border: 114px solid transparent;
    left: 335px;
    top: 336px;
-   border-right: 114px solid blue;
+   border-right: 114px solid red;
    transform: rotate(-90deg);
  }
  
- .rojod {
+ .verded {
    width: 50px;
    height: 4px;
    position: absolute;
    border: 114px solid transparent;
    left: 336px;
    top: 336px;
-   border-right: 114px solid red;
+   border-right: 114px solid green;
    transform: rotate(180deg);
  }
  
- .verded {
+ .azuld {
    width: 199.8px;
    height: 4px;
    position: absolute;
    border: 114px solid transparent;
    left: 137px;
    top: 336px;
-   border-right: 114px solid green;
+   border-right: 114px solid blue;
  }
  
  .amarillod {
@@ -271,13 +213,12 @@
  /*Fichas azules*/
  .ficha1{
      position:absolute ;
-     border:1px solid #000;
-     background:black;
+     background:blue;
      top:68%;
      left:62%;
      width:35px;
      height:35px;
-     z-index:9999;
+     z-index:9998;
      border-radius:50%;
      border: none;
      outline: none;
@@ -287,13 +228,12 @@
  }
  .ficha2{
      position:absolute ;
-     border:1px solid #000;
-     background:yellowgreen;
+     background:blue;
      top:96%;
      left:56%;
      width:35px;
-     height:35px;;
-     z-index:9999;
+     height:35px;
+     z-index:9998;
      border-radius:50%;
      border: none;
      outline: none;
@@ -304,12 +244,12 @@
  
  .ficha3{
      position:absolute ;
-     border:1px solid #000;
      background:blue;
      top:25px;
      left:85px;
-     width:48px;
-     height:48px;
+     width:35px;
+     height:35px;
+     z-index:9998;
      border-radius:50%;
      border: none;
      outline: none;
@@ -322,10 +262,11 @@
      position:absolute ;
      border:1px solid #000;
      background:blue;
-     top:85px;
-     left:85px;
-     width:48px;
-     height:48px;
+     top:45%;
+     left:33%;
+     width:35px;
+     height:35px;
+     z-index:9998;
      border-radius:50%;
      border: none;
      outline: none;
@@ -337,12 +278,10 @@
  /*Fichas rojas*/
  .fichab1{
      position:absolute ;
-     border:1px solid #000;
      background:red;
      top:225px;
-     left:25px;
-     width:48px;
-     height:48px;
+     width:35px;
+     height:35px;
      border-radius:50%;
      z-index: 9998;
      background-color: red;
@@ -358,8 +297,8 @@
      background:red;
      top:255px;
      left:25px;
-     width:48px;
-     height:48px;
+     width:35px;
+     height:35px;
      border-radius:50%;
      z-index: 9998;
      background-color: red;
@@ -375,8 +314,8 @@
      background:red;
      top:255px;
      left:55px;
-     width:48px;
-     height:48px;
+     width:35px;
+     height:35px;
      border-radius:50%;
      z-index: 9998;
      background-color: red;
@@ -392,8 +331,8 @@
      background:red;
      top:225px;
      left:55px;
-     width:48px;
-     height:48px;
+     width:35px;
+     height:35px;
      border-radius:50%;
      z-index: 9998;
      background-color: red;
@@ -412,8 +351,8 @@
      background:yellow;
      top:255px;
      left:225px;
-     width:48px;
-     height:48px;
+     width:35px;
+     height:35px;
      border-radius:50%;
      z-index: 9998;
      border: none;
@@ -425,12 +364,12 @@
  
  .fichac2{
      position:absolute ;
-     border:1px solid #000;
+     z-index: 9998;
      background:yellow;
      top:255px;
      left:255px;
-     width:48px;
-     height:48px;
+     width:35px;
+     height:35px;
      border: none;
      outline: none;
      border-radius:50%;
@@ -444,8 +383,8 @@
      background:yellow;
      top:225px;
      left:255px;
-     width:48px;
-     height:48px;
+     width:35px;
+     height:35px;;
      border: none;
      outline: none;
      border-radius:50%;
@@ -456,12 +395,12 @@
  
  .fichac4{
      position:absolute ;
-     border:1px solid #000;
+     z-index: 9998;
      background:yellow;
      top:225px;
      left:225px;
-     width:48px;
-     height:48px;
+     width:35px;
+     height:35px;
      border-radius:50%;
      border: none;
      outline: none;
@@ -473,12 +412,12 @@
  /*Fichas verdes*/
  .fichad1{
      position:absolute ;
-     border:1px solid #000;
+     z-index: 9998;
      background:green;
      top:55px;
      left:255px;
-     width:48px;
-     height:48px;
+     width:35px;
+     height:35px;
      border-radius:50%;
      border: none;
      outline: none;
@@ -488,12 +427,12 @@
  }
  .fichad2{
      position:absolute ;
-     border:1px solid #000;
+     z-index: 9998;
      background:green;
      top:55px;
      left:225px;
-     width:48px;
-     height:48px;
+     width:35px;
+     height:35px;
      border-radius:50%;
      border: none;
      outline: none;
@@ -504,12 +443,12 @@
  
  .fichad3{
      position:absolute ;
-     border:1px solid #000;
+     z-index: 9998;
      background:green;
      top:25px;
      left:255px;
-     width:48px;
-     height:48px;
+     width:35px;
+     height:35px;
      border-radius:50%;
      border: none;
      outline: none;
@@ -519,12 +458,12 @@
  }
  .fichad4{
      position:absolute ;
-     border:1px solid #000;
+     z-index: 9998;
      background:green;
      top:25px;
      left:225px;
-     width:48px;
-     height:48px;
+     width:35px;
+     height:35px;
      border-radius:50%;
      border: none;
      outline: none;
@@ -540,31 +479,38 @@
      position:absolute ;
      left:300px;
      top:294px;
+     z-index:100;
  }
  
  .f1{
      top:42px;
      position:absolute ;
+     z-index:100;
  }
  .f2{
      top:84px;
      position:absolute ;
+     z-index:100;
  }
  .f3{
      top:126px;
      position:absolute ;
+     z-index:100;
  }
  .f4{
      top:168px;
      position:absolute ;
+     z-index:100;
  }
  .f5{
      top:210px;
      position:absolute ;
+     z-index:100;
  }
  .f6{
      top:252px;
      position:absolute ;
+     z-index:100;
  }
  /*Cuadrado del medio, lado azul*/
  .f7{
@@ -572,6 +518,7 @@
      position:absolute ;
      width:228px;
      left:336px;
+     z-index:99;
  }
  
  .filab{
@@ -581,33 +528,40 @@
      position:absolute ;
      left:42px;
      top:300px;
+     z-index:99;
  }
  
  .f8{
      position:absolute ;
      left:84px;
+     z-index:100;
  }
  .f9{
      position:absolute ;
      left:126px;
+     z-index:100;
  }
  .f10{
      position:absolute ;
      left:168px;
+     z-index:100;
  }
  
  .f11{
      position:absolute ;
      left:210px;
+     z-index:100;
  }
  .f12{
      position:absolute ;
      left:252px;
+     z-index:100;
  }
  
  .f13{
      position:absolute ;
      left:294px;
+     z-index:100;
  }
  /*Cuadrado del medio, lado verde*/
  .f14{
@@ -616,6 +570,7 @@
      height:225px;
      width:1px;
      top:337px;
+     z-index:99;
  }
  
  .filac{
@@ -625,31 +580,38 @@
      position:absolute ;
      top:858px;
      left:300px;
+     z-index:99;
  }
  
  .f16{
      position:absolute ;
      top:606px;
+     z-index:100;
  }
  .f17{
      position:absolute ;
      top:648px;
+     z-index:100;
  }
  .f19{
      position:absolute ;
      top:690px;
+     z-index:100;
  }
  .f20{
      position:absolute ;
      top:732px;
+     z-index:100;
  }
  .f21{
      position:absolute ;
      top:774px;
+     z-index:100;
  }
  .f22{
      position:absolute ;
      top:816px;
+     z-index:100;
  }
  /*Cuadrado del medio, lado amarillo*/
  .f23{
@@ -657,10 +619,12 @@
      top:563px;
      width:228px;
      left:336px;
+     z-index:99;
  }
  .f25{
      position:absolute ;
      left:860px;
+     z-index:100;
  }
  .filad{
      height:300px;
@@ -669,32 +633,39 @@
      position:absolute ;
      top:300px;
      left:856px;
+     z-index:100;
  }
  .f25{
      position:absolute ;
      left:814px;
+     z-index:100;
  }
  
  .f26{
      position:absolute ;
      left:772px;
+     z-index:100;
  }
  .f27{
      position:absolute ;
      left:730px;
+     z-index:100;
  }
  
  .f28{
      position:absolute ;
      left:688px;
+     z-index:100;
  }
  .f29{
      position:absolute ;
      left:646px;
+     z-index:100;
  }
  .f30{
      position:absolute ;
      left:604px;
+     z-index:100;
  }
  
  /*Cuadrado del medio, lado rojo*/
@@ -704,6 +675,7 @@
      height:225px;
      width:2px;
      top:338px;
+     z-index:99;
  }
  
  .filae{
@@ -714,14 +686,48 @@
      transform:rotate(45deg);
      top:390px;
      left:315px;
+     z-index:99;
  }
- 
+  
+.derpasamarillo{
+    position:absolute ;
+    top:731px;
+    left:232px;
+    transform:rotate(270deg);
+    z-index:150;
+    width: 336px;
+}
+.izqpasamarillo{
+    position:absolute ;
+    top:731px;
+    left:330px;
+    transform:rotate(270deg);
+    z-index:150;
+    width: 337px;
+}
+.izqpasrojo{
+    position:absolute ;
+    top:168px;
+    left:331px;
+    transform:rotate(270deg);
+    z-index:150;
+    width: 337px;
+}
+.derpasrojo{
+    position:absolute ;
+    top:168px;
+    left:232px;
+    transform:rotate(270deg);
+    z-index:150;
+    width: 337px;
+}
  /*Diagonal casa azul*/
  .incli1{
      position:absolute ;
      top:317px;
      left:291px;
      transform:rotate(45deg);
+     z-index:99;
  }
  
  /*Diagonal casa rojo*/
@@ -730,6 +736,7 @@
      top:582px;
      left:290px;
      transform:rotate(-45deg);
+     z-index:99;
  }
  /*Diagonal casa amarillo*/
  .incli3{
@@ -737,6 +744,7 @@
      top:582px;
      left:555px;
      transform:rotate(45deg);
+     z-index:99;
  }
  /*Diagonal casa verde*/
  .incli4{
@@ -744,6 +752,7 @@
      top:317px;
      left:555px;
      transform:rotate(-45deg);
+     z-index:99;
  }
  
  /*Casilla seguro azul final*/
@@ -755,12 +764,14 @@
      left:400px;
      text-align:center ;
      color:#282828;
+     z-index:99;
  }
- /*Casilla seguro casa de azul*/
+ /*Casilla seguro casa de rojo*/
  .s2{
      position:absolute ;
      top:170px;
      left:300px;
+     background:red;
      
  }
  
@@ -794,14 +805,14 @@
      position:absolute ;
  }
  
- /*Casilla seguro casa de rojo*/
+ /*Casilla seguro casa de verde*/
  .s5{
      position:absolute ;
      top:500px;
      left:168px;
      width:42px;
      height:100px;
-     background:gray;
+     background:green;
  }
  .ss5{
      top:10px;
@@ -818,6 +829,8 @@
      position:absolute ;
      top:858px;
      left:400px;
+     z-index:1;
+     
  }
  
  /*Casilla seguro casa de amarillo*/
@@ -825,6 +838,7 @@
      position:absolute ;
      top:690px;
      left:500px;
+     background:yellow;
  }
  
  /*Casilla seguro después de casa de amarillo*/
@@ -855,14 +869,14 @@
      position:absolute ;
  }
  
- /*Casilla seguro casa de verde*/
+ /*Casilla seguro casa de azul*/
  .s11{
      position:absolute ;
      top:300px;
      left:688px;
      width:42px;
      height:100px;
-     background:gray;
+     background:blue;
  }
  .ss11{
      top:10px;
@@ -878,6 +892,7 @@
  .numeros{
      font-size:20px;
      position:absolute ;
+     z-index:99;
  }
  .n1{
      position:absolute ;
