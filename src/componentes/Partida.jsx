@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Partida.css";
+import Timer from './Timer';
 
 
 
@@ -495,6 +496,7 @@ function Partida() {
       {/* <button class="fichaAzul"></button>
       <button class="fichaVerde"></button>
       <button class="fichaAmarilla"></button> */}
+      <Timer/>
       
     </div>
   );
