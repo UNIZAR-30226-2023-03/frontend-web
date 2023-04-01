@@ -1,36 +1,57 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import "../styles/Principal.css";
+//import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function Principal(){
-    const [nombre, setNombre] = useState('');
-    const [password, setPassword] = useState('');
-    const [configuracion, setConfig] = useState('');
-    const [jugador, setJugador] = useState('');
+    // const [nombre, setNombre] = useState('');
+    // const [password, setPassword] = useState('');
+    // const [configuracion, setConfig] = useState('');
+    // const [jugador, setJugador] = useState('');
     const navigate = useNavigate();
+    const [mostrarPartidas, setMostrarPartidas] = useState(false);
+    //const [confPartada, setconfParitada] = useState('');
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        setNombre('nombre usuario');
-        setPassword('contraseña');
-        setConfig('configuracion');
-        setJugador(0);
-        const response = await axios.get("https://lamesa-backend.azurewebsites.net/partida/conectar", {nombre, password,jugador,configuracion});
-        console.log(response.data);
-        if (response.data){
-            navigate(process.env.PUBLIC_URL+'/carga');
-        }
-
+    const handleClick = () => {
+        setMostrarPartidas(true);
     };
-    return(
-        
-        <form onSubmit={handleSubmit}>
-            <h1>Bienvenido</h1>
-            <button type="submit">Jugar partida pública</button>
-        </form>
 
-    );
+    const handleClick1 = () => {
+        console.log('Botón 1 fue pulsado');
+    };
+    
+    const handleClick2 = () => {
+        console.log('Botón 2 fue pulsado');
+        navigate(process.env.PUBLIC_URL+'/partidaPrivada');
+    };
 
+    return (
+        <>
+        <h1>BIENVENIDO username</h1>
+        <button>Datos personales</button>
+        <button>Amigos</button>
+        <button>Torneos</button>
+        <button>Rankings</button>
+          {mostrarPartidas ? (
+            <div className="botones">
+              <button className="botonJugarPublica" onClick={handleClick1}>
+                Partida Pública
+              </button>
+              <button className="botonJugarPrivada" onClick={handleClick2}>
+                Partida Privada
+              </button>
+            </div>
+          ) : (
+            <div>
+              <button className="botonJugar" onClick={handleClick}>
+                Jugar
+              </button>
+            </div>
+          )}
+        </>
+      );
+      
+    
 }
 
 export default Principal;

@@ -257,7 +257,7 @@ function Partida() {
       
       const casilla = casillas.find(c => c.id === currentPhotoIndex+1);
       const ficha1 = document.querySelector('.ficha1');
-      if (casilla.numfichas==0){
+      if (casilla.numfichas===0){
         console.log(casilla.id);
         casilla.numfichas = 1; 
         ficha1.style.left = casilla.left;
@@ -487,7 +487,7 @@ function Partida() {
         ))
         }
         </div>
-      <button class="button-partida" onClick={onClick} disabled={isPlaying}>
+      <button class="tirarDado" onClick={onClick} disabled={isPlaying}>
         Tirar dado
       </button>
       {/* <p>Numero obtenido: {currentPhotoIndex+1}</p> */}

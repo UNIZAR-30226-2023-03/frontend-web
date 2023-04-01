@@ -7,7 +7,7 @@
     z-index:999;
   }
 
-  .button-partida {
+  .tirarDado {
     position: fixed;
     bottom: 130px;
     width: 100px;
@@ -15,7 +15,14 @@
     z-index: 1;
     transform: scale(3);
     left:1550px;
+    background-color: rgb(69, 31, 0);
+    border-radius: 15px;
+    color:#fff;
     display:inline-block ;
+    cursor: pointer;
+  }
+  .tirarDado:hover{
+    background-color: #140903;
   }
   .icono{
     position: fixed;

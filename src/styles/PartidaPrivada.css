@@ -1,0 +1,37 @@
+.botonesRapida {
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+}
+  
+.BotonPartidaRapidaAc {
+    background-color: #4CAF50;
+    color: white;
+}
+  
+.BotonPartidaRapidaIn {
+    background-color: #ddd;
+    color: #aaa;
+ 
+}
+
+
+.botonesBarrera {
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+}
+  
+.BotonPartidaBarAc{
+    background-color: #4CAF50;
+    color: white;
+}
+  
+.BotonPartidaBarIn {
+    background-color: #ddd;
+    color: #aaa;
+}
