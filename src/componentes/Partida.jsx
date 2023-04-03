@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import "../styles/Partida.css";
 import Timer from './Timer';
 
@@ -276,9 +276,11 @@ function Partida() {
   
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [timeIsUp, setTimeIsUp] = useState(false);
   //const [numeroObtenidoDado, setnumeroObtenidoDado] = useState(0);
-
+ 
   useEffect(() => {
+
     let intervalId = null;
     if (isPlaying) {
       intervalId = setInterval(() => {
@@ -292,7 +294,6 @@ function Partida() {
       }, 190);
     }
     else{
-      
       const casilla = casillas.find(c => c.id === currentPhotoIndex+1);
       const ficha1 = document.querySelector('.ficha1azul');
       if (casilla.numfichas===0){
@@ -331,11 +332,11 @@ function Partida() {
     handleStart();
   };
 
-//"..//imagenes/iconos/lamesa.png"
-
+  function handleTimeUp() {
+    setTimeIsUp(true);
+  }
   return (  
-    
-    <div class="all">
+    <>
       <div class="lamesa">
         <div class="icono"></div>
         <div class="ficha1azul"></div>
@@ -371,12 +372,6 @@ function Partida() {
         <div class="amarillod"></div>
         <div class="verded"></div>
 
-        
-          
-        
-        
-     
-        
         <div class="verdee">         
           <div class="filas"></div>
           <div class="filas f1"></div>
@@ -530,14 +525,11 @@ function Partida() {
       <button class="tirarDado" onClick={onClick} disabled={isPlaying}>
         Tirar dado
       </button>
-      {/* <p>Numero obtenido: {currentPhotoIndex+1}</p> */}
-      {/* <button class="fichaRoja"></button> */}
-      {/* <button class="fichaAzul"></button>
-      <button class="fichaVerde"></button>
-      <button class="fichaAmarilla"></button> */}
-      <Timer/>
-      
+    <div>
+    {<Timer timeLimit={10} onTimeUp={handleTimeUp} />}
+      {timeIsUp && <p>¡Se acabó el tiempo!</p>}
     </div>
+    </>
   );
 }
 export default Partida;

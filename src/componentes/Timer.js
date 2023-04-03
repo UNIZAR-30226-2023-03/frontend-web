@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from "react";
 
-function Timer() {
+function Timer({ timeLimit, onTimeUp }) {
     const FULL_DASH_ARRAY = 283;
     const WARNING_THRESHOLD = 10;
     const ALERT_THRESHOLD = 5;
+    const TIME_LIMIT = timeLimit;
     const COLOR_CODES = {
         info: {
           color: "green"
@@ -17,8 +18,7 @@ function Timer() {
           threshold: ALERT_THRESHOLD
         }
       };
-      
-      const TIME_LIMIT = 25;
+      const [timerStarted, setTimerStarted] = useState(false);
       let timePassed = 0;
       let timeLeft = TIME_LIMIT;
       let timerInterval = null;
@@ -27,22 +27,26 @@ function Timer() {
 
       function onTimesUp() {
         clearInterval(timerInterval);
+        onTimeUp();
       }
-      
+
       function startTimer() {
-        timerInterval = setInterval(() => {
-          timePassed = timePassed += 1;
-          timeLeft = TIME_LIMIT - timePassed;
-          document.getElementById("base-timer-label").innerHTML = formatTime(
-            timeLeft
-          );
-          setCircleDasharray();
-          setRemainingPathColor(timeLeft);
-      
-          if (timeLeft === 0) {
-            onTimesUp();
-          }
-        }, 1000);
+        if (!timerStarted) {
+          setTimerStarted(true);
+          timerInterval = setInterval(() => {
+            timePassed = timePassed += 1;
+            timeLeft = TIME_LIMIT - timePassed;
+            document.getElementById("base-timer-label").innerHTML = formatTime(
+              timeLeft
+            );
+            setCircleDasharray();
+            setRemainingPathColor(timeLeft);
+        
+            if (timeLeft === 0) {
+              onTimesUp();
+            }
+          }, 1000);
+        }
       }
       
       function formatTime(time) {
