@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 import "../styles/Registrarse.css";
 function Registrarse() {
   const navigate = useNavigate();
   const [username, setLogin] = useState('');
-  const [password_1, setPassword1] = useState('');
+  const [password, setPassword1] = useState('');
   const [password_2, setPassword2] = useState('');
   const [email, setEmail] = useState('');
 
@@ -18,6 +19,9 @@ function Registrarse() {
   };
 
   const handlePassword2Change = (event) => {
+    if(password!==password_2){
+      console.log('no igual') 
+    }
     setPassword2(event.target.value);
   };
 
@@ -27,44 +31,47 @@ function Registrarse() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(username, email, password_1, password_2);
-    try{
-      const response = await axios.post("https://lamesa-backend.azurewebsites.net/usuarios", {username, email, password_1});
+    console.log(username, email, password, password_2);
+    //si password no coinciden no enviar
+    
+      const response = await axios.post("https://lamesa-backend.azurewebsites.net/usuarios/crear", {email,username, password});
+      console.log(response.data.id);
       console.log(response.data);
       if (response.data){
+        const cookies = new Cookies();
+        cookies.set('idUsuario',response.data.id,{path: '/'})
+        cookies.set('nombreUsuario',username,{path: '/'})
         navigate(process.env.PUBLIC_URL+'/principal');
       }
-    }catch(error){
-      console.error(error);
-    }
+      
   };
 
   return (
-    <div class="containerRegistro">
-      <form onSubmit={handleSubmit} class="formRegistro">
+    <div className="containerRegistro">
+      <form onSubmit={handleSubmit} className="formRegistro">
         <h1>Crear cuenta</h1>
         <p>Para poder crear una cuenta, debes introducir los siguientes datos</p>
         <label>
-        <p class="textoRegistro">Nombre de usuario:</p>
+        <p className="textoRegistro">Nombre de usuario:</p>
           <input type="text" value={username} onChange={handleUsernameChange} />
         </label>
         <br/>
         <label>
-        <p class="textoRegistro">Correo electrónico:</p>
+        <p className="textoRegistro">Correo electrónico:</p>
           <input type="text" value={email} onChange={handleEmailChange} />
         </label>
         <br/>
         <label>
-          <p class="textoRegistro">Contraseña nueva:</p>
-          <input type="password" value={password_1} onChange={handlePassword1Change} />
+          <p className="textoRegistro">Contraseña nueva:</p>
+          <input type="password" value={password} onChange={handlePassword1Change} />
         </label>
         <br/>
         <label>
-        <p class="textoRegistro">Repita la contraseña anterior:</p>
+        <p className="textoRegistro">Repita la contraseña anterior:</p>
           <input type="password" value={password_2} onChange={handlePassword2Change} />
         </label>
         <br/>
-        <button type="submit" class="botonRegistro">Registrarse</button>
+        <button type="submit" className="botonRegistro">Registrarse</button>
       </form>
     </div>
   );

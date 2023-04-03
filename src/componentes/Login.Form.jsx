@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 import "../styles/InicioSesion.css";
 
 function LoginForm() {
@@ -22,6 +23,9 @@ function LoginForm() {
     const response = await axios.post("https://lamesa-backend.azurewebsites.net/usuarios/login", {login, password});
     console.log(response.data);
     if (response.data){
+      const cookies = new Cookies();
+      cookies.set('idUsuario',response.data,{path: '/'})
+      cookies.set('nombreUsuario',login,{path: '/'})
       navigate(process.env.PUBLIC_URL+'/principal');
     }
 
@@ -32,17 +36,17 @@ function LoginForm() {
       <form onSubmit={handleSubmit} className="form-container">
         <h1>Inicio de sesión</h1>
         <label>
-        <p class="textoIniciarSesion">Usuario:</p>
+        <p className="textoIniciarSesion">Usuario:</p>
           <input type="text" placeholder="Correo electrónico o nombre de usuario"
             value={login} required onChange={handleUsernameChange} />
         </label>
         <br/>
         <label>
-        <p class="textoIniciarSesion">Contraseña:</p>
+        <p className="textoIniciarSesion">Contraseña:</p>
           <input type="password" placeholder='Contraseña' required value={password} onChange={handlePasswordChange} />
         </label>
         <button type="submit">Iniciar sesión</button>
-        <p class="textoSinIniciarSesion">¿Aún no tienes cuenta?</p>
+        <p className="textoSinIniciarSesion">¿Aún no tienes cuenta?</p>
         <Link to='/registrarse'>Regístrate aquí</Link>
         <br/>
       </form>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import "../styles/Principal.css";
 //import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 function Principal(){
     // const [nombre, setNombre] = useState('');
@@ -24,10 +25,11 @@ function Principal(){
         console.log('Botón 2 fue pulsado');
         navigate(process.env.PUBLIC_URL+'/partidaPrivada');
     };
-
+    const cookies= new Cookies();
     return (
         <>
-        <h1>BIENVENIDO username</h1>
+        <h1>BIENVENIDO {cookies.get('nombreUsuario')}</h1>
+        
         <button>Datos personales</button>
         <button>Amigos</button>
         <button>Torneos</button>

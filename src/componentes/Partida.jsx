@@ -22,6 +22,24 @@ const photos = [
 ];
 
 const casillas = [
+  {id:'llegada-11', left:'62%', top:'96%',numfichas:0},
+  {id:'llegada-12', left:'62%', top:'96%',numfichas:0},
+  {id:'llegada-13', left:'62%', top:'96%',numfichas:0},
+  {id:'llegada-21', left:'62%', top:'96%',numfichas:0},
+  {id:'llegada-22', left:'62%', top:'96%',numfichas:0},
+  {id:'llegada-23', left:'62%', top:'96%',numfichas:0},
+  {id:'llegada-31', left:'62%', top:'96%',numfichas:0},
+  {id:'llegada-32', left:'62%', top:'96%',numfichas:0},
+  {id:'llegada-33', left:'62%', top:'96%',numfichas:0},
+  {id:'llegada-41', left:'62%', top:'96%',numfichas:0},
+  {id:'llegada-42', left:'62%', top:'96%',numfichas:0},
+  {id:'llegada-43', left:'62%', top:'96%',numfichas:0},
+  
+  
+  {id:'inicio-11', left:'62%', top:'96%',numfichas:0},
+  {id:'inicio-12', left:'62%', top:'96%',numfichas:0},
+  {id:'inicio-13', left:'62%', top:'96%',numfichas:0},
+  {id:'inicio-14', left:'62%', top:'96%',numfichas:0},
   {id:1, left:'62%', top:'96%',numfichas:0},
   {id:2, left:'62%', top:'91%',numfichas:0},
   {id:3, left:'62%', top:'86.6%',numfichas:0},
@@ -256,22 +274,22 @@ function Partida() {
     }
     else{
       
-      const casilla = casillas.find(c => c.id === currentPhotoIndex+1);
-      const ficha1 = document.querySelector('.ficha1');
-      if (casilla.numfichas===0){
-        console.log(casilla.id);
-        casilla.numfichas = 1; 
-        ficha1.style.left = casilla.left;
-        ficha1.style.top = casilla.top;
-      }
-      else{
-        const nuevaCasilla = casillas.find(c => c.id === casilla.id+'-2');
-        console.log(casilla.id);
-        console.log(nuevaCasilla.left);
-        ficha1.style.left = nuevaCasilla.left;
-        ficha1.style.top = nuevaCasilla.top;
+      // const casilla = casillas.find(c => c.id === currentPhotoIndex+1);
+      // const ficha1 = document.querySelector('.ficha1');
+      // if (casilla.numfichas===0){
+      //   console.log(casilla.id);
+      //   casilla.numfichas = 1; 
+      //   ficha1.style.left = casilla.left;
+      //   ficha1.style.top = casilla.top;
+      // }
+      // else{
+      //   const nuevaCasilla = casillas.find(c => c.id === casilla.id+'-2');
+      //   console.log(casilla.id);
+      //   console.log(nuevaCasilla.left);
+      //   ficha1.style.left = nuevaCasilla.left;
+      //   ficha1.style.top = nuevaCasilla.top;
         
-      }
+      // }
      
     }
     return () => clearInterval(intervalId);
@@ -301,10 +319,22 @@ function Partida() {
     <div class="all">
       <div class="lamesa">
         <div class="icono"></div>
-        <div class="ficha1"></div>
-        <div class="ficha2"></div>
-        <div class="ficha3"></div>
-        <div class="ficha4"></div>
+        <div class="ficha1azul"></div>
+        <div class="ficha2azul"></div>
+        <div class="ficha3azul"></div>
+        <div class="ficha4azul"></div>
+        <div class="ficha1rojo"></div>
+        <div class="ficha2rojo"></div>
+        <div class="ficha3rojo"></div>
+        <div class="ficha4rojo"></div>
+        <div class="ficha1amarillo"></div>
+        <div class="ficha2amarillo"></div>
+        <div class="ficha3amarillo"></div>
+        <div class="ficha4amarillo"></div>
+        <div class="ficha1verde"></div>
+        <div class="ficha2verde"></div>
+        <div class="ficha3verde"></div>
+        <div class="ficha4verde"></div> 
         <div class="azul"></div>
         <div class="rojo"></div>
         <div class="amarillo"></div>
@@ -322,23 +352,13 @@ function Partida() {
         <div class="amarillod"></div>
         <div class="verded"></div>
 
-        <div class="rojoe">
-          <div class="fichab1"></div>
-          <div class="fichab2"></div>
-          <div class="fichab3"></div>
-          <div class="fichab4"></div>
-        </div>
-        <div class="amarilloe">
-        <div class="fichac1"></div>
-        <div class="fichac2"></div>
-        <div class="fichac3"></div>
-        <div class="fichac4"></div>
-        </div>
-        <div class="verdee">
-          <div class="fichad1"></div>
-          <div class="fichad2"></div>
-          <div class="fichad3"></div>
-          <div class="fichad4"></div>          
+        
+          
+        
+        
+     
+        
+        <div class="verdee">         
           <div class="filas"></div>
           <div class="filas f1"></div>
           <div class="filas f2"></div>
@@ -496,7 +516,7 @@ function Partida() {
       {/* <button class="fichaAzul"></button>
       <button class="fichaVerde"></button>
       <button class="fichaAmarilla"></button> */}
-      <Timer/>
+      {/* <Timer/> */}
       
     </div>
   );

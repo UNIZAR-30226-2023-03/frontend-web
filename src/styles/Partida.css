@@ -227,26 +227,27 @@
  }
  
  /*Fichas azules*/
- .ficha1{
+ .ficha1azul{
+    position:absolute ;
+    background:blue;
+    top:9%;
+    left:5%;
+    width:35px;
+    height:35px;
+    z-index:9998;
+    border-radius:50%;
+    border: none;
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.1s ease-out;
+}
+
+ .ficha2azul{
      position:absolute ;
      background:blue;
-     top:68%;
-     left:62%;
-     width:35px;
-     height:35px;
-     z-index:9998;
-     border-radius:50%;
-     border: none;
-     outline: none;
-     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-     cursor: pointer;
-     transition: transform 0.1s ease-out;
- }
- .ficha2{
-     position:absolute ;
-     background:blue;
-     top:96%;
-     left:56%;
+     top:9%;
+     left:5%;
      width:35px;
      height:35px;
      z-index:9998;
@@ -258,7 +259,7 @@
      transition: transform 0.1s ease-out;
  }
  
- .ficha3{
+ .ficha3azul{
      position:absolute ;
      background:blue;
      top:25px;
@@ -274,7 +275,7 @@
      transition: transform 0.1s ease-out;
  }
  
- .ficha4{
+ .ficha4azul{
      position:absolute ;
      border:1px solid #000;
      background:blue;
@@ -292,7 +293,7 @@
  }
  
  /*Fichas rojas*/
- .fichab1{
+ .ficha1rojo{
      position:absolute ;
      background:red;
      top:225px;
@@ -307,7 +308,7 @@
      cursor: pointer;
      transition: transform 0.1s ease-out;
  }
- .fichab2{
+ .ficha2rojo{
      position:absolute ;
      border:1px solid #000;
      background:red;
@@ -324,7 +325,7 @@
      cursor: pointer;
      transition: transform 0.1s ease-out;
  }
- .fichab3{
+ .ficha3rojo{
      position:absolute ;
      border:1px solid #000;
      background:red;
@@ -341,7 +342,7 @@
      cursor: pointer;
      transition: transform 0.1s ease-out;
  }
- .fichab4{
+ .ficha4rojo{
      position:absolute ;
      border:1px solid #000;
      background:red;
@@ -361,12 +362,12 @@
  
  
  /*Fichas amarillas*/
- .fichac1{
+ .ficha1amarillo{
      position:absolute ;
      border:1px solid #000;
      background:yellow;
-     top:255px;
-     left:225px;
+     top:75%px;
+     left:25%px;
      width:35px;
      height:35px;
      border-radius:50%;
@@ -378,7 +379,7 @@
      transition: transform 0.1s ease-out;
  }
  
- .fichac2{
+ .ficha2amarillo{
      position:absolute ;
      z-index: 9998;
      background:yellow;
@@ -393,7 +394,7 @@
      cursor: pointer;
      transition: transform 0.1s ease-out;
  }
- .fichac3{
+ .ficha3amarillo{
      position:absolute ;
      border:1px solid #000;
      background:yellow;
@@ -409,7 +410,7 @@
      transition: transform 0.1s ease-out;
  }
  
- .fichac4{
+ .ficha4amarillo{
      position:absolute ;
      z-index: 9998;
      background:yellow;
@@ -426,7 +427,7 @@
  }
  
  /*Fichas verdes*/
- .fichad1{
+ .ficha1verde{
      position:absolute ;
      z-index: 9998;
      background:green;
@@ -441,7 +442,7 @@
      cursor: pointer;
      transition: transform 0.1s ease-out;
  }
- .fichad2{
+ .ficha2verde{
      position:absolute ;
      z-index: 9998;
      background:green;
@@ -457,7 +458,7 @@
      transition: transform 0.1s ease-out;
  }
  
- .fichad3{
+ .ficha3verde{
      position:absolute ;
      z-index: 9998;
      background:green;
@@ -472,7 +473,7 @@
      cursor: pointer;
      transition: transform 0.1s ease-out;
  }
- .fichad4{
+ .ficha4verde{
      position:absolute ;
      z-index: 9998;
      background:green;
