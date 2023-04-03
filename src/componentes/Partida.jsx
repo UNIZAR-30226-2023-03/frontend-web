@@ -22,12 +22,16 @@ const photos = [
 ];
 
 const casillas = [
-  {id:'llegada-11', left:'62%', top:'96%',numfichas:0},
-  {id:'llegada-12', left:'62%', top:'96%',numfichas:0},
-  {id:'llegada-13', left:'62%', top:'96%',numfichas:0},
-  {id:'llegada-21', left:'62%', top:'96%',numfichas:0},
-  {id:'llegada-22', left:'62%', top:'96%',numfichas:0},
-  {id:'llegada-23', left:'62%', top:'96%',numfichas:0},
+  //1: amarillo
+  //2: azul
+  //3: rojo
+  //4: verde
+  {id:'llegada-11', left:'54%', top:'58%',numfichas:0},
+  {id:'llegada-12', left:'49%', top:'58%',numfichas:0},
+  {id:'llegada-13', left:'43%', top:'58%',numfichas:0},
+  {id:'llegada-21', left:'58%', top:'49%',numfichas:0},
+  {id:'llegada-22', left:'58%', top:'96%',numfichas:0},
+  {id:'llegada-23', left:'58%', top:'96%',numfichas:0},
   {id:'llegada-31', left:'62%', top:'96%',numfichas:0},
   {id:'llegada-32', left:'62%', top:'96%',numfichas:0},
   {id:'llegada-33', left:'62%', top:'96%',numfichas:0},
@@ -35,11 +39,26 @@ const casillas = [
   {id:'llegada-42', left:'62%', top:'96%',numfichas:0},
   {id:'llegada-43', left:'62%', top:'96%',numfichas:0},
   
-  
-  {id:'inicio-11', left:'62%', top:'96%',numfichas:0},
-  {id:'inicio-12', left:'62%', top:'96%',numfichas:0},
-  {id:'inicio-13', left:'62%', top:'96%',numfichas:0},
-  {id:'inicio-14', left:'62%', top:'96%',numfichas:0},
+  {id:'inicio-11', left:'77%', top:'77%',numfichas:0},
+  {id:'inicio-12', left:'86%', top:'77%',numfichas:0},
+  {id:'inicio-13', left:'77%', top:'87%',numfichas:0},
+  {id:'inicio-14', left:'86%', top:'87%',numfichas:0},
+
+  {id:'inicio-21', left:'77%', top:'10%',numfichas:0},
+  {id:'inicio-22', left:'86%', top:'10%',numfichas:0},
+  {id:'inicio-23', left:'77%', top:'20%',numfichas:0},
+  {id:'inicio-24', left:'86%', top:'20%',numfichas:0},
+
+  {id:'inicio-31', left:'10%', top:'10%',numfichas:0},
+  {id:'inicio-32', left:'19%', top:'10%',numfichas:0},
+  {id:'inicio-33', left:'10%', top:'20%',numfichas:0},
+  {id:'inicio-34', left:'19%', top:'20%',numfichas:0},
+
+  {id:'inicio-41', left:'10%', top:'77%',numfichas:0},
+  {id:'inicio-42', left:'19%', top:'77%',numfichas:0},
+  {id:'inicio-43', left:'10%', top:'87%',numfichas:0},
+  {id:'inicio-44', left:'19%', top:'87%',numfichas:0},
+
   {id:1, left:'62%', top:'96%',numfichas:0},
   {id:2, left:'62%', top:'91%',numfichas:0},
   {id:3, left:'62%', top:'86.6%',numfichas:0},
@@ -274,22 +293,22 @@ function Partida() {
     }
     else{
       
-      // const casilla = casillas.find(c => c.id === currentPhotoIndex+1);
-      // const ficha1 = document.querySelector('.ficha1');
-      // if (casilla.numfichas===0){
-      //   console.log(casilla.id);
-      //   casilla.numfichas = 1; 
-      //   ficha1.style.left = casilla.left;
-      //   ficha1.style.top = casilla.top;
-      // }
-      // else{
-      //   const nuevaCasilla = casillas.find(c => c.id === casilla.id+'-2');
-      //   console.log(casilla.id);
-      //   console.log(nuevaCasilla.left);
-      //   ficha1.style.left = nuevaCasilla.left;
-      //   ficha1.style.top = nuevaCasilla.top;
+      const casilla = casillas.find(c => c.id === currentPhotoIndex+1);
+      const ficha1 = document.querySelector('.ficha1azul');
+      if (casilla.numfichas===0){
+        console.log(casilla.id);
+        casilla.numfichas = 1; 
+        ficha1.style.left = casilla.left;
+        ficha1.style.top = casilla.top;
+      }
+      else{
+        const nuevaCasilla = casillas.find(c => c.id === casilla.id+'-2');
+        console.log(casilla.id);
+        console.log(nuevaCasilla.left);
+        ficha1.style.left = nuevaCasilla.left;
+        ficha1.style.top = nuevaCasilla.top;
         
-      // }
+      }
      
     }
     return () => clearInterval(intervalId);
@@ -516,7 +535,7 @@ function Partida() {
       {/* <button class="fichaAzul"></button>
       <button class="fichaVerde"></button>
       <button class="fichaAmarilla"></button> */}
-      {/* <Timer/> */}
+      <Timer/>
       
     </div>
   );

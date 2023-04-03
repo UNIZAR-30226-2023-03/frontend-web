@@ -279,6 +279,8 @@
      position:absolute ;
      border:1px solid #000;
      background:blue;
+     top:10%;
+     left:77%;
      width:35px;
      height:35px;
      z-index:9998;
@@ -294,7 +296,8 @@
  .ficha1rojo{
      position:absolute ;
      background:red;
-     top:225px;
+     top:49%;
+     left:58%;
      width:35px;
      height:35px;
      border-radius:50%;
@@ -310,8 +313,8 @@
      position:absolute ;
      border:1px solid #000;
      background:red;
-     top:255px;
-     left:25px;
+     top:10%;
+     left:19%;
      width:35px;
      height:35px;
      border-radius:50%;
@@ -327,8 +330,8 @@
      position:absolute ;
      border:1px solid #000;
      background:red;
-     top:255px;
-     left:55px;
+     top:20%;
+     left:10%;
      width:35px;
      height:35px;
      border-radius:50%;
@@ -344,8 +347,8 @@
      position:absolute ;
      border:1px solid #000;
      background:red;
-     top:225px;
-     left:55px;
+     top:20%;
+     left:19%;
      width:35px;
      height:35px;
      border-radius:50%;
@@ -364,8 +367,8 @@
      position:absolute ;
      border:1px solid #000;
      background:yellow;
-     top:75%px;
-     left:25%px;
+     top:77%;
+     left:77%;
      width:35px;
      height:35px;
      border-radius:50%;
@@ -381,8 +384,8 @@
      position:absolute ;
      z-index: 9998;
      background:yellow;
-     top:255px;
-     left:255px;
+     top:77%;
+     left:86%;
      width:35px;
      height:35px;
      border: none;
@@ -396,24 +399,25 @@
      position:absolute ;
      border:1px solid #000;
      background:yellow;
-     top:225px;
-     left:255px;
+     top:87%;
+     left:77%;
      width:35px;
-     height:35px;;
+     height:35px;
      border: none;
      outline: none;
      border-radius:50%;
      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
      cursor: pointer;
      transition: transform 0.1s ease-out;
+     z-index: 9998;
  }
  
  .ficha4amarillo{
      position:absolute ;
      z-index: 9998;
      background:yellow;
-     top:225px;
-     left:225px;
+     top:87%;
+     left:86%;
      width:35px;
      height:35px;
      border-radius:50%;
@@ -429,8 +433,8 @@
      position:absolute ;
      z-index: 9998;
      background:green;
-     top:55px;
-     left:255px;
+     top:77%;
+     left:10%;
      width:35px;
      height:35px;
      border-radius:50%;
@@ -444,8 +448,8 @@
      position:absolute ;
      z-index: 9998;
      background:green;
-     top:55px;
-     left:225px;
+     top:77%;
+     left:19%;
      width:35px;
      height:35px;
      border-radius:50%;
@@ -460,8 +464,8 @@
      position:absolute ;
      z-index: 9998;
      background:green;
-     top:25px;
-     left:255px;
+     top:87%;
+     left:10%;
      width:35px;
      height:35px;
      border-radius:50%;
@@ -475,8 +479,8 @@
      position:absolute ;
      z-index: 9998;
      background:green;
-     top:25px;
-     left:225px;
+     top:87%;
+     left:19%;
      width:35px;
      height:35px;
      border-radius:50%;
