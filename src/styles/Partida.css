@@ -227,11 +227,11 @@
  }
  
  /*Fichas azules*/
- .ficha1azul{
+ .ficha2azul{
     position:absolute ;
     background:blue;
-    top:9%;
-    left:5%;
+    top:10%;
+    left:86%;
     width:35px;
     height:35px;
     z-index:9998;
@@ -243,27 +243,11 @@
     transition: transform 0.1s ease-out;
 }
 
- .ficha2azul{
-     position:absolute ;
-     background:blue;
-     top:9%;
-     left:5%;
-     width:35px;
-     height:35px;
-     z-index:9998;
-     border-radius:50%;
-     border: none;
-     outline: none;
-     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-     cursor: pointer;
-     transition: transform 0.1s ease-out;
- }
- 
  .ficha3azul{
      position:absolute ;
      background:blue;
-     top:25px;
-     left:85px;
+     top:20%;
+     left:77%;
      width:35px;
      height:35px;
      z-index:9998;
@@ -277,10 +261,24 @@
  
  .ficha4azul{
      position:absolute ;
+     background:blue;
+     top:20%;
+     left:86%;
+     width:35px;
+     height:35px;
+     z-index:9998;
+     border-radius:50%;
+     border: none;
+     outline: none;
+     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     cursor: pointer;
+     transition: transform 0.1s ease-out;
+ }
+ 
+ .ficha1azul{
+     position:absolute ;
      border:1px solid #000;
      background:blue;
-     top:45%;
-     left:33%;
      width:35px;
      height:35px;
      z-index:9998;
