@@ -262,8 +262,8 @@
  .ficha4azul{
      position:absolute ;
      background:blue;
-     top:20%;
-     left:86%;
+     top:10%;
+     left:77%;
      width:35px;
      height:35px;
      z-index:9998;
@@ -279,8 +279,8 @@
      position:absolute ;
      border:1px solid #000;
      background:blue;
-     top:10%;
-     left:77%;
+     top:54%;
+     left:35%;
      width:35px;
      height:35px;
      z-index:9998;
@@ -296,8 +296,8 @@
  .ficha1rojo{
      position:absolute ;
      background:red;
-     top:49%;
-     left:58%;
+     top:10%;
+     left:10%;
      width:35px;
      height:35px;
      border-radius:50%;
