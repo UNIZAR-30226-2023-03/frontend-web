@@ -33,7 +33,7 @@ function Registrarse() {
     event.preventDefault();
     console.log(username, email, password, password_2);
     //si password no coinciden no enviar
-      const response = await axios.post("https://lamesa-backend.azurewebsites.net/usuarios/crear", {email,username, password});
+      const response = await axios.post("https://lamesa-backend.azurewebsites.net/usuario/crear", {email,username, password});
       console.log(response.data.id);
       console.log(response.data);
       if (response.data){

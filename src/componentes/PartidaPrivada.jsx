@@ -93,7 +93,7 @@ function PartidaPrivada(){
                 </div>
                 <button type="submit">Crear partida</button>
             </form>
-        </div> 
+        </div>
     );
 }
 
