@@ -14,6 +14,7 @@ import Amigos from './componentes/Amigos';
 import DatosPersonales from './componentes/DatosPersonales';
 import Torneos from './componentes/Torneos';
 import Rankings from './componentes/Rankings';
+import PartidaPublica from './componentes/PartidaPublica';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path='/carga' Component={Carga}/>
         <Route path='/partida' Component={Partida}/>
         <Route path='/partidaPrivada' Component={PartidaPrivada}/>
+        <Route path='/partidaPublica' Component={PartidaPublica}/>
         <Route path='/datosPersonales' Component={DatosPersonales}/>
         <Route path='/amigos' Component={Amigos}/>
         <Route path='/torneos' Component={Torneos}/>

@@ -18,6 +18,7 @@ function Principal(){
 
     const handleClick1 = () => {
         console.log('Botón 1 fue pulsado');
+        navigate(process.env.PUBLIC_URL+'/partidaPublica');
     };
     
     const handleClick2 = () => {

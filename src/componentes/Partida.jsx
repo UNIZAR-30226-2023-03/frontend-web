@@ -272,13 +272,14 @@ const casillas = [
   {id:'68-2', left:'51%', top:'96%', numfichas:0}
 ]
 
-function Partida() {
+function Partida(props) {
   
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeIsUp, setTimeIsUp] = useState(false);
   //const [numeroObtenidoDado, setnumeroObtenidoDado] = useState(0);
- 
+  <p>El id es {props.idPartida}</p>;
+  <p>El color es {props.color}</p>;
   useEffect(() => {
 
     let intervalId = null;
@@ -310,7 +311,6 @@ function Partida() {
         ficha1.style.top = nuevaCasilla.top;
         
       }
-     
     }
     return () => clearInterval(intervalId);
   }, [isPlaying, currentPhotoIndex]);
