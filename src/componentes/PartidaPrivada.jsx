@@ -5,8 +5,6 @@ import Cookies from 'universal-cookie';
 import { useNavigate } from 'react-router-dom';
 
 function PartidaPrivada(){
-    const [idPartida, setPartidaId] = useState('');
-    const [color, setColor] = useState('');
     const [configuracionF, setconfiguracionF] = useState("NORMAL");
     const [configuracionB, setconfiguracionB] = useState("SOLO_SEGUROS");
     const [nombrePartida, setnombrePartida] = useState('');
@@ -52,29 +50,24 @@ function PartidaPrivada(){
         event.preventDefault();
         console.log('unirme')
         //enviar datos y esperar respuesta
-        const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/conectar", {nombrePartida, codigoPartida,jugador});
+        const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/conectar", {nombre:nombrePartida, password:codigoPartida,jugador});
         console.log(response.data);
-        setPartidaId(response.data.id_partida)
-        setColor(response.data.color_jugador)
-        console.log(idPartida)
-        console.log(color)
+        console.log(response.data);
+        let id_part = response.data.id;
+        let col = response.data.color;
+        navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col } });     
+ 
         
     };
 
     const handleSubmit1 = async (event) => {
         event.preventDefault();
         const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/crear", {nombre, password, jugador, configuracionB, configuracionF});
+        console.error();
         console.log(response.data);
-
-        setPartidaId(response.data.id_partida);
-        setColor(response.data.color_jugador);
-        console.log(idPartida);
-        console.log(color);
-
-        navigate({
-            pathname: process.env.PUBLIC_URL+'/partida',
-            //state: { color, idPartida }
-        });                                
+        let id_part = response.data.id;
+        let col = response.data.color;
+        navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col } });                              
     };
 
     return(

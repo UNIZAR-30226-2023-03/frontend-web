@@ -2,7 +2,9 @@ import React, { useState, useEffect} from "react";
 import "../styles/Partida.css";
 import Timer from './Timer';
 import {casillas} from './Casillas.jsx'
-
+import { useLocation } from 'react-router-dom';
+// import SockJS from 'sockjs-client';
+// import Stomp from 'stompjs';
 import uno from "../imagenes/carasdado/uno.PNG";
 import dos from "../imagenes/carasdado/dos.PNG";
 import tres from "../imagenes/carasdado/tres.PNG";
@@ -20,16 +22,55 @@ const photos = [
 ];
 
 
-function Partida(props) {
+// function connectToSocket(idPartida) {
+//   const url = "https://lamesa-backend.azurewebsites.net/partida"
+//   console.log("connecting to the game");
+//   let socket = new SockJS(url + "/ws");
+//   let stompClient = Stomp.over(socket);
+//   stompClient.connect({}, function (frame) {
+//       console.log("connected to the frame: " + frame);
+//       stompClient.subscribe("/topic/nuevo-jugador/" + idPartida, function (response) {
+//           // Un jugador se ha unido a la partida (cuando aún no ha empezado)
+//           let data = JSON.parse(response.body);
+//           console.log(data);
+//           displayResponse(data);
+//       })
+//       stompClient.subscribe("/topic/salida/" + idPartida, function (response) {
+//           // Un jugador ha sacado ficha de casa -> Actualizar tablero
+//           let data = JSON.parse(response.body);
+//           console.log(data);
+//           displayResponse(data);
+//       })
+//       stompClient.subscribe("/topic/movimiento/" + idPartida, function (response) {
+//           // Un jugador ha hecho un movimiento -> Actualizar tablero
+//           let data = JSON.parse(response.body);
+//           console.log(data);
+//           displayResponse(data);
+//       })
+//       stompClient.subscribe("/topic/chat/" + idPartida, function (response) {
+//           // Mensaje de chat recibido
+//           let data = JSON.parse(response.body);
+//           console.log(data);
+//           displayResponse(data);
+//       })
+//   })
+// }
 
-  //const { color = 'amarillo', idPartida = '1' } = props.location.state || {};
+
+function Partida() {
+  
+  const { state } = useLocation();
+  const [idPartida, setIdPartida] = useState(null);
+  const [color, setColor] = useState(null);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeIsUp, setTimeIsUp] = useState(false);
-  //const [numeroObtenidoDado, setnumeroObtenidoDado] = useState(0);
 
   useEffect(() => {
-
+    if (state) {
+      setIdPartida(state.id_part);
+      setColor(state.col);
+    }
     let intervalId = null;
     if (isPlaying) {
       intervalId = setInterval(() => {
@@ -46,22 +87,20 @@ function Partida(props) {
       const casilla = casillas.find(c => c.id === currentPhotoIndex+1);
       const ficha1 = document.querySelector('.ficha1azul');
       if (casilla.numfichas===0){
-        console.log(casilla.id);
+       
         casilla.numfichas = 1; 
         ficha1.style.left = casilla.left;
         ficha1.style.top = casilla.top;
       }
       else{
         const nuevaCasilla = casillas.find(c => c.id === casilla.id+'-2');
-        console.log(casilla.id);
-        console.log(nuevaCasilla.left);
         ficha1.style.left = nuevaCasilla.left;
         ficha1.style.top = nuevaCasilla.top;
         
       }
     }
     return () => clearInterval(intervalId);
-  }, [isPlaying, currentPhotoIndex]);
+  }, [isPlaying, currentPhotoIndex,state]);
 
 
   const handleStart = () => {
@@ -83,13 +122,12 @@ function Partida(props) {
   function handleTimeUp() {
     setTimeIsUp(true);
   }
-  // console.log(props.idPartida)
-  // console.log(props.color)
+
   return (  
     
     <>
-      {/* <p>El id es {idPartida}</p>;
-      <p>El color es {color}</p>; */}
+      <p>El id es {idPartida}</p>;
+      <p>El color es {color}</p>;
       <div className="lamesa">
         <div className="icono"></div>
         <div className="ficha1azul"></div>
