@@ -21,13 +21,13 @@ const photos = [
 
 
 function Partida(props) {
-  
+
+  //const { color = 'amarillo', idPartida = '1' } = props.location.state || {};
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeIsUp, setTimeIsUp] = useState(false);
   //const [numeroObtenidoDado, setnumeroObtenidoDado] = useState(0);
-  <p>El id es {props.idPartida}</p>;
-  <p>El color es {props.color}</p>;
+
   useEffect(() => {
 
     let intervalId = null;
@@ -83,183 +83,188 @@ function Partida(props) {
   function handleTimeUp() {
     setTimeIsUp(true);
   }
+  // console.log(props.idPartida)
+  // console.log(props.color)
   return (  
+    
     <>
-      <div class="lamesa">
-        <div class="icono"></div>
-        <div class="ficha1azul"></div>
-        <div class="ficha2azul"></div>
-        <div class="ficha3azul"></div>
-        <div class="ficha4azul"></div>
-        <div class="ficha1rojo"></div>
-        <div class="ficha2rojo"></div>
-        <div class="ficha3rojo"></div>
-        <div class="ficha4rojo"></div>
-        <div class="ficha1amarillo"></div>
-        <div class="ficha2amarillo"></div>
-        <div class="ficha3amarillo"></div>
-        <div class="ficha4amarillo"></div>
-        <div class="ficha1verde"></div>
-        <div class="ficha2verde"></div>
-        <div class="ficha3verde"></div>
-        <div class="ficha4verde"></div> 
-        <div class="azul"></div>
-        <div class="rojo"></div>
-        <div class="amarillo"></div>
-        <div class="verde"></div>
-        <div class="azulb"></div>
-        <div class="rojob"></div>
-        <div class="amarillob"></div>
-        <div class="verdeb"></div>
-        <div class="azulc"></div>
-        <div class="rojoc"></div>
-        <div class="amarilloc"></div>
-        <div class="verdec"></div>
-        <div class="azuld"></div>
-        <div class="rojod"></div>
-        <div class="amarillod"></div>
-        <div class="verded"></div>
+      {/* <p>El id es {idPartida}</p>;
+      <p>El color es {color}</p>; */}
+      <div className="lamesa">
+        <div className="icono"></div>
+        <div className="ficha1azul"></div>
+        <div className="ficha2azul"></div>
+        <div className="ficha3azul"></div>
+        <div className="ficha4azul"></div>
+        <div className="ficha1rojo"></div>
+        <div className="ficha2rojo"></div>
+        <div className="ficha3rojo"></div>
+        <div className="ficha4rojo"></div>
+        <div className="ficha1amarillo"></div>
+        <div className="ficha2amarillo"></div>
+        <div className="ficha3amarillo"></div>
+        <div className="ficha4amarillo"></div>
+        <div className="ficha1verde"></div>
+        <div className="ficha2verde"></div>
+        <div className="ficha3verde"></div>
+        <div className="ficha4verde"></div> 
+        <div className="azul"></div>
+        <div className="rojo"></div>
+        <div className="amarillo"></div>
+        <div className="verde"></div>
+        <div className="azulb"></div>
+        <div className="rojob"></div>
+        <div className="amarillob"></div>
+        <div className="verdeb"></div>
+        <div className="azulc"></div>
+        <div className="rojoc"></div>
+        <div className="amarilloc"></div>
+        <div className="verdec"></div>
+        <div className="azuld"></div>
+        <div className="rojod"></div>
+        <div className="amarillod"></div>
+        <div className="verded"></div>
 
-        <div class="verdee">         
-          <div class="filas"></div>
-          <div class="filas f1"></div>
-          <div class="filas f2"></div>
-          <div class="filas f3"></div>
-          <div class="filas f4"></div>
-          <div class="filas f5"></div>
-          <div class="filas f6"></div>
-          <div class="filas f7"></div>
-          <div class="filab f8"></div>
-          <div class="filab f9"></div>
-          <div class="filab f10"></div>
-          <div class="filab f11"></div>
-          <div class="filab f12"></div>
-          <div class="filab f13"></div>
-          <div class="filab f14"></div>
-          <div class="filab f15"></div>
-          <div class="filac f16"></div>
-          <div class="filac f17"></div>
-          <div class="filac f18"></div>
-          <div class="filac f19"></div>
-          <div class="filac f20"></div>
-          <div class="filac f21"></div>
-          <div class="filac f22"></div>
-          <div class="filac f23"></div>
-          <div class="filad f24"></div>
-          <div class="filad f25"></div>
-          <div class="filad f26"></div>
-          <div class="filad f27"></div>
-          <div class="filad f28"></div>
-          <div class="filad f29"></div>
-          <div class="filad f30"></div>
-          <div class="filad f31"></div> 
-          <div class="filae incli1"></div>
-          <div class="filae incli2"></div>
-          <div class="filae incli3"></div>
-          <div class="filae incli4"></div>   
-          <div class="filae derpasamarillo"></div>  
-          <div class="filae izqpasamarillo"></div>
-          <div class="filae derpasrojo"></div>  
-          <div class="filae izqpasrojo"></div>
-          <div class="filae debpasazul"></div>  
-          <div class="filae arrpasazul"></div>     
-          <div class="filae debpasverde"></div>  
-          <div class="filae arrpasverde"></div>    
-          <i class="star s1 fa fa-star"></i>
-          <i class="star s2 fa fa-star"></i>   
-          <div class="s3">
-          <i class="ss3 fa fa-star"></i></div>      
-          <div class="s4">
-          <i class="ss4 fa fa-star"></i></div>         
-          <div class="s5">
-          <i class="ss5 fa fa-star"></i></div>           
-          <i class="star s6 fa fa-star"></i>      
-          <i class="star s7 fa fa-star"></i>
-          <i class="star s8 fa fa-star"></i>
-          <div class="s9">
-          <i class="ss9 fa fa-star"></i></div>    
-          <div class="s10">
-          <i class="ss10 fa fa-star"></i></div>             
-          <div class="s11">
-          <i class="ss11 fa fa-star"></i></div>
-          <i class="star s12 fa fa-star"></i> 
+        <div className="verdee">         
+          <div className="filas"></div>
+          <div className="filas f1"></div>
+          <div className="filas f2"></div>
+          <div className="filas f3"></div>
+          <div className="filas f4"></div>
+          <div className="filas f5"></div>
+          <div className="filas f6"></div>
+          <div className="filas f7"></div>
+          <div className="filab f8"></div>
+          <div className="filab f9"></div>
+          <div className="filab f10"></div>
+          <div className="filab f11"></div>
+          <div className="filab f12"></div>
+          <div className="filab f13"></div>
+          <div className="filab f14"></div>
+          <div className="filab f15"></div>
+          <div className="filac f16"></div>
+          <div className="filac f17"></div>
+          <div className="filac f18"></div>
+          <div className="filac f19"></div>
+          <div className="filac f20"></div>
+          <div className="filac f21"></div>
+          <div className="filac f22"></div>
+          <div className="filac f23"></div>
+          <div className="filad f24"></div>
+          <div className="filad f25"></div>
+          <div className="filad f26"></div>
+          <div className="filad f27"></div>
+          <div className="filad f28"></div>
+          <div className="filad f29"></div>
+          <div className="filad f30"></div>
+          <div className="filad f31"></div> 
+          <div className="filae incli1"></div>
+          <div className="filae incli2"></div>
+          <div className="filae incli3"></div>
+          <div className="filae incli4"></div>   
+          <div className="filae derpasamarillo"></div>  
+          <div className="filae izqpasamarillo"></div>
+          <div className="filae derpasrojo"></div>  
+          <div className="filae izqpasrojo"></div>
+          <div className="filae debpasazul"></div>  
+          <div className="filae arrpasazul"></div>     
+          <div className="filae debpasverde"></div>  
+          <div className="filae arrpasverde"></div>    
+          <i className="star s1 fa fa-star"></i>
+          <i className="star s2 fa fa-star"></i>   
+          <div className="s3">
+          <i className="ss3 fa fa-star"></i></div>      
+          <div className="s4">
+          <i className="ss4 fa fa-star"></i></div>         
+          <div className="s5">
+          <i className="ss5 fa fa-star"></i></div>           
+          <i className="star s6 fa fa-star"></i>      
+          <i className="star s7 fa fa-star"></i>
+          <i className="star s8 fa fa-star"></i>
+          <div className="s9">
+          <i className="ss9 fa fa-star"></i></div>    
+          <div className="s10">
+          <i className="ss10 fa fa-star"></i></div>             
+          <div className="s11">
+          <i className="ss11 fa fa-star"></i></div>
+          <i className="star s12 fa fa-star"></i> 
 
-          <div class="numeros"></div>
-          <div class="numeros n1">1</div>
-          <div class="numeros n2">2</div>
-          <div class="numeros n3">3</div>
-          <div class="numeros n4">4</div>
-          <div class="numeros n5">5</div>
-          <div class="numeros n6">6</div>
-          <div class="numeros n7">7</div>
-          <div class="numeros n8">8</div>
-          <div class="numerosb"></div>
-          <div class="numerosb n9">9</div>
-          <div class="numerosb n10">10</div>
-          <div class="numerosb n11">11</div>
-          <div class="numerosb n12">12</div>
-          <div class="numerosb n13">13</div>
-          <div class="numerosb n14">14</div>
-          <div class="numerosb n15">15</div>
-          <div class="numerosb n16">16</div>
-          <div class="numerosb n17">17</div>
-          <div class="numerosb n18">18</div>
-          <div class="numerosb n19">19</div>
-          <div class="numerosb n20">20</div>
-          <div class="numerosb n21">21</div>
-          <div class="numerosb n22">22</div>
-          <div class="numerosb n23">23</div>
-          <div class="numerosb n24">24</div>
-          <div class="numerosb n25">25</div>
+          <div className="numeros"></div>
+          <div className="numeros n1">1</div>
+          <div className="numeros n2">2</div>
+          <div className="numeros n3">3</div>
+          <div className="numeros n4">4</div>
+          <div className="numeros n5">5</div>
+          <div className="numeros n6">6</div>
+          <div className="numeros n7">7</div>
+          <div className="numeros n8">8</div>
+          <div className="numerosb"></div>
+          <div className="numerosb n9">9</div>
+          <div className="numerosb n10">10</div>
+          <div className="numerosb n11">11</div>
+          <div className="numerosb n12">12</div>
+          <div className="numerosb n13">13</div>
+          <div className="numerosb n14">14</div>
+          <div className="numerosb n15">15</div>
+          <div className="numerosb n16">16</div>
+          <div className="numerosb n17">17</div>
+          <div className="numerosb n18">18</div>
+          <div className="numerosb n19">19</div>
+          <div className="numerosb n20">20</div>
+          <div className="numerosb n21">21</div>
+          <div className="numerosb n22">22</div>
+          <div className="numerosb n23">23</div>
+          <div className="numerosb n24">24</div>
+          <div className="numerosb n25">25</div>
           
-          <div class="numeros n26">26</div>
-          <div class="numeros n27">27</div>
-          <div class="numeros n28">28</div>
-          <div class="numeros n29">29</div>
-          <div class="numeros n30">30</div>
-          <div class="numeros n31">31</div>
-          <div class="numeros n32">32</div>
-          <div class="numeros n33">33</div>
-          <div class="numeros n34">34</div>
-          <div class="numeros n35">35</div>
-          <div class="numeros n36">36</div>
-          <div class="numeros n37">37</div>
-          <div class="numeros n38">38</div>
-          <div class="numeros n39">39</div>
-          <div class="numeros n40">40</div>
-          <div class="numeros n41">41</div>
-          <div class="numeros n42">42</div>
+          <div className="numeros n26">26</div>
+          <div className="numeros n27">27</div>
+          <div className="numeros n28">28</div>
+          <div className="numeros n29">29</div>
+          <div className="numeros n30">30</div>
+          <div className="numeros n31">31</div>
+          <div className="numeros n32">32</div>
+          <div className="numeros n33">33</div>
+          <div className="numeros n34">34</div>
+          <div className="numeros n35">35</div>
+          <div className="numeros n36">36</div>
+          <div className="numeros n37">37</div>
+          <div className="numeros n38">38</div>
+          <div className="numeros n39">39</div>
+          <div className="numeros n40">40</div>
+          <div className="numeros n41">41</div>
+          <div className="numeros n42">42</div>
           
-          <div class="numerosb n43">43</div>
-          <div class="numerosb n44">44</div>
-          <div class="numerosb n45">45</div>
-          <div class="numerosb n46">46</div>
-          <div class="numerosb n47">47</div>
-          <div class="numerosb n48">48</div>
-          <div class="numerosb n49">49</div>
-          <div class="numerosb n50">50</div>
-          <div class="numerosb n51">51</div>
-          <div class="numerosb n52">52</div>
-          <div class="numerosb n53">53</div>
-          <div class="numerosb n54">54</div>
-          <div class="numerosb n55">55</div>
-          <div class="numerosb n56">56</div>
-          <div class="numerosb n57">57</div>
-          <div class="numerosb n58">58</div>
-          <div class="numerosb n59">59</div>
+          <div className="numerosb n43">43</div>
+          <div className="numerosb n44">44</div>
+          <div className="numerosb n45">45</div>
+          <div className="numerosb n46">46</div>
+          <div className="numerosb n47">47</div>
+          <div className="numerosb n48">48</div>
+          <div className="numerosb n49">49</div>
+          <div className="numerosb n50">50</div>
+          <div className="numerosb n51">51</div>
+          <div className="numerosb n52">52</div>
+          <div className="numerosb n53">53</div>
+          <div className="numerosb n54">54</div>
+          <div className="numerosb n55">55</div>
+          <div className="numerosb n56">56</div>
+          <div className="numerosb n57">57</div>
+          <div className="numerosb n58">58</div>
+          <div className="numerosb n59">59</div>
           
-          <div class="numeros n60">60</div>
-          <div class="numeros n61">61</div>
-          <div class="numeros n62">62</div>
-          <div class="numeros n63">63</div>
-          <div class="numeros n64">64</div>
-          <div class="numeros n65">65</div>
-          <div class="numeros n66">66</div>
-          <div class="numeros n67">67</div>
-          <div class="numeros n68">68</div>       
+          <div className="numeros n60">60</div>
+          <div className="numeros n61">61</div>
+          <div className="numeros n62">62</div>
+          <div className="numeros n63">63</div>
+          <div className="numeros n64">64</div>
+          <div className="numeros n65">65</div>
+          <div className="numeros n66">66</div>
+          <div className="numeros n67">67</div>
+          <div className="numeros n68">68</div>       
         </div>
       </div>
-      <div class="partidaDado">
+      <div className="partidaDado">
         {photos.map((photo, index) => (
           <img
             key={photo.name}
@@ -270,7 +275,7 @@ function Partida(props) {
         ))
         }
         </div>
-      <button class="tirarDado" onClick={onClick} disabled={isPlaying}>
+      <button className="tirarDado" onClick={onClick} disabled={isPlaying}>
         Tirar dado
       </button>
     <div>

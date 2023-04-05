@@ -41,8 +41,7 @@ function Registrarse() {
         cookies.set('idUsuario',response.data.id,{path: '/'})
         cookies.set('nombreUsuario',username,{path: '/'})
         navigate(process.env.PUBLIC_URL+'/principal');
-      }
-      
+      }      
   };
 
   return (

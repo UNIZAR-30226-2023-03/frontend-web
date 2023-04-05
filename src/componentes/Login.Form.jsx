@@ -24,7 +24,7 @@ function LoginForm() {
     console.log(response.data);
     if (response.data){
       const cookies = new Cookies();
-      cookies.set('idUsuario',response.data,{path: '/'})
+      cookies.set('idUsuario',response.data.id,{path: '/'})
       cookies.set('nombreUsuario',login,{path: '/'})
       navigate(process.env.PUBLIC_URL+'/principal');
     }
