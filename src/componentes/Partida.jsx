@@ -3,8 +3,11 @@ import "../styles/Partida.css";
 import Timer from './Timer';
 import {casillas} from './Casillas.jsx'
 import { useLocation } from 'react-router-dom';
-// import SockJS from 'sockjs-client';
-// import Stomp from 'stompjs';
+//import io from 'socket.io-client';
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
+//import SockJsClient from 'react-stomp';
+
 import uno from "../imagenes/carasdado/uno.PNG";
 import dos from "../imagenes/carasdado/dos.PNG";
 import tres from "../imagenes/carasdado/tres.PNG";
@@ -21,40 +24,44 @@ const photos = [
   { id:6, name: "Foto 6", url: seis },
 ];
 
+function NuevoJugador(data){
 
-// function connectToSocket(idPartida) {
-//   const url = "https://lamesa-backend.azurewebsites.net/partida"
-//   console.log("connecting to the game");
-//   let socket = new SockJS(url + "/ws");
-//   let stompClient = Stomp.over(socket);
-//   stompClient.connect({}, function (frame) {
-//       console.log("connected to the frame: " + frame);
-//       stompClient.subscribe("/topic/nuevo-jugador/" + idPartida, function (response) {
-//           // Un jugador se ha unido a la partida (cuando aún no ha empezado)
-//           let data = JSON.parse(response.body);
-//           console.log(data);
-//           displayResponse(data);
-//       })
-//       stompClient.subscribe("/topic/salida/" + idPartida, function (response) {
-//           // Un jugador ha sacado ficha de casa -> Actualizar tablero
-//           let data = JSON.parse(response.body);
-//           console.log(data);
-//           displayResponse(data);
-//       })
-//       stompClient.subscribe("/topic/movimiento/" + idPartida, function (response) {
-//           // Un jugador ha hecho un movimiento -> Actualizar tablero
-//           let data = JSON.parse(response.body);
-//           console.log(data);
-//           displayResponse(data);
-//       })
-//       stompClient.subscribe("/topic/chat/" + idPartida, function (response) {
-//           // Mensaje de chat recibido
-//           let data = JSON.parse(response.body);
-//           console.log(data);
-//           displayResponse(data);
-//       })
-//   })
-// }
+}
+
+
+function connectToSocket(idPartida) {
+  const url = "https://lamesa-backend.azurewebsites.net"
+  console.log("connecting to the game");
+  let socket = new SockJS(url + "/ws");
+  let stompClient = Stomp.over(socket);
+  stompClient.connect({}, function (frame) {
+      console.log("connected to the frame: " + frame);
+      stompClient.subscribe("/topic/nuevo-jugador/" + idPartida, function (response) {
+          // Un jugador se ha unido a la partida (cuando aún no ha empezado)
+          let data = JSON.parse(response.body);
+          console.log(data);
+          NuevoJugador(data);
+      })
+      stompClient.subscribe("/topic/salida/" + idPartida, function (response) {
+          // Un jugador ha sacado ficha de casa -> Actualizar tablero
+          let data = JSON.parse(response.body);
+          console.log(data);
+          //displayResponse(data);
+      })
+      stompClient.subscribe("/topic/movimiento/" + idPartida, function (response) {
+          // Un jugador ha hecho un movimiento -> Actualizar tablero
+          let data = JSON.parse(response.body);
+          console.log(data);
+          //displayResponse(data);
+      })
+      stompClient.subscribe("/topic/chat/" + idPartida, function (response) {
+          // Mensaje de chat recibido
+          let data = JSON.parse(response.body);
+          console.log(data);
+          //displayResponse(data);
+      })
+  })
+}
 
 
 function Partida() {
@@ -65,7 +72,7 @@ function Partida() {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeIsUp, setTimeIsUp] = useState(false);
-
+  connectToSocket(idPartida)
   useEffect(() => {
     if (state) {
       setIdPartida(state.id_part);
