@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 //import io from 'socket.io-client';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-//import SockJsClient from 'react-stomp';
+import Cookies from 'universal-cookie';
 
 import uno from "../imagenes/carasdado/uno.PNG";
 import dos from "../imagenes/carasdado/dos.PNG";
@@ -63,15 +63,15 @@ function connectToSocket(idPartida) {
   })
 }
 
-
 function Partida() {
-  
+  const cookies = new Cookies();
   const { state } = useLocation();
   const [idPartida, setIdPartida] = useState(null);
   const [color, setColor] = useState(null);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeIsUp, setTimeIsUp] = useState(false);
+ 
   connectToSocket(idPartida)
   useEffect(() => {
     if (state) {
@@ -135,6 +135,12 @@ function Partida() {
     <>
       <p>El id es {idPartida}</p>;
       <p>El color es {color}</p>;
+      <div>
+        {color === "AMARILLO" && <h1 className="usernameAmarillo">{cookies.get('nombreUsuario')}</h1>}
+        {color === "VERDE" && <p >{cookies.get('nombreUsuario')}</p>}
+        {color === "ROJO" && <p >{cookies.get('nombreUsuario')}</p>}
+        {color === "AZUL" && <p >{cookies.get('nombreUsuario')}</p>}
+        </div>
       <div className="lamesa">
         <div className="icono"></div>
         <div className="ficha1azul"></div>
