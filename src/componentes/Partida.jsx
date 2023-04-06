@@ -71,13 +71,21 @@ function Partida() {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeIsUp, setTimeIsUp] = useState(false);
+  const [jugadores, setJugadores] = useState([]);
  
   connectToSocket(idPartida)
   useEffect(() => {
     if (state) {
       setIdPartida(state.id_part);
       setColor(state.col);
+      setJugadores(state.jugadores);     
+      // if(state.jugadores.length > 0){
+      //   //const secondData = dataArray[1];
+      //   //console.log("username usuario 2"+ secondData.username);
+      //   //console.log("color usuario 2"+ secondData.color);
+      // }
     }
+
     let intervalId = null;
     if (isPlaying) {
       intervalId = setInterval(() => {
@@ -109,7 +117,17 @@ function Partida() {
     return () => clearInterval(intervalId);
   }, [isPlaying, currentPhotoIndex,state]);
 
-
+      console.log("COMPROBANDO COLORRRRR");
+      if(color === "AZUL"){
+        console.log("AMARILLO PARA AZUL: "+jugadores[0].username);
+      }else if(color ==="ROJO"){
+        console.log("AMARILLO PARA ROJO: "+jugadores[0].username);
+        console.log("AZUL PARA ROJO: "+jugadores[1].username);
+      }else if(color ==="VERDE"){
+        console.log("AMARILLO PARA VERDE: "+jugadores[0].username);
+        console.log("AZUL PARA VERDE: "+jugadores[1].username);
+        console.log("ROJO PARA VERDE: "+jugadores[2].username);
+      }
   const handleStart = () => {
     setIsPlaying(true);
     setTimeout(() => {

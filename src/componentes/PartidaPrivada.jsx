@@ -51,11 +51,14 @@ function PartidaPrivada(){
         console.log('unirme')
         //enviar datos y esperar respuesta
         const response = await axios.post("http://localhost:8080/partida/conectar", {nombre:nombrePartida, password:codigoPartida,jugador});
+        console.log("me uno a una partida y me llega esto");
         console.log(response.data);
-        console.log(response.data);
-        let id_part = response.data.id;
+        let id_part = response.data.id; 
         let col = response.data.color;
-        navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col } });     
+        //let num=response.data.length;
+        let jugadores=response.data.jugadores;
+        console.log("voy a enviar esto: "+jugadores);
+        navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jugadores } });     
  
         
     };
@@ -64,6 +67,7 @@ function PartidaPrivada(){
         event.preventDefault();
         const response = await axios.post("http://localhost:8080/partida/crear", {nombre, password, jugador, configuracionB, configuracionF});
         console.error();
+        console.log("creo un partida y me llega esto");
         console.log(response.data);
         let id_part = response.data.id;
         let col = response.data.color;
