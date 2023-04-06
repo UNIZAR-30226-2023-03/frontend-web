@@ -30,7 +30,7 @@ function NuevoJugador(data){
 
 
 function connectToSocket(idPartida) {
-  const url = "https://lamesa-backend.azurewebsites.net"
+  const url = "http://localhost:8080"
   console.log("connecting to the game");
   let socket = new SockJS(url + "/ws");
   let stompClient = Stomp.over(socket);

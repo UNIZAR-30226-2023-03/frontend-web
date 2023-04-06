@@ -29,7 +29,7 @@ function PartidaPublica(){
 
     const handleSubmit1 = async (event) => {
         event.preventDefault();
-        const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/publica", {jugador:id, configuracionB:partidaBar, configuracionF:partidaMod});
+        const response = await axios.post("http://localhost:8080/partida/publica", {jugador:id, configuracionB:partidaBar, configuracionF:partidaMod});
         console.log(response.data);
         let id_part = response.data.id;
         let col = response.data.color;
