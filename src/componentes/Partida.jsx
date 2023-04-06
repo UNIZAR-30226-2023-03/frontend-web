@@ -3,6 +3,7 @@ import "../styles/Partida.css";
 import Timer from './Timer';
 import {casillas} from './Casillas.jsx'
 import { useLocation } from 'react-router-dom';
+//import io from 'socket.io-client';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import Cookies from 'universal-cookie';
@@ -38,8 +39,7 @@ function connectToSocket(idPartida) {
       stompClient.subscribe("/topic/nuevo-jugador/" + idPartida, function (response) {
           // Un jugador se ha unido a la partida (cuando aún no ha empezado)
           let data = JSON.parse(response.body);
-          console.log("datos que me llegan del socket")
-          console.log(data);
+          console.log("Datos recibidos del SOCKET (JUGADOR UNIENDOSE A PARTIDA): "+ data);
           NuevoJugador(data);
       })
       stompClient.subscribe("/topic/salida/" + idPartida, function (response) {
@@ -71,12 +71,17 @@ function Partida() {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeIsUp, setTimeIsUp] = useState(false);
- 
+  const [jugadores, setJugadores] = useState([]);
+  const [usernameAmarillo, setUsernameAmarillo] = useState('');
+  const [usernameAzul, setUsernameAzul] = useState('');
+  const [usernameRojo, setUsernameRojo] = useState('');
+  const [usernameVerde, setUsernameVerde] = useState('');
   connectToSocket(idPartida)
   useEffect(() => {
     if (state) {
       setIdPartida(state.id_part);
       setColor(state.col);
+      setJugadores(state.jugadores);
     }
     let intervalId = null;
     if (isPlaying) {
@@ -109,6 +114,22 @@ function Partida() {
     return () => clearInterval(intervalId);
   }, [isPlaying, currentPhotoIndex,state]);
 
+  if(color==="AMARILLO"){
+    setUsernameAmarillo(cookies.get('nombreUsuario'));
+  }
+  else if(color === "AZUL"){
+    setUsernameAmarillo(jugadores[0].username);
+    setUsernameAzul(cookies.get('nombreUsuario'));
+  }else if(color ==="ROJO"){
+    setUsernameAmarillo(jugadores[0].username);
+    setUsernameAzul(jugadores[1].username);
+    setUsernameRojo(cookies.get('nombreUsuario'));
+  }else if(color ==="VERDE"){
+    setUsernameAmarillo(jugadores[0].username);
+    setUsernameAzul(jugadores[1].username);
+    setUsernameRojo(jugadores[2].username);
+    setUsernameVerde(cookies.get('nombreUsuario'));
+  }
 
   const handleStart = () => {
     setIsPlaying(true);
@@ -136,11 +157,26 @@ function Partida() {
       <p>El id es {idPartida}</p>;
       <p>El color es {color}</p>;
       <div>
-        {color === "AMARILLO" && <h1 className="usernameAmarillo">{cookies.get('nombreUsuario')}</h1>}
-        {color === "VERDE" && <p >{cookies.get('nombreUsuario')}</p>}
-        {color === "ROJO" && <p >{cookies.get('nombreUsuario')}</p>}
-        {color === "AZUL" && <p >{cookies.get('nombreUsuario')}</p>}
-        </div>
+        {color === "AMARILLO" && <h1 className="usernameAmarillo">{cookies.get('nombreUsuario')}</h1>&&
+        <h1 className="usernameRojo">{usernameRojo}</h1>&&
+        <h1 className="usernameAzul">{usernameAzul}</h1>&&
+        <h1 className="usernameVerde">{usernameVerde}</h1>}
+        
+        {color === "VERDE" && <h1 className="usernameVerde" >{cookies.get('nombreUsuario')}</h1> && 
+        <h1 className="usernameAmarillo">{usernameAmarillo}</h1> &&
+        <h1 className="usernameRojo">{usernameRojo}</h1>&&
+        <h1 className="usernameAzul">{usernameAzul}</h1>}
+
+        {color === "ROJO" && <h1 className="usernameRojo" >{cookies.get('nombreUsuario')}</h1>&&
+        <h1 className="usernameAmarillo">{usernameAmarillo}</h1>&&
+        <h1 className="usernameAzul">{usernameAzul}</h1>&&
+        <h1 className="usernameVerde">{usernameVerde}</h1>}
+
+        {color === "AZUL" && <h1 className="usernameAzul" >{cookies.get('nombreUsuario')}</h1>&&
+        <h1 className="usernameAmarillo">{usernameAmarillo}</h1>&&
+        <h1 className="usernameRojo">{usernameRojo}</h1>&&
+        <h1 className="usernameVerde">{usernameVerde}</h1>}
+      </div>    
       <div className="lamesa">
         <div className="icono"></div>
         <div className="ficha1azul"></div>

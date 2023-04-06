@@ -30,25 +30,28 @@
   }
 
   .usernameAmarillo{
-    margin-left:1220px;
-    margin-top:509px;
+    left:63%;
+    top:63%;
     z-index:400;
     position:absolute ;
   }
   .usernameVerde{
-    top:55%;
-    left:55%;
+    top:63%;
+    left:32%;
     z-index:9999;
+    position:absolute ;
   }
   .usernameRojo{
-    top:55%;
-    left:55%;
+    top:2%;
+    left:32%;
     z-index:9999;
+    position:absolute ;
   }
   .usernameAzul{
-    top:55%;
-    left:55%;
+    top:2%;
+    left:63%;
     z-index:200;
+    position:absolute ;
   }
   
   .ficha1azul:hover,.ficha2azul:hover,.ficha3azul:hover,.ficha4azul:hover,.ficha1rojo:hover,.ficha2rojo:hover,.ficha3rojo:hover,.ficha4rojo:hover,.ficha1verde:hover,.ficha2verde:hover,.ficha3verde:hover,.ficha4verde:hover,.ficha1amarillo:hover,.ficha2amarillo:hover,.ficha3amarillo:hover,.ficha4amarillo:hover {
