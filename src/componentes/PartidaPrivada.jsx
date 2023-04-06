@@ -56,6 +56,7 @@ function PartidaPrivada(){
         let id_part = response.data.id;
         let col = response.data.color;
         navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col } });     
+        
  
         
     };
