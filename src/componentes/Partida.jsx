@@ -3,7 +3,6 @@ import "../styles/Partida.css";
 import Timer from './Timer';
 import {casillas} from './Casillas.jsx'
 import { useLocation } from 'react-router-dom';
-//import io from 'socket.io-client';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import Cookies from 'universal-cookie';
@@ -39,6 +38,7 @@ function connectToSocket(idPartida) {
       stompClient.subscribe("/topic/nuevo-jugador/" + idPartida, function (response) {
           // Un jugador se ha unido a la partida (cuando aún no ha empezado)
           let data = JSON.parse(response.body);
+          console.log("datos que me llegan del socket")
           console.log(data);
           NuevoJugador(data);
       })

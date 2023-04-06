@@ -60,12 +60,12 @@ function Registrarse() {
         </label>
         <br/>
         <label>
-          <p className="textoRegistro">Contraseña nueva:</p>
+          <p className="textoRegistro">Contraseña:</p>
           <input type="password" value={password} onChange={handlePassword1Change} />
         </label>
         <br/>
         <label>
-        <p className="textoRegistro">Repita la contraseña anterior:</p>
+        <p className="textoRegistro">Repita la contraseña:</p>
           <input type="password" value={password_2} onChange={handlePassword2Change} />
         </label>
         <br/>
