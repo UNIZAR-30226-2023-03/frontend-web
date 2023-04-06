@@ -28,13 +28,35 @@
     position: fixed;
     z-index:9999;
   }
+
+  .usernameAmarillo{
+    margin-left:1220px;
+    margin-top:509px;
+    z-index:400;
+    position:absolute ;
+  }
+  .usernameVerde{
+    top:55%;
+    left:55%;
+    z-index:9999;
+  }
+  .usernameRojo{
+    top:55%;
+    left:55%;
+    z-index:9999;
+  }
+  .usernameAzul{
+    top:55%;
+    left:55%;
+    z-index:200;
+  }
   
-  .ficha1:hover,.ficha2:hover,.ficha3:hover,.ficha4:hover,.fichab1:hover,.fichab2:hover,.fichab3:hover,.fichab4:hover,.fichac1:hover,.fichac2:hover,.fichac3:hover,.fichac4:hover,.fichad1:hover,.fichad2:hover,.fichad3:hover,.fichad4:hover {
+  .ficha1azul:hover,.ficha2azul:hover,.ficha3azul:hover,.ficha4azul:hover,.ficha1rojo:hover,.ficha2rojo:hover,.ficha3rojo:hover,.ficha4rojo:hover,.ficha1verde:hover,.ficha2verde:hover,.ficha3verde:hover,.ficha4verde:hover,.ficha1amarillo:hover,.ficha2amarillo:hover,.ficha3amarillo:hover,.ficha4amarillo:hover {
     transform: scale(1.1);
     z-index: 9999;
   }
   
-  .ficha1:active,.ficha2:active,.ficha3:active,.ficha4:active,.fichab1:active,.fichab2:active,.fichab3:active,.fichab4:active,.fichac1:active,.fichac2:active,.fichac3:active,.fichac4:active,.fichad1:active,.fichad2:active,.fichad3:active,.fichad4:active {
+  .ficha1azul:active,.ficha2azul:active,.ficha3azul:active,.ficha4azul:active,.ficha1rojo:active,.ficha2rojo:active,.ficha3rojo:active,.ficha4rojo:active,.ficha1verde:active,.ficha2verde:active,.ficha3verde:active,.ficha4verde:active,.ficha1amarillo:active,.ficha2amarillo:active,.ficha3amarillo:active,.ficha4amarillo:active {
     transform: scale(0.9);
   }
 
