@@ -61,12 +61,12 @@
     position:absolute ;
   }
   
-  .ficha1azul:hover,.ficha2azul:hover,.ficha3azul:hover,.ficha4azul:hover,.ficha1rojo:hover,.ficha2rojo:hover,.ficha3rojo:hover,.ficha4rojo:hover,.ficha1verde:hover,.ficha2verde:hover,.ficha3verde:hover,.ficha4verde:hover,.ficha1amarillo:hover,.ficha2amarillo:hover,.ficha3amarillo:hover,.ficha4amarillo:hover {
+  .ficha1AZUL:hover,.ficha2AZUL:hover,.ficha3AZUL:hover,.ficha4AZUL:hover,.ficha1ROJO:hover,.ficha2ROJO:hover,.ficha3ROJO:hover,.ficha4ROJO:hover,.ficha1VERDE:hover,.ficha2VERDE:hover,.ficha3VERDE:hover,.ficha4VERDE:hover,.ficha1AMARILLO:hover,.ficha2AMARILLO:hover,.ficha3AMARILLO:hover,.ficha4AMARILLO:hover {
     transform: scale(1.1);
     z-index: 9999;
   }
   
-  .ficha1azul:active,.ficha2azul:active,.ficha3azul:active,.ficha4azul:active,.ficha1rojo:active,.ficha2rojo:active,.ficha3rojo:active,.ficha4rojo:active,.ficha1verde:active,.ficha2verde:active,.ficha3verde:active,.ficha4verde:active,.ficha1amarillo:active,.ficha2amarillo:active,.ficha3amarillo:active,.ficha4amarillo:active {
+  .ficha1AZUL:active,.ficha2AZUL:active,.ficha3AZUL:active,.ficha4AZUL:active,.ficha1ROJO:active,.ficha2ROJO:active,.ficha3ROJO:active,.ficha4ROJO:active,.ficha1VERDE:active,.ficha2VERDE:active,.ficha3VERDE:active,.ficha4VERDE:active,.ficha1AMARILLO:active,.ficha2AMARILLO:active,.ficha3AMARILLO:active,.ficha4AMARILLO:active {
     transform: scale(0.9);
   }
 
@@ -256,7 +256,7 @@
  }
  
  /*Fichas azules*/
- .ficha2azul{
+ .ficha2AZUL{
     position:absolute ;
     background:blue;
     top:10%;
@@ -272,7 +272,7 @@
     transition: transform 0.1s ease-out;
 }
 
- .ficha3azul{
+ .ficha3AZUL{
      position:absolute ;
      background:blue;
      top:20%;
@@ -288,7 +288,7 @@
      transition: transform 0.1s ease-out;
  }
  
- .ficha4azul{
+ .ficha4AZUL{
      position:absolute ;
      background:blue;
      top:20%;
@@ -304,7 +304,7 @@
      transition: transform 0.1s ease-out;
  }
  
- .ficha1azul{
+ .ficha1AZUL{
      position:absolute ;
      border:1px solid #000;
      background:blue;
@@ -322,7 +322,7 @@
  }
  
  /*Fichas rojas*/
- .ficha1rojo{
+ .ficha1ROJO{
      position:absolute ;
      background:red;
      top:10%;
@@ -338,7 +338,7 @@
      cursor: pointer;
      transition: transform 0.1s ease-out;
  }
- .ficha2rojo{
+ .ficha2ROJO{
      position:absolute ;
      border:1px solid #000;
      background:red;
@@ -355,7 +355,7 @@
      cursor: pointer;
      transition: transform 0.1s ease-out;
  }
- .ficha3rojo{
+ .ficha3ROJO{
      position:absolute ;
      border:1px solid #000;
      background:red;
@@ -372,7 +372,7 @@
      cursor: pointer;
      transition: transform 0.1s ease-out;
  }
- .ficha4rojo{
+ .ficha4ROJO{
      position:absolute ;
      border:1px solid #000;
      background:red;
@@ -392,7 +392,7 @@
  
  
  /*Fichas amarillas*/
- .ficha1amarillo{
+ .ficha1AMARILLO{
      position:absolute ;
      border:1px solid #000;
      background:yellow;
@@ -409,7 +409,7 @@
      transition: transform 0.1s ease-out;
  }
  
- .ficha2amarillo{
+ .ficha2AMARILLO{
      position:absolute ;
      z-index: 9998;
      background:yellow;
@@ -424,7 +424,7 @@
      cursor: pointer;
      transition: transform 0.1s ease-out;
  }
- .ficha3amarillo{
+ .ficha3AMARILLO{
      position:absolute ;
      border:1px solid #000;
      background:yellow;
@@ -441,7 +441,7 @@
      z-index: 9998;
  }
  
- .ficha4amarillo{
+ .ficha4AMARILLO{
      position:absolute ;
      z-index: 9998;
      background:yellow;
@@ -458,7 +458,7 @@
  }
  
  /*Fichas verdes*/
- .ficha1verde{
+ .ficha1VERDE{
      position:absolute ;
      z-index: 9998;
      background:green;
@@ -473,7 +473,7 @@
      cursor: pointer;
      transition: transform 0.1s ease-out;
  }
- .ficha2verde{
+ .ficha2VERDE{
      position:absolute ;
      z-index: 9998;
      background:green;
@@ -489,7 +489,7 @@
      transition: transform 0.1s ease-out;
  }
  
- .ficha3verde{
+ .ficha3VERDE{
      position:absolute ;
      z-index: 9998;
      background:green;
@@ -504,7 +504,7 @@
      cursor: pointer;
      transition: transform 0.1s ease-out;
  }
- .ficha4verde{
+ .ficha4VERDE{
      position:absolute ;
      z-index: 9998;
      background:green;

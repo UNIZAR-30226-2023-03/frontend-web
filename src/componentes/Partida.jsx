@@ -27,13 +27,12 @@ const photos = [
 // function NuevoJugador(data){
 
 // }
-function connectToSocket(idPartida,setturno) {
+function connectToSocket(idPartida,setturno,actualizarTablero) {
   const url = "http://localhost:8080"
   console.log("connecting to the game");
   let socket = new SockJS(url + "/ws");
   let stompClient = Stomp.over(socket);
   stompClient.connect({}, function (frame) {
-      console.log("connected to the frame: " + frame);
       // stompClient.subscribe("/topic/nuevo-jugador/" + idPartida, function (response) {
       //     // Un jugador se ha unido a la partida (cuando aún no ha empezado)
       //     let data = JSON.parse(response.body);
@@ -43,21 +42,20 @@ function connectToSocket(idPartida,setturno) {
       stompClient.subscribe("/topic/dado/" + idPartida, function (response) {
           // Un jugador ha sacado ficha de casa -> Actualizar tablero
           let data = JSON.parse(response.body);
-          console.log(data.turno);
+          console.log("JUGADOR HA HECHO UN MOVIMIENTO DESDE CASA: "+data);
           setturno(data.turno);
+          actualizarTablero(data);
           //displayResponse(data);
       })
-      // stompClient.subscribe("/topic/movimiento/" + idPartida, function (response) {
-      //     // Un jugador ha hecho un movimiento -> Actualizar tablero
-      //     let data = JSON.parse(response.body);
-      //     console.log(data);
-      //     //displayResponse(data);
-      // })
+      stompClient.subscribe("/topic/movimiento/" + idPartida, function (response) {
+          // Un jugador ha hecho un movimiento -> Actualizar tablero
+          //let data = JSON.parse(response.body);
+          //console.log("JUGADOR HA HECHO UN MOVIMIENTO: "+data);
+          //displayResponse(data);
+      })
       stompClient.subscribe("/topic/turno/" + idPartida, function (response) {
           // Mensaje de turno recibido
-          console.log("ASDFHASDJFKBANSDJLKFBASFASFKASLIFBASDLKJFBKASDL");
           let data = JSON.parse(response.body);
-          console.log("INFORMACIONNNN DE TURNOOO: "+data);
           setturno(data);
           //displayResponse(data);
       })
@@ -85,7 +83,28 @@ function Partida() {
   const [usernameVerde, setUsernameVerde] = useState('');
   const [turno, setturno] = useState('');
   let jugadorhatirado = false;
-  connectToSocket(idPartida,setturno);
+
+  function actualizarTablero(data){
+    let numficha = data.fichas[0].numero;
+    const casilla = casillas.find(c => c.id === data.casilla.posicion);
+    let ficha = '.ficha'+numficha+data.fichas[0].color;
+    console.log("FICHA DE OTRO JUGADOR: "+ ficha);
+    const ficha1 = document.querySelector(ficha);
+    if(casilla.numfichas===0){
+      console.log("CASILLA SIN FICHAS");
+      casilla.numfichas = 1; 
+      ficha1.style.left = casilla.left;
+      ficha1.style.top = casilla.top;
+    }
+    else{
+      console.log("CASILLA CON 1 FICHA");
+      const nuevaCasilla = casillas.find(c => c.id === casilla.id+'-2');
+      ficha1.style.left = nuevaCasilla.left;
+      ficha1.style.top = nuevaCasilla.top;
+    }
+  }
+
+  connectToSocket(idPartida,setturno, actualizarTablero);
   useEffect(() => {
     if (state) {
       setIdPartida(state.id_part);
@@ -106,7 +125,7 @@ function Partida() {
     }
     else{
       // const casilla = casillas.find(c => c.id === currentPhotoIndex+1);
-      // const ficha1 = document.querySelector('.ficha1azul');
+      // const ficha1 = document.querySelector('.ficha1AZUL');
       // if (casilla.numfichas===0){
        
       //   casilla.numfichas = 1; 
@@ -154,25 +173,39 @@ function Partida() {
   const getRandomTime = () => {
     return Math.floor(Math.random() * 2000) + 2000;
   };
-  async function enviarDado() {
-    console.log("ENVIANDO DADOOOOOO");
-    const response = await axios.post("http://localhost:8080/partida/dado/"+idPartida + "?dado=" + currentPhotoIndex+1);
-    console.log("RESPUESTA TRAS ENVIAR DADO SACAR: " + response.data.sacar);
-    console.log("RESPUESTA TRAS ENVIAR DADO TURNO: " + response.data.turno);
-    setturno(response.data.turno);
+
+  function moverFicha(response){
     if(response.data.sacar){
       let numficha = response.data.fichas[0].numero;
       const casilla = casillas.find(c => c.id === response.data.casilla.posicion);
       let ficha = '.ficha'+numficha+color;
       console.log("FICHAAAAA: "+ ficha);
-      const ficha1 = document.querySelector({ficha});
-      ficha1.style.left = casilla.left;
-      ficha1.style.top = casilla.top;
+      const ficha1 = document.querySelector(ficha);
+      if (casilla.numfichas===0){
+        casilla.numfichas = 1; 
+        ficha1.style.left = casilla.left;
+        ficha1.style.top = casilla.top;
+      }
+      else{
+        const nuevaCasilla = casillas.find(c => c.id === casilla.id+'-2');
+        ficha1.style.left = nuevaCasilla.left;
+        ficha1.style.top = nuevaCasilla.top;
+      }
+      
     }
   }
+  async function enviarDado() {
+    console.log("ENVIANDO DADOOOOOO");
+    const response = await axios.post("http://localhost:8080/partida/dado/"+idPartida + "?dado=5");
+    console.log("RESPUESTA TRAS ENVIAR DADO SACAR: " + response.data.sacar);
+    console.log("RESPUESTA TRAS ENVIAR DADO TURNO: " + response.data.turno);
+    console.log("RESPUESTA TRAS ENVIAR DADO POSICION: " + response.data.casilla.posicion);
+    moverFicha(response);
+    setturno(response.data.turno);
+  }
+
   async function enviarComienzopartida(){
     const response = await axios.post("http://localhost:8080/partida/empezar/"+idPartida);
-    console.log("DATOS DE EMPEZAR PARTIDA: "+ response.data);
     setturno(response.data);
   }
   function startpartida(){
@@ -234,22 +267,22 @@ function Partida() {
       </div>    
       <div className="lamesa">
         <div className="icono"></div>
-        <div className="ficha1azul"></div>
-        <div className="ficha2azul"></div>
-        <div className="ficha3azul"></div>
-        <div className="ficha4azul"></div>
-        <div className="ficha1rojo"></div>
-        <div className="ficha2rojo"></div>
-        <div className="ficha3rojo"></div>
-        <div className="ficha4rojo"></div>
-        <div className="ficha1amarillo"></div>
-        <div className="ficha2amarillo"></div>
-        <div className="ficha3amarillo"></div>
-        <div className="ficha4amarillo"></div>
-        <div className="ficha1verde"></div>
-        <div className="ficha2verde"></div>
-        <div className="ficha3verde"></div>
-        <div className="ficha4verde"></div> 
+        <div className="ficha1AZUL"></div>
+        <div className="ficha2AZUL"></div>
+        <div className="ficha3AZUL"></div>
+        <div className="ficha4AZUL"></div>
+        <div className="ficha1ROJO"></div>
+        <div className="ficha2ROJO"></div>
+        <div className="ficha3ROJO"></div>
+        <div className="ficha4ROJO"></div>
+        <div className="ficha1AMARILLO"></div>
+        <div className="ficha2AMARILLO"></div>
+        <div className="ficha3AMARILLO"></div>
+        <div className="ficha4AMARILLO"></div>
+        <div className="ficha1VERDE"></div>
+        <div className="ficha2VERDE"></div>
+        <div className="ficha3VERDE"></div>
+        <div className="ficha4VERDE"></div> 
         <div className="azul"></div>
         <div className="rojo"></div>
         <div className="amarillo"></div>
