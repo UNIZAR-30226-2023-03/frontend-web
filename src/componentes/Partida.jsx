@@ -44,7 +44,7 @@ function connectToSocket(idPartida,setturno,actualizarTablero,color) {
           let data = JSON.parse(response.body);
           if(color !== data.fichas[0].color){
             setturno(data.turno);
-            actualizarTablero(data);
+            actualizarTablero(data.fichas[0].numero,parseInt(data.casilla.posicion)+1,data.fichas[0].color);
           }
 
           //displayResponse(data);
@@ -52,13 +52,14 @@ function connectToSocket(idPartida,setturno,actualizarTablero,color) {
       stompClient.subscribe("/topic/movimiento/" + idPartida, function (response) {
           // Un jugador ha hecho un movimiento -> Actualizar tablero
           let data = JSON.parse(response.body);
-          //console.log("JUGADOR HA HECHO UN MOVIMIENTO: "+data);
+          console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO NUMCASILLA: "+data.destino.posicion+1);
+          console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO COLOR: "+data.destino.fichas.color);
+          console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO FICHA: "+data.destino.fichas.numero);
           //displayResponse(data);
-            
-          if(color !== data.fichas[0].color){ //data.fichas is undefined
-            setturno(data.turno);
-            actualizarTablero(data);
-          }
+          // if(color !== data.color){
+          //   setturno(data.turno);
+          //   actualizarTableroMovimiento(data);
+          // }
       })
       stompClient.subscribe("/topic/turno/" + idPartida, function (response) {
           // Mensaje de turno recibido
@@ -95,14 +96,14 @@ function Partida() {
   const [turno, setturno] = useState('');
   const [numDado, setnumDado] = useState(0);
   let jugadorhatirado = false;
-  let primeravez = true;
+  let fichasBloqueadas;
   const vector = [5,4,4,4,3,3,2,2,2,2,2,2,2,1,1,1,1,1,1,1,2,2,2];
   const [indice, setindice] = useState(0);
+
   useEffect(() => {
-    function actualizarTablero(data){
-      let numficha = data.fichas[0].numero;
-      const casilla = casillasTablero.find(c => c.id === data.casilla.posicion+1);
-      let ficha = '.ficha'+numficha+data.fichas[0].color;
+    function actualizarTablero(numFicha,numcasilla,color){
+      const casilla = casillasTablero.find(c => c.id === numcasilla);
+      let ficha = '.ficha'+numFicha+color;
       console.log("FICHA DE OTRO JUGADOR: "+ ficha);
       const ficha1 = document.querySelector(ficha);
       if(casilla.numfichas===0){
@@ -138,21 +139,6 @@ function Partida() {
     }
     else{
       setnumDado(currentPhotoIndex+1);
-      // const casilla = casillas.find(c => c.id === currentPhotoIndex+1);
-      // const ficha1 = document.querySelector('.ficha1AZUL');
-      // if (casilla.numfichas===0){
-       
-      //   casilla.numfichas = 1; 
-      //   ficha1.style.left = casilla.left;
-      //   ficha1.style.top = casilla.top;
-      // }
-      // else{
-      //   const nuevaCasilla = casillas.find(c => c.id === casilla.id+'-2');
-      //   ficha1.style.left = nuevaCasilla.left;
-      //   ficha1.style.top = nuevaCasilla.top;
-        
-      // }
-
     }
     return () => clearInterval(intervalId);
   }, [isPlaying, currentPhotoIndex,state, idPartida, casillasTablero,color,numDado]);
@@ -177,7 +163,7 @@ function Partida() {
   }
   function mostrarFichasBloqueadas(response){
     let ficha,fichacambiar,i;
-    const fichasBloqueadas = response.data.fichas.map((ficha) => ficha.numero);
+    fichasBloqueadas = response.data.fichas.map((ficha) => ficha.numero);
     for (i = 1; i <= 4; i++) {
       if (fichasBloqueadas.includes(i)) {
         ficha = '.ficha'+i+color;
@@ -187,6 +173,17 @@ function Partida() {
         ficha = '.ficha'+i+color;
         fichacambiar = document.querySelector(ficha);
         fichacambiar.style.disabled="false";
+      }
+    }
+  }
+  function quitarFichasBloqueadas(){
+    let ficha,fichacambiar,i;
+    for (i = 1; i <= 4; i++) {
+      if (fichasBloqueadas.includes(i)) {
+        ficha = '.ficha'+i+color;
+        fichacambiar = document.querySelector(ficha);
+        fichacambiar.style.backgroundColor = "rgb(8, 152, 249)";
+        fichacambiar.style.disabled="true";
       }
     }
   }
@@ -283,6 +280,7 @@ function Partida() {
       fichamover.style.top = nuevaCasilla.top;
     }
     setturno(response.data.turno);
+    //quitarFichasBloqueadas();
   }
   async function enviarFicha(numficha){
     const response = await axios.post("http://localhost:8080/partida/movimiento", {partida: idPartida,ficha: numficha,dado: vector[indice-1]});
