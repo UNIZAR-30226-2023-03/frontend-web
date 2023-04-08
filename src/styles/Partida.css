@@ -258,7 +258,7 @@
  /*Fichas azules*/
  .ficha2AZUL{
     position:absolute ;
-    background:blue;
+    background:rgb(8, 152, 249);
     top:10%;
     left:86%;
     width:35px;
@@ -274,7 +274,7 @@
 
  .ficha3AZUL{
      position:absolute ;
-     background:blue;
+     background:rgb(8, 152, 249);
      top:20%;
      left:77%;
      width:35px;
@@ -290,7 +290,7 @@
  
  .ficha4AZUL{
      position:absolute ;
-     background:blue;
+     background:rgb(8, 152, 249);
      top:20%;
      left:86%;
      width:35px;
@@ -307,7 +307,7 @@
  .ficha1AZUL{
      position:absolute ;
      border:1px solid #000;
-     background:blue;
+     background:rgb(8, 152, 249);
      top:10%;
      left:77%;
      width:35px;
@@ -395,7 +395,7 @@
  .ficha1AMARILLO{
      position:absolute ;
      border:1px solid #000;
-     background:yellow;
+     background:rgb(255, 196, 2);
      top:77%;
      left:77%;
      width:35px;
@@ -412,7 +412,7 @@
  .ficha2AMARILLO{
      position:absolute ;
      z-index: 9998;
-     background:yellow;
+     background:rgb(255, 196, 2);
      top:77%;
      left:86%;
      width:35px;
@@ -427,7 +427,7 @@
  .ficha3AMARILLO{
      position:absolute ;
      border:1px solid #000;
-     background:yellow;
+     background:rgb(255, 196, 2);
      top:87%;
      left:77%;
      width:35px;
@@ -444,7 +444,7 @@
  .ficha4AMARILLO{
      position:absolute ;
      z-index: 9998;
-     background:yellow;
+     background:rgb(255, 196, 2);
      top:87%;
      left:86%;
      width:35px;

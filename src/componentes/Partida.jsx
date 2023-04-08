@@ -27,7 +27,7 @@ const photos = [
 // function NuevoJugador(data){
 
 // }
-function connectToSocket(idPartida,setturno,actualizarTablero) {
+function connectToSocket(idPartida,setturno,actualizarTablero,color) {
   const url = "http://localhost:8080"
   console.log("connecting to the game");
   let socket = new SockJS(url + "/ws");
@@ -42,16 +42,23 @@ function connectToSocket(idPartida,setturno,actualizarTablero) {
       stompClient.subscribe("/topic/dado/" + idPartida, function (response) {
           // Un jugador ha sacado ficha de casa -> Actualizar tablero
           let data = JSON.parse(response.body);
-          console.log("JUGADOR HA HECHO UN MOVIMIENTO DESDE CASA: "+data);
-          setturno(data.turno);
-          actualizarTablero(data);
+          if(color !== data.fichas[0].color){
+            setturno(data.turno);
+            actualizarTablero(data);
+          }
+
           //displayResponse(data);
       })
       stompClient.subscribe("/topic/movimiento/" + idPartida, function (response) {
           // Un jugador ha hecho un movimiento -> Actualizar tablero
-          //let data = JSON.parse(response.body);
+          let data = JSON.parse(response.body);
           //console.log("JUGADOR HA HECHO UN MOVIMIENTO: "+data);
           //displayResponse(data);
+            
+          if(color !== data.fichas[0].color){ //data.fichas is undefined
+            setturno(data.turno);
+            actualizarTablero(data);
+          }
       })
       stompClient.subscribe("/topic/turno/" + idPartida, function (response) {
           // Mensaje de turno recibido
@@ -67,9 +74,13 @@ function connectToSocket(idPartida,setturno,actualizarTablero) {
     // })
   })
 }
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 
 function Partida() {
+  const casillasTablero = casillas;
   const cookies = new Cookies();
   const { state } = useLocation();
   const [idPartida, setIdPartida] = useState(null);
@@ -82,30 +93,32 @@ function Partida() {
   const [usernameRojo, setUsernameRojo] = useState('');
   const [usernameVerde, setUsernameVerde] = useState('');
   const [turno, setturno] = useState('');
+  const [numDado, setnumDado] = useState(0);
   let jugadorhatirado = false;
-
-  function actualizarTablero(data){
-    let numficha = data.fichas[0].numero;
-    const casilla = casillas.find(c => c.id === data.casilla.posicion);
-    let ficha = '.ficha'+numficha+data.fichas[0].color;
-    console.log("FICHA DE OTRO JUGADOR: "+ ficha);
-    const ficha1 = document.querySelector(ficha);
-    if(casilla.numfichas===0){
-      console.log("CASILLA SIN FICHAS");
-      casilla.numfichas = 1; 
-      ficha1.style.left = casilla.left;
-      ficha1.style.top = casilla.top;
-    }
-    else{
-      console.log("CASILLA CON 1 FICHA");
-      const nuevaCasilla = casillas.find(c => c.id === casilla.id+'-2');
-      ficha1.style.left = nuevaCasilla.left;
-      ficha1.style.top = nuevaCasilla.top;
-    }
-  }
-
-  connectToSocket(idPartida,setturno, actualizarTablero);
+  let primeravez = true;
+  const vector = [5,4,4,4,3,3,2,2,2,2,2,2,2,1,1,1,1,1,1,1,2,2,2];
+  const [indice, setindice] = useState(0);
   useEffect(() => {
+    function actualizarTablero(data){
+      let numficha = data.fichas[0].numero;
+      const casilla = casillasTablero.find(c => c.id === data.casilla.posicion+1);
+      let ficha = '.ficha'+numficha+data.fichas[0].color;
+      console.log("FICHA DE OTRO JUGADOR: "+ ficha);
+      const ficha1 = document.querySelector(ficha);
+      if(casilla.numfichas===0){
+        console.log("CASILLA SIN FICHAS");
+        casilla.numfichas = 1; 
+        ficha1.style.left = casilla.left;
+        ficha1.style.top = casilla.top;
+      }
+      else{
+        console.log("CASILLA CON 1 FICHA");
+        const nuevaCasilla = casillasTablero.find(c => c.id === casilla.id+'-2');
+        ficha1.style.left = nuevaCasilla.left;
+        ficha1.style.top = nuevaCasilla.top;
+      }
+    }
+    connectToSocket(idPartida,setturno, actualizarTablero,color);
     if (state) {
       setIdPartida(state.id_part);
       setColor(state.col);
@@ -124,6 +137,7 @@ function Partida() {
       }, 190);
     }
     else{
+      setnumDado(currentPhotoIndex+1);
       // const casilla = casillas.find(c => c.id === currentPhotoIndex+1);
       // const ficha1 = document.querySelector('.ficha1AZUL');
       // if (casilla.numfichas===0){
@@ -141,7 +155,7 @@ function Partida() {
 
     }
     return () => clearInterval(intervalId);
-  }, [isPlaying, currentPhotoIndex,state, idPartida]);
+  }, [isPlaying, currentPhotoIndex,state, idPartida, casillasTablero,color,numDado]);
 
   function comprobarUsernames(){
     if(color==="AMARILLO"){
@@ -161,6 +175,56 @@ function Partida() {
       setUsernameVerde(cookies.get('nombreUsuario'));
     }
   }
+  function mostrarFichasBloqueadas(response){
+    let ficha,fichacambiar,i;
+    const fichasBloqueadas = response.data.fichas.map((ficha) => ficha.numero);
+    for (i = 1; i <= 4; i++) {
+      if (fichasBloqueadas.includes(i)) {
+        ficha = '.ficha'+i+color;
+        fichacambiar = document.querySelector(ficha);
+        fichacambiar.style.backgroundColor = "blue";
+      } else {
+        ficha = '.ficha'+i+color;
+        fichacambiar = document.querySelector(ficha);
+        fichacambiar.style.disabled="false";
+      }
+    }
+  }
+  
+  function moverFichaSalida(response){
+    let numficha, casilla, ficha, fichamover;
+    numficha = response.data.fichas[0].numero;
+    casilla = casillasTablero.find(c => c.id === response.data.casilla.posicion+1);
+    ficha = '.ficha'+numficha+color;
+    console.log("FICHAAAAA: "+ ficha);
+    fichamover = document.querySelector(ficha);
+    if(casilla.numfichas===0){
+      casilla.numfichas = 1; 
+      fichamover.style.left = casilla.left;
+      fichamover.style.top = casilla.top;
+    }
+    else{
+      let nuevaCasilla = casillasTablero.find(c => c.id === casilla.id+'-2');
+      fichamover.style.left = nuevaCasilla.left;
+      fichamover.style.top = nuevaCasilla.top;
+    }
+  }
+
+  async function enviarDado() {
+    await sleep(4000); // Espera 4 segundos
+    console.log("ENVIANDO DADO: "+vector[indice]);
+    let response;
+    response = await axios.post("http://localhost:8080/partida/dado/"+idPartida + "?dado="+vector[indice]);
+    console.log("RESPUESTA TRAS ENVIAR DADO SACAR: "+response.data.sacar);
+    if(response.data.sacar===true){
+      moverFichaSalida(response);
+      setturno(response.data.turno);
+    }
+    else{
+      mostrarFichasBloqueadas(response);
+    }
+    setindice(indice+1);
+  }
 
   const handleStart = () => {
     setIsPlaying(true);
@@ -173,43 +237,12 @@ function Partida() {
   const getRandomTime = () => {
     return Math.floor(Math.random() * 2000) + 2000;
   };
-
-  function moverFicha(response){
-    if(response.data.sacar){
-      let numficha = response.data.fichas[0].numero;
-      const casilla = casillas.find(c => c.id === response.data.casilla.posicion);
-      let ficha = '.ficha'+numficha+color;
-      console.log("FICHAAAAA: "+ ficha);
-      const ficha1 = document.querySelector(ficha);
-      if (casilla.numfichas===0){
-        casilla.numfichas = 1; 
-        ficha1.style.left = casilla.left;
-        ficha1.style.top = casilla.top;
-      }
-      else{
-        const nuevaCasilla = casillas.find(c => c.id === casilla.id+'-2');
-        ficha1.style.left = nuevaCasilla.left;
-        ficha1.style.top = nuevaCasilla.top;
-      }
-      
-    }
-  }
-  async function enviarDado() {
-    console.log("ENVIANDO DADOOOOOO");
-    const response = await axios.post("http://localhost:8080/partida/dado/"+idPartida + "?dado=5");
-    console.log("RESPUESTA TRAS ENVIAR DADO SACAR: " + response.data.sacar);
-    console.log("RESPUESTA TRAS ENVIAR DADO TURNO: " + response.data.turno);
-    console.log("RESPUESTA TRAS ENVIAR DADO POSICION: " + response.data.casilla.posicion);
-    moverFicha(response);
-    setturno(response.data.turno);
-  }
-
+  
   async function enviarComienzopartida(){
     const response = await axios.post("http://localhost:8080/partida/empezar/"+idPartida);
     setturno(response.data);
   }
   function startpartida(){
-    console.log("PARTIDAAAA: " + idPartida);
     enviarComienzopartida();
     const botonStart = document.querySelector('.empezarPartida');
     botonStart.style.display = 'none';
@@ -233,6 +266,34 @@ function Partida() {
       //enviarDado();
     }
   }
+  function movimientoFichas(response,numficha){
+    let casilla, ficha, fichamover;
+    casilla = casillasTablero.find(c => c.id === response.data.destino.posicion+1);
+    ficha = '.ficha'+numficha+color;
+    console.log("FICHA TRAS PULSAR EL USUARIO: "+ ficha);
+    fichamover = document.querySelector(ficha);
+    if(casilla.numfichas===0){
+      casilla.numfichas = 1; 
+      fichamover.style.left = casilla.left;
+      fichamover.style.top = casilla.top;
+    }
+    else{
+      let nuevaCasilla = casillasTablero.find(c => c.id === casilla.id+'-2');
+      fichamover.style.left = nuevaCasilla.left;
+      fichamover.style.top = nuevaCasilla.top;
+    }
+    setturno(response.data.turno);
+  }
+  async function enviarFicha(numficha){
+    const response = await axios.post("http://localhost:8080/partida/movimiento", {partida: idPartida,ficha: numficha,dado: vector[indice-1]});
+    console.log("RESPUESTA TRAS ENVIAR MOVIMIENTO DESTINO: " +response.data.destino.posicion);
+    console.log("RESPUESTA TRAS ENVIAR MOVIMIENTO COMIDA: "+ response.data.comida);
+    movimientoFichas(response,numficha);
+  }
+  const fichaPulsada = (numficha, color) => {
+    console.log("FICHA PULSADA");
+    enviarFicha(numficha);
+  };
 
   return (  
     <>
@@ -267,22 +328,22 @@ function Partida() {
       </div>    
       <div className="lamesa">
         <div className="icono"></div>
-        <div className="ficha1AZUL"></div>
-        <div className="ficha2AZUL"></div>
-        <div className="ficha3AZUL"></div>
-        <div className="ficha4AZUL"></div>
-        <div className="ficha1ROJO"></div>
-        <div className="ficha2ROJO"></div>
-        <div className="ficha3ROJO"></div>
-        <div className="ficha4ROJO"></div>
-        <div className="ficha1AMARILLO"></div>
-        <div className="ficha2AMARILLO"></div>
-        <div className="ficha3AMARILLO"></div>
-        <div className="ficha4AMARILLO"></div>
-        <div className="ficha1VERDE"></div>
-        <div className="ficha2VERDE"></div>
-        <div className="ficha3VERDE"></div>
-        <div className="ficha4VERDE"></div> 
+        <button className="ficha1AZUL" onClick={fichaPulsada.bind(null, 1, "AZUL")}></button>
+        <button className="ficha2AZUL" onClick={fichaPulsada.bind(null, 2, "AZUL")}></button>
+        <button className="ficha3AZUL"  onClick={fichaPulsada.bind(null, 3, "AZUL")}></button>
+        <button className="ficha4AZUL" onClick={fichaPulsada.bind(null, 4, "AZUL")}></button>
+        <button className="ficha1ROJO" disabled></button>
+        <button className="ficha2ROJO" disabled></button>
+        <button className="ficha3ROJO" disabled></button>
+        <button className="ficha4ROJO" disabled></button>
+        <button className="ficha1AMARILLO"  onClick={fichaPulsada.bind(null, 1, "AMARILLO")}></button>
+        <button className="ficha2AMARILLO"  onClick={fichaPulsada.bind(null, 2, "AMARILLO")}></button>
+        <button className="ficha3AMARILLO"  onClick={fichaPulsada.bind(null, 3, "AMARILLO")}></button>
+        <button className="ficha4AMARILLO"  onClick={fichaPulsada.bind(null, 4, "AMARILLO")}></button>
+        <button className="ficha1VERDE" disabled></button>
+        <button className="ficha2VERDE" disabled></button>
+        <button className="ficha3VERDE" disabled></button>
+        <button className="ficha4VERDE" disabled></button> 
         <div className="azul"></div>
         <div className="rojo"></div>
         <div className="amarillo"></div>
