@@ -9,6 +9,9 @@ function Registrarse() {
   const [password, setPassword1] = useState('');
   const [password_2, setPassword2] = useState('');
   const [email, setEmail] = useState('');
+  const [error1, setError1] = useState(false);
+  const [error2, setError2] = useState(false);
+  const [error3, setError3] = useState(false);
 
   const handleUsernameChange = (event) => {
     setLogin(event.target.value);
@@ -20,7 +23,6 @@ function Registrarse() {
 
   const handlePassword2Change = (event) => {
     if(password!==password_2){
-      console.log('no igual') 
     }
     setPassword2(event.target.value);
   };
@@ -32,16 +34,35 @@ function Registrarse() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(username, email, password, password_2);
-    //si password no coinciden no enviar
-      const response = await axios.post("http://localhost:8080/usuario/crear", {email,username, password});
-      console.log(response.data.id);
-      console.log(response.data);
-      if (response.data){
+    if(password!==password_2){
+      setError3(true);
+      setError1(false);
+      setError2(false);
+    }
+    else{
+      await axios.post("http://localhost:8080/usuario/crear", {email,username, password})
+      .then ( response => {
         const cookies = new Cookies();
         cookies.set('idUsuario',response.data.id,{path: '/'})
         cookies.set('nombreUsuario',username,{path: '/'})
         navigate(process.env.PUBLIC_URL+'/principal');
-      }      
+      }) 
+      .catch(error => {
+        console.log(error.response.data)
+        if(error.response.data==="Ya existe un usuario con ese username"){
+          setError1(true);
+          setError2(false);
+          setError3(false);
+        }
+        else if (error.response.data==="Ya existe un usuario con ese email"){
+          setError2(true);
+          setError3(false);
+          setError1(false);
+        }
+      })
+    }
+    
+
   };
 
   return (
@@ -52,11 +73,13 @@ function Registrarse() {
         <label>
         <p className="textoRegistro">Nombre de usuario:</p>
           <input type="text" value={username} onChange={handleUsernameChange} />
+          <p className={error1 ? 'error1' : 'error1In'}>Ya existe un usuario con este username </p>
         </label>
         <br/>
         <label>
         <p className="textoRegistro">Correo electrónico:</p>
           <input type="text" value={email} onChange={handleEmailChange} />
+          <p className={error2 ? 'error2' : 'error2In'}>Ya existe un usuario con ese email </p>
         </label>
         <br/>
         <label>
@@ -67,6 +90,7 @@ function Registrarse() {
         <label>
         <p className="textoRegistro">Repita la contraseña:</p>
           <input type="password" value={password_2} onChange={handlePassword2Change} />
+          <p className={error3 ? 'error2' : 'error2In'}>La contraseña no coincide </p>
         </label>
         <br/>
         <button type="submit" className="botonRegistro">Registrarse</button>
