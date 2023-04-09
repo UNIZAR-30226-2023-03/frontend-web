@@ -307,7 +307,9 @@
  .ficha1AZUL{
      position:absolute ;
      border:1px solid #000;
-     background:url('..//imagenes/iconos/cruz.png');
+     /* background-image:url("..//imagenes/iconos/cruz.png");
+     background-size:cover; */
+     background:rgb(8, 152, 249);
      top:10%;
      left:77%;
      width:35px;
@@ -324,14 +326,13 @@
  /*Fichas rojas*/
  .ficha1ROJO{
      position:absolute ;
-     background:red;
      top:10%;
      left:10%;
      width:35px;
      height:35px;
      border-radius:50%;
      z-index: 9998;
-     background-color: red;
+     background: rgb(236, 40, 40);
      border: none;
      outline: none;
      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
@@ -341,14 +342,13 @@
  .ficha2ROJO{
      position:absolute ;
      border:1px solid #000;
-     background:red;
+     background:rgb(236, 40, 40);
      top:10%;
      left:19%;
      width:35px;
      height:35px;
      border-radius:50%;
      z-index: 9998;
-     background-color: red;
      border: none;
      outline: none;
      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
@@ -358,14 +358,13 @@
  .ficha3ROJO{
      position:absolute ;
      border:1px solid #000;
-     background:red;
+     background:rgb(236, 40, 40);
      top:20%;
      left:10%;
      width:35px;
      height:35px;
      border-radius:50%;
      z-index: 9998;
-     background-color: red;
      border: none;
      outline: none;
      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
@@ -375,14 +374,13 @@
  .ficha4ROJO{
      position:absolute ;
      border:1px solid #000;
-     background:red;
+     background:rgb(236, 40, 40);
      top:20%;
      left:19%;
      width:35px;
      height:35px;
      border-radius:50%;
      z-index: 9998;
-     background-color: red;
      border: none;
      outline: none;
      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
@@ -461,7 +459,7 @@
  .ficha1VERDE{
      position:absolute ;
      z-index: 9998;
-     background:green;
+     background:rgb(126, 223, 15);
      top:77%;
      left:10%;
      width:35px;
@@ -476,7 +474,7 @@
  .ficha2VERDE{
      position:absolute ;
      z-index: 9998;
-     background:green;
+     background:rgb(126, 223, 15);
      top:77%;
      left:19%;
      width:35px;
@@ -492,7 +490,7 @@
  .ficha3VERDE{
      position:absolute ;
      z-index: 9998;
-     background:green;
+     background:rgb(126, 223, 15);
      top:87%;
      left:10%;
      width:35px;
@@ -507,7 +505,7 @@
  .ficha4VERDE{
      position:absolute ;
      z-index: 9998;
-     background:green;
+     background:rgb(126, 223, 15);
      top:87%;
      left:19%;
      width:35px;

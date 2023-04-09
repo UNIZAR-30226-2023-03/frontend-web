@@ -40,7 +40,7 @@ function Registrarse() {
       setError2(false);
     }
     else{
-      await axios.post("https://lamesa-backend.azurewebsites.net/usuario/crear", {email,username, password})
+      await axios.post("http://localhost:8080/usuario/crear", {email,username, password})
       .then ( response => {
         const cookies = new Cookies();
         cookies.set('idUsuario',response.data.id,{path: '/'})

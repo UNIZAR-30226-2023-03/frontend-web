@@ -28,7 +28,7 @@ const photos = [
 
 // }
 function connectToSocket(idPartida,setturno,actualizarTablero,color) {
-  const url = "https://lamesa-backend.azurewebsites.net"
+  const url = "http://localhost:8080"
   console.log("connecting to the game");
   let socket = new SockJS(url + "/ws");
   let stompClient = Stomp.over(socket);
@@ -165,29 +165,37 @@ function Partida() {
     let ficha,fichacambiar,i;
     fichasBloqueadas = response.data.fichas.map((ficha) => ficha.numero);
     for (i = 1; i <= 4; i++) {
+      ficha = '.ficha'+i+color;
+      fichacambiar = document.querySelector(ficha);
       if (fichasBloqueadas.includes(i)) {
-        ficha = '.ficha'+i+color;
-        fichacambiar = document.querySelector(ficha);
-        let imagen = "url('..//imagenes/iconos/cruz.png')";
-        fichacambiar.style.background= imagen;
-        fichacambiar.style.backgroundSize = "cover";
+        //fichacambiar.style.backgroundImage = 'url("..//imagenes/iconos/cruz.png")'; // establece la imagen de fondo
+        //fichacambiar.style.backgroundSize = "cover"; // establece el tamaño de la imagen de fondo
+        fichacambiar.style.backgroundColor = "rgb(39, 40, 41)"; // establece el color de fondo
       } else {
-        ficha = '.ficha'+i+color;
-        fichacambiar = document.querySelector(ficha);
-        fichacambiar.style.disabled="false";
+        fichacambiar.setAttribute('disabled', false);
       }
     }
   }
-  function quitarFichasBloqueadas(){
-    let ficha,fichacambiar,i;
-    for (i = 1; i <= 4; i++) {
-      if (fichasBloqueadas.includes(i)) {
-        ficha = '.ficha'+i+color;
-        fichacambiar = document.querySelector(ficha);
-        fichacambiar.style.background = "rgb(8, 152, 249)";
-        fichacambiar.style.disabled="true";
 
-      }
+  function inhabilitarFichas(){
+    let ficha,fichacambiar,i,colorficha;
+    if(color ==="AZUL"){
+      colorficha = "rgb(8, 0, 249)";
+    }
+    else if(color ==="AMARILLO"){
+      colorficha= "rgb(255, 196, 2)";
+    }
+    else if(color === "VERDE"){
+      colorficha = "rgb(126, 223, 15)";
+    }
+    else{
+      colorficha = "rgb(236, 40, 40)";
+    }
+    for (i = 1; i <= 4; i++) {
+      ficha = '.ficha'+i+color;
+      fichacambiar = document.querySelector(ficha);
+      fichacambiar.style.backgroundColor = colorficha;
+      fichacambiar.setAttribute('disabled', true);
     }
   }
   
@@ -213,7 +221,7 @@ function Partida() {
     await sleep(4000); // Espera 4 segundos
     console.log("ENVIANDO DADO: "+vector[indice]);
     let response;
-    response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/dado/"+idPartida + "?dado="+vector[indice]);
+    response = await axios.post("http://localhost:8080/partida/dado/"+idPartida + "?dado="+vector[indice]);
     console.log("RESPUESTA TRAS ENVIAR DADO SACAR: "+response.data.sacar);
     if(response.data.sacar===true){
       moverFicha(response.data.fichas[0].numero,parseInt(response.data.casilla.posicion)+1);
@@ -238,7 +246,7 @@ function Partida() {
   };
   
   async function enviarComienzopartida(){
-    const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/empezar/"+idPartida);
+    const response = await axios.post("http://localhost:8080/partida/empezar/"+idPartida);
     setturno(response.data);
   }
   function startpartida(){
@@ -266,12 +274,12 @@ function Partida() {
     }
   }
   async function enviarFicha(numficha){
-    const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/movimiento", {partida: idPartida,ficha: numficha,dado: vector[indice-1]});
+    const response = await axios.post("http://localhost:8080/partida/movimiento", {partida: idPartida,ficha: numficha,dado: vector[indice-1]});
     console.log("RESPUESTA TRAS ENVIAR MOVIMIENTO DESTINO: " +response.data.destino.posicion);
     console.log("RESPUESTA TRAS ENVIAR MOVIMIENTO COMIDA: "+ response.data.comida);
     moverFicha(numficha,parseInt(response.data.destino.posicion)+1);
     setturno(response.data.turno);
-    quitarFichasBloqueadas();
+    inhabilitarFichas();
   }
   const fichaPulsada = (numficha, color) => {
     console.log("FICHA PULSADA");
@@ -281,6 +289,7 @@ function Partida() {
   return (  
     <>
     {comprobarUsernames}
+    {inhabilitarFichas}
       <p>El id es {idPartida}</p>;
       <p>El color es {color}</p>;
       <p>Turno de {turno}</p>
@@ -313,15 +322,15 @@ function Partida() {
         <div className="icono"></div>
         <button className="ficha1AZUL" onClick={fichaPulsada.bind(null, 1, "AZUL")}></button>
         <button className="ficha2AZUL" onClick={fichaPulsada.bind(null, 2, "AZUL")}></button>
-        <button className="ficha3AZUL"  onClick={fichaPulsada.bind(null, 3, "AZUL")}></button>
+        <button className="ficha3AZUL" onClick={fichaPulsada.bind(null, 3, "AZUL")}></button>
         <button className="ficha4AZUL" onClick={fichaPulsada.bind(null, 4, "AZUL")}></button>
-        <button className="ficha1ROJO" disabled></button>
+        <button className="ficha1ROJO"></button>
         <button className="ficha2ROJO" disabled></button>
         <button className="ficha3ROJO" disabled></button>
         <button className="ficha4ROJO" disabled></button>
         <button className="ficha1AMARILLO"  onClick={fichaPulsada.bind(null, 1, "AMARILLO")}></button>
         <button className="ficha2AMARILLO"  onClick={fichaPulsada.bind(null, 2, "AMARILLO")}></button>
-        <button className="ficha3AMARILLO"  onClick={fichaPulsada.bind(null, 3, "AMARILLO")}></button>
+        <button className="ficha3AMARILLO" onClick={fichaPulsada.bind(null, 3, "AMARILLO")}></button>
         <button className="ficha4AMARILLO"  onClick={fichaPulsada.bind(null, 4, "AMARILLO")}></button>
         <button className="ficha1VERDE" disabled></button>
         <button className="ficha2VERDE" disabled></button>
