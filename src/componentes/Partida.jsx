@@ -97,8 +97,8 @@ function Partida() {
   const [numDado, setnumDado] = useState(0);
   let jugadorhatirado = false;
   let fichasBloqueadas;
-  const vector = [5,4,4,4,3,3,2,2,2,2,2,2,2,1,1,1,1,1,1,1,2,2,2];
-  const [indice, setindice] = useState(0);
+  //const vector = [5,4,4,4,3,3,2,2,2,2,2,2,2,1,1,1,1,1,1,1,2,2,2];
+  //const [indice, setindice] = useState(0);
 
   useEffect(() => {
     function actualizarTablero(numFicha,numcasilla,color){
@@ -221,9 +221,9 @@ function Partida() {
 
   async function enviarDado() {
     await sleep(4000); // Espera 4 segundos
-    console.log("ENVIANDO DADO: "+vector[indice]);
+    //console.log("ENVIANDO DADO: "+vector[indice]);
     let response;
-    response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/dado/"+idPartida + "?dado="+vector[indice]);
+    response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/dado/"+idPartida + "?dado="+numDado);
     console.log("RESPUESTA TRAS ENVIAR DADO SACAR: "+response.data.sacar);
     if(response.data.sacar===true){
       moverFicha(response.data.fichas[0].numero,parseInt(response.data.casilla.posicion)+1);
@@ -232,7 +232,7 @@ function Partida() {
     else{
       mostrarFichasBloqueadas(response);
     }
-    setindice(indice+1);
+    //setindice(indice+1);
   }
 
   const handleStart = () => {
@@ -276,7 +276,7 @@ function Partida() {
     }
   }
   async function enviarFicha(numficha){
-    const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/movimiento", {partida: idPartida,ficha: numficha,dado: vector[indice-1]});
+    const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/movimiento", {partida: idPartida,ficha: numficha,dado: numDado});
     moverFicha(numficha,parseInt(response.data.destino.posicion)+1);
     setturno(response.data.turno);
     inhabilitarFichas();
