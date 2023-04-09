@@ -168,7 +168,7 @@ function Partida() {
       if (fichasBloqueadas.includes(i)) {
         ficha = '.ficha'+i+color;
         fichacambiar = document.querySelector(ficha);
-        let imagen = "url(\'..//imagenes/iconos/cruz.png\')";
+        let imagen = "url('..//imagenes/iconos/cruz.png')";
         fichacambiar.style.background= imagen;
         fichacambiar.style.backgroundSize = "cover";
       } else {
