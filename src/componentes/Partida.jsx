@@ -28,7 +28,7 @@ const photos = [
 
 // }
 function connectToSocket(idPartida,setturno,actualizarTablero,color) {
-  const url = "http://localhost:8080"
+  const url = "https://lamesa-backend.azurewebsites.net"
   console.log("connecting to the game");
   let socket = new SockJS(url + "/ws");
   let stompClient = Stomp.over(socket);
@@ -168,7 +168,7 @@ function Partida() {
       if (fichasBloqueadas.includes(i)) {
         ficha = '.ficha'+i+color;
         fichacambiar = document.querySelector(ficha);
-        let imagen = "url(\"..//imagenes/iconos/cruz.png\")";
+        let imagen = "url(\'..//imagenes/iconos/cruz.png\')";
         fichacambiar.style.background= imagen;
         fichacambiar.style.backgroundSize = "cover";
       } else {
@@ -213,7 +213,7 @@ function Partida() {
     await sleep(4000); // Espera 4 segundos
     console.log("ENVIANDO DADO: "+vector[indice]);
     let response;
-    response = await axios.post("http://localhost:8080/partida/dado/"+idPartida + "?dado="+vector[indice]);
+    response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/dado/"+idPartida + "?dado="+vector[indice]);
     console.log("RESPUESTA TRAS ENVIAR DADO SACAR: "+response.data.sacar);
     if(response.data.sacar===true){
       moverFicha(response.data.fichas[0].numero,parseInt(response.data.casilla.posicion)+1);
@@ -238,7 +238,7 @@ function Partida() {
   };
   
   async function enviarComienzopartida(){
-    const response = await axios.post("http://localhost:8080/partida/empezar/"+idPartida);
+    const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/empezar/"+idPartida);
     setturno(response.data);
   }
   function startpartida(){
@@ -266,7 +266,7 @@ function Partida() {
     }
   }
   async function enviarFicha(numficha){
-    const response = await axios.post("http://localhost:8080/partida/movimiento", {partida: idPartida,ficha: numficha,dado: vector[indice-1]});
+    const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/movimiento", {partida: idPartida,ficha: numficha,dado: vector[indice-1]});
     console.log("RESPUESTA TRAS ENVIAR MOVIMIENTO DESTINO: " +response.data.destino.posicion);
     console.log("RESPUESTA TRAS ENVIAR MOVIMIENTO COMIDA: "+ response.data.comida);
     moverFicha(numficha,parseInt(response.data.destino.posicion)+1);
