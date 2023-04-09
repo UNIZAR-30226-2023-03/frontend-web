@@ -252,15 +252,15 @@ function Partida() {
     return Math.floor(Math.random() * 2000) + 2000;
   };
   
-  async function enviarComienzopartida(){
-    const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/empezar/"+idPartida);
-    setturno(response.data);
-  }
-  function startpartida(){
-    enviarComienzopartida();
-    const botonStart = document.querySelector('.empezarPartida');
-    botonStart.style.display = 'none';
-  }
+  // async function enviarComienzopartida(){
+  //   const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/empezar/"+idPartida);
+  //   setturno(response.data);
+  // }
+  // function startpartida(){
+  //   enviarComienzopartida();
+  //   const botonStart = document.querySelector('.empezarPartida');
+  //   botonStart.style.display = 'none';
+  // }
   const onClick = () => {
     jugadorhatirado = true;
     handleStart();
