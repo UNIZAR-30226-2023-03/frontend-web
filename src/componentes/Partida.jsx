@@ -53,13 +53,13 @@ function connectToSocket(idPartida,setturno,actualizarTablero,color) {
           // Un jugador ha hecho un movimiento -> Actualizar tablero
           let data = JSON.parse(response.body);
           console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO NUMCASILLA: "+data.destino.posicion+1);
-          console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO COLOR: "+data.destino.fichas.color);
-          console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO FICHA: "+data.destino.fichas.numero);
+          console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO COLOR: "+data.ficha.color);
+          console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO FICHA: "+data.ficha.numero);
           //displayResponse(data);
-          // if(color !== data.color){
-          //   setturno(data.turno);
-          //   actualizarTableroMovimiento(data);
-          // }
+          if(color !== data.color){
+            setturno(data.turno);
+            actualizarTablero(data.ficha.numero, parseInt(data.destino.posicion)+1,data.ficha.color);
+          }
       })
       stompClient.subscribe("/topic/turno/" + idPartida, function (response) {
           // Mensaje de turno recibido
@@ -168,7 +168,9 @@ function Partida() {
       if (fichasBloqueadas.includes(i)) {
         ficha = '.ficha'+i+color;
         fichacambiar = document.querySelector(ficha);
-        fichacambiar.style.backgroundColor = "blue";
+        let imagen = "url(\"..//imagenes/iconos/cruz.png\")";
+        fichacambiar.style.background= imagen;
+        fichacambiar.style.backgroundSize = "cover";
       } else {
         ficha = '.ficha'+i+color;
         fichacambiar = document.querySelector(ficha);
@@ -182,16 +184,16 @@ function Partida() {
       if (fichasBloqueadas.includes(i)) {
         ficha = '.ficha'+i+color;
         fichacambiar = document.querySelector(ficha);
-        fichacambiar.style.backgroundColor = "rgb(8, 152, 249)";
+        fichacambiar.style.background = "rgb(8, 152, 249)";
         fichacambiar.style.disabled="true";
+
       }
     }
   }
   
-  function moverFichaSalida(response){
-    let numficha, casilla, ficha, fichamover;
-    numficha = response.data.fichas[0].numero;
-    casilla = casillasTablero.find(c => c.id === response.data.casilla.posicion+1);
+  function moverFicha(numficha, numcasilla){
+    let ficha, fichamover, casilla;
+    casilla = casillasTablero.find(c => c.id === numcasilla);
     ficha = '.ficha'+numficha+color;
     console.log("FICHAAAAA: "+ ficha);
     fichamover = document.querySelector(ficha);
@@ -214,7 +216,7 @@ function Partida() {
     response = await axios.post("http://localhost:8080/partida/dado/"+idPartida + "?dado="+vector[indice]);
     console.log("RESPUESTA TRAS ENVIAR DADO SACAR: "+response.data.sacar);
     if(response.data.sacar===true){
-      moverFichaSalida(response);
+      moverFicha(response.data.fichas[0].numero,parseInt(response.data.casilla.posicion)+1);
       setturno(response.data.turno);
     }
     else{
@@ -263,30 +265,13 @@ function Partida() {
       //enviarDado();
     }
   }
-  function movimientoFichas(response,numficha){
-    let casilla, ficha, fichamover;
-    casilla = casillasTablero.find(c => c.id === response.data.destino.posicion+1);
-    ficha = '.ficha'+numficha+color;
-    console.log("FICHA TRAS PULSAR EL USUARIO: "+ ficha);
-    fichamover = document.querySelector(ficha);
-    if(casilla.numfichas===0){
-      casilla.numfichas = 1; 
-      fichamover.style.left = casilla.left;
-      fichamover.style.top = casilla.top;
-    }
-    else{
-      let nuevaCasilla = casillasTablero.find(c => c.id === casilla.id+'-2');
-      fichamover.style.left = nuevaCasilla.left;
-      fichamover.style.top = nuevaCasilla.top;
-    }
-    setturno(response.data.turno);
-    //quitarFichasBloqueadas();
-  }
   async function enviarFicha(numficha){
     const response = await axios.post("http://localhost:8080/partida/movimiento", {partida: idPartida,ficha: numficha,dado: vector[indice-1]});
     console.log("RESPUESTA TRAS ENVIAR MOVIMIENTO DESTINO: " +response.data.destino.posicion);
     console.log("RESPUESTA TRAS ENVIAR MOVIMIENTO COMIDA: "+ response.data.comida);
-    movimientoFichas(response,numficha);
+    moverFicha(numficha,parseInt(response.data.destino.posicion)+1);
+    setturno(response.data.turno);
+    quitarFichasBloqueadas();
   }
   const fichaPulsada = (numficha, color) => {
     console.log("FICHA PULSADA");

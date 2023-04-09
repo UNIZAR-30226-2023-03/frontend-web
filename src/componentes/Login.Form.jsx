@@ -50,7 +50,7 @@ function LoginForm() {
         <p className="textoIniciarSesion">Usuario:</p>
           <input type="text" placeholder="Correo electrónico o nombre de usuario"
             value={login} required onChange={handleUsernameChange} />
-          <p className={error1 ? 'error1' : 'error1In'}>Este correo no existe </p>
+          <p className={error1 ? 'error1' : 'error1In'}>El usuario no existe </p>
         </label>
         <label>
         <p className="textoIniciarSesion">Contraseña:</p>
