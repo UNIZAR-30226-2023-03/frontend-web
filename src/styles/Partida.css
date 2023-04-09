@@ -332,7 +332,7 @@
      height:35px;
      border-radius:50%;
      z-index: 9998;
-     background: rgb(236, 40, 40);
+     background: rgb(93, 0, 0);
      border: none;
      outline: none;
      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
@@ -342,7 +342,7 @@
  .ficha2ROJO{
      position:absolute ;
      border:1px solid #000;
-     background:rgb(236, 40, 40);
+     background:rgb(93, 0, 0);
      top:10%;
      left:19%;
      width:35px;
@@ -358,7 +358,7 @@
  .ficha3ROJO{
      position:absolute ;
      border:1px solid #000;
-     background:rgb(236, 40, 40);
+     background:rgb(93, 0, 0);
      top:20%;
      left:10%;
      width:35px;
@@ -374,7 +374,7 @@
  .ficha4ROJO{
      position:absolute ;
      border:1px solid #000;
-     background:rgb(236, 40, 40);
+     background:rgb(93, 0, 0);
      top:20%;
      left:19%;
      width:35px;
