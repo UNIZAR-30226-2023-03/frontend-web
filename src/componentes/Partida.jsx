@@ -172,7 +172,8 @@ function Partida() {
         //fichacambiar.style.backgroundSize = "cover"; // establece el tamaño de la imagen de fondo
         fichacambiar.style.backgroundColor = "rgb(39, 40, 41)"; // establece el color de fondo
       } else {
-        fichacambiar.setAttribute('disabled', false);
+        console.log("HABILITANDO FICHA: "+ ficha);
+        //fichacambiar.setAttribute('disabled', 'false');
       }
     }
   }
@@ -195,7 +196,8 @@ function Partida() {
       ficha = '.ficha'+i+color;
       fichacambiar = document.querySelector(ficha);
       fichacambiar.style.backgroundColor = colorficha;
-      fichacambiar.setAttribute('disabled', true);
+      console.log("INHABILITANDO FICHA: "+ ficha);
+      //fichacambiar.setAttribute('disabled', 'true');
     }
   }
   
@@ -275,8 +277,6 @@ function Partida() {
   }
   async function enviarFicha(numficha){
     const response = await axios.post("http://localhost:8080/partida/movimiento", {partida: idPartida,ficha: numficha,dado: vector[indice-1]});
-    console.log("RESPUESTA TRAS ENVIAR MOVIMIENTO DESTINO: " +response.data.destino.posicion);
-    console.log("RESPUESTA TRAS ENVIAR MOVIMIENTO COMIDA: "+ response.data.comida);
     moverFicha(numficha,parseInt(response.data.destino.posicion)+1);
     setturno(response.data.turno);
     inhabilitarFichas();
