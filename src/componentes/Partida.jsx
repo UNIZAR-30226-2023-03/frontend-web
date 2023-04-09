@@ -23,7 +23,7 @@ const photos = [
   { id:5, name: "Foto 5", url: cinco },
   { id:6, name: "Foto 6", url: seis },
 ];
-
+//prueba en azure
 // function NuevoJugador(data){
 
 // }
@@ -289,7 +289,6 @@ function Partida() {
   return (  
     <>
     {comprobarUsernames}
-    {inhabilitarFichas}
       <p>El id es {idPartida}</p>;
       <p>El color es {color}</p>;
       <p>Turno de {turno}</p>
