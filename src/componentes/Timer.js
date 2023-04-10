@@ -84,19 +84,19 @@ function Timer({ timeLimit, onTimeUp }) {
         ).toFixed(0)} 283`;
         document
           .getElementById("base-timer-path-remaining")
-          .setAttribute("stroke-dasharray", circleDasharray);
+          .setAttribute("strokeDasharray", circleDasharray);
       }
 
   return (
     <div>
-        <p class="textoTiempo">Tiempo restante:</p>
+        <p className="textoTiempo">Tiempo restante:</p>
         <div className="base-timer">
         <svg className="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <g className="base-timer__circle">
             <circle className="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
             <path
               id="base-timer-path-remaining"
-              stroke-dasharray="283"
+              strokeDasharray="283"
               className={`base-timer__path-remaining ${remainingPathColor}`}
               d="
                 M 50, 50

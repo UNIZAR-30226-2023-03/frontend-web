@@ -22,7 +22,7 @@ function LoginForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await axios.post("https://lamesa-backend.azurewebsites.net/usuario/login", {login, password})
+    await axios.post("http://localhost:8080/usuario/login", {login, password})
       .then ( response => {
         const cookies = new Cookies();
         cookies.set('idUsuario',response.data.id,{path: '/'})

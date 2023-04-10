@@ -1,9 +1,10 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, useMemo} from "react";
 import "../styles/Partida.css";
 import Timer from './Timer';
 import {casillas} from './Casillas.jsx'
 import { useLocation } from 'react-router-dom';
 //import io from 'socket.io-client';
+
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import Cookies from 'universal-cookie';
@@ -23,62 +24,7 @@ const photos = [
   { id:5, name: "Foto 5", url: cinco },
   { id:6, name: "Foto 6", url: seis },
 ];
-//prueba en azure
-// function NuevoJugador(data){
 
-// }
-function connectToSocket(idPartida,setturno,actualizarTablero,color,inhabilitarFichas) {
-  const url = "https://lamesa-backend.azurewebsites.net"
-  console.log("connecting to the game");
-  let socket = new SockJS(url + "/ws");
-  let stompClient = Stomp.over(socket);
-  stompClient.connect({}, function (frame) {
-      // stompClient.subscribe("/topic/nuevo-jugador/" + idPartida, function (response) {
-      //     // Un jugador se ha unido a la partida (cuando aún no ha empezado)
-      //     let data = JSON.parse(response.body);
-      //     console.log("Datos recibidos del SOCKET (JUGADOR UNIENDOSE A PARTIDA): "+ data);
-      //     NuevoJugador(data);
-      // })
-      stompClient.subscribe("/topic/dado/" + idPartida, function (response) {
-          // Un jugador ha sacado ficha de casa -> Actualizar tablero
-          let data = JSON.parse(response.body);
-          if(color !== data.fichas[0].color && data.sacar){
-            actualizarTablero(data.fichas[0].numero,parseInt(data.casilla.posicion)+1,data.fichas[0].color);
-          }
-          inhabilitarFichas(color);
-          console.log("LLEGA TURNO DESDE DADO: "+ data.turno);
-          setturno(data.turno);
-
-          //displayResponse(data);
-      })
-      stompClient.subscribe("/topic/movimiento/" + idPartida, function (response) {
-          // Un jugador ha hecho un movimiento -> Actualizar tablero
-          let data = JSON.parse(response.body);
-          console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO NUMCASILLA: "+data.destino.posicion+1);
-          console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO COLOR: "+data.ficha.color);
-          console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO FICHA: "+data.ficha.numero);
-          //displayResponse(data);
-          if(color !== data.color){
-            actualizarTablero(data.ficha.numero, parseInt(data.destino.posicion)+1,data.ficha.color);
-          }
-          setturno(data.turno);
-      })
-      stompClient.subscribe("/topic/turno/" + idPartida, function (response) {
-          // Mensaje de turno recibido
-          let data = JSON.parse(response.body);
-          inhabilitarFichas(color);
-          console.log("LLEGA TURNO DESDE TURNO: "+ data);
-          setturno(data);
-          //displayResponse(data);
-      })
-    //   stompClient.subscribe("/topic/chat/" + idPartida, function (response) {
-    //     // Mensaje de chat recibido
-    //     let data = JSON.parse(response.body);
-    //     console.log(data);
-    //     //displayResponse(data);
-    // })
-  })
-}
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -86,7 +32,6 @@ function moverFicha(numficha, numcasilla,color,casillasTablero){
   let ficha, fichamover, casilla;
   casilla = casillasTablero.find(c => c.id === numcasilla);
   ficha = '.ficha'+numficha+color;
-  console.log("FICHAAAAA: "+ ficha);
   fichamover = document.querySelector(ficha);
   if(casilla.numfichas===0){
     casilla.numfichas = 1; 
@@ -142,13 +87,12 @@ function inhabilitarFichas(color){
 
 function Partida() {
   const casillasTablero = casillas;
-  const cookies = new Cookies();
+  const cookies = useMemo(() => new Cookies(), []);
   const { state } = useLocation();
   const [idPartida, setIdPartida] = useState(null);
   const [color, setColor] = useState(null);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [jugadores, setJugadores] = useState([]);
   const [usernameAmarillo, setUsernameAmarillo] = useState('');
   const [usernameAzul, setUsernameAzul] = useState('');
   const [usernameRojo, setUsernameRojo] = useState('');
@@ -156,27 +100,13 @@ function Partida() {
   const [turno, setturno] = useState('');
   const [numDado, setnumDado] = useState(0);
   let jugadorhatirado = false;
+  const [primeravez, setprimeravez] = useState(true);
+  const [partidaempezada, setpartidaempezada] = useState(false);
   //const vector = [5,4,4,4,3,3,2,2,2,2,2,2,2,1,1,1,1,1,1,1,2,2,2];
   //const [indice, setindice] = useState(0);
+   
 
   useEffect(() => {
-    async function enviarDado(numdado,setturno,idPartida) {
-      await sleep(4000); // Espera 4 segundos
-      //console.log("ENVIANDO DADO: "+vector[indice]);
-      let response;
-      console.log("DADO: "+numdado);
-      response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/dado/"+idPartida + "?dado="+numdado);
-      console.log("RESPUESTA TRAS ENVIAR DADO SACAR: "+response.data.sacar);
-      if(response.data.sacar===true){
-        moverFicha(response.data.fichas[0].numero,parseInt(response.data.casilla.posicion)+1,color,casillasTablero);
-        setturno(response.data.turno);
-      }
-      else{
-        mostrarFichasBloqueadas(response,color);
-      }
-      //setindice(indice+1);
-    }
-
     function actualizarTablero(numFicha,numcasilla,color){
       const casilla = casillasTablero.find(c => c.id === numcasilla);
       let ficha = '.ficha'+numFicha+color;
@@ -196,11 +126,121 @@ function Partida() {
       }
     }
 
-    connectToSocket(idPartida,setturno, actualizarTablero,color,inhabilitarFichas);
-    if (state) {
+    function connectToSocket(idPartida,setturno,actualizarTablero,color,
+      inhabilitarFichas,setUsernameRojo,setUsernameAzul,setUsernameVerde,
+      setpartidaempezada) {
+      const url = "http://localhost:8080"
+      console.log("connecting to the game");
+      let socket = new SockJS(url + "/ws");
+      let stompClient = Stomp.over(socket);
+      stompClient.connect({}, function (frame) {
+          stompClient.subscribe("/topic/nuevo-jugador/" + idPartida, function (response) {
+              // Un jugador se ha unido a la partida (cuando aún no ha empezado)
+              let data = JSON.parse(response.body);
+              if(data.color !== color){
+                if(data.color ==="ROJO"){
+                  setUsernameRojo(data.username);
+                }
+                else if(data.color ==="AZUL"){
+                  setUsernameAzul(data.username);
+                }
+                else if(data.color ==="VERDE"){
+                  setUsernameVerde(data.username);
+                  setpartidaempezada(true);
+                }
+              }
+          })
+          stompClient.subscribe("/topic/dado/" + idPartida, function (response) {
+              // Un jugador ha sacado ficha de casa -> Actualizar tablero
+              let data = JSON.parse(response.body);
+              if(color !== data.fichas[0].color && data.sacar){
+                actualizarTablero(data.fichas[0].numero,parseInt(data.casilla.posicion)+1,data.fichas[0].color);
+              }
+              inhabilitarFichas(color);
+              console.log("LLEGA TURNO DESDE DADO: "+ data.turno);
+              setturno(data.turno);
+    
+              //displayResponse(data);
+          })
+          stompClient.subscribe("/topic/movimiento/" + idPartida, function (response) {
+              // Un jugador ha hecho un movimiento -> Actualizar tablero
+              let data = JSON.parse(response.body);
+              console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO NUMCASILLA: "+data.destino.posicion+1);
+              console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO COLOR: "+data.ficha.color);
+              console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO FICHA: "+data.ficha.numero);
+              //displayResponse(data);
+              if(color !== data.color){
+                actualizarTablero(data.ficha.numero, parseInt(data.destino.posicion)+1,data.ficha.color);
+              }
+              setturno(data.turno);
+          })
+          stompClient.subscribe("/topic/turno/" + idPartida, function (response) {
+              // Mensaje de turno recibido
+              let data = JSON.parse(response.body);
+              inhabilitarFichas(color);
+              console.log("LLEGA TURNO DESDE TURNO: "+ data);
+              setturno(data);
+              //displayResponse(data);
+          })
+        //   stompClient.subscribe("/topic/chat/" + idPartida, function (response) {
+        //     // Mensaje de chat recibido
+        //     let data = JSON.parse(response.body);
+        //     console.log(data);
+        //     //displayResponse(data);
+        // })
+      })
+    }
+    connectToSocket(idPartida, setturno, actualizarTablero, color,
+      inhabilitarFichas, setUsernameRojo, setUsernameAzul, setUsernameVerde,
+      setpartidaempezada);
+  }, [color,idPartida, casillasTablero]);
+
+  useEffect(() => {
+    let col = "";
+    
+    async function enviarDado(numdado,setturno,idPartida) {
+      await sleep(4000); // Espera 4 segundos
+      //console.log("ENVIANDO DADO: "+vector[indice]);
+      let response;
+      console.log("DADO: "+numdado);
+      response = await axios.post("http://localhost:8080/partida/dado/"+idPartida + "?dado="+numdado);
+      console.log("RESPUESTA TRAS ENVIAR DADO SACAR: "+response.data.sacar);
+      if(response.data.sacar===true){
+        moverFicha(response.data.fichas[0].numero,parseInt(response.data.casilla.posicion)+1,color,casillasTablero);
+        setturno(response.data.turno);
+      }
+      else{
+        mostrarFichasBloqueadas(response,color);
+      }
+      //setindice(indice+1);
+    }
+
+    if (primeravez && state) {
+      setprimeravez(false);
       setIdPartida(state.id_part);
       setColor(state.col);
-      setJugadores(state.jugadores);
+      col = state.col;
+      const jugadores = state.jug;
+      function comprobarUsernames(){
+        if(col==="AMARILLO"){
+          setUsernameAmarillo(cookies.get('nombreUsuario'));
+        }
+        else if(col === "AZUL"){
+          setUsernameAmarillo(jugadores && jugadores[0].username);
+          setUsernameAzul(cookies.get('nombreUsuario'));
+        }else if(col ==="ROJO"){
+          setUsernameAmarillo(jugadores && jugadores[0].username);
+          setUsernameAzul(jugadores && jugadores[1].username);
+          setUsernameRojo(cookies.get('nombreUsuario'));
+        }else if(col ==="VERDE"){
+          setpartidaempezada(true);
+          setUsernameAmarillo(jugadores && jugadores[0].username);
+          setUsernameAzul(jugadores && jugadores[1].username);
+          setUsernameRojo(jugadores && jugadores[2].username);
+          setUsernameVerde(cookies.get('nombreUsuario'));
+        }
+      }
+      comprobarUsernames();
     }
     let intervalId = null;
     if (isPlaying) {
@@ -214,31 +254,14 @@ function Partida() {
         });
       }, 190);
     }
-    else{
+    else if(partidaempezada){
       setnumDado(parseInt(currentPhotoIndex)+1);
       enviarDado(parseInt(currentPhotoIndex)+1,setturno,idPartida);
     }
     return () => clearInterval(intervalId);
-  }, [isPlaying,currentPhotoIndex,state, idPartida, casillasTablero,color]);
+  }, [isPlaying,currentPhotoIndex,state, idPartida, casillasTablero,color,partidaempezada,primeravez,cookies]);
 
-  function comprobarUsernames(){
-    if(color==="AMARILLO"){
-      setUsernameAmarillo(cookies.get('nombreUsuario'));
-    }
-    else if(color === "AZUL"){
-      setUsernameAmarillo(jugadores[0].username);
-      setUsernameAzul(cookies.get('nombreUsuario'));
-    }else if(color ==="ROJO"){
-      setUsernameAmarillo(jugadores[0].username);
-      setUsernameAzul(jugadores[1].username);
-      setUsernameRojo(cookies.get('nombreUsuario'));
-    }else if(color ==="VERDE"){
-      setUsernameAmarillo(jugadores[0].username);
-      setUsernameAzul(jugadores[1].username);
-      setUsernameRojo(jugadores[2].username);
-      setUsernameVerde(cookies.get('nombreUsuario'));
-    }
-  }
+
   
   const handleStart = () => {
     setIsPlaying(true);
@@ -253,7 +276,7 @@ function Partida() {
   };
   
   // async function enviarComienzopartida(){
-  //   const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/empezar/"+idPartida);
+  //   const response = await axios.post("http://localhost:8080/partida/empezar/"+idPartida);
   //   setturno(response.data);
   // }
   // function startpartida(){
@@ -280,7 +303,7 @@ function Partida() {
     }
   }
   async function enviarFicha(numficha){
-    const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/movimiento", {partida: idPartida,ficha: numficha,dado: numDado});
+    const response = await axios.post("http://localhost:8080/partida/movimiento", {partida: idPartida,ficha: numficha,dado: numDado});
     moverFicha(numficha,parseInt(response.data.destino.posicion)+1,color,casillasTablero);
     setturno(response.data.turno);
     inhabilitarFichas(color);
@@ -292,34 +315,20 @@ function Partida() {
 
   return (  
     <>
-    {comprobarUsernames}
-      <p>El id es {idPartida}</p>;
-      <p>El color es {color}</p>;
+      <p>El id es {idPartida}</p>
+      <p>El color es {color}</p>
       <p>Turno de {turno}</p>
       <div>
-        {color === "AMARILLO" && <h1 className="usernameAmarillo">{cookies.get('nombreUsuario')}</h1>&&
-        <h1 className="usernameRojo">{usernameRojo}</h1>&&
-        <h1 className="usernameAzul">{usernameAzul}</h1>&&
-        <h1 className="usernameVerde">{usernameVerde}</h1>
+        {/* {color === "AMARILLO" && 
         // <button className="empezarPartida" onClick={startpartida}>
         // Comenzar Partida
         // </button>
-        }
+        } */}
         
-        {color === "VERDE" && <h1 className="usernameVerde" >{cookies.get('nombreUsuario')}</h1> && 
-        <h1 className="usernameAmarillo">{usernameAmarillo}</h1> &&
-        <h1 className="usernameRojo">{usernameRojo}</h1>&&
-        <h1 className="usernameAzul">{usernameAzul}</h1>}
-
-        {color === "ROJO" && <h1 className="usernameRojo" >{cookies.get('nombreUsuario')}</h1>&&
-        <h1 className="usernameAmarillo">{usernameAmarillo}</h1>&&
-        <h1 className="usernameAzul">{usernameAzul}</h1>&&
-        <h1 className="usernameVerde">{usernameVerde}</h1>}
-
-        {color === "AZUL" && <h1 className="usernameAzul" >{cookies.get('nombreUsuario')}</h1>&&
-        <h1 className="usernameAmarillo">{usernameAmarillo}</h1>&&
-        <h1 className="usernameRojo">{usernameRojo}</h1>&&
-        <h1 className="usernameVerde">{usernameVerde}</h1>}
+        <h1 className="usernameVerde" >{usernameVerde}</h1>
+        <h1 className="usernameAmarillo">{usernameAmarillo}</h1> 
+        <h1 className="usernameRojo">{usernameRojo}</h1>
+        <h1 className="usernameAzul">{usernameAzul}</h1>
       </div>    
       <div className="lamesa">
         <div className="icono"></div>
