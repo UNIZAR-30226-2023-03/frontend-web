@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 function PartidaPublica(){
     const [partidaMod, setPartidaMod] = useState('NORMAL');
     const [partidaBar, setPartidaBar] = useState('SOLO_SEGUROS');
+    const [error, setError] = useState(false);
     const navigate = useNavigate();
     const cookies= new Cookies();
     const id = cookies.get('idUsuario');
@@ -29,11 +30,16 @@ function PartidaPublica(){
 
     const handleSubmit1 = async (event) => {
         event.preventDefault();
-        const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/publica", {jugador:id, configuracionB:partidaBar, configuracionF:partidaMod});
-        console.log(response.data);
-        let id_part = response.data.id;
-        let col = response.data.color;
-        navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col } }); 
+        await axios.post("https://lamesa-backend.azurewebsites.net/partida/publica", {jugador:id, configuracionB:partidaBar, configuracionF:partidaMod})
+        .then(response => {
+            let id_part = response.data.id;
+            let col = response.data.color;
+            navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col } });
+        })
+        .catch(error =>{
+            setError(true)
+        })
+         
     };
     return(
         <div>
@@ -47,7 +53,9 @@ function PartidaPublica(){
                             <button className={partidaBar==="SOLO_SEGUROS" ? 'BotonPartidaBarAc' : 'BotonPartidaBarIn'} onClick={handleClick3}>Partida Con Barreras Normales</button> 
                             <button className={partidaBar==="TODAS_CASILLAS" ? 'BotonPartidaBarAc' : 'BotonPartidaBarIn'} onClick={handleClick4}>Partida Con Barreras En todas las casillas</button> 
                     </div>
+                    <p className={error ? 'error' : 'errorIn'}>Ya estás jugando una partida</p>
                 </div>
+                
                 <form onSubmit={handleSubmit1}>
                     <button type="submit">Crear partida</button>
                 </form>

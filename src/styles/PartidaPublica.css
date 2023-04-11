@@ -40,3 +40,9 @@
     background-color: #ddd;
     color: #aaa;
 }
+.error{
+color: red;
+}
+.errorIn{
+    display: none;
+}
