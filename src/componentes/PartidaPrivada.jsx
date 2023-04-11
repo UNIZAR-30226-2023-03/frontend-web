@@ -55,7 +55,7 @@ function PartidaPrivada(){
         event.preventDefault();
         console.log('unirme')
         //enviar datos y esperar respuesta
-        await axios.post("http://localhost:8080/partida/conectar", {nombre:nombrePartida, password:codigoPartida,jugador})
+        await axios.post("https://lamesa-backend.azurewebsites.net/partida/conectar", {nombre:nombrePartida, password:codigoPartida,jugador})
         .then(response =>{
             let id_part = response.data.id;
             let col = response.data.color;
@@ -87,7 +87,7 @@ function PartidaPrivada(){
 
     const handleSubmit1 = async (event) => {
         event.preventDefault();
-        await axios.post("http://localhost:8080/partida/crear", {nombre, password, jugador, configuracionB, configuracionF})
+        await axios.post("https://lamesa-backend.azurewebsites.net/partida/crear", {nombre, password, jugador, configuracionB, configuracionF})
         .then(response => {
             let id_part = response.data.id;
             let col = response.data.color;

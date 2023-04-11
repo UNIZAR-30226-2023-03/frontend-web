@@ -129,7 +129,7 @@ function Partida() {
     function connectToSocket(idPartida,setturno,actualizarTablero,color,
       inhabilitarFichas,setUsernameRojo,setUsernameAzul,setUsernameVerde,
       setpartidaempezada) {
-      const url = "http://localhost:8080"
+      const url = "https://lamesa-backend.azurewebsites.net"
       console.log("connecting to the game");
       let socket = new SockJS(url + "/ws");
       let stompClient = Stomp.over(socket);
@@ -203,7 +203,7 @@ function Partida() {
       //console.log("ENVIANDO DADO: "+vector[indice]);
       let response;
       console.log("DADO: "+numdado);
-      response = await axios.post("http://localhost:8080/partida/dado/"+idPartida + "?dado="+numdado);
+      response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/dado/"+idPartida + "?dado="+numdado);
       console.log("RESPUESTA TRAS ENVIAR DADO SACAR: "+response.data.sacar);
       if(response.data.sacar===true){
         moverFicha(response.data.fichas[0].numero,parseInt(response.data.casilla.posicion)+1,color,casillasTablero);
@@ -276,7 +276,7 @@ function Partida() {
   };
   
   // async function enviarComienzopartida(){
-  //   const response = await axios.post("http://localhost:8080/partida/empezar/"+idPartida);
+  //   const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/empezar/"+idPartida);
   //   setturno(response.data);
   // }
   // function startpartida(){
@@ -303,7 +303,7 @@ function Partida() {
     }
   }
   async function enviarFicha(numficha){
-    const response = await axios.post("http://localhost:8080/partida/movimiento", {partida: idPartida,ficha: numficha,dado: numDado});
+    const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/movimiento", {partida: idPartida,ficha: numficha,dado: numDado});
     moverFicha(numficha,parseInt(response.data.destino.posicion)+1,color,casillasTablero);
     setturno(response.data.turno);
     inhabilitarFichas(color);
