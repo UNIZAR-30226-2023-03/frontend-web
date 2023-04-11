@@ -41,3 +41,36 @@
     background-color: #ddd;
     color: #aaa;
 }
+
+.error1In{
+    display: none;
+  }
+  .error1{
+    color: red;
+  }
+  .error2In{
+    display: none;
+  }
+  .error2{
+    color: red;
+  }
+  .error3In{
+    display: none;
+  }
+  .error3{
+    color: red;
+  }
+  .error4In{
+    display: none;
+  }
+  .error4{
+    color: red;
+  }
+  .error5In{
+    display: none;
+  }
+  .error5{
+    color: red;
+    text-align: center;
+    
+}
