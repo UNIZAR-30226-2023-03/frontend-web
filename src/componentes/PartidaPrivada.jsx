@@ -117,19 +117,19 @@ function PartidaPrivada(){
         <div>
             <h1>UNIRSE A UN PARTIDA PRIVADA</h1>
             <form onSubmit={handleSubmit}>
-                <label>
+                
                     <p>Introduce el nombre de la partida privada:</p>
                     <input type="text" placeholder="Nombre de la partida privada"
                     value={nombrePartida} required onChange={handleNombreChange} />
                     <p className={error2 ? 'error2' : 'error2In'}>La partida no existe o ya esta en curso </p>
-                </label>
-                <label>
+                
+                
                     <p>Introduce el código de la partida privada:</p>
                     <input type="text" placeholder="Código de la partida privada"
                     value={codigoPartida} required onChange={handleCodigoChange} />
                     <p className={error4 ? 'error4' : 'error4In'}>Contraseña incorrecta para la sala indicada </p>
                     <p className={error1 ? 'error1' : 'error1In'}>Ya estás jugando una partida </p>
-                </label>
+                
                 <button type="submit">Unirme</button>
             </form>
             <h1>CREAR UN PARTIDA PRIVADA</h1>
