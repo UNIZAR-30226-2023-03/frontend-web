@@ -42,6 +42,8 @@ let estadoFichas = [
   {ficha:'ficha3VERDE',casilla:'inicio-VERDE-3'},
   {ficha:'ficha4VERDE',casilla:'inicio-VERDE-4'},
 ];
+const vectorAmarillo = [5,6,6,6,5,5];
+const vectorAzul = [5,1,5,3,5,5];
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -83,13 +85,16 @@ function moverFicha(numficha, numcasilla,casillasTablero,colorficha,tipocasilla)
     fichamover.style.left = casilla.left;
     fichamover.style.top = casilla.top;
     //actualizarFicha(ficha,numcasilla);
+    console.log("FICHA "+ fichacss+" MOVIDA A LA CASILLA "+ numcasilla);
   }
   else{
     casilla = casillasTablero.find(c => c.id === casilla.id+'-2');
     fichamover.style.left = casilla.left;
     fichamover.style.top = casilla.top;
     //actualizarFicha(ficha,numcasilla+'-2');
+    console.log("FICHA "+ fichacss+" MOVIDA A LA CASILLA "+ casilla.id+'-2');
   }
+  
 }
 
 function mostrarFichasBloqueadas(response,color){
@@ -176,7 +181,6 @@ function Partida() {
                 }
                 else if(data.color ==="VERDE"){
                   setUsernameVerde(data.username);
-                  setpartidaempezada(true);
                 }
               }
           })
@@ -206,7 +210,7 @@ function Partida() {
                   moverFicha(data.ficha.numero, parseInt(data.destino.posicion)+1,casillasTablero,data.ficha.color,data.destino.tipo);  
                 }
                 if(data.comida){
-                  moverFicha(data.comida.numero,parseInt(data.destino.posicion)+1,casillasTablero,data.comida.color,data.destino.tipo);
+                  moverFicha(data.comida.numero,parseInt(data.destino.posicion)+1,casillasTablero,data.comida.color,"CASA");
                 }
                 setturno(data.turno);             
               }
@@ -220,6 +224,7 @@ function Partida() {
               inhabilitarFichas(color);
               console.log("LLEGA TURNO DESDE TURNO: "+ data);
               setturno(data);
+              setpartidaempezada(true);
               //displayResponse(data);
           })
         //   stompClient.subscribe("/topic/chat/" + idPartida, function (response) {
@@ -237,8 +242,6 @@ function Partida() {
 
   useEffect(() => {
     let col = "";
-    const vectorAmarillo = [5,6,6,6];
-    const vectorAzul = [5,1,5];
     async function enviarDado(numdado,setturno,idPartida) {
       await sleep(4000); // Espera 4 segundos
       let vector;
@@ -253,6 +256,7 @@ function Partida() {
       //console.log("DADO: "+numdado);
       //response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/dado/"+idPartida + "?dado="+numdado);
       response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/dado/"+idPartida + "?dado="+vector[indice]);
+      setnumDado(vector[indice]);
       console.log("RESPUESTA TRAS ENVIAR DADO SACAR: "+response.data.sacar);
       if(response.data.sacar===true){
         moverFicha(response.data.fichas[0].numero,parseInt(response.data.casilla.posicion)+1,casillasTablero,color,response.data.casilla.tipo);
@@ -357,11 +361,14 @@ function Partida() {
     }
   }
   async function enviarFicha(numficha){
+    //const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/movimiento", {partida: idPartida,ficha: numficha,dado: numDado});
     const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/movimiento", {partida: idPartida,ficha: numficha,dado: numDado});
     if(!response.data.acabada){
       moverFicha(numficha,parseInt(response.data.destino.posicion)+1,casillasTablero,color,response.data.destino.tipo);
       if(response.data.comida){
-        moverFicha(response.data.comida.numero,parseInt(response.data.destino.posicion)+1,casillasTablero,response.data.comida.color,response.data.destino.tipo);
+        console.log("FICHA COMIDA NUMERO "+response.data.comida.numero);
+        console.log("FICHA COMIDA CASILLA "+parseInt(response.data.destino.posicion)+1);
+        moverFicha(response.data.comida.numero,parseInt(response.data.destino.posicion)+1,casillasTablero,response.data.comida.color,"CASA");
       }
       setturno(response.data.turno);
       inhabilitarFichas(color);
