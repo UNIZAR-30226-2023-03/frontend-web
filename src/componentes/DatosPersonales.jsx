@@ -84,6 +84,7 @@ function DatosPersonales(){
           setNewCtr(false)
         })
         .catch(error1 =>{
+          //contraseña no correcta
           setMal(true);
           setNueva(false);
           setno(false);
@@ -91,6 +92,7 @@ function DatosPersonales(){
         })
       }
       else{
+        //no coinciden las contraseñas
         setNueva(false);
         setMal(false)
         setno(true);
@@ -99,6 +101,7 @@ function DatosPersonales(){
       
     })
     .catch(error =>{
+      //contraseña antigua incorrecta
       setNewCtr(true);
       setNueva(false);
       setMal(false)
