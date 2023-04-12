@@ -24,24 +24,69 @@ const photos = [
   { id:5, name: "Foto 5", url: cinco },
   { id:6, name: "Foto 6", url: seis },
 ];
+let estadoFichas = [
+  {ficha:'ficha1AZUL',casilla:'inicio-AZUL-1'},
+  {ficha:'ficha2AZUL',casilla:'inicio-AZUL-2'},
+  {ficha:'ficha3AZUL',casilla:'inicio-AZUL-3'},
+  {ficha:'ficha4AZUL',casilla:'inicio-AZUL-4'},
+  {ficha:'ficha1AMARILLO',casilla:'inicio-AMARILLO-1'},
+  {ficha:'ficha2AMARILLO',casilla:'inicio-AMARILLO-2'},
+  {ficha:'ficha3AMARILLO',casilla:'inicio-AMARILLO-3'},
+  {ficha:'ficha4AMARILLO',casilla:'inicio-AMARILLO-4'},
+  {ficha:'ficha1ROJO',casilla:'inicio-ROJO-1'},
+  {ficha:'ficha2ROJO',casilla:'inicio-ROJO-2'},
+  {ficha:'ficha3ROJO',casilla:'inicio-ROJO-3'},
+  {ficha:'ficha4ROJO',casilla:'inicio-ROJO-4'},
+  {ficha:'ficha1VERDE',casilla:'inicio-VERDE-1'},
+  {ficha:'ficha2VERDE',casilla:'inicio-VERDE-2'},
+  {ficha:'ficha3VERDE',casilla:'inicio-VERDE-3'},
+  {ficha:'ficha4VERDE',casilla:'inicio-VERDE-4'},
+];
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-function moverFicha(numficha, numcasilla,color,casillasTablero){
-  let ficha, fichamover, casilla;
-  casilla = casillasTablero.find(c => c.id === numcasilla);
-  ficha = '.ficha'+numficha+color;
-  fichamover = document.querySelector(ficha);
+
+// function actualizarFicha(ficha,nuevaCasilla){
+//   estadoFichas = estadoFichas.map((elem) =>
+//   elem.ficha === ficha ? {...elem,casilla:nuevaCasilla}: elem);
+// }
+// function buscarCasilla(ficha){
+//   const casilla = estadoFichas.find((elem)=> elem.ficha === ficha);
+//   return casilla;
+// }
+
+function moverFicha(numficha, numcasilla,casillasTablero,colorficha,tipocasilla){
+  let ficha,fichacss, fichamover, casilla;// casilla_ant;//,casilla_anterior;
+  const casillasArray = Object.values(casillasTablero);
+  if(tipocasilla ==="CASA"){
+    numcasilla = 'inicio-'+colorficha+'-'+numficha;
+  }
+  else if(tipocasilla ==="PASILLO"){
+    numcasilla = 'inicio-'+colorficha+'-'+numficha;
+  }
+  else if(tipocasilla ==="META"){
+    numcasilla ='llegada-'+colorficha+'-'+numficha;
+  }
+  casilla = casillasArray.find(c => c.id === numcasilla);
+  ficha = 'ficha'+numficha+colorficha;
+  fichacss = '.'+ficha;
+  console.log("FICHA QUE SE VA A MOVER "+fichacss);
+  //casilla_ant = buscarCasilla(ficha);
+  //casilla_anterior = casillasTablero.find(c => c.id === casilla_ant);
+  //casilla_anterior.numfichas = 0;
+  fichamover = document.querySelector(fichacss);
   if(casilla.numfichas===0){
     casilla.numfichas = 1; 
     fichamover.style.left = casilla.left;
     fichamover.style.top = casilla.top;
+    //actualizarFicha(ficha,numcasilla);
   }
   else{
-    let nuevaCasilla = casillasTablero.find(c => c.id === casilla.id+'-2');
-    fichamover.style.left = nuevaCasilla.left;
-    fichamover.style.top = nuevaCasilla.top;
+    casilla = casillasTablero.find(c => c.id === casilla.id+'-2');
+    fichamover.style.left = casilla.left;
+    fichamover.style.top = casilla.top;
+    //actualizarFicha(ficha,numcasilla+'-2');
   }
 }
 
@@ -102,33 +147,16 @@ function Partida() {
   let jugadorhatirado = false;
   const [primeravez, setprimeravez] = useState(true);
   const [partidaempezada, setpartidaempezada] = useState(false);
-  //const vector = [5,4,4,4,3,3,2,2,2,2,2,2,2,1,1,1,1,1,1,1,2,2,2];
-  //const [indice, setindice] = useState(0);
-   
+  const [partidafinalizada, setpartidafinalizada] = useState(false);
+  const [botondadopulsado, setbotondadopulsado] = useState(false);
+  const [indice, setindice] = useState(0);
+  
 
   useEffect(() => {
-    function actualizarTablero(numFicha,numcasilla,color){
-      const casilla = casillasTablero.find(c => c.id === numcasilla);
-      let ficha = '.ficha'+numFicha+color;
-      console.log("FICHA DE OTRO JUGADOR: "+ ficha);
-      const ficha1 = document.querySelector(ficha);
-      if(casilla.numfichas===0){
-        console.log("CASILLA SIN FICHAS");
-        casilla.numfichas = 1; 
-        ficha1.style.left = casilla.left;
-        ficha1.style.top = casilla.top;
-      }
-      else{
-        console.log("CASILLA CON 1 FICHA");
-        const nuevaCasilla = casillasTablero.find(c => c.id === casilla.id+'-2');
-        ficha1.style.left = nuevaCasilla.left;
-        ficha1.style.top = nuevaCasilla.top;
-      }
-    }
 
-    function connectToSocket(idPartida,setturno,actualizarTablero,color,
-      inhabilitarFichas,setUsernameRojo,setUsernameAzul,setUsernameVerde,
-      setpartidaempezada) {
+    function connectToSocket(idPartida,setturno,color,inhabilitarFichas,
+      setUsernameRojo,setUsernameAzul,setUsernameVerde,setpartidaempezada,
+      setpartidafinalizada) {
       const url = "https://lamesa-backend.azurewebsites.net"
       console.log("connecting to the game");
       let socket = new SockJS(url + "/ws");
@@ -154,10 +182,12 @@ function Partida() {
               // Un jugador ha sacado ficha de casa -> Actualizar tablero
               let data = JSON.parse(response.body);
               if(color !== data.fichas[0].color && data.sacar){
-                actualizarTablero(data.fichas[0].numero,parseInt(data.casilla.posicion)+1,data.fichas[0].color);
+                moverFicha(data.fichas[0].numero, parseInt(data.casilla.posicion)+1,casillasTablero,data.fichas[0].color,data.casilla.tipo);
               }
               inhabilitarFichas(color);
               console.log("LLEGA TURNO DESDE DADO: "+ data.turno);
+              console.log("LLEGA TURNO DESDE DADO SACAR: "+ data.sacar);
+              console.log("LLEGA TURNO DESDE DADO COLOR FICHA: "+ data.fichas[0].color);
               setturno(data.turno);
     
               //displayResponse(data);
@@ -169,10 +199,18 @@ function Partida() {
               console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO COLOR: "+data.ficha.color);
               console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO FICHA: "+data.ficha.numero);
               //displayResponse(data);
-              if(color !== data.color){
-                actualizarTablero(data.ficha.numero, parseInt(data.destino.posicion)+1,data.ficha.color);
+              if(!data.acabada){
+                if(color !== data.color){
+                  moverFicha(data.ficha.numero, parseInt(data.destino.posicion)+1,casillasTablero,data.ficha.color,data.destino.tipo);  
+                }
+                if(data.comida){
+                  moverFicha(data.comida.numero,parseInt(data.destino.posicion)+1,casillasTablero,data.comida.color,data.destino.tipo);
+                }
+                setturno(data.turno);             
               }
-              setturno(data.turno);
+              else{
+                setpartidafinalizada(true);
+              }
           })
           stompClient.subscribe("/topic/turno/" + idPartida, function (response) {
               // Mensaje de turno recibido
@@ -190,29 +228,39 @@ function Partida() {
         // })
       })
     }
-    connectToSocket(idPartida, setturno, actualizarTablero, color,
+    connectToSocket(idPartida, setturno, color,
       inhabilitarFichas, setUsernameRojo, setUsernameAzul, setUsernameVerde,
-      setpartidaempezada);
+      setpartidaempezada,setpartidafinalizada);
   }, [color,idPartida, casillasTablero]);
 
   useEffect(() => {
     let col = "";
-    
+    const vectorAmarillo = [5,6,6,6];
+    const vectorAzul = [5,1,5];
     async function enviarDado(numdado,setturno,idPartida) {
       await sleep(4000); // Espera 4 segundos
-      //console.log("ENVIANDO DADO: "+vector[indice]);
+      let vector;
+      if(color === "AMARILLO"){
+        vector = vectorAmarillo;
+      }
+      else{
+        vector = vectorAzul;
+      }
       let response;
-      console.log("DADO: "+numdado);
-      response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/dado/"+idPartida + "?dado="+numdado);
+      console.log("ENVIANDO DADO: "+vector[indice]);
+      //console.log("DADO: "+numdado);
+      //response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/dado/"+idPartida + "?dado="+numdado);
+      response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/dado/"+idPartida + "?dado="+vector[indice]);
       console.log("RESPUESTA TRAS ENVIAR DADO SACAR: "+response.data.sacar);
       if(response.data.sacar===true){
-        moverFicha(response.data.fichas[0].numero,parseInt(response.data.casilla.posicion)+1,color,casillasTablero);
+        moverFicha(response.data.fichas[0].numero,parseInt(response.data.casilla.posicion)+1,casillasTablero,color,response.data.casilla.tipo);
         setturno(response.data.turno);
       }
       else{
         mostrarFichasBloqueadas(response,color);
       }
-      //setindice(indice+1);
+      setindice(indice+1);
+      setbotondadopulsado(false);
     }
 
     if (primeravez && state) {
@@ -254,12 +302,13 @@ function Partida() {
         });
       }, 190);
     }
-    else if(partidaempezada){
+    else if(partidaempezada && botondadopulsado){
+      console.log("enviando y actualizando dado");
       setnumDado(parseInt(currentPhotoIndex)+1);
       enviarDado(parseInt(currentPhotoIndex)+1,setturno,idPartida);
     }
     return () => clearInterval(intervalId);
-  }, [isPlaying,currentPhotoIndex,state, idPartida, casillasTablero,color,partidaempezada,primeravez,cookies]);
+  }, [isPlaying,currentPhotoIndex,state, idPartida, casillasTablero,color,partidaempezada,primeravez,cookies,indice,botondadopulsado]);
 
 
   
@@ -275,16 +324,19 @@ function Partida() {
     return Math.floor(Math.random() * 2000) + 2000;
   };
   
-  // async function enviarComienzopartida(){
-  //   const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/empezar/"+idPartida);
-  //   setturno(response.data);
-  // }
-  // function startpartida(){
-  //   enviarComienzopartida();
-  //   const botonStart = document.querySelector('.empezarPartida');
-  //   botonStart.style.display = 'none';
-  // }
+  async function enviarComienzopartida(){
+    const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/empezar/"+idPartida);
+    setturno(response.data);
+  }
+  function startpartida(){
+    setpartidaempezada(true);
+    enviarComienzopartida();
+    const botonStart = document.querySelector('.empezarPartida');
+    botonStart.style.display = 'none';
+  }
   const onClick = () => {
+    setbotondadopulsado(true);
+    console.log("boton tirar dado pulsado");
     jugadorhatirado = true;
     handleStart();
     const botonTirarDado = document.querySelector('.tirarDado');
@@ -304,9 +356,18 @@ function Partida() {
   }
   async function enviarFicha(numficha){
     const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/movimiento", {partida: idPartida,ficha: numficha,dado: numDado});
-    moverFicha(numficha,parseInt(response.data.destino.posicion)+1,color,casillasTablero);
-    setturno(response.data.turno);
-    inhabilitarFichas(color);
+    if(!response.data.acabada){
+      moverFicha(numficha,parseInt(response.data.destino.posicion)+1,casillasTablero,color,response.data.destino.tipo);
+      if(response.data.comida){
+        moverFicha(response.data.comida.numero,parseInt(response.data.destino.posicion)+1,casillasTablero,response.data.comida.color,response.data.destino.tipo);
+      }
+      setturno(response.data.turno);
+      inhabilitarFichas(color);
+    }
+    else{
+      setpartidafinalizada(true);
+    }
+
   }
   const fichaPulsada = (numficha, color) => {
     console.log("FICHA PULSADA");
@@ -318,12 +379,13 @@ function Partida() {
       <p>El id es {idPartida}</p>
       <p>El color es {color}</p>
       <p>Turno de {turno}</p>
+      {partidafinalizada && <p>LA PARTIDA SE ACABÓ!!!!</p>}
       <div>
-        {/* {color === "AMARILLO" && 
-        // <button className="empezarPartida" onClick={startpartida}>
-        // Comenzar Partida
-        // </button>
-        } */}
+        {color === "AMARILLO" && 
+        <button className="empezarPartida" onClick={startpartida}>
+        Comenzar Partida
+        </button>
+        }
         
         <h1 className="usernameVerde" >{usernameVerde}</h1>
         <h1 className="usernameAmarillo">{usernameAmarillo}</h1> 
@@ -519,7 +581,7 @@ function Partida() {
         Tirar dado
       </button>}
     <div>
-    {<Timer timeLimit={6} onTimeUp={handleTimeUp} />}
+    {<Timer timeLimit={60} onTimeUp={handleTimeUp} />}
     </div>
     </>
   );

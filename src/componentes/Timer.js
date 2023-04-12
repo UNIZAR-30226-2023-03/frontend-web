@@ -84,7 +84,7 @@ function Timer({ timeLimit, onTimeUp }) {
         ).toFixed(0)} 283`;
         document
           .getElementById("base-timer-path-remaining")
-          .setAttribute("strokeDasharray", circleDasharray);
+          .setAttribute("stroke-dasharray", circleDasharray);
       }
 
   return (
@@ -96,7 +96,7 @@ function Timer({ timeLimit, onTimeUp }) {
             <circle className="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
             <path
               id="base-timer-path-remaining"
-              strokeDasharray="283"
+              stroke-dasharray="283"
               className={`base-timer__path-remaining ${remainingPathColor}`}
               d="
                 M 50, 50
