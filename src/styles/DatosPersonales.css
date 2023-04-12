@@ -34,3 +34,7 @@
 .noIIn{
     display: none;
 }
+
+.button [type="submit"]{
+    color: green;
+}

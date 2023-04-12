@@ -25,6 +25,10 @@ function DatosPersonales(){
   const [contraseñaNueva2, setcontraseñaNueva2]=useState('');
   const [mal, setMal]=useState(false);
   const [noIgual, setno]=useState(false);
+  const [mostrarContraseña, setMostrarContraseña]=useState(false);
+  const [showPass1, setShowPass1]=useState('password');
+  const [showPass2, setShowPass2]=useState('password');
+  const [showPass3, setShowPass3]=useState('password');
 
 
   function handleOnChange(event){
@@ -109,6 +113,26 @@ function DatosPersonales(){
     })
   }
 
+ function mostrasCambio(){
+    if(mostrarContraseña){
+      setMostrarContraseña(false)
+    }else{setMostrarContraseña(true);}
+  }
+function mostrarPass(){ 
+    if(showPass1==="text"){
+      setShowPass1("password")
+    }else{setShowPass1("text")}
+}
+function mostrarPass1(){ 
+  if(showPass2==="text"){
+    setShowPass2("password")
+  }else{setShowPass2("text")}
+}
+function mostrarPass2(){ 
+  if(showPass3==="text"){
+    setShowPass3("password")
+  }else{setShowPass3("text")}
+}
 
 
 
@@ -132,24 +156,34 @@ function DatosPersonales(){
       <p className={ncr ? 'cr' : 'crIn'}>Su email ha sido cambiado a {newEmail} </p>
       <button type="submit">Cambiar Correo</button>
     </form>
-
-    <p>Cambiar contraseña</p>
-    <form onSubmit={handleSubmit2}>
-      <p>Introduce la contraseña antigua</p>
-      <input type="password" placeholder="Contraseña antigua"
-      value={contraseñaAntigua} required onChange={handleOnChange2} />
-      <p className={newCtr ? 'antigua' : 'antiguaIn'}>La contraseña antigua es incorrecta </p>
-      <p>Introduce la contraseña nueva</p>
-      <input type="password" placeholder="Contraseña nueva"
-      value={contraseñaNueva} required onChange={handleOnChange3} />
-      <p>Repita la contraseña</p>
-      <input type="password" placeholder="Contraseña nueva"
-      value={contraseñaNueva2} required onChange={handleOnChange4} />
-      <p className={noIgual ? 'noI' : 'noIIn'}>Las contraseñas no coinciden </p>
-      <button type="submit">Cambiar Contraseña</button>
-      <p className={nueva ? 'nueva' : 'nuevaIn'}>La contraseña ha sido cambiada con exito </p>
-      <p className={mal ? 'mail' : 'mailIn'}>Error, la contraseña no ha sido cambiada </p>
-    </form>
+    <button onClick={mostrasCambio}>Cambiar contraseña</button>
+    {mostrarContraseña ?(
+      <div className="container">
+        <p>Cambiar contraseña</p>
+        
+          <p>Introduce la contraseña antigua</p>
+          <input type={showPass1} placeholder="Contraseña antigua"
+          value={contraseñaAntigua} required onChange={handleOnChange2} />
+          <button onMouseDown={mostrarPass} onMouseUp={mostrarPass}>mostrar Contraseña</button>
+          <p className={newCtr ? 'antigua' : 'antiguaIn'}>La contraseña antigua es incorrecta </p>
+          <p>Introduce la contraseña nueva</p>
+          <input type={showPass2} placeholder="Contraseña nueva"
+          value={contraseñaNueva} required onChange={handleOnChange3} />
+          <button onMouseDown={mostrarPass1} onMouseUp={mostrarPass1}>mostrar Contraseña</button>
+          <p>Repita la contraseña</p>
+          <input type={showPass3} placeholder="Contraseña nueva"
+          value={contraseñaNueva2} required onChange={handleOnChange4} />
+          <button onMouseDown={mostrarPass2} onMouseUp={mostrarPass2}>mostrar Contraseña</button>
+          <p className={noIgual ? 'noI' : 'noIIn'}>Las contraseñas no coinciden </p>
+          <form onSubmit={handleSubmit2}>
+            <button type="submit">Cambiar Contraseña</button>
+            <p className={nueva ? 'nueva' : 'nuevaIn'}>La contraseña ha sido cambiada con exito </p>
+            <p className={mal ? 'mail' : 'mailIn'}>Error, la contraseña no ha sido cambiada </p>
+          </form>
+      </div>
+      ) : (
+      <div></div>)}
+    
     </>
   );
 }

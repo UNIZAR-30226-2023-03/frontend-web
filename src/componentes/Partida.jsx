@@ -45,6 +45,7 @@ let estadoFichas = [
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+  
 }
 
 // function actualizarFicha(ficha,nuevaCasilla){
@@ -57,6 +58,7 @@ function sleep(ms) {
 // }
 
 function moverFicha(numficha, numcasilla,casillasTablero,colorficha,tipocasilla){
+  console.log(estadoFichas)
   let ficha,fichacss, fichamover, casilla;// casilla_ant;//,casilla_anterior;
   const casillasArray = Object.values(casillasTablero);
   if(tipocasilla ==="CASA"){
