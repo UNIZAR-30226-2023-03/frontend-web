@@ -45,6 +45,8 @@ function Registrarse() {
         const cookies = new Cookies();
         cookies.set('idUsuario',response.data.id,{path: '/'})
         cookies.set('nombreUsuario',username,{path: '/'})
+        cookies.set('correoUsuario',email,{path: '/'})
+        console.log(email)
         navigate(process.env.PUBLIC_URL+'/principal');
       }) 
       .catch(error => {

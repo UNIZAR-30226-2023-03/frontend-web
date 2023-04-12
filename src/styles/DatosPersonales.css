@@ -1,0 +1,36 @@
+.si{
+    color: green;
+}
+.siIn{
+    display:none;
+}
+.cr{
+    color: green;
+}
+.crIn{
+    display:none;
+}
+.antigua{
+    color: red;
+}
+.antiguaIn{
+    display: none;
+}
+.nueva{
+    color: green;
+}
+.nuevaIn{
+    display: none;
+}
+.mail{
+    color: red;
+}
+.mailIn{
+    display: none;
+}
+.noI{
+    color: red;
+}
+.noIIn{
+    display: none;
+}

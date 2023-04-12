@@ -27,6 +27,7 @@ function LoginForm() {
         const cookies = new Cookies();
         cookies.set('idUsuario',response.data.id,{path: '/'})
         cookies.set('nombreUsuario',response.data.username,{path: '/'})
+        cookies.set('correoUsuario',response.data.email,{path: '/'})
         navigate(process.env.PUBLIC_URL+'/principal');
       })
       .catch(error => {
