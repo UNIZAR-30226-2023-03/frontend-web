@@ -49,13 +49,13 @@ function LoginForm() {
         <h1>Inicio de sesión</h1>
         <label>
         <p className="textoIniciarSesion">Usuario:</p>
-          <input type="text" placeholder="Correo electrónico o nombre de usuario"
+          <input className='inp' type="text" placeholder="Correo electrónico o nombre de usuario"
             value={login} required onChange={handleUsernameChange} />
           <p className={error1 ? 'error1' : 'error1In'}>El usuario no existe </p>
         </label>
         <label>
         <p className="textoIniciarSesion">Contraseña:</p>
-          <input type="password" placeholder='Contraseña' required value={password} onChange={handlePasswordChange} />
+          <input className='inp' type="password" placeholder='Contraseña' required value={password} onChange={handlePasswordChange} />
           <p className={error2 ? 'error2' : 'error2In'}>La contraseña es incorrecta </p>
         </label>
         <button type="submit">Iniciar sesión</button>

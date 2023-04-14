@@ -2,6 +2,7 @@ import "../styles/DatosPersonales.css";
 import React, { useState } from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
+import ojo from "../imagenes/iconos/ojo.svg";
 
 
 
@@ -43,7 +44,6 @@ function DatosPersonales(){
     })
     .catch(error =>{
       setNewUser(false)
-      console.log('no ok')
     })
   }
 
@@ -59,7 +59,6 @@ function DatosPersonales(){
     })
     .catch(error =>{
       setncr(false);
-      console.log(error.response.data)
     })
   }
   
@@ -143,7 +142,7 @@ function mostrarPass2(){
     <p>Nombre de usuario : {username} </p>
     <form onSubmit={handleSubmit}>
       <p>Si quieres cambiar tu nombre de usuario introducelo en el siguente recuadro</p>
-      <input type="text" placeholder="Nuevo nombre de usuario"
+      <input className="inp" type="text" placeholder="Nuevo nombre de usuario"
       value={newUser} required onChange={handleOnChange} />
       <p className={ne ? 'si' : 'siIn'}>Su usuario ha sido cambiado a {newUser} </p>
       <button type="submit">Cambiar Usuario</button>
@@ -151,7 +150,7 @@ function mostrarPass2(){
     <p>Correo electronico : {correo} </p>
     <form onSubmit={handleSubmit1}>
       <p>Si quieres cambiar tu email introducelo en el siguente recuadro</p>
-      <input type="text" placeholder="Nuevo email"
+      <input className="inp" type="text" placeholder="Nuevo email"
       value={newEmail} required onChange={handleOnChange1} />
       <p className={ncr ? 'cr' : 'crIn'}>Su email ha sido cambiado a {newEmail} </p>
       <button type="submit">Cambiar Correo</button>
@@ -159,22 +158,31 @@ function mostrarPass2(){
     <button onClick={mostrasCambio}>Cambiar contraseña</button>
     {mostrarContraseña ?(
       <div className="container">
-        <p>Cambiar contraseña</p>
-        
-          <p>Introduce la contraseña antigua</p>
-          <input type={showPass1} placeholder="Contraseña antigua"
-          value={contraseñaAntigua} required onChange={handleOnChange2} />
-          <button onMouseDown={mostrarPass} onMouseUp={mostrarPass}>mostrar Contraseña</button>
-          <p className={newCtr ? 'antigua' : 'antiguaIn'}>La contraseña antigua es incorrecta </p>
-          <p>Introduce la contraseña nueva</p>
-          <input type={showPass2} placeholder="Contraseña nueva"
-          value={contraseñaNueva} required onChange={handleOnChange3} />
-          <button onMouseDown={mostrarPass1} onMouseUp={mostrarPass1}>mostrar Contraseña</button>
-          <p>Repita la contraseña</p>
-          <input type={showPass3} placeholder="Contraseña nueva"
-          value={contraseñaNueva2} required onChange={handleOnChange4} />
-          <button onMouseDown={mostrarPass2} onMouseUp={mostrarPass2}>mostrar Contraseña</button>
-          <p className={noIgual ? 'noI' : 'noIIn'}>Las contraseñas no coinciden </p>
+          <p>Cambiar contraseña</p>
+
+          <div className="contraseña">
+            <p>Introduce la contraseña antigua</p>
+            <input className="inp" type={showPass1} placeholder="Contraseña antigua"
+            value={contraseñaAntigua} required onChange={handleOnChange2} />
+            <button className="ojo" onMouseDown={mostrarPass} onMouseUp={mostrarPass}><img src={ojo} alt="" /></button>
+            <p className={newCtr ? 'antigua' : 'antiguaIn'}>La contraseña antigua es incorrecta </p>
+          </div>
+
+          <div className="contraseña">
+            <p>Introduce la contraseña nueva</p>
+            <input className="inp" type={showPass2} placeholder="Contraseña nueva"
+            value={contraseñaNueva} required onChange={handleOnChange3} />
+            <button className="ojo" onMouseDown={mostrarPass1} onMouseUp={mostrarPass1}><img src={ojo} alt="" /></button>
+          </div>
+
+          <div className="contraseña">
+            <p>Repita la contraseña</p>
+            <input className="inp" type={showPass3} placeholder="Contraseña nueva"
+            value={contraseñaNueva2} required onChange={handleOnChange4} />
+            <button className="ojo" onMouseDown={mostrarPass2} onMouseUp={mostrarPass2}><img src={ojo} alt="" /></button>
+            <p className={noIgual ? 'noI' : 'noIIn'}>Las contraseñas no coinciden </p>
+          </div>
+          
           <form onSubmit={handleSubmit2}>
             <button type="submit">Cambiar Contraseña</button>
             <p className={nueva ? 'nueva' : 'nuevaIn'}>La contraseña ha sido cambiada con exito </p>

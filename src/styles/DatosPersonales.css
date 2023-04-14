@@ -34,7 +34,25 @@
 .noIIn{
     display: none;
 }
+.contraseña {
+    text-align: center;
+}
+.inp::placeholder{
+    text-align: center;
+}
+.inp{
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border: none;
+}
 
-.button [type="submit"]{
-    color: green;
+.contraseña .ojo{
+    background: transparent;
+    border:none;
+    cursor: pointer;
+    
+}
+.contraseña .ojo :hover{
+    transform: scale(1.3);
+    transition: background-color 0.6s ease;
 }
