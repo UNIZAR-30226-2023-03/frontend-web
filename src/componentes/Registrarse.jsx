@@ -74,24 +74,24 @@ function Registrarse() {
         <p>Para poder crear una cuenta, debes introducir los siguientes datos</p>
         <label>
         <p className="textoRegistro">Nombre de usuario:</p>
-          <input type="text" value={username} onChange={handleUsernameChange} />
-          <p className={error1 ? 'error1' : 'error1In'}>Ya existe un usuario con este username </p>
+          <input type="text" value={username} required onChange={handleUsernameChange} />
+          <p className={error1 ? 'error1' : 'error1In'}>Ya existe un usuario con este nombre</p>
         </label>
         <br/>
         <label>
         <p className="textoRegistro">Correo electrónico:</p>
-          <input type="text" value={email} onChange={handleEmailChange} />
-          <p className={error2 ? 'error2' : 'error2In'}>Ya existe un usuario con ese email </p>
+          <input type="text" value={email} required onChange={handleEmailChange} />
+          <p className={error2 ? 'error2' : 'error2In'}>Ya existe un usuario con ese correo</p>
         </label>
         <br/>
         <label>
           <p className="textoRegistro">Contraseña:</p>
-          <input type="password" value={password} onChange={handlePassword1Change} />
+          <input type="password" value={password} required onChange={handlePassword1Change} />
         </label>
         <br/>
         <label>
         <p className="textoRegistro">Repita la contraseña:</p>
-          <input type="password" value={password_2} onChange={handlePassword2Change} />
+          <input type="password" value={password_2} required onChange={handlePassword2Change} />
           <p className={error3 ? 'error2' : 'error2In'}>La contraseña no coincide </p>
         </label>
         <br/>

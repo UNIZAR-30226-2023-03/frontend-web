@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Timer({ timeLimit, onTimeUp, mostrar }) {
+function Timer({ timeLimit, onTimeUp }) {
     const FULL_DASH_ARRAY = 283;
     const WARNING_THRESHOLD = 10;
     const ALERT_THRESHOLD = 5;
@@ -35,10 +35,11 @@ function Timer({ timeLimit, onTimeUp, mostrar }) {
           setTimerStarted(true);
           timerInterval = setInterval(() => {
             timePassed = timePassed += 1;
-            timeLeft = TIME_LIMIT - timePassed;
-            document.getElementById("base-timer-label").innerHTML = formatTime(
-              timeLeft
-            );
+            timeLeft = TIME_LIMIT - timePassed; 
+            let baseTimerLabel = document.getElementById("base-timer-label");
+            if (baseTimerLabel !== null) {
+              baseTimerLabel.innerHTML = formatTime(timeLeft);
+            }          
             setCircleDasharray();
             setRemainingPathColor(timeLeft);
         
@@ -56,20 +57,34 @@ function Timer({ timeLimit, onTimeUp, mostrar }) {
       
       function setRemainingPathColor(timeLeft) {
         const { alert, warning, info } = COLOR_CODES;
-        if (timeLeft <= alert.threshold) {
-          document
-            .getElementById("base-timer-path-remaining")
-            .classList.remove(warning.color);
-          document
-            .getElementById("base-timer-path-remaining")
-            .classList.add(alert.color);
-        } else if (timeLeft <= warning.threshold) {
-          document
-            .getElementById("base-timer-path-remaining")
-            .classList.remove(info.color);
-          document
-            .getElementById("base-timer-path-remaining")
-            .classList.add(warning.color);
+        // if(mostrar){
+        //   if (timeLeft <= alert.threshold) {
+        //     document
+        //       .getElementById("base-timer-path-remaining")
+        //       .classList.remove(warning.color);
+        //     document
+        //       .getElementById("base-timer-path-remaining")
+        //       .classList.add(alert.color);
+        //   } else if (timeLeft <= warning.threshold) {
+        //     document
+        //       .getElementById("base-timer-path-remaining")
+        //       .classList.remove(info.color);
+        //     document
+        //       .getElementById("base-timer-path-remaining")
+        //       .classList.add(warning.color);
+        //   }
+        // }
+        const remainingPathColorElement = document.getElementById(
+          "base-timer-path-remaining"
+        );
+        if (remainingPathColorElement) {
+          if (timeLeft <= alert.threshold) {
+            remainingPathColorElement.classList.remove(warning.color);
+            remainingPathColorElement.classList.add(alert.color);
+          } else if (timeLeft <= warning.threshold) {
+            remainingPathColorElement.classList.remove(info.color);
+            remainingPathColorElement.classList.add(warning.color);
+          }
         }
       }
       
@@ -79,18 +94,18 @@ function Timer({ timeLimit, onTimeUp, mostrar }) {
       }
       
       function setCircleDasharray() {
-        const circleDasharray = `${(
-          calculateTimeFraction() * FULL_DASH_ARRAY
-        ).toFixed(0)} 283`;
-        document
-          .getElementById("base-timer-path-remaining")
-          .setAttribute("stroke-dasharray", circleDasharray);
+        let baseTimerPathRemaining = document.getElementById("base-timer-path-remaining");
+        if (baseTimerPathRemaining !== null) {
+          const circleDasharray = `${(
+            calculateTimeFraction() * FULL_DASH_ARRAY
+          ).toFixed(0)} 283`;
+          baseTimerPathRemaining.setAttribute("stroke-dasharray", circleDasharray);
+        }
       }
 
   return (
     
     <div>
-      {mostrar &&(
         <>
           <p className="textoTiempo">Tiempo restante:</p>
           <div className="base-timer">
@@ -113,7 +128,6 @@ function Timer({ timeLimit, onTimeUp, mostrar }) {
           <span id="base-timer-label" className="base-timer__label">{formatTime(timeLeft)}</span>
           </div>
       </>
-       )}
     </div>
    
   );
