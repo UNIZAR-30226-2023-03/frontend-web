@@ -57,23 +57,6 @@ function Timer({ timeLimit, onTimeUp }) {
       
       function setRemainingPathColor(timeLeft) {
         const { alert, warning, info } = COLOR_CODES;
-        // if(mostrar){
-        //   if (timeLeft <= alert.threshold) {
-        //     document
-        //       .getElementById("base-timer-path-remaining")
-        //       .classList.remove(warning.color);
-        //     document
-        //       .getElementById("base-timer-path-remaining")
-        //       .classList.add(alert.color);
-        //   } else if (timeLeft <= warning.threshold) {
-        //     document
-        //       .getElementById("base-timer-path-remaining")
-        //       .classList.remove(info.color);
-        //     document
-        //       .getElementById("base-timer-path-remaining")
-        //       .classList.add(warning.color);
-        //   }
-        // }
         const remainingPathColorElement = document.getElementById(
           "base-timer-path-remaining"
         );

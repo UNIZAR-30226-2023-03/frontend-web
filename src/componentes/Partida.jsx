@@ -223,12 +223,12 @@ function Partida() {
   const [numjugadores,setNumjugadores]  = useState(0);
   const [turno, setturno] = useState('');
   const [numDado, setnumDado] = useState(0);
-  let jugadorhatirado = false;
   const [primeravez, setprimeravez] = useState(true);
   const [partidaempezada, setpartidaempezada] = useState(false);
   const [partidafinalizada, setpartidafinalizada] = useState(false);
   const [juegoautomatico, setjuegoautomatico] = useState(false);
   const [fichapulsada, setfichapulsada] = useState(false);
+  const [habilitartimer, sethabilitartimer] = useState(true);
   //const [fichasdisponibles, setfichasdisponibles] = useState([]);
   const [botondadopulsado, setbotondadopulsado] = useState(false);
   const [indice, setindice] = useState(0);
@@ -286,18 +286,19 @@ function Partida() {
             setturno(data.turno);
             setjuegoautomatico(false);
             setfichapulsada(false);
+            sethabilitartimer(true);
   
             //displayResponse(data);
         })
           stompClient.subscribe("/topic/movimiento/" + idPartida, function (response) {
               // Un jugador ha hecho un movimiento -> Actualizar tablero
               let data = JSON.parse(response.body);
-              console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO NUMCASILLA: "+data.destino.posicion+1);
-              console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO COLOR: "+data.ficha.color);
-              console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO FICHA: "+data.ficha.numero);
               //displayResponse(data);
               if(!data.acabada){
                 if(color !== data.color){
+                  console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO NUMCASILLA: "+data.destino.posicion+1);
+                  console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO COLOR: "+data.ficha.color);
+                  console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO FICHA: "+data.ficha.numero);
                   moverFicha(data.ficha.numero, parseInt(data.destino.posicion)+1,data.ficha.color,data.destino.tipo);  
                 }
                 if(data.comida){
@@ -305,6 +306,7 @@ function Partida() {
                 }
                 setjuegoautomatico(false);
                 setfichapulsada(false);
+                sethabilitartimer(true);
                 setturno(data.turno);             
               }
               else{
@@ -318,6 +320,8 @@ function Partida() {
               setturno(data);
               setjuegoautomatico(false);
               setfichapulsada(false);
+              setbotondadopulsado(false);
+              sethabilitartimer(true);
               setpartidaempezada(true);
               if(data !== color){
                 colorearFichas(color);
@@ -340,6 +344,7 @@ function Partida() {
   }, [color,idPartida]);
 
   useEffect(() => {
+    console.log("USE EFECT DE ENVIAR DADO");
     let col = "";
     async function enviarDado(numdado,setturno,idPartida) {
       await sleep(4000); // Espera 4 segundos
@@ -360,9 +365,12 @@ function Partida() {
       if(response.data.sacar===true){
         moverFicha(response.data.fichas[0].numero,parseInt(response.data.casilla.posicion)+1,color,response.data.casilla.tipo);
         setturno(response.data.turno);
+        sethabilitartimer(false);
       }
       else if(response.data.vueltaACasa){
         moverFicha(response.data.fichas[0].numero,parseInt(response.data.casilla.posicion)+1,color,"CASA");
+        sethabilitartimer(false);
+        setturno(response.data.turno);
       }
       else{
         console.log("BLOQUEANDO FICHASS");
@@ -374,7 +382,6 @@ function Partida() {
         }
       }
       setindice(indice+1);
-      setbotondadopulsado(false);
     }
 
     if (primeravez && state) {
@@ -422,11 +429,11 @@ function Partida() {
     }
     else if(partidaempezada && botondadopulsado){
       console.log("enviando y actualizando dado");
-      //setnumDado(parseInt(currentPhotoIndex)+1);
+      setnumDado(parseInt(currentPhotoIndex)+1);
       enviarDado(parseInt(currentPhotoIndex)+1,setturno,idPartida);
     }
     return () => clearInterval(intervalId);
-  }, [isPlaying,currentPhotoIndex,state, idPartida,color,partidaempezada,primeravez,cookies,indice,botondadopulsado,juegoautomatico]);
+  }, [isPlaying,state]);
 
 
   
@@ -458,7 +465,6 @@ function Partida() {
     setbotondadopulsado(true);
     setjuegoautomatico(false);
     console.log("boton tirar dado pulsado");
-    jugadorhatirado = true;
     handleStart();
     const botonTirarDado = document.querySelector('.tirarDado');
     botonTirarDado.style.display = 'none';
@@ -467,22 +473,30 @@ function Partida() {
 
   function handleTimeUp() {
     console.log("ENTRANDO EN HANDLETIMEUP");
-    if(!jugadorhatirado){
-      setbotondadopulsado(true);
-      setjuegoautomatico(true);
-      const botonTirarDado = document.querySelector('.tirarDado');
-      botonTirarDado.style.display = 'none';
-      handleStart();
-    }
-    else if(!fichapulsada && turno === color){
-      console.log("NO SE HA PULSADO LA FICHA, JUEGO AUTOMATICO");
-      setjuegoautomatico(true);
-      if(fichasdisponibles.length !== 0) {
-        let numficha = fichasdisponibles[0];
-        console.log("FICHA A ENVIAR DESDE TIMEUP "+numficha);
-        console.log("DADO A ENVIAR DESDE TIMEUP "+numDado);
-        colorearFichas(color);
-        enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada);
+    console.log("turno: "+turno);
+    console.log("color: "+color);
+    if(turno === color){
+      if(botondadopulsado === false && turno === color){
+        // entra aquí cuando se ha pulsado el boton de tirar dado
+        console.log("JUGADOR NO HA TIRADO EL DADO");
+        setbotondadopulsado(true);
+        setjuegoautomatico(true);
+        const botonTirarDado = document.querySelector('.tirarDado');
+        botonTirarDado.style.display = 'none';
+        handleStart();
+      }
+      else if(!fichapulsada && turno === color && habilitartimer){
+        console.log("NO SE HA PULSADO LA FICHA, JUEGO AUTOMATICO");
+        setfichapulsada(true);
+        setjuegoautomatico(true);
+        sethabilitartimer(false);
+        if(fichasdisponibles.length !== 0) {
+          let numficha = fichasdisponibles[0];
+          console.log("FICHA A ENVIAR DESDE TIMEUP "+numficha);
+          console.log("DADO A ENVIAR DESDE TIMEUP "+numDado);
+          colorearFichas(color);
+          enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada);
+        }
       }
     }
   }
