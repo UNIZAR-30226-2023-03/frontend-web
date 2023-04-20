@@ -1,118 +1,65 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import ReactDOM from "react-dom";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
-function Timer({ timeLimit, onTimeUp }) {
-    const FULL_DASH_ARRAY = 283;
-    const WARNING_THRESHOLD = 10;
-    const ALERT_THRESHOLD = 5;
-    const TIME_LIMIT = timeLimit;
-    const COLOR_CODES = {
-        info: {
-          color: "green"
-        },
-        warning: {
-          color: "orange",
-          threshold: WARNING_THRESHOLD
-        },
-        alert: {
-          color: "red",
-          threshold: ALERT_THRESHOLD
-        }
-      };
-      const [timerStarted, setTimerStarted] = useState(false);
-      let timePassed = 0;
-      let timeLeft = TIME_LIMIT;
-      let timerInterval = null;
-      let remainingPathColor = COLOR_CODES.info.color;
-      startTimer();
+import "../styles/Timer.css";
 
-      function onTimesUp() {
-        clearInterval(timerInterval);
-        onTimeUp();
-      }
+const RenderTime = ({ remainingTime }) => {
+  const currentTime = useRef(remainingTime);
+  const prevTime = useRef(null);
+  const isNewTimeFirstTick = useRef(false);
+  const [, setOneLastRerender] = useState(0);
 
-      function startTimer() {
-        if (!timerStarted) {
-          setTimerStarted(true);
-          timerInterval = setInterval(() => {
-            timePassed = timePassed += 1;
-            timeLeft = TIME_LIMIT - timePassed; 
-            let baseTimerLabel = document.getElementById("base-timer-label");
-            if (baseTimerLabel !== null) {
-              baseTimerLabel.innerHTML = formatTime(timeLeft);
-            }          
-            setCircleDasharray();
-            setRemainingPathColor(timeLeft);
-        
-            if (timeLeft === 0) {
-              onTimesUp();
-            }
-          }, 1000);
-        }
-      }
-      
-      function formatTime(time) {
-        let seconds = time % 60;     
-        return `${seconds}`;
-      }
-      
-      function setRemainingPathColor(timeLeft) {
-        const { alert, warning, info } = COLOR_CODES;
-        const remainingPathColorElement = document.getElementById(
-          "base-timer-path-remaining"
-        );
-        if (remainingPathColorElement) {
-          if (timeLeft <= alert.threshold) {
-            remainingPathColorElement.classList.remove(warning.color);
-            remainingPathColorElement.classList.add(alert.color);
-          } else if (timeLeft <= warning.threshold) {
-            remainingPathColorElement.classList.remove(info.color);
-            remainingPathColorElement.classList.add(warning.color);
-          }
-        }
-      }
-      
-      function calculateTimeFraction() {
-        const rawTimeFraction = timeLeft / TIME_LIMIT;
-        return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
-      }
-      
-      function setCircleDasharray() {
-        let baseTimerPathRemaining = document.getElementById("base-timer-path-remaining");
-        if (baseTimerPathRemaining !== null) {
-          const circleDasharray = `${(
-            calculateTimeFraction() * FULL_DASH_ARRAY
-          ).toFixed(0)} 283`;
-          baseTimerPathRemaining.setAttribute("stroke-dasharray", circleDasharray);
-        }
-      }
+  if (currentTime.current !== remainingTime) {
+    isNewTimeFirstTick.current = true;
+    prevTime.current = currentTime.current;
+    currentTime.current = remainingTime;
+  } else {
+    isNewTimeFirstTick.current = false;
+  }
+
+  // force one last re-render when the time is over to tirgger the last animation
+  if (remainingTime === 0) {
+    setTimeout(() => {
+      setOneLastRerender((val) => val + 1);
+    }, 20);
+  }
+
+  const isTimeUp = isNewTimeFirstTick.current;
 
   return (
-    
-    <div>
-        <>
-          <p className="textoTiempo">Tiempo restante:</p>
-          <div className="base-timer">
-          <svg className="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <g className="base-timer__circle">
-              <circle className="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
-              <path
-                id="base-timer-path-remaining"
-                stroke-dasharray="283"
-                className={`base-timer__path-remaining ${remainingPathColor}`}
-                d="
-                  M 50, 50
-                  m -45, 0
-                  a 45,45 0 1,0 90,0
-                  a 45,45 0 1,0 -90,0
-                "
-              ></path>
-            </g>
-          </svg>
-          <span id="base-timer-label" className="base-timer__label">{formatTime(timeLeft)}</span>
-          </div>
-      </>
+    <div className="time-wrapper">
+      <div key={remainingTime} className={`time ${isTimeUp ? "up" : ""}`}>
+        {remainingTime}
+      </div>
+      {prevTime.current !== null && (
+        <div
+          key={prevTime.current}
+          className={`time ${!isTimeUp ? "down" : ""}`}
+        >
+          {prevTime.current}
+        </div>
+      )}
     </div>
-   
+  );
+};
+
+
+
+function Timer() {
+  return (
+      <div className="timer-wrapper">
+        <CountdownCircleTimer
+          isPlaying
+          duration={10}
+          colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+          colorsTime={[10, 6, 3, 0]}
+        >
+          {RenderTime}
+        </CountdownCircleTimer>
+      </div>
   );
 }
 export default Timer;
+//const rootElement = document.getElementById("root");
+//ReactDOM.render(<App />, rootElement);
