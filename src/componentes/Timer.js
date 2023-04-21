@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import ReactDOM from "react-dom";
+//import ReactDOM from "react-dom";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 import "../styles/Timer.css";
@@ -46,14 +46,19 @@ const RenderTime = ({ remainingTime }) => {
 
 
 
-function Timer() {
+function Timer({ onTimeUp}) {
+  const handleTimerComplete = () => {
+    onTimeUp();
+  };
+
   return (
       <div className="timer-wrapper">
         <CountdownCircleTimer
           isPlaying
-          duration={10}
+          duration={59}
           colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
           colorsTime={[10, 6, 3, 0]}
+          onComplete={handleTimerComplete} 
         >
           {RenderTime}
         </CountdownCircleTimer>

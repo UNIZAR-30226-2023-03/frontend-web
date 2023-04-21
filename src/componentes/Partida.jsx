@@ -45,8 +45,8 @@ let estadoFichas = [
   {ficha:'ficha4VERDE',casilla:'inicio-VERDE-4'},
 ];
 let fichasdisponibles = [];
-const vectorAmarillo = [5,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2];
-const vectorAzul = [5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2];
+const vectorAmarillo = [5,6,6,5,6,6,5,6,6,5,6,6,5,6,6,5,6,6];
+const vectorAzul = [5,6,6,5,5,6,6,5,1,1,1,1,1,1,1,2,2,2,2,2];
 
 
 function actualizarFicha(ficha,nuevaCasilla){
@@ -57,7 +57,7 @@ function buscarCasilla(ficha) {
   const casilla = estadoFichas.find(elem => elem.ficha === ficha)?.casilla;
   return casilla;
 }
-async function enviarDado(numdado,setturno,idPartida,setnumDado,color,indice,setindice,setpartidafinalizada,setmostrartimer) {
+async function enviarDado(numdado,setturno,idPartida,setnumDado,color,indice,setindice,setpartidafinalizada,juegoautonomo,setmostrartimer) {
   let vector;
   if(color === "AMARILLO"){
     vector = vectorAmarillo;
@@ -72,31 +72,28 @@ async function enviarDado(numdado,setturno,idPartida,setnumDado,color,indice,set
   //response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/dado/"+idPartida + "?dado="+numdado);
   response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/dado/"+idPartida + "?dado="+vector[indice]);
   console.log("RESPUESTA TRAS ENVIAR DADO SACAR: "+response.data.sacar);
+  setmostrartimer(false);
   if(response.data.sacar===true){
     moverFicha(response.data.fichas[0].numero,parseInt(response.data.casilla.posicion)+1,color,response.data.casilla.tipo);
     setturno(response.data.turno);
-    //setmostrartimer(false);
-    //sethabilitartimer(false);
   }
   else if(response.data.vueltaACasa){
     moverFicha(response.data.fichas[0].numero,parseInt(response.data.casilla.posicion)+1,color,"CASA");
-    //sethabilitartimer(false);
     setturno(response.data.turno);
-    //setmostrartimer(false);
   }
   else{
     console.log("BLOQUEANDO FICHASS");
-    let numficha = mostrarFichasBloqueadas(response.data.fichas,color,false);
-    // if(numficha !== -1 && juegoautomatico){
-    //   console.log("ENVIO FICHA AUTOMATICAMENTE "+numficha);
-    //   enviarFicha(numficha,idPartida,vector[indice],setturno,color,setpartidafinalizada);
-    //   //setjuegoautomatico(false);
-    // }
+    let numficha = mostrarFichasBloqueadas(response.data.fichas,color,juegoautonomo);
+    if(numficha !== -1 && juegoautonomo){
+      colorearFichas(color);
+      console.log("ENVIO FICHA AUTOMATICAMENTE "+numficha);
+      enviarFicha(numficha,idPartida,vector[indice],setturno,color,setpartidafinalizada,setmostrartimer);
+    }
   }
   setindice(indice+1);
 }
 
-async function enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada,setmostrartimer){
+async function enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada, setmostrartimer){
   //const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/movimiento", {partida: idPartida,ficha: numficha,dado: numDado});
   const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/movimiento", {partida: idPartida,ficha: numficha,dado: numDado});
   if(!response.data.acabada){
@@ -110,10 +107,8 @@ async function enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidaf
     if(response.data.turno === color){
       const botonStart = document.querySelector('.tirarDado');
       botonStart.style.display = 'block';
-      //setmostrartimer(true);
-    }
-    else{
-      //setmostrartimer(false);
+      setmostrartimer(true);
+      // ha tirado un 6, activar de nuevo el timer
     }
   }
   else{
@@ -166,7 +161,7 @@ function moverFicha(numficha, numcasilla,colorficha,tipocasilla){
   console.log(estadoFichas);
 }
 
-function mostrarFichasBloqueadas(fichas,color,juegoautomatico){
+function mostrarFichasBloqueadas(fichas,color,juegoautonomo){
   let ficha,fichacambiar,i;
   let fichasBloqueadas = fichas.map((ficha) => ficha.numero);
   for (i = 1; i <= 4; i++) {
@@ -177,7 +172,7 @@ function mostrarFichasBloqueadas(fichas,color,juegoautomatico){
       fichacambiar.style.backgroundColor = "rgb(39, 40, 41)"; // establece el color de fondo
     } else {
       console.log("HABILITANDO FICHA: "+ ficha);
-      if(!juegoautomatico){
+      if(!juegoautonomo){
         fichacambiar.disabled = false;
         console.log("AÑADIENDO FICHA AL VECTOR");
         fichasdisponibles = [...fichasdisponibles, i];
@@ -266,12 +261,9 @@ function Partida() {
   const [partidafinalizada, setpartidafinalizada] = useState(false);
   const [juegoautomatico, setjuegoautomatico] = useState(false);
   const [fichapulsada, setfichapulsada] = useState(false);
-  const [habilitartimer, sethabilitartimer] = useState(true);
   const [botondadopulsado, setbotondadopulsado] = useState(false);
- // const [tiempoturno, setmostrartimer] = useState(true);
-  const [mostrartimer, setmostrartimer] = useState(false);
-  const [parartimer, setparartimer] = useState(false);
   const [indice, setindice] = useState(0);
+  const [mostrartimer, setmostrartimer] = useState(false);
   const dadoRef = useRef(0);
   useEffect(() => {
 
@@ -323,16 +315,9 @@ function Partida() {
             console.log("LLEGA TURNO DESDE DADO SACAR: "+ data.sacar);
             console.log("LLEGA TURNO DESDE DADO COLOR FICHA: "+ data.fichas[0].color);
             setturno(data.turno);
-            if(data.turno === color){
-              //setmostrartimer(true);
-            }
-            else{
-              //setmostrartimer(false);
-            }
             setjuegoautomatico(false);
             setfichapulsada(false);
-            sethabilitartimer(true);
-  
+            setbotondadopulsado(false);
             //displayResponse(data);
         })
           stompClient.subscribe("/topic/movimiento/" + idPartida, function (response) {
@@ -348,18 +333,12 @@ function Partida() {
                 }
                 if(data.comida){
                   moverFicha(data.comida.numero,parseInt(data.destino.posicion)+1,data.comida.color,"CASA");
+                  //enviarDado(20,setturno,idPartida,setnumDado,color,indice,setindice,setpartidafinalizada,juegoautomatico,setmostrartimer);
                 }
                 setjuegoautomatico(false);
                 setfichapulsada(false);
-                sethabilitartimer(true);
-                setturno(data.turno);
-                if(data.turno === color){
-                  //setmostrartimer(true);
-                }
-                else{
-                  //setmostrartimer(false);
-                }
-                             
+                setbotondadopulsado(false);
+                setturno(data.turno);                             
               }
               else{
                 setpartidafinalizada(true);
@@ -370,16 +349,9 @@ function Partida() {
               let data = JSON.parse(response.body);
               console.log("LLEGA TURNO DESDE TURNO: "+ data);
               setturno(data);
-              if(data === color){
-                setmostrartimer(true);
-              }
-              else{
-                setmostrartimer(false);
-              }
               setjuegoautomatico(false);
               setfichapulsada(false);
               setbotondadopulsado(false);
-              sethabilitartimer(true);
               setpartidaempezada(true);
               if(data !== color){
                 colorearFichas(color);
@@ -480,12 +452,10 @@ function Partida() {
     const botonStart = document.querySelector('.empezarPartida');
     botonStart.style.display = 'none';
   }
-  async function gestionarenviodado(){
+  async function gestionarenviodado(juegoautonomo){
     await handleStart();
-    setmostrartimer(true);
-    //setparartimer(true);
     console.log("enviando y actualizando DADO: "+dadoRef.current);
-    enviarDado(dadoRef.current,setturno,idPartida,setnumDado,color,indice,setindice,setpartidafinalizada,setmostrartimer); 
+    enviarDado(dadoRef.current,setturno,idPartida,setnumDado,color,indice,setindice,setpartidafinalizada,juegoautonomo,setmostrartimer); 
   }
   const onClick = () => {
     const botonTirarDado = document.querySelector('.tirarDado');
@@ -493,41 +463,40 @@ function Partida() {
     setbotondadopulsado(true);
     setjuegoautomatico(false);
     console.log("boton tirar dado pulsado");
-    setmostrartimer(false);
-    gestionarenviodado();
+    gestionarenviodado(false);
   };
 
   function handleTimeUp() {
     console.log("ENTRANDO EN HANDLETIMEUP");
     console.log("turno: "+turno);
     console.log("color: "+color);
-    if(turno === color){}
-    //   if(botondadopulsado === false && turno === color){
-    //     console.log("JUGADOR NO HA TIRADO EL DADO");
-    //     setbotondadopulsado(true);
-    //     setjuegoautomatico(true);
-    //     const botonTirarDado = document.querySelector('.tirarDado');
-    //     botonTirarDado.style.display = 'none';
-    //     handleStart();
-    //   }
-    //   else if(!fichapulsada && turno === color && habilitartimer){
-    //     console.log("NO SE HA PULSADO LA FICHA, JUEGO AUTOMATICO");
-    //     setfichapulsada(true);
-    //     setjuegoautomatico(true);
-    //     sethabilitartimer(false);
-    //     if(fichasdisponibles.length !== 0) {
-    //       let numficha = fichasdisponibles[0];
-    //       console.log("FICHA A ENVIAR DESDE TIMEUP "+numficha);
-    //       console.log("DADO A ENVIAR DESDE TIMEUP "+numDado);
-    //       colorearFichas(color);
-    //       enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada);
-    //     }
-    //   }
-    // }
+    if(turno === color){
+      if(!botondadopulsado){
+        console.log("JUGADOR NO HA TIRADO EL DADO");
+        setbotondadopulsado(true);
+        setjuegoautomatico(true);
+        const botonTirarDado = document.querySelector('.tirarDado');
+        botonTirarDado.style.display = 'none';
+        gestionarenviodado(true);
+      }
+      else if(!fichapulsada){
+        console.log("NO SE HA PULSADO LA FICHA, JUEGO AUTOMATICO");
+        setfichapulsada(true);
+        setjuegoautomatico(true);
+        if(fichasdisponibles.length !== 0) {
+          let numficha = fichasdisponibles[0];
+          console.log("FICHA A ENVIAR DESDE TIMEUP "+numficha);
+          console.log("DADO A ENVIAR DESDE TIMEUP "+numDado);
+          colorearFichas(color);
+          enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada,setmostrartimer);
+        }
+      }
+    }
   }
 
   const fichaPulsada = (numficha, color) => {
     setfichapulsada(true);
+    setjuegoautomatico(false);
     console.log("FICHA PULSADA");
     let ficha = '.ficha'+numficha+color;
     console.log("INHABILITANDO FICHA: "+ ficha);
@@ -545,7 +514,7 @@ function Partida() {
       <p>El color es {color}</p>
       <p>Turno de {turno}</p>
       {partidafinalizada && <p>LA PARTIDA SE ACABÓ!!!!</p>}
-      {juegoautomatico && <p>JUGANDO AUTOMÁTICAMENTE DURANTE 1 TURNO</p>}
+      {color === turno && juegoautomatico && <p>JUGANDO AUTOMÁTICAMENTE DURANTE 1 TURNO</p>}
      <div>
         {color === "AMARILLO" && 
         <button className="empezarPartida" onClick={startpartida}>
@@ -764,7 +733,8 @@ function Partida() {
         Tirar dado
       </button>}
     <div>
-      <Timer></Timer>
+      {!mostrartimer && color === turno && <Timer onTimeUp={handleTimeUp}></Timer>}
+      {mostrartimer && <Timer onTimeUp={handleTimeUp}></Timer>}
     </div>
     </>
   );
