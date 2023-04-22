@@ -265,16 +265,21 @@ function Partida() {
   const [indice, setindice] = useState(0);
   const [mostrartimer, setmostrartimer] = useState(false);
   const dadoRef = useRef(0);
-  useEffect(() => {
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [stompcl, setstompcl] = useState(null);
+  const [showChat, setShowChat] = useState(false);
 
-    function connectToSocket(idPartida,setturno,color,setUsernameRojo,
-      setUsernameAzul,setUsernameVerde,setpartidaempezada,setpartidafinalizada,
-      setNumjugadores) {
+ 
+
+  useEffect(() => {
+    function connectToSocket() {
       let numjug = 0;
       const url = "https://lamesa-backend.azurewebsites.net"
       console.log("connecting to the game");
       let socket = new SockJS(url + "/ws");
       let stompClient = Stomp.over(socket);
+      setstompcl(stompClient);
       stompClient.connect({}, function (frame) {
           stompClient.subscribe("/topic/nuevo-jugador/" + idPartida, function (response) {
               // Un jugador se ha unido a la partida (cuando aún no ha empezado)
@@ -358,20 +363,28 @@ function Partida() {
                 bloquearFichas(numjug,color);
               }
               console.log("LLAMANDO A BLOQUEAR FICHAS CON "+color+" "+numjug);
-              //displayResponse(data);
           })
-        //   stompClient.subscribe("/topic/chat/" + idPartida, function (response) {
-        //     // Mensaje de chat recibido
-        //     let data = JSON.parse(response.body);
-        //     console.log(data);
-        //     //displayResponse(data);
-        // })
+          stompClient.subscribe("/topic/chat/" + idPartida, function (response) {
+            // Mensaje de chat recibido
+            let data = JSON.parse(response.body);
+            console.log("ALGUIEN HA ESCRITO ALGO");
+            console.log("usuario: "+data.usuario);
+            console.log("mensaje: "+data.mensaje);
+            if(data.usuario !== cookies.get('nombreusuario')){
+              const mensaje = {
+                body: data.mensaje,
+                from: data.usuario
+              }
+              //setMessages(()=>mensaje)
+              setMessages((prevMessages) => [...prevMessages, mensaje]);
+            }
+            
+        })
       })
     }
-    connectToSocket(idPartida, setturno, color,
-      setUsernameRojo, setUsernameAzul, setUsernameVerde,
-      setpartidaempezada,setpartidafinalizada,setNumjugadores);
-  }, [color,idPartida]);
+    connectToSocket();
+    // eslint-disable-next-line
+  }, [color, idPartida]);
 
   useEffect(() => {
     let col = "";
@@ -507,6 +520,25 @@ function Partida() {
     fichasdisponibles = [];
     enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada,setmostrartimer);
   };
+  async function enviarmensaje(message){
+    console.log("ENVIANDO MENSAJE: "+message);
+    stompcl.send("/app/chat/" + idPartida, {}, JSON.stringify({
+      usuario: cookies.get('nombreUsuario'),
+      mensaje: message
+    }));
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    enviarmensaje(message);
+    const mensaje ={
+      body: message,
+      from: "Yo"
+    }
+    setMessages([...messages,mensaje]);
+    setMessage("");
+    console.log("MENSAJES: "+ messages);
+  }
+
 
   return (  
     <>
@@ -521,6 +553,29 @@ function Partida() {
         Comenzar Partida
         </button>
         }
+        <button className="abrirChat"onClick={() => setShowChat(!showChat)}>
+          CHAT
+        </button>
+        {showChat &&
+        <div className="chat">
+            <ul>
+            {messages.map((message,index) => (
+              <li key={index}>
+                <p style={{textAlign: message.from === "Yo" ? 'right' : 'left'}}>
+                  {message.from}: 
+                </p>
+                <p style={{textAlign: message.from === "Yo" ? 'right' : 'left'}}>
+                  {message.body}
+                </p>
+              </li>
+            ))} 
+            </ul>
+          <form onSubmit={handleSubmit}>
+            <input type="text" onChange={(e) => setMessage(e.target.value)}
+            value={message} placeholder="Escribir mensaje..."/>
+            <button>Enviar</button>
+          </form>
+        </div>}
         
         <h1 className="usernameVerde" >{usernameVerde}</h1>
         <h1 className="usernameAmarillo">{usernameAmarillo}</h1> 

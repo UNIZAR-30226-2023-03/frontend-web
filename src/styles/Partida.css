@@ -1,4 +1,4 @@
-  .partidaDado {
+.partidaDado {
     position: absolute;
     bottom: 150px;
     right: 10px;
@@ -13,7 +13,68 @@
     display:inline-block ;
     cursor: pointer;
   }
+  .abrirChat{
+    background-color: rgb(69, 31, 0);
+    border-radius: 15px;
+    color:#fff;
+    display:inline-block ;
+    cursor: pointer;
+  }
 
+  .chat{
+    position: absolute;
+    top: 350px;
+    left:50px;
+  }
+  .chat ul{
+    margin: 0;
+    padding: 0;
+    max-height: 450px;
+    height: 450px;
+    width: 350px;
+    max-width: 350px;
+    overflow-y: scroll;
+    list-style: none;
+    background-color: #f7f3b4;
+    border: 5px solid rgb(148, 96, 4); 
+    border-radius: 20px;
+  }
+  .chat li{
+    width: 30%;
+    margin-bottom: 20px;
+    background-color: #acc997;
+    margin-left: 20px;
+  }
+  
+  .chat input[type="text"] {
+    width: 300px;
+    height: 30px;
+    left:5px;
+    border-radius: 10px;
+    background-color: #f7f3b4;
+    border: 5px solid rgb(148, 96, 4); 
+    margin: 0;
+    padding: 0;
+  }
+  .chat form {
+    margin: 0;
+  }
+  
+  .chat button {
+    background-color: rgb(69, 31, 0);
+    border-radius: 15px;
+    color:#fff;
+    height: 30px;
+    width: 60px;
+    cursor: pointer;
+    display:inline-block;
+  }
+  
+  .chat form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   .tirarDado {
     position: fixed;
     bottom: 130px;
