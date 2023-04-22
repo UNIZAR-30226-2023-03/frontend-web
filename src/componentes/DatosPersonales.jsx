@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 import ojo from "../imagenes/iconos/ojo.svg";
+import home from "../imagenes/iconos/home.svg";
 
 
 
@@ -30,6 +31,8 @@ function DatosPersonales(){
   const [showPass1, setShowPass1]=useState('password');
   const [showPass2, setShowPass2]=useState('password');
   const [showPass3, setShowPass3]=useState('password');
+  const [cambioUsuario, setCambioUsuario]=useState(false);
+  const [cambioCorreo, setCambioCorreo]=useState(false);
 
 
   function handleOnChange(event){
@@ -132,67 +135,120 @@ function mostrarPass2(){
     setShowPass3("password")
   }else{setShowPass3("text")}
 }
+function nombre(){
+  if (cambioUsuario){
+    setCambioUsuario(false);
+  }
+  else{
+    setCambioUsuario(true);
+  }
+
+}
+function fcorreo(){
+  if (cambioCorreo){
+    setCambioCorreo(false);
+  }
+  else{
+    setCambioCorreo(true);
+  }
+
+}
 
 
 
   return(
     
-    <>
-    <h1>Datos personales</h1>
-    <p>Nombre de usuario : {username} </p>
-    <form onSubmit={handleSubmit}>
-      <p>Si quieres cambiar tu nombre de usuario introducelo en el siguente recuadro</p>
-      <input className="inp" type="text" placeholder="Nuevo nombre de usuario"
-      value={newUser} required onChange={handleOnChange} />
-      <p className={ne ? 'si' : 'siIn'}>Su usuario ha sido cambiado a {newUser} </p>
-      <button type="submit">Cambiar Usuario</button>
-    </form>
-    <p>Correo electronico : {correo} </p>
-    <form onSubmit={handleSubmit1}>
-      <p>Si quieres cambiar tu email introducelo en el siguente recuadro</p>
-      <input className="inp" type="text" placeholder="Nuevo email"
-      value={newEmail} required onChange={handleOnChange1} />
-      <p className={ncr ? 'cr' : 'crIn'}>Su email ha sido cambiado a {newEmail} </p>
-      <button type="submit">Cambiar Correo</button>
-    </form>
-    <button onClick={mostrasCambio}>Cambiar contraseña</button>
-    {mostrarContraseña ?(
-      <div className="container">
-          <p>Cambiar contraseña</p>
-
-          <div className="contraseña">
-            <p>Introduce la contraseña antigua</p>
-            <input className="inp" type={showPass1} placeholder="Contraseña antigua"
-            value={contraseñaAntigua} required onChange={handleOnChange2} />
-            <button className="ojo" onMouseDown={mostrarPass} onMouseUp={mostrarPass}><img src={ojo} alt="" /></button>
-            <p className={newCtr ? 'antigua' : 'antiguaIn'}>La contraseña antigua es incorrecta </p>
-          </div>
-
-          <div className="contraseña">
-            <p>Introduce la contraseña nueva</p>
-            <input className="inp" type={showPass2} placeholder="Contraseña nueva"
-            value={contraseñaNueva} required onChange={handleOnChange3} />
-            <button className="ojo" onMouseDown={mostrarPass1} onMouseUp={mostrarPass1}><img src={ojo} alt="" /></button>
-          </div>
-
-          <div className="contraseña">
-            <p>Repita la contraseña</p>
-            <input className="inp" type={showPass3} placeholder="Contraseña nueva"
-            value={contraseñaNueva2} required onChange={handleOnChange4} />
-            <button className="ojo" onMouseDown={mostrarPass2} onMouseUp={mostrarPass2}><img src={ojo} alt="" /></button>
-            <p className={noIgual ? 'noI' : 'noIIn'}>Las contraseñas no coinciden </p>
-          </div>
-          
-          <form onSubmit={handleSubmit2}>
-            <button type="submit">Cambiar Contraseña</button>
-            <p className={nueva ? 'nueva' : 'nuevaIn'}>La contraseña ha sido cambiada con exito </p>
-            <p className={mal ? 'mail' : 'mailIn'}>Error, la contraseña no ha sido cambiada </p>
-          </form>
+    <div className="todo">
+      <div className="back">
+        <div class="breadcrumb">
+          <div class="breadcrumb-item"><a href="principal"><img className="casa" src={home} alt="" /></a></div>
+          <div class="breadcrumb-item">&gt;</div>
+          <div class="breadcrumb-item">Datos Personales</div>
+        </div>
       </div>
-      ) : (
+      <h1>Datos personales</h1>
+      <div className="separator"></div>
+      <p className="nombre">Nombre de usuario :</p>
+      <div className="cambio1">
+        <p className="usuario" >{username}</p>
+        <button className="cambio" onClick={nombre}>CAMBIAR NOMBRE DE USUARIO</button>
+      </div>
+      <div className="separator"></div>
+      <p className="nombre">Correo electronico : </p>
+      <div className="cambio1">
+        <p className="usuario">{correo}</p>
+        <button className="cambio" onClick={fcorreo}>CAMBIAR CORREO ELECTRONICO</button>
+      </div>      
+      <div className="separator"></div>
+      <p className="nombre">Contraseña : </p>
+      <div className="cambio1">
+        <p className="usuario">XXXXXX</p>
+        <button className="cambio" onClick={mostrasCambio}>CAMBIAR CONTRASEÑA</button>
+      </div>    
+      <div className="separator"></div>
+      {cambioUsuario ? (
+          <form onSubmit={handleSubmit}>
+            <p>Si quieres cambiar tu nombre de usuario introducelo en el siguente recuadro</p>
+            <input className="inp" type="text" placeholder="Nuevo nombre de usuario"
+            value={newUser} required onChange={handleOnChange} />
+            <p className={ne ? 'si' : 'siIn'}>Su usuario ha sido cambiado a {newUser} </p>
+            <button type="submit">Cambiar Usuario</button>
+         </form>
+        ) : (
+          <div></div>)}
+
+      <p>Correo electronico : {correo} </p>
+      <form onSubmit={handleSubmit1}>
+        <p>Si quieres cambiar tu email introducelo en el siguente recuadro</p>
+        <input className="inp" type="text" placeholder="Nuevo email"
+        value={newEmail} required onChange={handleOnChange1} />
+        <p className={ncr ? 'cr' : 'crIn'}>Su email ha sido cambiado a {newEmail} </p>
+        <button type="submit">Cambiar Correo</button>
+      </form>
+
+
+      <button onClick={mostrasCambio}>Cambiar contraseña</button>
+
+
+      {mostrarContraseña ?(
+        <div className="container">
+            <p>Cambiar contraseña</p>
+
+            <div className="contraseña">
+              <p>Introduce la contraseña antigua</p>
+              <input className="inp" type={showPass1} placeholder="Contraseña antigua"
+              value={contraseñaAntigua} required onChange={handleOnChange2} />
+              <button className="ojo" onMouseDown={mostrarPass} onMouseUp={mostrarPass}><img src={ojo} alt="" /></button>
+              <p className={newCtr ? 'antigua' : 'antiguaIn'}>La contraseña antigua es incorrecta </p>
+            </div>
+
+            <div className="contraseña">
+              <p>Introduce la contraseña nueva</p>
+              <input className="inp" type={showPass2} placeholder="Contraseña nueva"
+              value={contraseñaNueva} required onChange={handleOnChange3} />
+              <button className="ojo" onMouseDown={mostrarPass1} onMouseUp={mostrarPass1}><img src={ojo} alt="" /></button>
+            </div>
+
+            <div className="contraseña">
+              <p>Repita la contraseña</p>
+              <input className="inp" type={showPass3} placeholder="Contraseña nueva"
+              value={contraseñaNueva2} required onChange={handleOnChange4} />
+              <button className="ojo" onMouseDown={mostrarPass2} onMouseUp={mostrarPass2}><img src={ojo} alt="" /></button>
+              <p className={noIgual ? 'noI' : 'noIIn'}>Las contraseñas no coinciden </p>
+            </div>
+            
+            <form onSubmit={handleSubmit2}>
+              <button type="submit">Cambiar Contraseña</button>
+              <p className={nueva ? 'nueva' : 'nuevaIn'}>La contraseña ha sido cambiada con exito </p>
+              <p className={mal ? 'mail' : 'mailIn'}>Error, la contraseña no ha sido cambiada </p>
+            </form>
+        </div>
+        ) : (
       <div></div>)}
+      
+
+    </div>
     
-    </>
   );
 }
 
