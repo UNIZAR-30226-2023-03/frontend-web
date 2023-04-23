@@ -269,7 +269,7 @@ function Partida() {
   const [messages, setMessages] = useState([]);
   const [stompcl, setstompcl] = useState(null);
   const [showChat, setShowChat] = useState(false);
-
+  const miusername  = cookies.get('nombreUsuario');
  
 
   useEffect(() => {
@@ -368,15 +368,21 @@ function Partida() {
             // Mensaje de chat recibido
             let data = JSON.parse(response.body);
             console.log("ALGUIEN HA ESCRITO ALGO");
-            console.log("usuario: "+data.usuario);
+            console.log("usuario del mensaje: "+data.usuario);
             console.log("mensaje: "+data.mensaje);
-            if(data.usuario !== cookies.get('nombreusuario')){
+            //console.log("yo soy : "+cookies.get('nombreusuario'));
+            console.log("yo soy : "+miusername);
+            if(data.usuario !== miusername){
+              console.log("NO ES MI MENSAJE");
               const mensaje = {
                 body: data.mensaje,
                 from: data.usuario
               }
               //setMessages(()=>mensaje)
               setMessages((prevMessages) => [...prevMessages, mensaje]);
+            }
+            else{
+              console.log("MENSAJE MIO, LO IGNORO");
             }
             
         })
@@ -526,6 +532,7 @@ function Partida() {
       usuario: cookies.get('nombreUsuario'),
       mensaje: message
     }));
+    console.log("MENSAJE ENVIADO CON: "+cookies.get('nombreUsuario')+ " y "+message);
   }
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -560,12 +567,23 @@ function Partida() {
         <div className="chat">
             <ul>
             {messages.map((message,index) => (
-              <li key={index}>
-                <p style={{textAlign: message.from === "Yo" ? 'right' : 'left'}}>
+              <li key={index} style={{
+                backgroundImage: message.from === "Yo" 
+                  ? `linear-gradient(to right, transparent ${100 - (message.body.length / 30.0) * 100}%, #acc997)` 
+                  : `linear-gradient(to left, transparent ${100 - (message.body.length / 30.0) * 100}%, #acc997)`
+              }}>
+                <p style={{
+                  textAlign: message.from === "Yo" ? 'right' : 'left',
+                  fontWeight: 'bold',
+                  fontSize: '1.4em'
+                }}>
                   {message.from}: 
                 </p>
-                <p style={{textAlign: message.from === "Yo" ? 'right' : 'left'}}>
-                  {message.body}
+                <p style={{
+                  textAlign: message.from === "Yo" ? 'right' : 'left',
+                  fontSize: '1.2em'
+                }}>
+                  {message.body} 
                 </p>
               </li>
             ))} 
