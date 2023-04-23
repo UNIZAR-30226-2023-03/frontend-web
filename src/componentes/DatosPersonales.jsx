@@ -218,10 +218,10 @@ function fcorreo(){
 
       <div className="form1">
         {mostrarContraseña ?(
-          <div className="container">
+          <div className="container1">
               <p className="textoForm1">Cambiar la contraseña</p>
               <div className="contraseña">
-                <p>Introduce la contraseña antigua</p>
+                <p >Introduce la contraseña antigua</p>
                 <div className="inpojo">
                   <input className="inp" type={showPass1} placeholder="Contraseña antigua" value={contraseñaAntigua} required onChange={handleOnChange2} />
                   <button className="ojo" onMouseDown={mostrarPass} onMouseUp={mostrarPass}><img src={ojo} alt="" /></button>

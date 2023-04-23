@@ -1,48 +1,140 @@
-.container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.todo1{
+    margin-left: 10%;
+    margin-right:10%;
+    text-align: center;
+
 }
-.botonesRapida {
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-    font-size: 16px;
-    cursor: pointer;
+.textocrear{
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 5%;
+    margin-bottom: 6%;
+}
+
+.container{
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+.rapida {
+    display:flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 5%;
 }
   
 .BotonPartidaRapidaAc {
+    font-size: 24px;
+    border: none;
     background-color: #4CAF50;
-    color: white;
+    color: black;
+    padding: 12px 24px;
+    border-radius: 4px;
+
 }
-  
+.BotonPartidaRapidaAc:hover {
+    transform: scale(1.1);
+    transition: 0.1s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2)
+}
 .BotonPartidaRapidaIn {
     background-color: #ddd;
     color: #aaa;
- 
+    cursor: pointer;
+    font-size: 24px;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+}
+.BotonPartidaRapidaIn:hover {
+    transform: scale(1.1);
+    transition: 0.1s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2)
 }
 
 
-.botonesBarrera {
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-    font-size: 16px;
-    cursor: pointer;
+.barrera {
+    width: 125%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5%;
 }
   
 .BotonPartidaBarAc{
+    font-size: 20px;
+    border: none;
     background-color: #4CAF50;
-    color: white;
+    color: black;
+    padding: 12px 20px;
+    border-radius: 4px;
+    
+}
+.BotonPartidaBarAc:hover {
+    transform: scale(1.1);
+    transition: 0.1s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2)
 }
   
 .BotonPartidaBarIn {
     background-color: #ddd;
     color: #aaa;
+    cursor: pointer;
+    font-size: 20px;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+}
+.BotonPartidaBarIn:hover {
+    transform: scale(1.1);
+    transition: 0.1s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2)
 }
 .error{
-color: red;
+    color: red;
 }
 .errorIn{
     display: none;
+}
+
+.bott{
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.bott:hover{
+    transform: scale(1.1);
+    transition: 0.1s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2)
+}
+.breadcrumb .casa:hover{
+    transform: scale(1.7);
+    transition: 0.2s ease-in-out;
+}
+
+.breadcrumb .casa{
+
+    transform: scale(1.4);
+    transition: all;
+}
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.breadcrumb-item {
+    font-size: 20px;
+    color: #999;
+    margin-right: 5px;
+}
+.back1{
+    margin-top: 4%;
+    margin-left: 10%;
 }

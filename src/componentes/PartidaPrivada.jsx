@@ -3,6 +3,7 @@ import "../styles/PartidaPrivada.css";
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { useNavigate } from 'react-router-dom';
+import home from "../imagenes/iconos/home.svg"
 
 function PartidaPrivada(){
     const [configuracionF, setconfiguracionF] = useState("NORMAL");
@@ -114,50 +115,52 @@ function PartidaPrivada(){
     };
 
     return(
-        <div>
-            <h1>UNIRSE A UN PARTIDA PRIVADA</h1>
-            <form onSubmit={handleSubmit}>
-                
-                    <p>Introduce el nombre de la partida privada:</p>
-                    <input type="text" placeholder="Nombre de la partida privada"
-                    value={nombrePartida} required onChange={handleNombreChange} />
-                    <p className={error2 ? 'error2' : 'error2In'}>La partida no existe o ya esta en curso </p>
-                
-                
-                    <p>Introduce el código de la partida privada:</p>
-                    <input type="text" placeholder="Código de la partida privada"
-                    value={codigoPartida} required onChange={handleCodigoChange} />
-                    <p className={error4 ? 'error4' : 'error4In'}>Contraseña incorrecta para la sala indicada </p>
-                    <p className={error1 ? 'error1' : 'error1In'}>Ya estás jugando una partida </p>
-                
-                <button type="submit">Unirme</button>
-            </form>
-            <h1>CREAR UN PARTIDA PRIVADA</h1>
-            <div className='container'>
-                
-                        <p>Introduce el nombre de la partida privada:</p>
-                        <input type="text" placeholder="Nombre de la partida privada"
-                        value={nombre} required onChange={handleNombreNuevoChange} />
-                        <p className={error5 ? 'error5' : 'error5In'}>Nombre de sala no disponible: ya se está jugando una partida con ese nombre de sala </p>
-                
-                
-                        <p>Introduce el código de la partida privada:</p>
-                        <input type="text" placeholder="Código de la partida privada"
-                        value={password} required onChange={handleCodigoNuevoChange} />
-                        <p className={error3 ? 'error3' : 'error3In'}>Ya estás jugando una partida </p>
-                
-                <div className="botonesRapida">
-                            <button className={configuracionF==="NORMAL" ? 'BotonPartidaRapidaAc' : 'BotonPartidaRapidaIn'} onClick={handleClick1}>Partida Normal</button> 
-                            <button className={configuracionF==="RAPIDA" ? 'BotonPartidaRapidaAc' : 'BotonPartidaRapidaIn'} onClick={handleClick2}>Partida Rapida</button> 
+        <div className='all1'>
+            <div className="back2">
+                <div class="breadcrumb">
+                <div class="breadcrumb-item"><a href="principal"><img className="casa" src={home} alt="" /></a></div>
+                <div class="breadcrumb-item">&gt;</div>
+                <div class="breadcrumb-item">Partida Privada</div>
                 </div>
-                    <div className="botonesBarrera">
-                            <button className={configuracionB==="SOLO_SEGUROS" ? 'BotonPartidaBarAc' : 'BotonPartidaBarIn'} onClick={handleClick3}>Partida Con Barreras Normales</button> 
-                            <button className={configuracionB==="TODAS_CASILLAS" ? 'BotonPartidaBarAc' : 'BotonPartidaBarIn'} onClick={handleClick4}>Partida Con Barreras En todas las casillas</button> 
-                </div>
-                
             </div>
-            <form onSubmit={handleSubmit1}>
-                <button type="submit">Crear partida</button>
+            <p className='tit'>UNIRSE A UN PARTIDA PRIVADA</p>
+            <form className='fpp' onSubmit={handleSubmit}>
+                <p className='ttn'>Introduce el nombre de la partida privada:</p>
+                <input className='inp' type="text" placeholder="Nombre de la partida privada" value={nombrePartida} required onChange={handleNombreChange} />
+                <p className={error2 ? 'error2' : 'error2In'}>La partida no existe o ya esta en curso </p>
+                <div className="separator1"></div>
+                <p className='ttn'>Introduce el código de la partida privada:</p>
+                <input className='inp' type="text" placeholder="Código de la partida privada"  value={codigoPartida} required onChange={handleCodigoChange} />
+                <p className={error4 ? 'error4' : 'error4In'}>Contraseña incorrecta para la sala indicada </p>
+                <p className={error1 ? 'error1' : 'error1In'}>Ya estás jugando una partida </p>
+                <button className='bott' type="submit">Unirme</button>
+            </form>
+            <p className='tit'>CREAR UN PARTIDA PRIVADA</p>
+            <div className='c2'>
+                <div className='fpp'>
+                    <p className='ttn'>Introduce el nombre de la partida privada:</p>
+                    <input className='inp' type="text" placeholder="Nombre de la partida privada" value={nombre} required onChange={handleNombreNuevoChange} />
+                    <p className={error5 ? 'error5' : 'error5In'}>Nombre de sala no disponible: ya se está jugando una partida con ese nombre de sala </p>
+                    <p className='ttn'>Introduce el código de la partida privada:</p>
+                    <input className='inp' type="text" placeholder="Código de la partida privada" value={password} required onChange={handleCodigoNuevoChange} />
+                    <p className={error3 ? 'error3' : 'error3In'}>Ya estás jugando una partida </p>
+
+                </div>
+            </div>
+
+                        
+            <div className="botonesRapida">
+                <button className={configuracionF==="NORMAL" ? 'BotonPartidaRapidaAc' : 'BotonPartidaRapidaIn'} onClick={handleClick1}>Partida Normal</button> 
+                <button className={configuracionF==="RAPIDA" ? 'BotonPartidaRapidaAc' : 'BotonPartidaRapidaIn'} onClick={handleClick2}>Partida Rapida</button> 
+            </div>
+
+            <div className="botonesBarrera">
+                <button className={configuracionB==="SOLO_SEGUROS" ? 'BotonPartidaBarAc' : 'BotonPartidaBarIn'} onClick={handleClick3}>Partida Con Barreras Normales</button> 
+                <button className={configuracionB==="TODAS_CASILLAS" ? 'BotonPartidaBarAc' : 'BotonPartidaBarIn'} onClick={handleClick4}>Partida Con Barreras En todas las casillas</button> 
+            </div>
+                
+            <form className='dd' onSubmit={handleSubmit1}>
+                <button className='bott' type="submit">Crear partida</button>
             </form>
         </div>
     );

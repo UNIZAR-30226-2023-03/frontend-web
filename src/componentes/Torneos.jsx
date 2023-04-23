@@ -1,7 +1,8 @@
 import React, { useState, useEffect} from "react";
 import Cookies from 'universal-cookie';
 import axios from 'axios';
-import "../styles/loading.css";
+import "../styles/Torneos.css";
+import home from "../imagenes/iconos/home.svg"
 
 async function buscartorneosactivos(settorneosActivos) {
   const response = await axios.get("https://lamesa-backend.azurewebsites.net/torneo");
@@ -27,6 +28,14 @@ function Torneos(){
   }, []);
     return(
       <>
+      <div className="back3">
+        <div class="breadcrumb">
+          <div class="breadcrumb-item"><a href="principal"><img className="casa" src={home} alt="" /></a></div>
+          <div class="breadcrumb-item">&gt;</div>
+          <div class="breadcrumb-item">Torneos</div>
+        </div>
+      </div>      
+
         <h1>TORNEOS</h1>
         <h2>Torneos disponibles</h2>
         {torneosActivos.map((torneo, index) => (

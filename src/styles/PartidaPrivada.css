@@ -1,15 +1,60 @@
-.container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.tit{
+  font-size: 35px;
+  font-weight: bold;
+  margin-top: 3%;
+
+}
+.all1{
+  margin-left: 30%;
+  margin-right:30%;
+  text-align: center;
+
+
+}
+.fpp{
+  position: relative;
+  margin-top: -1%;
+}
+.fpp::before{
+  content: "";
+  position: absolute;
+  bottom: 60%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  border-bottom: 2px solid black;
+}
+.ttn{
+  text-align: left;
+  font-size: 19px;
+  width: 100%;
+  font-weight: bold;
+
+}
+.inp{
+  margin-bottom: 4%;
+}
+.dd .bott{
+  margin-bottom: 10%;
+  font-size: 20px;
+} 
+.c2 .fpp::before{
+  margin-bottom: -2%;
+
+}
+
+.fpp .bott{
+  font-size: 20px;
+  margin-bottom: 2%;
 }
 
 .botonesRapida {
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-    font-size: 16px;
-    cursor: pointer;
+  margin-left: 10%;
+  width: 80%;
+  justify-content: space-between;
+  display: flex;
+  margin-bottom: 5%;
+
 }
   
 .BotonPartidaRapidaAc {
@@ -25,11 +70,11 @@
 
 
 .botonesBarrera {
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-    font-size: 16px;
-    cursor: pointer;
+
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+
 }
   
 .BotonPartidaBarAc{
@@ -73,4 +118,29 @@
     color: red;
     text-align: center;
     
+}
+
+.breadcrumb .casa:hover{
+  transform: scale(1.7);
+  transition: 0.2s ease-in-out;
+}
+
+.breadcrumb .casa{
+
+  transform: scale(1.4);
+  transition: all;
+}
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.breadcrumb-item {
+  font-size: 20px;
+  color: #999;
+  margin-right: 5px;
+}
+.back2{
+  margin-top: 10%;
+  margin-bottom: 5%;
 }
