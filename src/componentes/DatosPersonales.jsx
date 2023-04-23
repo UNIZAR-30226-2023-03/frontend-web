@@ -178,10 +178,10 @@ function fcorreo(){
         <button className="cambio" onClick={nombre}>CAMBIAR NOMBRE DE USUARIO</button>
       </div>
       <div className="separator"></div>
-      <p className="nombre">Correo electronico : </p>
+      <p className="nombre">Correo electrónico : </p>
       <div className="cambio1">
         <p className="usuario">{correo}</p>
-        <button className="cambio" onClick={fcorreo}>CAMBIAR CORREO ELECTRONICO</button>
+        <button className="cambio" onClick={fcorreo}>CAMBIAR CORREO ELECTRóNICO</button>
       </div>      
       <div className="separator"></div>
       <p className="nombre">Contraseña : </p>
@@ -207,7 +207,7 @@ function fcorreo(){
       <div className="form1">
         {cambioCorreo ? (
           <form  onSubmit={handleSubmit1}>
-            <p className="textoForm">Nuevo correo electronico</p>
+            <p className="textoForm">Nuevo correo electrónico</p>
             <input className="inp" type="text" placeholder="Nuevo email" value={newEmail} required onChange={handleOnChange1} />
             <p className={ncr ? 'cr' : 'crIn'}>Su email ha sido cambiado a {newEmail} </p>
             <button className="chBot" type="submit">CAMBIAR CORREO</button>
@@ -250,7 +250,7 @@ function fcorreo(){
               
               <form onSubmit={handleSubmit2}>
                 <button className="chBot1" type="submit">Cambiar Contraseña</button>
-                <p className={nueva ? 'nueva' : 'nuevaIn'}>La contraseña ha sido cambiada con exito </p>
+                <p className={nueva ? 'nueva' : 'nuevaIn'}>La contraseña ha sido cambiada con éxito </p>
                 <p className={mal ? 'mail' : 'mailIn'}>Error, la contraseña no ha sido cambiada </p>
               </form>
           </div>

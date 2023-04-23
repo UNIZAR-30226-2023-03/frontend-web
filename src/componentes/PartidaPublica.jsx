@@ -53,15 +53,15 @@ function PartidaPublica(){
                 <div class="breadcrumb-item">Datos Personales</div>
                 </div>
             </div>
-            <p className='textocrear'>UNIRSE A UNA PARTIDA PUBLICA</p>
+            <p className='textocrear'>UNIRSE A UNA PARTIDA PúBLICA</p>
                <div className="container">
                     <div className="rapida">
-                            <button className={partidaMod==="NORMAL" ? 'BotonPartidaRapidaAc' : 'BotonPartidaRapidaIn'} onClick={handleClick1}>Partida Normal</button> 
-                            <button className={partidaMod === "RAPIDA" ? 'BotonPartidaRapidaAc' : 'BotonPartidaRapidaIn'} onClick={handleClick2}>Partida Rapida</button> 
+                            <button className={partidaMod==="NORMAL" ? 'BotonPartidaRapidaAc' : 'BotonPartidaRapidaIn'} onClick={handleClick1}>Partida normal</button> 
+                            <button className={partidaMod === "RAPIDA" ? 'BotonPartidaRapidaAc' : 'BotonPartidaRapidaIn'} onClick={handleClick2}>Partida rápida</button> 
                     </div>
                     <div className="barrera">
-                            <button className={partidaBar==="SOLO_SEGUROS" ? 'BotonPartidaBarAc' : 'BotonPartidaBarIn'} onClick={handleClick3}>Partida Con Barreras Normales</button> 
-                            <button className={partidaBar==="TODAS_CASILLAS" ? 'BotonPartidaBarAc' : 'BotonPartidaBarIn'} onClick={handleClick4}>Partida Con Barreras En todas las casillas</button> 
+                            <button className={partidaBar==="SOLO_SEGUROS" ? 'BotonPartidaBarAc' : 'BotonPartidaBarIn'} onClick={handleClick3}>Partida con barreras normales</button> 
+                            <button className={partidaBar==="TODAS_CASILLAS" ? 'BotonPartidaBarAc' : 'BotonPartidaBarIn'} onClick={handleClick4}>Partida con barreras en todas las casillas</button> 
                     </div>
                     <p className={error ? 'error' : 'errorIn'}>Ya estás jugando una partida</p>
                 </div>
