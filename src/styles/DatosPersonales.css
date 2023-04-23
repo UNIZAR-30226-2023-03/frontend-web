@@ -34,16 +34,16 @@
 .noIIn{
     display: none;
 }
-.contraseña {
-    text-align: center;
-}
-.inp::placeholder{
-    text-align: center;
-}
+
 .inp{
-    border-radius: 8px;
+    text-align: left;
+    border-radius: 3px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     border: none;
+    background-color: rgb(241, 239, 239);
+    box-sizing: border-box;
+    padding: 1%;
+    width: 100%;
 }
 
 .contraseña .ojo{
@@ -85,7 +85,7 @@ h1{
     border-bottom: 1px solid black;
     margin-bottom: 10px;
     margin-top: 10px;
-    width: 50%;
+ 
 }
 .usuario {
     font-size: 22px;
@@ -94,17 +94,77 @@ h1{
 
 .todo{
     margin-left: 30%;
+    margin-right: 30%;
 }
-.cambio{
+.cambio1{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cambio1 .cambio{
     background: transparent;
     border:none;
     cursor: pointer;
     text-decoration: underline;
-    padding-left: 30%;
+
 }
 .cambio:hover{
     text-decoration: none;
 }
-.cambio1{
+
+.textoForm{
+    margin-left: -73%;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.chBot{
+    margin-top: 40px;
+    margin-left: -75%;
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 20px;
+    cursor:pointer
+}
+.contraseña{
+
+    width: 100%;
+
+}
+.inpojo{
     display: flex;
 }
+.textoForm1{
+    margin-left: -75%;
+    margin-bottom: 20px;
+    font-size: 19px;
+    font-weight: bold;
+}
+.chBot1{
+    margin-top: -10%;
+    margin-left: -288%;
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 200px;
+    cursor:pointer
+    
+
+}
+
+
