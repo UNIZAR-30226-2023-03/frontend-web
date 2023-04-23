@@ -1,8 +1,8 @@
 import React, { useState, useEffect} from "react";
 import Cookies from 'universal-cookie';
 import axios from 'axios';
-import "../styles/Torneos.css";
-import home from "../imagenes/iconos/home.svg"
+import { useNavigate } from 'react-router-dom';
+import "../styles/loading.css";
 
 async function buscartorneosactivos(settorneosActivos) {
   const response = await axios.get("https://lamesa-backend.azurewebsites.net/torneo");
@@ -15,27 +15,33 @@ async function buscartorneosactivos(settorneosActivos) {
   });
   settorneosActivos(torneosactivos);
 }
-async function apuntarseTorneo(idTorneo,idUsuario){
-  await axios.get("https://lamesa-backend.azurewebsites.net/torneo", {usuario: idUsuario,torneo: idTorneo});
-  //setusuarioapuntado(true);
+function esperarpartida(navigate,idTorneo){
+  navigate(process.env.PUBLIC_URL+'/esperartorneo',{ state: { idTorneo}});
+}
+async function apuntarseTorneo(idTorneo,idUsuario,navigate){
+  const response = await axios.post("https://lamesa-backend.azurewebsites.net/torneo/apuntar", {usuario: idUsuario,torneo: idTorneo});
+  if(response.data.apuntado){
+    esperarpartida(navigate,idTorneo);
+  }
+  else if(response.data.esjugador16){
+    //empezar partida
+  }
+  else{
+    //error
+    // el usuario no se ha podido apuntar al torneo
+  }
+  
 }
 
 function Torneos(){
   const cookies= new Cookies();
+  const navigate = useNavigate();
   const [torneosActivos, settorneosActivos] = useState([]);
   useEffect(() => {
     buscartorneosactivos(settorneosActivos); 
   }, []);
     return(
       <>
-      <div className="back3">
-        <div class="breadcrumb">
-          <div class="breadcrumb-item"><a href="principal"><img className="casa" src={home} alt="" /></a></div>
-          <div class="breadcrumb-item">&gt;</div>
-          <div class="breadcrumb-item">Torneos</div>
-        </div>
-      </div>      
-
         <h1>TORNEOS</h1>
         <h2>Torneos disponibles</h2>
         {torneosActivos.map((torneo, index) => (
@@ -43,7 +49,7 @@ function Torneos(){
             <table border={1}>
             <tr>
               <td colspan="3">torneo.nombre</td>
-              <td rowspan="2"><button onClick={() => apuntarseTorneo(torneo.id,cookies.get('idUsuario'))}>Apuntarse</button></td>
+              <td rowspan="2"><button onClick={() => apuntarseTorneo(torneo.id,cookies.get('idUsuario'),navigate)}>Apuntarse</button></td>
             </tr>
             <tr>
               <td>torneo.precioEntrada</td>
@@ -52,7 +58,7 @@ function Torneos(){
             </tr>
             </table>
           </div>
-        ))}
+        ))}        
       </>
     );
 }
@@ -63,5 +69,7 @@ le das al boton y esperas
 y cuando eso, aparece un boton para empezar la partida
 los 15 primeros por el scoket y el ultimo por el booleano
 socket/topic/torneo/id
+
+
 */
 export default Torneos;

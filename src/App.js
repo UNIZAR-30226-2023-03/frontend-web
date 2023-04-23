@@ -15,6 +15,7 @@ import DatosPersonales from './componentes/DatosPersonales';
 import Torneos from './componentes/Torneos';
 import Rankings from './componentes/Rankings';
 import PartidaPublica from './componentes/PartidaPublica';
+import EsperarTorneo from './componentes/EsperarTorneo';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Route path='/amigos' Component={Amigos}/>
         <Route path='/torneos' Component={Torneos}/>
         <Route path='/rankings' Component={Rankings}/>
+        <Route path='/esperartorneo' Component={EsperarTorneo}/>
     </Routes>
     </BrowserRouter>
     
