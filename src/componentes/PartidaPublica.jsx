@@ -35,7 +35,9 @@ function PartidaPublica(){
         .then(response => {
             let id_part = response.data.id;
             let col = response.data.color;
-            navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col } });
+            let jug = response.data.jugadores;
+            let tipo = "publica";
+            navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo } });
         })
         .catch(error =>{
             setError(true)

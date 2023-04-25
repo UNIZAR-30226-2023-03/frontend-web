@@ -270,7 +270,7 @@ function Partida() {
   const [stompcl, setstompcl] = useState(null);
   const [showChat, setShowChat] = useState(false);
   const miusername  = cookies.get('nombreUsuario');
- 
+  const [tipopart, settipopart] = useState("");
 
   useEffect(() => {
     function connectToSocket() {
@@ -393,28 +393,27 @@ function Partida() {
   }, [color, idPartida]);
 
   useEffect(() => {
-    let col = "";
     if (primeravez && state) {
       setprimeravez(false);
       setIdPartida(state.id_part);
       setColor(state.col);
-      col = state.col;
+      settipopart(state.tipo);
       const jugadores = state.jug;
       function comprobarUsernames(){
-        if(col==="AMARILLO"){
+        if(state.col==="AMARILLO"){
           setUsernameAmarillo(cookies.get('nombreUsuario'));
           setNumjugadores(1);
         }
-        else if(col === "AZUL"){
+        else if(state.col === "AZUL"){
           setUsernameAmarillo(jugadores && jugadores[0].username);
           setUsernameAzul(cookies.get('nombreUsuario'));
           setNumjugadores(2);
-        }else if(col ==="ROJO"){
+        }else if(state.col ==="ROJO"){
           setUsernameAmarillo(jugadores && jugadores[0].username);
           setUsernameAzul(jugadores && jugadores[1].username);
           setUsernameRojo(cookies.get('nombreUsuario'));
           setNumjugadores(3);
-        }else if(col ==="VERDE"){
+        }else if(state.col ==="VERDE"){
           setpartidaempezada(true);
           setUsernameAmarillo(jugadores && jugadores[0].username);
           setUsernameAzul(jugadores && jugadores[1].username);
@@ -423,7 +422,36 @@ function Partida() {
           setNumjugadores(4);
         }
       }
-      comprobarUsernames();
+      if(state.tipo ==="privada" || state.tipo === "publica"){
+        comprobarUsernames();
+      }
+      else if(state.tipo === "torneo"){
+        setNumjugadores(4);
+        if(state.col === "AMARILLO"){
+          setUsernameAmarillo(cookies.get('nombreUsuario'));
+          setUsernameAzul(jugadores && jugadores[0].username);
+          setUsernameRojo(jugadores && jugadores[1].username);
+          setUsernameVerde(jugadores && jugadores[2].username);
+        }
+        else if(state.col === "AZUL"){
+          setUsernameAzul(cookies.get('nombreUsuario'));
+          setUsernameAmarillo(jugadores && jugadores[0].username);
+          setUsernameRojo(jugadores && jugadores[1].username);
+          setUsernameVerde(jugadores && jugadores[2].username);         
+        }
+        else if(state.col === "ROJO"){
+          setUsernameRojo(cookies.get('nombreUsuario'));
+          setUsernameAmarillo(jugadores && jugadores[0].username);
+          setUsernameAzul(jugadores && jugadores[1].username);
+          setUsernameVerde(jugadores && jugadores[2].username);         
+        }
+        else if(state.col === "VERDE"){
+          setUsernameVerde(cookies.get('nombreUsuario'));
+          setUsernameAmarillo(jugadores && jugadores[0].username);
+          setUsernameAzul(jugadores && jugadores[1].username);
+          setUsernameRojo(jugadores && jugadores[2].username);         
+        }
+      }
     }
   }, [cookies,primeravez,state]);
  
@@ -556,6 +584,7 @@ function Partida() {
       {color === turno && juegoautomatico && <p>JUGANDO AUTOMÁTICAMENTE DURANTE 1 TURNO</p>}
      <div>
         {color === "AMARILLO" && 
+        tipopart==="privada" &&
         <button className="empezarPartida" onClick={startpartida}>
         Comenzar Partida
         </button>

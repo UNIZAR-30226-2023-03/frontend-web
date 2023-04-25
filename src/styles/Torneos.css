@@ -1,4 +1,20 @@
-.back3{
-    margin-top: 4%;
-    margin-left: 3%;
+.torneosdisponibles table {
+    margin: auto;
+    background-color: #6e4306;
+    text-align: center;
+    color: white;
+    border: 5px solid #6e4306;
+    border-radius: 25px;
 }
+.torneosdisponibles td, th {
+    padding: 0.5rem;
+    border: none;
+  }
+  
+  .torneosdisponibles td {
+    font-size: 1.2rem;
+  }
+  .nombre-torneo{
+    font-weight: bold;
+    font-size: 2.5rem;
+  }

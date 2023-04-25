@@ -61,7 +61,8 @@ function PartidaPrivada(){
             let id_part = response.data.id;
             let col = response.data.color;
             let jug = response.data.jugadores;
-            navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug } });
+            let tipo = "privada";
+            navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo } });
         })
         .catch(error => {
             if(error.response.data==="Ya estás jugando una partida"){
@@ -93,7 +94,8 @@ function PartidaPrivada(){
             let id_part = response.data.id;
             let col = response.data.color;
             let jug = response.data.jugadores;
-            navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug } }); 
+            let tipo = "privada";
+            navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo } }); 
         })
         .catch(error =>{
             if(error.response.data==="Nombre de sala no disponible: ya se está jugando una partida con ese nombre de sala"){
