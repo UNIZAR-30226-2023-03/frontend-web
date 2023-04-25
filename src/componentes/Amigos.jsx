@@ -6,14 +6,38 @@ import "../styles/Amigos.css";
 import home from "../imagenes/iconos/home.svg"
 
 
-async function eliminarAmigo(amigo,yo){
-  //const response = await axios.post("https://lamesa-backend.azurewebsites.net/usuario/eliminar-amigo", {usuario: yo,amigo});  
+async function eliminarAmigo(amigo,yo,setamigoeliminado){
+  await axios.post("https://lamesa-backend.azurewebsites.net/usuario/eliminar-amigo", {usuario: yo,amigo});  
+  setamigoeliminado(true);
+}
+async function aceptarSolicitud(yo,amigo,setaceptarsolicitud){
+  await axios.post("https://lamesa-backend.azurewebsites.net/usuario/aceptar-solicitud", {usuario: yo,amigo});  
+  setaceptarsolicitud(true);
+}
+async function rechazarSolicitud(yo,amigo,setrechazarsolicitud){
+  await axios.post("https://lamesa-backend.azurewebsites.net/usuario/denegar-solicitud", {usuario: yo,amigo});  
+  setrechazarsolicitud(true);
+}
+
+async function consultarSolicitudes(yo,setsolicitudes){
+  const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuario/solicitudes" + yo);  
+  const solicitudes = response.data;
+  const sol = [];
+    solicitudes.forEach(solicitud => {
+      sol.push(solicitud); 
+    });
+    setsolicitudes(sol);
 }
 
 function Amigos(){
   const [amigosactuales, setamigosactuales] = useState([]);
+  const [solicitudes, setsolicitudes] = useState([]);
+  const [aceptarsolicitud, setaceptarsolicitud] = useState(false);
+  const [rechazarsolicitud, setrechazarsolicitud] = useState(false);
   const cookies= new Cookies();
   const idUsuario = cookies.get('idUsuario');
+  const [amigoeliminado, setamigoeliminado] = useState(false);
+  const [usernamebuscar, setusernamebuscar] = useState("");
   useEffect(() => {
     async function buscaramigosactuales() {
       const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuarios/amigos/"+idUsuario);
@@ -26,6 +50,11 @@ function Amigos(){
     }
     buscaramigosactuales(); 
   }, [idUsuario]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // preguntar al backend por usernamebuscar
+  }
 
     return( 
       <>
@@ -43,12 +72,34 @@ function Amigos(){
           <div key={index} className="amigosdisponibles">
             <table>
             <tr>
-              <td className="nombre-amigo">amigo.username</td>
-              <td ><button onClick={() => eliminarAmigo(amigo.id, idUsuario)}>Eliminar Amigo</button></td>
+              <td className="nombre-amigo">{amigo.username}</td>
+              <td ><button onClick={() => eliminarAmigo(amigo.id, idUsuario,setamigoeliminado)}>Eliminar Amigo</button></td>
             </tr>
             </table>
           </div>
         ))}
+        {amigoeliminado && <p>Amigo eliminado correctamente</p>}
+        <button onClick={() => consultarSolicitudes(idUsuario,setsolicitudes)}>Solicitudes de amistad</button>
+        <h1>SOLICITUDES</h1>
+        {solicitudes.map((solicitud, index) => (
+          <div key={index} className="amigosdisponibles">
+            <table>
+            <tr>
+              <td className="nombre-amigo">{solicitud.username}</td>
+              <td ><button onClick={() => aceptarSolicitud(idUsuario,solicitud.id,setaceptarsolicitud)}>Aceptar</button></td>
+              <td ><button onClick={() => rechazarSolicitud(idUsuario,solicitud.id,setrechazarsolicitud)}>Rechazar</button></td>
+            </tr>
+            </table>
+          </div>
+        ))}    
+        {aceptarsolicitud && <p>Solicitud aceptada correctamente</p>}
+        {rechazarsolicitud && <p>Solicitud rechazada con éxito</p>}
+        <button>BUSCAR AMIGOS</button>
+        <form onSubmit={handleSubmit}>
+          <input type="text" onChange={(e) => setusernamebuscar(e.target.value)}
+          value={usernamebuscar} placeholder="Escribir mensaje..."/>
+          <button>Buscar</button>
+        </form>
       </>
     );
 }

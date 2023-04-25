@@ -85,9 +85,9 @@ function Torneos(){
               <td rowspan="2"><button onClick={() => apuntarseTorneo(torneo.id,cookies.get('idUsuario'),navigate)}>Apuntarse</button></td>
             </tr>
             <tr>
-              <td>torneo.precioEntrada</td>
-              <td>torneo.configBarreras</td>
-              <td>torneo.configFichas</td>
+              <td>{torneo.precioEntrada}</td>
+              <td>{torneo.configBarreras}</td>
+              <td>{torneo.configFichas}</td>
             </tr>
             </table>
           </div>
