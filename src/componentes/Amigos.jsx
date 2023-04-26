@@ -3,7 +3,8 @@ import Cookies from 'universal-cookie';
 import axios from 'axios';
 //import { useNavigate, useLocation } from 'react-router-dom';
 import "../styles/Amigos.css";
-import home from "../imagenes/iconos/home.svg"
+import home from "../imagenes/iconos/home.svg";
+import { Button, Modal } from 'react-bootstrap';
 
 
 async function eliminarAmigo(amigo,yo,setamigoeliminado){
@@ -50,6 +51,7 @@ function Amigos(){
   const [amigoeliminado, setamigoeliminado] = useState(false);
   const [usernamebuscar, setusernamebuscar] = useState("");
   const [errorenviosolicitud, seterrorenviosolicitud] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     async function buscaramigosactuales() {
@@ -66,6 +68,7 @@ function Amigos(){
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    seterrorenviosolicitud(false);
     enviarSolicitud(idUsuario,usernamebuscar,seterrorenviosolicitud);
   }
 
@@ -107,13 +110,29 @@ function Amigos(){
         ))}    
         {aceptarsolicitud && <p>Solicitud aceptada correctamente</p>}
         {rechazarsolicitud && <p>Solicitud rechazada con éxito</p>}
-        <button>BUSCAR AMIGOS</button>
-        <form onSubmit={handleSubmit}>
-          <input type="text" onChange={(e) => setusernamebuscar(e.target.value)}
-          value={usernamebuscar} placeholder="Escribir mensaje..."/>
-          <button>Buscar</button>
-        </form>
-        {errorenviosolicitud && <p>El nombre de usuario introducido no existe</p>}
+        <Button onClick={() => setShowModal(true)}>BUSCAR AMIGOS</Button>
+        <Modal 
+          show={showModal} 
+          onHide={() => setShowModal(false)} 
+          centered
+          className="custom-modal"
+        >
+          <Modal.Header>
+          <Button className="cerrarModal" onClick={() => {
+            setShowModal(false);
+            seterrorenviosolicitud(false);
+          }}>X</Button>
+          <Modal.Title className="modalTitle">Introduce el nombre de tu amigo</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form className="modalForm"  onSubmit={handleSubmit}>
+              <input type="text" onChange={(e) => setusernamebuscar(e.target.value)}
+                value={usernamebuscar} placeholder="Escribir nombre de usuario..." />
+              <Button type="submit">Enviar solicitud de amistad</Button>
+            </form>
+            {errorenviosolicitud && <p className="mensajeError">El nombre de usuario introducido no existe</p>}
+          </Modal.Body>
+        </Modal>
       </>
     );
 }
