@@ -16,6 +16,7 @@ import Torneos from './componentes/Torneos';
 import Rankings from './componentes/Rankings';
 import PartidaPublica from './componentes/PartidaPublica';
 import EsperarTorneo from './componentes/EsperarTorneo';
+import Tienda from './componentes/Tienda';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path='/torneos' Component={Torneos}/>
         <Route path='/rankings' Component={Rankings}/>
         <Route path='/esperartorneo' Component={EsperarTorneo}/>
+        <Route path='/tienda' Component={Tienda}/>
     </Routes>
     </BrowserRouter>
     

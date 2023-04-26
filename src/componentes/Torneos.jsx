@@ -37,7 +37,7 @@ function Torneos(){
   const navigate = useNavigate();
   const [torneosActivos, settorneosActivos] = useState([]);
   const [jugadordesapuntado, setjugadordesapuntado] = useState(false);
-
+  const [showcreartorneo, setshowcreartorneo] = useState(false);
   useEffect(() => {
     if (state) {
       if(state.accion === "desapuntado"){
@@ -81,7 +81,7 @@ function Torneos(){
           <div key={index}className="torneosdisponibles">
             <table>
             <tr>
-              <td colspan="3" className="nombre-torneo">torneo.nombre</td>
+              <td colspan="3" className="nombre-torneo">{torneo.nombre}</td>
               <td rowspan="2"><button onClick={() => apuntarseTorneo(torneo.id,cookies.get('idUsuario'),navigate)}>Apuntarse</button></td>
             </tr>
             <tr>
@@ -105,7 +105,8 @@ function Torneos(){
             </tr>
             </table>
           </div>
-        {jugadordesapuntado && <p>Has sido desapuntado del torneo satisfactoreamente</p>}   
+        {jugadordesapuntado && <p>Has sido desapuntado del torneo satisfactoreamente</p>}
+        <button onClick={() => setshowcreartorneo(!showcreartorneo)}>Crear torneo</button>
       </>
     );
 }

@@ -35,6 +35,9 @@ function Principal(){
     const handleClick6 = () => {
       navigate(process.env.PUBLIC_URL+'/rankings');
     };
+    const handleClick7 = () => {
+      navigate(process.env.PUBLIC_URL+'/tienda');
+    };
     const cookies= new Cookies();
     return (
         <>
@@ -44,6 +47,7 @@ function Principal(){
           <button onClick={handleClick4}>Amigos</button>
           <button onClick={handleClick5}>Torneos</button>
           <button onClick={handleClick6}>Rankings</button>
+          <button onClick={handleClick7}>Tienda</button>
           {mostrarPartidas ? (
               <div className="botones">
                 <button className="botonJugarPublica" onClick={handleClick1}>

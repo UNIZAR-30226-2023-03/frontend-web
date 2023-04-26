@@ -29,6 +29,17 @@ async function consultarSolicitudes(yo,setsolicitudes){
     setsolicitudes(sol);
 }
 
+async function enviarSolicitud(yo, nombre,seterrorenviosolicitud){
+  try {
+    const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuario/obtener-id/?name=" + nombre);
+    const id = response.data;
+    await axios.post("https://lamesa-backend.azurewebsites.net/usuario/enviar-solicitud", { usuario: yo, amigo: id });
+  } catch (error) {
+    seterrorenviosolicitud(true);
+  }
+  
+}
+
 function Amigos(){
   const [amigosactuales, setamigosactuales] = useState([]);
   const [solicitudes, setsolicitudes] = useState([]);
@@ -38,6 +49,8 @@ function Amigos(){
   const idUsuario = cookies.get('idUsuario');
   const [amigoeliminado, setamigoeliminado] = useState(false);
   const [usernamebuscar, setusernamebuscar] = useState("");
+  const [errorenviosolicitud, seterrorenviosolicitud] = useState("");
+
   useEffect(() => {
     async function buscaramigosactuales() {
       const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuarios/amigos/"+idUsuario);
@@ -53,7 +66,7 @@ function Amigos(){
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // preguntar al backend por usernamebuscar
+    enviarSolicitud(idUsuario,usernamebuscar,seterrorenviosolicitud);
   }
 
     return( 
@@ -100,6 +113,7 @@ function Amigos(){
           value={usernamebuscar} placeholder="Escribir mensaje..."/>
           <button>Buscar</button>
         </form>
+        {errorenviosolicitud && <p>El nombre de usuario introducido no existe</p>}
       </>
     );
 }
