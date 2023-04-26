@@ -4,7 +4,8 @@ import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import "../styles/loading.css";
 import "../styles/Torneos.css";
-import home from "../imagenes/iconos/home.svg"
+import home from "../imagenes/iconos/home.svg";
+import { Button, Modal } from 'react-bootstrap';
 
 
 function esperarpartida(navigate,idTorneo){
@@ -38,6 +39,11 @@ function Torneos(){
   const [torneosActivos, settorneosActivos] = useState([]);
   const [jugadordesapuntado, setjugadordesapuntado] = useState(false);
   const [showcreartorneo, setshowcreartorneo] = useState(false);
+  const [nombrenuevotorneo, setnombrenuevotorneo] = useState("");
+  const [numjugadores, setnumjugadores] = useState(0);
+  const [configuracionB, setconfiguracionB] = useState("SOLO_SEGUROS");
+  
+  
   useEffect(() => {
     if (state) {
       if(state.accion === "desapuntado"){
@@ -106,7 +112,50 @@ function Torneos(){
             </table>
           </div>
         {jugadordesapuntado && <p>Has sido desapuntado del torneo satisfactoreamente</p>}
-        <button onClick={() => setshowcreartorneo(!showcreartorneo)}>Crear torneo</button>
+
+        <Button onClick={() => setshowcreartorneo(true)}>Crear torneo</Button>
+        <Modal 
+          show={showcreartorneo} 
+          centered
+          className="custom-modal-creartorneo"
+        >
+          <Modal.Header>
+          <Button className="cerrarModal" onClick={() => {
+            setshowcreartorneo(false);
+          }}>X</Button>
+          <Modal.Title className="modalTitle">Creación de un nuevo torneo</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Nombre del nuevo torneo</p>
+            <input type="text" onChange={(e) => setnombrenuevotorneo(e.target.value)}
+              value={nombrenuevotorneo} placeholder="Nombre del torneo..." />
+            <p>Número de jugadores</p>
+            <div>
+              <input  type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked/>
+              <label for="inlineRadio1">4</label>
+            </div>
+            <div >
+              <input  type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"/>
+              <label for="inlineRadio2">8</label>
+            </div>
+            <div>
+              <input  type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"/>
+              <label  for="inlineRadio3">16</label>
+            </div>
+
+            <p>Cuota de entrada</p>
+            <input type="number" onChange={(e) => setnumjugadores(e.target.value)}
+              value={numjugadores} placeholder="Nombre del torneo..." min="0" /> monedas
+            
+            <p>Personalización de las partidas</p>
+            <div className="botonesBarrera">
+                <button className={configuracionB==="SOLO_SEGUROS" ? 'BotonPartidaBarAc' : 'BotonPartidaBarIn'} onClick={() =>  setconfiguracionB("SOLO_SEGUROS")}>Partidas con barreras normales</button> 
+                <button className={configuracionB==="TODAS_CASILLAS" ? 'BotonPartidaBarAc' : 'BotonPartidaBarIn'} onClick={() =>  setconfiguracionB("TODAS_CASILLAS")}>Partidas con barreras en todas las casillas</button> 
+            </div>
+          
+            
+          </Modal.Body>
+        </Modal>
       </>
     );
 }

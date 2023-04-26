@@ -51,7 +51,8 @@ function Amigos(){
   const [amigoeliminado, setamigoeliminado] = useState(false);
   const [usernamebuscar, setusernamebuscar] = useState("");
   const [errorenviosolicitud, seterrorenviosolicitud] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [showModalBuscarAmigo, setShowModalBuscarAmigo] = useState(false);
+  const [showModalSolicitudes, setShowModalSolicitudes] = useState(false);
 
   useEffect(() => {
     async function buscaramigosactuales() {
@@ -95,31 +96,65 @@ function Amigos(){
           </div>
         ))}
         {amigoeliminado && <p>Amigo eliminado correctamente</p>}
-        <button onClick={() => consultarSolicitudes(idUsuario,setsolicitudes)}>Solicitudes de amistad</button>
-        <h1>SOLICITUDES</h1>
-        {solicitudes.map((solicitud, index) => (
-          <div key={index} className="amigosdisponibles">
-            <table>
-            <tr>
-              <td className="nombre-amigo">{solicitud.username}</td>
-              <td ><button onClick={() => aceptarSolicitud(idUsuario,solicitud.id,setaceptarsolicitud)}>Aceptar</button></td>
-              <td ><button onClick={() => rechazarSolicitud(idUsuario,solicitud.id,setrechazarsolicitud)}>Rechazar</button></td>
-            </tr>
-            </table>
-          </div>
-        ))}    
-        {aceptarsolicitud && <p>Solicitud aceptada correctamente</p>}
-        {rechazarsolicitud && <p>Solicitud rechazada con éxito</p>}
-        <Button onClick={() => setShowModal(true)}>BUSCAR AMIGOS</Button>
+
+  
+        <Button onClick={() => {
+          setShowModalSolicitudes(true);
+          setShowModalBuscarAmigo(false);
+          consultarSolicitudes(idUsuario, setsolicitudes);
+          }}>Solicitudes de amistad</Button>
         <Modal 
-          show={showModal} 
-          onHide={() => setShowModal(false)} 
+          show={showModalSolicitudes} 
+          onHide={() => {setShowModalSolicitudes(false);setShowModalBuscarAmigo(false)}} 
+          centered
+          className="custom-modal-solicitudes"
+        >
+          <Modal.Header>
+            <Button className="cerrarModal" onClick={() => {
+              setShowModalSolicitudes(false);
+              setShowModalBuscarAmigo(false);
+              seterrorenviosolicitud(false);
+            }}>X</Button>
+          <Modal.Title className="modalTitle">Solicitudes pendientes</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          {/* {solicitudes.map((solicitud, index) => (
+            <div key={index} className="amigosdisponibles">
+              <table>
+              <tr>
+                <td className="nombre-amigo">{solicitud.username}</td>
+                <td ><button onClick={() => aceptarSolicitud(idUsuario,solicitud.id,setaceptarsolicitud)}>Aceptar</button></td>
+                <td ><button onClick={() => rechazarSolicitud(idUsuario,solicitud.id,setrechazarsolicitud)}>Rechazar</button></td>
+              </tr>
+              </table>
+            </div>
+          ))} */}
+            <div>
+              <table className="solicitudes">
+              <tr>
+                <td className="nombre-amigo">solicitud.username</td>
+                <td ><button type="button" class="btn btn-success">Success</button></td>
+
+                <td ><button className="aceptarSol" >Aceptar</button></td>
+                <td ><button className="rechazarSol" >Rechazar</button></td>
+              </tr>
+              </table>
+            </div>
+          {aceptarsolicitud && <p>Solicitud aceptada correctamente</p>}
+         {rechazarsolicitud && <p>Solicitud rechazada con éxito</p>}  
+          </Modal.Body>
+        </Modal>
+
+        <Button onClick={() => {setShowModalBuscarAmigo(true);setShowModalSolicitudes(false);}}>BUSCAR AMIGOS</Button>
+        <Modal 
+          show={showModalBuscarAmigo} 
+          onHide={() => setShowModalBuscarAmigo(false)} 
           centered
           className="custom-modal"
         >
           <Modal.Header>
           <Button className="cerrarModal" onClick={() => {
-            setShowModal(false);
+            setShowModalBuscarAmigo(false);
             seterrorenviosolicitud(false);
           }}>X</Button>
           <Modal.Title className="modalTitle">Introduce el nombre de tu amigo</Modal.Title>
