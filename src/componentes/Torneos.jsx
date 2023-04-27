@@ -42,7 +42,11 @@ function Torneos(){
   const [nombrenuevotorneo, setnombrenuevotorneo] = useState("");
   const [numjugadores, setnumjugadores] = useState(0);
   const [configuracionB, setconfiguracionB] = useState("SOLO_SEGUROS");
+  const [selectedValue, setSelectedValue] = useState('');
   
+  const handleOptionChange = (event) => {
+    setSelectedValue(event.target.value);
+  }
   
   useEffect(() => {
     if (state) {
@@ -73,10 +77,10 @@ function Torneos(){
       <>
         <div>
           <div className="back4">
-            <div class="breadcrumb">
-              <div class="breadcrumb-item"><a href="principal"><img className="casa" src={home} alt="" /></a></div>
-              <div class="breadcrumb-item">&gt;</div>
-              <div class="breadcrumb-item">Torneos</div>
+            <div className="breadcrumb">
+              <div className="breadcrumb-item"><a href="principal"><img className="casa" src={home} alt="" /></a></div>
+              <div className="breadcrumb-item">&gt;</div>
+              <div className="breadcrumb-item">Torneos</div>
             </div>
           </div>              
         </div>
@@ -86,23 +90,23 @@ function Torneos(){
         {torneosActivos.map((torneo, index) => (
           <div key={index}className="torneosdisponibles">
             <table>
-            <tr>
-              <td colspan="3" className="nombre-torneo">{torneo.nombre}</td>
-              <td rowspan="2"><button onClick={() => apuntarseTorneo(torneo.id,cookies.get('idUsuario'),navigate)}>Apuntarse</button></td>
-            </tr>
-            <tr>
-              <td>{torneo.precioEntrada}</td>
-              <td>{torneo.configBarreras}</td>
-              <td>{torneo.configFichas}</td>
-            </tr>
+              <tr>
+                <td colSpan="3" className="nombre-torneo">{torneo.nombre}</td>
+                <td rowSpan="2"><button onClick={() => apuntarseTorneo(torneo.id,cookies.get('idUsuario'),navigate)}>Apuntarse</button></td>
+              </tr>
+              <tr>
+                <td>{torneo.precioEntrada}</td>
+                <td>{torneo.configBarreras}</td>
+                <td>{torneo.configFichas}</td>
+              </tr>
             </table>
           </div>
         ))}
           <div className="torneosdisponibles">
             <table>
             <tr>
-              <td colspan="3" className="nombre-torneo">NOMBRE TORNEO</td>
-              <td rowspan="2"><button>Apuntarse</button></td>
+              <td colSpan="3" className="nombre-torneo">NOMBRE TORNEO</td>
+              <td rowSpan="2"><button>Apuntarse</button></td>
             </tr>
             <tr>
               <td>torneo.precioEntrada</td>
@@ -112,7 +116,7 @@ function Torneos(){
             </table>
           </div>
         {jugadordesapuntado && <p>Has sido desapuntado del torneo satisfactoreamente</p>}
-
+        {showcreartorneo && <div className="fondo-negro"></div>}
         <Button onClick={() => setshowcreartorneo(true)}>Crear torneo</Button>
         <Modal 
           show={showcreartorneo} 
@@ -126,34 +130,39 @@ function Torneos(){
           <Modal.Title className="modalTitle">Creación de un nuevo torneo</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+          <div className="numjug">
             <p>Nombre del nuevo torneo</p>
             <input type="text" onChange={(e) => setnombrenuevotorneo(e.target.value)}
               value={nombrenuevotorneo} placeholder="Nombre del torneo..." />
             <p>Número de jugadores</p>
-            <div>
-              <input  type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked/>
-              <label for="inlineRadio1">4</label>
-            </div>
-            <div >
-              <input  type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"/>
-              <label for="inlineRadio2">8</label>
-            </div>
-            <div>
-              <input  type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"/>
-              <label  for="inlineRadio3">16</label>
-            </div>
+           
+            
+              <label>
+                <input type="radio" name="radioGroup" value="4" checked={selectedValue === "4"} onChange={handleOptionChange} />
+                4
+              </label>
+              <label>
+                <input type="radio" name="radioGroup" value="8" checked={selectedValue === "8"} onChange={handleOptionChange} />
+                8
+              </label>
+              <label>
+                <input type="radio" name="radioGroup" value="16" checked={selectedValue === "16"} onChange={handleOptionChange} />
+                16
+              </label>
+           
+          
 
             <p>Cuota de entrada</p>
             <input type="number" onChange={(e) => setnumjugadores(e.target.value)}
-              value={numjugadores} placeholder="Nombre del torneo..." min="0" /> monedas
+              value={numjugadores}  min="0" /> monedas
             
             <p>Personalización de las partidas</p>
             <div className="botonesBarrera">
                 <button className={configuracionB==="SOLO_SEGUROS" ? 'BotonPartidaBarAc' : 'BotonPartidaBarIn'} onClick={() =>  setconfiguracionB("SOLO_SEGUROS")}>Partidas con barreras normales</button> 
                 <button className={configuracionB==="TODAS_CASILLAS" ? 'BotonPartidaBarAc' : 'BotonPartidaBarIn'} onClick={() =>  setconfiguracionB("TODAS_CASILLAS")}>Partidas con barreras en todas las casillas</button> 
             </div>
-          
-            
+            <button className="crearTorneo" >Crear torneo</button>
+            </div>
           </Modal.Body>
         </Modal>
       </>

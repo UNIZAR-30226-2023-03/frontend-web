@@ -2,3 +2,31 @@
     margin-top: 4%;
     margin-left: 3%;
 }
+.ranking-table {
+    border: 5px solid #ffffff;
+    width: 1200px;
+    border-collapse: collapse;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .ranking-table td {
+    font-size: 20px;
+    padding: 5px;
+    border-bottom: 1px solid black;
+    border-left: none;
+    border-right: none;
+  }
+  
+  .ranking-table th {
+    background-color: rgb(138, 83, 0);
+    font-weight: bold;
+    font-size: 30px;
+    padding: 5px;
+  }
+  
+  .ranking-table tr:hover {
+    background-color: #ddd;
+  }

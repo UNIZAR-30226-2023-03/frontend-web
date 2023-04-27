@@ -10,6 +10,10 @@
     padding: 0.5rem;
     border: none;
   }
+  .modalTitle{
+    font-weight: bold;
+    font-size: 1.75rem;
+  }
   
   .torneosdisponibles td {
     font-size: 1.2rem;
@@ -21,3 +25,37 @@
   .form-check {
     display: inline-block;
   }
+
+  .custom-modal-creartorneo{
+    width: 1000px;
+    height: 600px;
+    background-color: #ffc957;
+    border-radius: 10px;
+    border: 5px solid #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);  
+    z-index: 100;
+  }
+
+.crearTorneo {
+  background-color: rgb(119, 55, 3);
+  border-radius: 15px;
+  color:#fff;
+  height: 40px;
+  width: 120px;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+}
+
+.numjug {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

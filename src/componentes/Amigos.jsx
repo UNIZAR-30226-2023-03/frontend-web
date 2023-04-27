@@ -32,8 +32,10 @@ async function consultarSolicitudes(yo,setsolicitudes){
 
 async function enviarSolicitud(yo, nombre,seterrorenviosolicitud){
   try {
+    console.log("buscar usuario",nombre);
     const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuario/obtener-id/?name=" + nombre);
     const id = response.data;
+    console.log("id obtenido",id);
     await axios.post("https://lamesa-backend.azurewebsites.net/usuario/enviar-solicitud", { usuario: yo, amigo: id });
   } catch (error) {
     seterrorenviosolicitud(true);
@@ -58,6 +60,7 @@ function Amigos(){
     async function buscaramigosactuales() {
       const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuarios/amigos/"+idUsuario);
       const amigos = response.data;
+      console.log("amigos actuales",amigos)
       const amigosact = [];
       amigos.forEach(amigo => {
         amigosact.push(amigo); 
@@ -77,27 +80,28 @@ function Amigos(){
       <>
         <div>
           <div className="back4">
-            <div class="breadcrumb">
-              <div class="breadcrumb-item"><a href="principal"><img className="casa" src={home} alt="" /></a></div>
-              <div class="breadcrumb-item">&gt;</div>
-              <div class="breadcrumb-item">Amigos</div>
+            <div className="breadcrumb">
+              <div className="breadcrumb-item"><a href="principal"><img className="casa" src={home} alt="" /></a></div>
+              <div className="breadcrumb-item">&gt;</div>
+              <div className="breadcrumb-item">Amigos</div>
             </div>
           </div>              
         </div>
         <h1>MIS AMIGOS</h1>
         {amigosactuales.map((amigo, index) => (
-          <div key={index} className="amigosdisponibles">
+          <div key={index} className="amigosDisponibles">
             <table>
             <tr>
-              <td className="nombre-amigo">{amigo.username}</td>
-              <td ><button onClick={() => eliminarAmigo(amigo.id, idUsuario,setamigoeliminado)}>Eliminar Amigo</button></td>
+              <td>{amigo.username}</td>
+              <td><button onClick={() => eliminarAmigo(amigo.id, idUsuario,setamigoeliminado)}>Eliminar Amigo</button></td>
             </tr>
             </table>
           </div>
         ))}
         {amigoeliminado && <p>Amigo eliminado correctamente</p>}
 
-  
+        {showModalSolicitudes && <div className="fondo-negro"></div>}
+        {showModalBuscarAmigo && <div className="fondo-negro"></div>}
         <Button onClick={() => {
           setShowModalSolicitudes(true);
           setShowModalBuscarAmigo(false);
@@ -118,30 +122,19 @@ function Amigos(){
           <Modal.Title className="modalTitle">Solicitudes pendientes</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          {/* {solicitudes.map((solicitud, index) => (
+          {solicitudes.map((solicitud, index) => (
             <div key={index} className="amigosdisponibles">
-              <table>
-              <tr>
-                <td className="nombre-amigo">{solicitud.username}</td>
-                <td ><button onClick={() => aceptarSolicitud(idUsuario,solicitud.id,setaceptarsolicitud)}>Aceptar</button></td>
-                <td ><button onClick={() => rechazarSolicitud(idUsuario,solicitud.id,setrechazarsolicitud)}>Rechazar</button></td>
-              </tr>
-              </table>
-            </div>
-          ))} */}
-            <div>
               <table className="solicitudes">
               <tr>
-                <td className="nombre-amigo">solicitud.username</td>
-                <td ><button type="button" class="btn btn-success">Success</button></td>
-
-                <td ><button className="aceptarSol" >Aceptar</button></td>
-                <td ><button className="rechazarSol" >Rechazar</button></td>
+                <td className="nombre-amigo">{solicitud.username}</td>
+                <td ><button className="aceptarSol" onClick={() => aceptarSolicitud(idUsuario,solicitud.id,setaceptarsolicitud)}>Aceptar</button></td>
+                <td ><button className="rechazarSol" onClick={() => rechazarSolicitud(idUsuario,solicitud.id,setrechazarsolicitud)}>Rechazar</button></td>
               </tr>
               </table>
             </div>
+          ))}
           {aceptarsolicitud && <p>Solicitud aceptada correctamente</p>}
-         {rechazarsolicitud && <p>Solicitud rechazada con éxito</p>}  
+          {rechazarsolicitud && <p>Solicitud rechazada con éxito</p>}  
           </Modal.Body>
         </Modal>
 
