@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from "react";
 import Cookies from 'universal-cookie';
 import axios from 'axios';
-//import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import "../styles/Amigos.css";
 import home from "../imagenes/iconos/home.svg";
 import { Button, Modal } from 'react-bootstrap';
@@ -11,18 +11,23 @@ async function eliminarAmigo(amigo,yo,setamigoeliminado){
   await axios.post("https://lamesa-backend.azurewebsites.net/usuario/eliminar-amigo", {usuario: yo,amigo});  
   setamigoeliminado(true);
 }
-async function aceptarSolicitud(yo,amigo,setaceptarsolicitud){
+async function aceptarSolicitud(yo,amigo,setaceptarsolicitud,setShowModalSolicitudes){
+  console.log("aceptar solicitud con "+yo+","+amigo);
   await axios.post("https://lamesa-backend.azurewebsites.net/usuario/aceptar-solicitud", {usuario: yo,amigo});  
   setaceptarsolicitud(true);
+  setShowModalSolicitudes(false);
 }
-async function rechazarSolicitud(yo,amigo,setrechazarsolicitud){
+async function rechazarSolicitud(yo,amigo,setrechazarsolicitud,setShowModalSolicitudes){
+  console.log("rechazar solicitud con "+yo+","+amigo);
   await axios.post("https://lamesa-backend.azurewebsites.net/usuario/denegar-solicitud", {usuario: yo,amigo});  
   setrechazarsolicitud(true);
 }
 
 async function consultarSolicitudes(yo,setsolicitudes){
-  const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuario/solicitudes" + yo);  
+  console.log("consultar solicitudes")
+  const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuario/solicitudes/"+yo);  
   const solicitudes = response.data;
+  console.log("solicitudes",response.data);
   const sol = [];
     solicitudes.forEach(solicitud => {
       sol.push(solicitud); 
@@ -33,7 +38,7 @@ async function consultarSolicitudes(yo,setsolicitudes){
 async function enviarSolicitud(yo, nombre,seterrorenviosolicitud){
   try {
     console.log("buscar usuario",nombre);
-    const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuario/obtener-id/?name=" + nombre);
+    const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuario/obtener-id?name=" + nombre);
     const id = response.data;
     console.log("id obtenido",id);
     await axios.post("https://lamesa-backend.azurewebsites.net/usuario/enviar-solicitud", { usuario: yo, amigo: id });
@@ -44,6 +49,7 @@ async function enviarSolicitud(yo, nombre,seterrorenviosolicitud){
 }
 
 function Amigos(){
+  const navigate = useNavigate();
   const [amigosactuales, setamigosactuales] = useState([]);
   const [solicitudes, setsolicitudes] = useState([]);
   const [aceptarsolicitud, setaceptarsolicitud] = useState(false);
@@ -56,9 +62,17 @@ function Amigos(){
   const [showModalBuscarAmigo, setShowModalBuscarAmigo] = useState(false);
   const [showModalSolicitudes, setShowModalSolicitudes] = useState(false);
 
+  async function apuntarseaPartida(idUsuario,idPartida){
+    const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/conectar-amigo", {jugador: idUsuario,partida: idPartida});  
+    let id_part = response.data.id;
+    let col = response.data.color;
+    let jug = response.data.jugadores;
+    let tipo = "PRIVADA";
+    navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo } });
+  }
   useEffect(() => {
     async function buscaramigosactuales() {
-      const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuarios/amigos/"+idUsuario);
+      const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuario/amigos/"+idUsuario);
       const amigos = response.data;
       console.log("amigos actuales",amigos)
       const amigosact = [];
@@ -74,6 +88,7 @@ function Amigos(){
     e.preventDefault();
     seterrorenviosolicitud(false);
     enviarSolicitud(idUsuario,usernamebuscar,seterrorenviosolicitud);
+    setusernamebuscar("");
   }
 
     return( 
@@ -93,6 +108,12 @@ function Amigos(){
             <table>
             <tr>
               <td>{amigo.username}</td>
+              {amigo.estado === "ESPERANDO JUGADORES" &&
+               <td><button onClick={() => apuntarseaPartida(idUsuario,amigo.idPartida)}>¡Únete a su partida!</button></td>
+              }
+              {amigo.estado === "EN_PROGRESO" &&
+               <td><p>Está jugando una partida ahora mismo</p></td>
+              }
               <td><button onClick={() => eliminarAmigo(amigo.id, idUsuario,setamigoeliminado)}>Eliminar Amigo</button></td>
             </tr>
             </table>
@@ -102,7 +123,7 @@ function Amigos(){
 
         {showModalSolicitudes && <div className="fondo-negro"></div>}
         {showModalBuscarAmigo && <div className="fondo-negro"></div>}
-        <Button onClick={() => {
+        <Button className="solicitudesboton" onClick={() => {
           setShowModalSolicitudes(true);
           setShowModalBuscarAmigo(false);
           consultarSolicitudes(idUsuario, setsolicitudes);
@@ -126,19 +147,20 @@ function Amigos(){
             <div key={index} className="amigosdisponibles">
               <table className="solicitudes">
               <tr>
-                <td className="nombre-amigo">{solicitud.username}</td>
-                <td ><button className="aceptarSol" onClick={() => aceptarSolicitud(idUsuario,solicitud.id,setaceptarsolicitud)}>Aceptar</button></td>
-                <td ><button className="rechazarSol" onClick={() => rechazarSolicitud(idUsuario,solicitud.id,setrechazarsolicitud)}>Rechazar</button></td>
+                <td className="nombre-amigo">{solicitud.username} ha solicitado seguirte</td>
+                <td ><button className="aceptarSol" onClick={() => aceptarSolicitud(idUsuario,solicitud.id,setaceptarsolicitud,setShowModalSolicitudes)}>Aceptar</button></td>
+                <td ><button className="rechazarSol" onClick={() => rechazarSolicitud(idUsuario,solicitud.id,setrechazarsolicitud,setShowModalSolicitudes)}>Rechazar</button></td>
               </tr>
               </table>
             </div>
-          ))}
-          {aceptarsolicitud && <p>Solicitud aceptada correctamente</p>}
-          {rechazarsolicitud && <p>Solicitud rechazada con éxito</p>}  
+          ))}  
           </Modal.Body>
         </Modal>
+        {aceptarsolicitud && <p className="mensajeConfirmacion">Solicitud aceptada correctamente</p>}
+        {rechazarsolicitud && <p>Solicitud rechazada con éxito</p>}
+        <p className="mensajeConfirmacion">Solicitud aceptada correctamente</p>
 
-        <Button onClick={() => {setShowModalBuscarAmigo(true);setShowModalSolicitudes(false);}}>BUSCAR AMIGOS</Button>
+        <Button className="solicitudesboton" onClick={() => {setShowModalBuscarAmigo(true);setShowModalSolicitudes(false);}}>BUSCAR AMIGOS</Button>
         <Modal 
           show={showModalBuscarAmigo} 
           onHide={() => setShowModalBuscarAmigo(false)} 

@@ -20,7 +20,7 @@
   }
   .nombre-torneo{
     font-weight: bold;
-    font-size: 2.5rem;
+    font-size: 2.75rem;
   }
   .form-check {
     display: inline-block;
@@ -51,6 +51,7 @@
   cursor: pointer;
   margin: 0 auto;
   display: block;
+ 
 }
 
 .numjug {
@@ -58,4 +59,52 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.Titulobody{
+  font-size: 1.25rem;
+}
+
+.numjug input[type="text"] {
+  width: 250px;
+  height: 30px;
+  left:5px;
+  border-radius: 10px;
+  background-color: #f7f3b400;
+  border: 5px solid rgb(148, 96, 4); 
+  margin: 5;
+  padding: 0;
+}
+
+.numjug input[type="number"] {
+  width: 75px;
+  height: 30px;
+  left:5px;
+  border-radius: 10px;
+  background-color: #f7f3b400;
+  border: 5px solid rgb(148, 96, 4); 
+  margin: 5;
+  padding: 0;
+}
+
+.apuntarseboton{
+  background-color: rgb(253, 137, 42);
+  border-radius: 15px;
+  color:#000000;
+  height: 40px;
+  width: 120px;
+  cursor: pointer;
+  margin:25px; 
+  left:500px;
+}
+
+.creartorneoboton{
+  background-color: rgb(119, 55, 3);
+  border-radius: 15px;
+  color:#fff;
+  height: 50px;
+  width: 120px;
+  cursor: pointer;
+  margin:25px; 
+  left:500px;
 }

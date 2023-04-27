@@ -35,18 +35,18 @@ async function apuntarseTorneo(idTorneo,idUsuario,navigate){
 function Torneos(){
   const { state } = useLocation();
   const cookies= new Cookies();
+  const idUsuario = cookies.get('idUsuario');
   const navigate = useNavigate();
   const [torneosActivos, settorneosActivos] = useState([]);
   const [jugadordesapuntado, setjugadordesapuntado] = useState(false);
   const [showcreartorneo, setshowcreartorneo] = useState(false);
   const [nombrenuevotorneo, setnombrenuevotorneo] = useState("");
-  const [numjugadores, setnumjugadores] = useState(0);
+  const [monedas, setmonedas] = useState(0);
   const [configuracionB, setconfiguracionB] = useState("SOLO_SEGUROS");
-  const [selectedValue, setSelectedValue] = useState('');
+  const [configuracionF, setconfiguracionF] = useState("NORMAL");
+  const [torneocreado, settorneocreado] = useState(false);
+  const [errorcreartorneo, seterrorcreartorneo] = useState("");
   
-  const handleOptionChange = (event) => {
-    setSelectedValue(event.target.value);
-  }
   
   useEffect(() => {
     if (state) {
@@ -72,9 +72,21 @@ function Torneos(){
     }
     buscartorneosactivos(); 
   }, []);
+  async function crearTorneo(){
+    settorneocreado(false);
+    await axios.post("https://lamesa-backend.azurewebsites.net/torneo/crear", {usuario:idUsuario, nombre: nombrenuevotorneo, precio:monedas, configBarreas: configuracionB, configFichas: configuracionF})
+    .then ( response => {
+      console.log("torneo creado");
+      settorneocreado(true);
+    })
+    .catch(error => {
+      seterrorcreartorneo(error.response.data);
+    })    
+  }
  
     return(
       <>
+        {torneocreado &&<p className="mensajeConfirmacion">Torneo creado correctamente</p>}
         <div>
           <div className="back4">
             <div className="breadcrumb">
@@ -106,7 +118,7 @@ function Torneos(){
             <table>
             <tr>
               <td colSpan="3" className="nombre-torneo">NOMBRE TORNEO</td>
-              <td rowSpan="2"><button>Apuntarse</button></td>
+              <td rowSpan="2"><button className="apuntarseboton">Apuntarse</button></td>
             </tr>
             <tr>
               <td>torneo.precioEntrada</td>
@@ -117,7 +129,7 @@ function Torneos(){
           </div>
         {jugadordesapuntado && <p>Has sido desapuntado del torneo satisfactoreamente</p>}
         {showcreartorneo && <div className="fondo-negro"></div>}
-        <Button onClick={() => setshowcreartorneo(true)}>Crear torneo</Button>
+        <Button className="creartorneoboton" onClick={() => setshowcreartorneo(true)}>Crear torneo</Button>
         <Modal 
           show={showcreartorneo} 
           centered
@@ -131,37 +143,28 @@ function Torneos(){
           </Modal.Header>
           <Modal.Body>
           <div className="numjug">
-            <p>Nombre del nuevo torneo</p>
+            <p className="Titulobody">Nombre del nuevo torneo</p>
             <input type="text" onChange={(e) => setnombrenuevotorneo(e.target.value)}
               value={nombrenuevotorneo} placeholder="Nombre del torneo..." />
-            <p>Número de jugadores</p>
-           
-            
-              <label>
-                <input type="radio" name="radioGroup" value="4" checked={selectedValue === "4"} onChange={handleOptionChange} />
-                4
-              </label>
-              <label>
-                <input type="radio" name="radioGroup" value="8" checked={selectedValue === "8"} onChange={handleOptionChange} />
-                8
-              </label>
-              <label>
-                <input type="radio" name="radioGroup" value="16" checked={selectedValue === "16"} onChange={handleOptionChange} />
-                16
-              </label>
-           
-          
 
-            <p>Cuota de entrada</p>
-            <input type="number" onChange={(e) => setnumjugadores(e.target.value)}
-              value={numjugadores}  min="0" /> monedas
+            <p className="Titulobody">Cuota de entrada</p>
+            <input type="number" onChange={(e) => setmonedas(e.target.value)}
+              value={monedas}  min="0" /> monedas
             
-            <p>Personalización de las partidas</p>
+            <p className="Titulobody">Personalización de las partidas</p>
+
+            <div className="botonesRapida">
+                <button className={configuracionF==="NORMAL" ? 'BotonPartidaRapidaAc' : 'BotonPartidaRapidaIn'} onClick={() =>  setconfiguracionF("NORMAL")}>Partida normal</button> 
+                <button className={configuracionF==="RAPIDA" ? 'BotonPartidaRapidaAc' : 'BotonPartidaRapidaIn'} onClick={() =>  setconfiguracionF("RAPIDA")}>Partida rápida</button> 
+            </div>
+
             <div className="botonesBarrera">
                 <button className={configuracionB==="SOLO_SEGUROS" ? 'BotonPartidaBarAc' : 'BotonPartidaBarIn'} onClick={() =>  setconfiguracionB("SOLO_SEGUROS")}>Partidas con barreras normales</button> 
                 <button className={configuracionB==="TODAS_CASILLAS" ? 'BotonPartidaBarAc' : 'BotonPartidaBarIn'} onClick={() =>  setconfiguracionB("TODAS_CASILLAS")}>Partidas con barreras en todas las casillas</button> 
             </div>
-            <button className="crearTorneo" >Crear torneo</button>
+            <p></p>
+            <button className="crearTorneo" onClick={() => crearTorneo()} >Crear torneo</button>
+            <p>q{errorcreartorneo}</p>
             </div>
           </Modal.Body>
         </Modal>
