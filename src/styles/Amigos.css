@@ -154,11 +154,26 @@
     background-color: rgb(119, 55, 3);
     border-radius: 15px;
     color:#fff;
-    height: 50px;
-    width: 120px;
+    height: 100px;
+    width: 250px;
     cursor: pointer;
     margin:25px; 
-    left:500px;
+    top:25%;
+    left:83%;
+    font-size: 1.3em;
+    position:absolute;
+  }
+  .buscarAmigosboton{
+    background-color: rgb(119, 55, 3);
+    border-radius: 15px;
+    position: fixed;
+    color:#fff;
+    height: 100px;
+    width: 250px;
+    cursor: pointer;
+    font-size: 1.5em;
+    position: relative;
+    left:43%;
   }
 
   .mensajeConfirmacion{
@@ -188,6 +203,25 @@
       opacity: 0;
       visibility: hidden;
     }
+  }
+
+  .exclamacion {
+    position: fixed;
+    z-index: 100;
+    background-color: rgba(119, 55, 3, 0);
+    background-image: url('../imagenes/iconos/exclamacion.png');
+    background-size: cover;
+    border: none;
+    width: 50px;
+    height: 50px;
+    top:25.5%;
+    left:95.5%;
+  }
+
+  .sinAmigos{
+    text-align: center;
+    font-size: 1.75em;
+    color: #9d5509;
   }
 
 

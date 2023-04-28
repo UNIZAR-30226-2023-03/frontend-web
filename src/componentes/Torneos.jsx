@@ -78,6 +78,7 @@ function Torneos(){
     .then ( response => {
       console.log("torneo creado");
       settorneocreado(true);
+      setshowcreartorneo(false);
     })
     .catch(error => {
       seterrorcreartorneo(error.response.data);
@@ -164,7 +165,7 @@ function Torneos(){
             </div>
             <p></p>
             <button className="crearTorneo" onClick={() => crearTorneo()} >Crear torneo</button>
-            <p>q{errorcreartorneo}</p>
+            <p className="mensajeError">{errorcreartorneo}</p>
             </div>
           </Modal.Body>
         </Modal>

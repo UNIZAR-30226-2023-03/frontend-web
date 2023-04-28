@@ -9,6 +9,13 @@ body {
     color: #ffffff;
     font-size: 25px;
   }
+  .inp {
+    width: 280px;
+    height: 30px;
+    border-radius: 10px;
+    margin: 5;
+    padding: 0;
+  }
   .textoSinIniciarSesion{
     color: #ffffff;
     font-size: 18px;

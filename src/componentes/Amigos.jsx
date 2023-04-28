@@ -11,29 +11,22 @@ async function eliminarAmigo(amigo,yo,setamigoeliminado){
   await axios.post("https://lamesa-backend.azurewebsites.net/usuario/eliminar-amigo", {usuario: yo,amigo});  
   setamigoeliminado(true);
 }
-async function aceptarSolicitud(yo,amigo,setaceptarsolicitud,setShowModalSolicitudes){
+async function aceptarSolicitud(yo,amigo,setaceptarsolicitud,setShowModalSolicitudes,setmostrarexclamacion){
   console.log("aceptar solicitud con "+yo+","+amigo);
   await axios.post("https://lamesa-backend.azurewebsites.net/usuario/aceptar-solicitud", {usuario: yo,amigo});  
   setaceptarsolicitud(true);
   setShowModalSolicitudes(false);
+  setmostrarexclamacion(false);
 }
-async function rechazarSolicitud(yo,amigo,setrechazarsolicitud,setShowModalSolicitudes){
+async function rechazarSolicitud(yo,amigo,setrechazarsolicitud,setShowModalSolicitudes,setmostrarexclamacion){
   console.log("rechazar solicitud con "+yo+","+amigo);
   await axios.post("https://lamesa-backend.azurewebsites.net/usuario/denegar-solicitud", {usuario: yo,amigo});  
   setrechazarsolicitud(true);
+  setShowModalSolicitudes(false);
+  setmostrarexclamacion(false);
 }
 
-async function consultarSolicitudes(yo,setsolicitudes){
-  console.log("consultar solicitudes")
-  const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuario/solicitudes/"+yo);  
-  const solicitudes = response.data;
-  console.log("solicitudes",response.data);
-  const sol = [];
-    solicitudes.forEach(solicitud => {
-      sol.push(solicitud); 
-    });
-    setsolicitudes(sol);
-}
+
 
 async function enviarSolicitud(yo, nombre,seterrorenviosolicitud){
   try {
@@ -61,6 +54,7 @@ function Amigos(){
   const [errorenviosolicitud, seterrorenviosolicitud] = useState("");
   const [showModalBuscarAmigo, setShowModalBuscarAmigo] = useState(false);
   const [showModalSolicitudes, setShowModalSolicitudes] = useState(false);
+  const [mostrarexclamacion, setmostrarexclamacion] = useState(false);
 
   async function apuntarseaPartida(idUsuario,idPartida){
     const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/conectar-amigo", {jugador: idUsuario,partida: idPartida});  
@@ -84,6 +78,24 @@ function Amigos(){
     buscaramigosactuales(); 
   }, [idUsuario]);
 
+  useEffect(()=>{
+    async function consultarSolicitudes(yo){
+      console.log("consultar solicitudes")
+      const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuario/solicitudes/"+yo);  
+      const solicitudes = response.data;
+      if(response.data.length !== 0){
+        setmostrarexclamacion(true);
+      }
+      console.log("solicitudes",response.data);
+      const sol = [];
+        solicitudes.forEach(solicitud => {
+          sol.push(solicitud); 
+        });
+        setsolicitudes(sol);
+    }
+    consultarSolicitudes(idUsuario)
+  }, [idUsuario])
+
   const handleSubmit = (e) => {
     e.preventDefault();
     seterrorenviosolicitud(false);
@@ -103,6 +115,10 @@ function Amigos(){
           </div>              
         </div>
         <h1>MIS AMIGOS</h1>
+        {amigosactuales.length === 0 &&
+            <p className="sinAmigos">Parece que todavía no tienen ningún amigo agregado.
+            <br></br><br></br>
+           Busca a tus amigos aqui:</p>}
         {amigosactuales.map((amigo, index) => (
           <div key={index} className="amigosDisponibles">
             <table>
@@ -119,14 +135,15 @@ function Amigos(){
             </table>
           </div>
         ))}
-        {amigoeliminado && <p>Amigo eliminado correctamente</p>}
+        {amigoeliminado && <p className="mensajeConfirmacion">Amigo eliminado correctamente</p>}
 
         {showModalSolicitudes && <div className="fondo-negro"></div>}
         {showModalBuscarAmigo && <div className="fondo-negro"></div>}
+        {mostrarexclamacion && <button className="exclamacion"></button>}
         <Button className="solicitudesboton" onClick={() => {
           setShowModalSolicitudes(true);
           setShowModalBuscarAmigo(false);
-          consultarSolicitudes(idUsuario, setsolicitudes);
+          setmostrarexclamacion(false);
           }}>Solicitudes de amistad</Button>
         <Modal 
           show={showModalSolicitudes} 
@@ -148,8 +165,8 @@ function Amigos(){
               <table className="solicitudes">
               <tr>
                 <td className="nombre-amigo">{solicitud.username} ha solicitado seguirte</td>
-                <td ><button className="aceptarSol" onClick={() => aceptarSolicitud(idUsuario,solicitud.id,setaceptarsolicitud,setShowModalSolicitudes)}>Aceptar</button></td>
-                <td ><button className="rechazarSol" onClick={() => rechazarSolicitud(idUsuario,solicitud.id,setrechazarsolicitud,setShowModalSolicitudes)}>Rechazar</button></td>
+                <td ><button className="aceptarSol" onClick={() => aceptarSolicitud(idUsuario,solicitud.id,setaceptarsolicitud,setShowModalSolicitudes,setmostrarexclamacion)}>Aceptar</button></td>
+                <td ><button className="rechazarSol" onClick={() => rechazarSolicitud(idUsuario,solicitud.id,setrechazarsolicitud,setShowModalSolicitudes,setmostrarexclamacion)}>Rechazar</button></td>
               </tr>
               </table>
             </div>
@@ -157,10 +174,9 @@ function Amigos(){
           </Modal.Body>
         </Modal>
         {aceptarsolicitud && <p className="mensajeConfirmacion">Solicitud aceptada correctamente</p>}
-        {rechazarsolicitud && <p>Solicitud rechazada con éxito</p>}
-        <p className="mensajeConfirmacion">Solicitud aceptada correctamente</p>
+        {rechazarsolicitud && <p className="mensajeConfirmacion">Solicitud rechazada con éxito</p>}
 
-        <Button className="solicitudesboton" onClick={() => {setShowModalBuscarAmigo(true);setShowModalSolicitudes(false);}}>BUSCAR AMIGOS</Button>
+        <Button className="buscarAmigosboton" onClick={() => {setShowModalBuscarAmigo(true);setShowModalSolicitudes(false);}}>BUSCAR AMIGOS</Button>
         <Modal 
           show={showModalBuscarAmigo} 
           onHide={() => setShowModalBuscarAmigo(false)} 
