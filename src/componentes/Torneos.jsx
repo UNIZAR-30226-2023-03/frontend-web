@@ -11,25 +11,29 @@ import { Button, Modal } from 'react-bootstrap';
 function esperarpartida(navigate,idTorneo){
   navigate(process.env.PUBLIC_URL+'/esperartorneo',{ state: { idTorneo}});
 }
-async function apuntarseTorneo(idTorneo,idUsuario,navigate){
-  const response = await axios.post("https://lamesa-backend.azurewebsites.net/torneo/apuntar", {usuario: idUsuario,torneo: idTorneo});
-  if(response.data.apuntado){
-    esperarpartida(navigate,idTorneo);
-  }
-  else if(response.data.esjugador16){
-    const response = await axios.post("https://lamesa-backend.azurewebsites.net/torneo/jugar", {usuario: idUsuario,torneo: idTorneo});
-    //empezar partida
-    let id_part = response.data.id;
-    let col = response.data.color;
-    let jug = response.data.jugadores;
-    let tipo = "torneo";
-    navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo } });
-  }
-  else{
-    //error
-    // el usuario no se ha podido apuntar al torneo
-  }
-  
+
+async function empezarpartidatorneo(idUsuario, idTorneo,navigate){
+  const response = await axios.post("https://lamesa-backend.azurewebsites.net/torneo/jugar", {usuario: idUsuario,torneo: idTorneo});
+  //empezar partida
+  let id_part = response.data.id;
+  let col = response.data.color;
+  let jug = response.data.jugadores;
+  let tipo = "torneo";
+  navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo } });
+}
+async function apuntarseTorneo(idTorneo,idUsuario,navigate, seterrorapuntarsetorneo){
+  await axios.post("https://lamesa-backend.azurewebsites.net/torneo/apuntar", {usuario: idUsuario,torneo: idTorneo})
+  .then ( response => {
+    if(response.data.apuntado){
+      esperarpartida(navigate,idTorneo);
+    }
+    else if(response.data.esjugador16){
+      empezarpartidatorneo(idUsuario, idTorneo,navigate);
+    }
+  })
+  .catch(error => {
+    seterrorapuntarsetorneo(error.response.data);
+  })   
 }
 
 function Torneos(){
@@ -46,6 +50,7 @@ function Torneos(){
   const [configuracionF, setconfiguracionF] = useState("NORMAL");
   const [torneocreado, settorneocreado] = useState(false);
   const [errorcreartorneo, seterrorcreartorneo] = useState("");
+  const [errorapuntarsetorneo, seterrorapuntarsetorneo] = useState("");
   
   
   useEffect(() => {
@@ -79,6 +84,19 @@ function Torneos(){
       console.log("torneo creado");
       settorneocreado(true);
       setshowcreartorneo(false);
+      if(response.data.apuntado){
+        // hace falta el idTorneo
+        //esperarpartida(navigate,idTorneo);
+      }
+      else if(response.data.esjugador16){
+        // const response = await axios.post("https://lamesa-backend.azurewebsites.net/torneo/jugar", {usuario: idUsuario,torneo: idTorneo});
+        // //empezar partida
+        // let id_part = response.data.id;
+        // let col = response.data.color;
+        // let jug = response.data.jugadores;
+        // let tipo = "torneo";
+        // navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo } });
+      }
     })
     .catch(error => {
       seterrorcreartorneo(error.response.data);
@@ -105,7 +123,7 @@ function Torneos(){
             <table>
               <tr>
                 <td colSpan="3" className="nombre-torneo">{torneo.nombre}</td>
-                <td rowSpan="2"><button onClick={() => apuntarseTorneo(torneo.id,cookies.get('idUsuario'),navigate)}>Apuntarse</button></td>
+                <td rowSpan="2"><button className="apuntarseboton" onClick={() => apuntarseTorneo(torneo.id,cookies.get('idUsuario'),navigate,seterrorapuntarsetorneo)}>Apuntarse</button></td>
               </tr>
               <tr>
                 <td>{torneo.precioEntrada}</td>
@@ -128,7 +146,8 @@ function Torneos(){
             </tr>
             </table>
           </div>
-        {jugadordesapuntado && <p>Has sido desapuntado del torneo satisfactoreamente</p>}
+        <p className="mensajeError">{errorapuntarsetorneo}</p>
+        {jugadordesapuntado && <p className="mensajeConfirmacion">Has sido desapuntado del torneo con éxito</p>}
         {showcreartorneo && <div className="fondo-negro"></div>}
         <Button className="creartorneoboton" onClick={() => setshowcreartorneo(true)}>Crear torneo</Button>
         <Modal 

@@ -2,7 +2,9 @@
     margin-top: 4%;
     margin-left: 3%;
 }
-
+.tituloPag{
+  text-align: center;
+}
 .custom-modal{
     width: 500px;
     left:50px;
@@ -117,6 +119,9 @@
     border-radius: 10px; 
     cursor: pointer; 
   }
+  .amigosDisponibles{
+    margin-bottom: 25px;
+  }
 
   .amigosDisponibles table {
     margin: 0 auto;
@@ -129,7 +134,9 @@
   
   .amigosDisponibles td {
     padding: 10px;
-    text-align: center; 
+    text-align: center;
+    font-size: 1.5em;
+    font-style: italic;
   }
   
   .amigosDisponibles button {
@@ -174,6 +181,7 @@
     font-size: 1.5em;
     position: relative;
     left:43%;
+    margin-top: 50px;
   }
 
   .mensajeConfirmacion{
@@ -218,7 +226,7 @@
     left:95.5%;
   }
 
-  .sinAmigos{
+  .sinContenido{
     text-align: center;
     font-size: 1.75em;
     color: #9d5509;

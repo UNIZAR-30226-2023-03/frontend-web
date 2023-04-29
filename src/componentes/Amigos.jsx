@@ -9,7 +9,7 @@ import { Button, Modal } from 'react-bootstrap';
 
 async function eliminarAmigo(amigo,yo,setamigoeliminado){
   await axios.post("https://lamesa-backend.azurewebsites.net/usuario/eliminar-amigo", {usuario: yo,amigo});  
-  setamigoeliminado(true);
+  window.location.reload();
 }
 async function aceptarSolicitud(yo,amigo,setaceptarsolicitud,setShowModalSolicitudes,setmostrarexclamacion){
   console.log("aceptar solicitud con "+yo+","+amigo);
@@ -17,6 +17,7 @@ async function aceptarSolicitud(yo,amigo,setaceptarsolicitud,setShowModalSolicit
   setaceptarsolicitud(true);
   setShowModalSolicitudes(false);
   setmostrarexclamacion(false);
+  window.location.reload();
 }
 async function rechazarSolicitud(yo,amigo,setrechazarsolicitud,setShowModalSolicitudes,setmostrarexclamacion){
   console.log("rechazar solicitud con "+yo+","+amigo);
@@ -52,6 +53,7 @@ function Amigos(){
   const [amigoeliminado, setamigoeliminado] = useState(false);
   const [usernamebuscar, setusernamebuscar] = useState("");
   const [errorenviosolicitud, seterrorenviosolicitud] = useState("");
+  const [solicitudcorrecta, setsolicitudcorrecta] = useState(false);
   const [showModalBuscarAmigo, setShowModalBuscarAmigo] = useState(false);
   const [showModalSolicitudes, setShowModalSolicitudes] = useState(false);
   const [mostrarexclamacion, setmostrarexclamacion] = useState(false);
@@ -101,6 +103,11 @@ function Amigos(){
     seterrorenviosolicitud(false);
     enviarSolicitud(idUsuario,usernamebuscar,seterrorenviosolicitud);
     setusernamebuscar("");
+    if(errorenviosolicitud === ""){
+      setShowModalBuscarAmigo(false);
+      setsolicitudcorrecta(true);
+      
+    }
   }
 
     return( 
@@ -114,9 +121,9 @@ function Amigos(){
             </div>
           </div>              
         </div>
-        <h1>MIS AMIGOS</h1>
+        <h1 className="tituloPag">MIS AMIGOS</h1>
         {amigosactuales.length === 0 &&
-            <p className="sinAmigos">Parece que todavía no tienen ningún amigo agregado.
+            <p className="sinContenido">Parece que todavía no tienen ningún amigo agregado.
             <br></br><br></br>
            Busca a tus amigos aqui:</p>}
         {amigosactuales.map((amigo, index) => (
@@ -160,6 +167,7 @@ function Amigos(){
           <Modal.Title className="modalTitle">Solicitudes pendientes</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+          {solicitudes.length === 0 && <p className="sinContenido">No tienes ninguna <br></br> solicitud pendiente</p>}
           {solicitudes.map((solicitud, index) => (
             <div key={index} className="amigosdisponibles">
               <table className="solicitudes">
@@ -175,7 +183,7 @@ function Amigos(){
         </Modal>
         {aceptarsolicitud && <p className="mensajeConfirmacion">Solicitud aceptada correctamente</p>}
         {rechazarsolicitud && <p className="mensajeConfirmacion">Solicitud rechazada con éxito</p>}
-
+        {solicitudcorrecta && <p className="mensajeConfirmacion">Solicitud enviada correctamente</p>}
         <Button className="buscarAmigosboton" onClick={() => {setShowModalBuscarAmigo(true);setShowModalSolicitudes(false);}}>BUSCAR AMIGOS</Button>
         <Modal 
           show={showModalBuscarAmigo} 

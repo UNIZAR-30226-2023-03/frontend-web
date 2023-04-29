@@ -2,31 +2,50 @@
     margin-top: 4%;
     margin-left: 3%;
 }
-.ranking-table {
-    border: 5px solid #ffffff;
-    width: 1200px;
-    border-collapse: collapse;
-    margin: 0 auto;
-    text-align: center;
-    border-radius: 10px;
-    overflow: hidden;
+
+.botonOrdenar{
+  position: fixed;
+  z-index: 100;
+  background-color: rgba(119, 55, 3, 0);
+  background-image: url('../imagenes/iconos/flechas.png');
+  background-size: cover;
+  border: none;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  margin-left: 10px;
+}  
+  .ranking-table tr:hover {
+    background: #ffa426;
   }
 
+  .ranking-table table {
+    text-align: center;
+    width: 98%;
+    margin: auto;
+    border-spacing: 0 0;
+    background: #213b4c00;
+    color: white;
+    box-shadow: 0 0 20px #291706;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.ranking-table td, th {
+    padding: 0.5rem;
+    border: none;
+  }
   .ranking-table td {
-    font-size: 20px;
-    padding: 5px;
-    border-bottom: 1px solid black;
-    border-left: none;
-    border-right: none;
+    font-size: 1.2em;
+    border: none;
+    color:black;
   }
-  
-  .ranking-table th {
-    background-color: rgb(138, 83, 0);
-    font-weight: bold;
-    font-size: 30px;
-    padding: 5px;
-  }
-  
-  .ranking-table tr:hover {
-    background-color: #ddd;
+
+  .ranking-table th{
+    background: #6b4302;
+    border: none;  
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-size: 1.4em;
+    padding: 20px 0px 20px 0px;
   }
