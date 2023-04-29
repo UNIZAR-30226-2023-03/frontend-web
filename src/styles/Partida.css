@@ -1,3 +1,17 @@
+.ajustesboton{
+    position: fixed;
+    z-index: 100;
+    background-color: rgb(119, 55, 3);
+    background-image: url('../imagenes/iconos/ajustes.png');
+    background-size: cover;
+    cursor: pointer;
+    border: #fff 3px solid;
+    border-radius: 5px;
+    width: 50px;
+    height: 50px;
+    top:3%;
+    left:2%;
+}
 .partidaDado {
     position: absolute;
     bottom: 150px;
@@ -7,18 +21,43 @@
     z-index:999;
   }
   .empezarPartida{
-    background-color: rgb(69, 31, 0);
+    background-color: rgb(119, 55, 3);
     border-radius: 15px;
+    position: fixed;
     color:#fff;
-    display:inline-block ;
+    height: 75px;
+    width: 150px;
     cursor: pointer;
+    font-size: 1.5em;
+    z-index: 9999;
+    left:46.5%;
+    top:47%;
+  }
+  .mensajeErrorPartida{
+    background-color: rgb(255, 0, 0);
+    border: #fff 3px solid;
+    border-radius: 7px;
+    color:#fff;
+    padding: 0.2%;
+    width: 11%;
+    font-size: 1.3em;
+    position: fixed;
+    text-align: center;
+    left:44.7%;
+    top:55%;
+    z-index: 9999; 
   }
   .abrirChat{
-    background-color: rgb(69, 31, 0);
+    background-color: rgb(119, 55, 3);
     border-radius: 15px;
+    position: fixed;
     color:#fff;
-    display:inline-block ;
+    height: 50px;
+    width: 150px;
     cursor: pointer;
+    font-size: 1.5em;
+    left:8%;
+    top:28%;
   }
 
   .chat{
@@ -93,32 +132,56 @@
   }
   .icono{
     position: fixed;
-    z-index:9999;
+    z-index:9998;
   }
 
   .usernameAmarillo{
-    left:63%;
-    top:63%;
+    left:60%;
+    top:66%;
     z-index:400;
-    position:absolute ;
+    position:fixed;
+    font-size: 1.4em;
+    text-align: center;
+    width: 13%;
+    max-width: 15%;
+    color:rgb(255, 128, 0);
+    overflow-wrap:anywhere;
   }
   .usernameVerde{
-    top:63%;
-    left:32%;
+    top:66%;
+    left:28%;
     z-index:9999;
-    position:absolute ;
+    position:fixed;
+    font-size: 1.4em;
+    text-align: center;
+    width: 13%;
+    max-width: 15%;
+    color:rgb(166, 255, 0);
+    overflow-wrap:anywhere;
   }
   .usernameRojo{
-    top:2%;
-    left:32%;
+    top:4%;
+    left:28%;
     z-index:9999;
-    position:absolute ;
+    position:fixed;
+    font-size: 1.4em;
+    text-align: center;
+    width: 13%;
+    max-width: 15%;
+    color:rgb(79, 2, 2);
+    overflow-wrap:anywhere;
   }
   .usernameAzul{
-    top:2%;
-    left:63%;
+    top:4%;
+    left:60%;
     z-index:200;
-    position:absolute ;
+    position:fixed;
+    font-size: 1.4em;
+    text-align: center;
+    width: 13%;
+    max-width: 15%;
+    color:rgb(8, 255, 255);
+    overflow-wrap:anywhere;
   }
   
   .ficha1AZUL:hover,.ficha2AZUL:hover,.ficha3AZUL:hover,.ficha4AZUL:hover,.ficha1ROJO:hover,.ficha2ROJO:hover,.ficha3ROJO:hover,.ficha4ROJO:hover,.ficha1VERDE:hover,.ficha2VERDE:hover,.ficha3VERDE:hover,.ficha4VERDE:hover,.ficha1AMARILLO:hover,.ficha2AMARILLO:hover,.ficha3AMARILLO:hover,.ficha4AMARILLO:hover {
@@ -155,7 +218,7 @@
      position:absolute ;
      background:red;
      border-radius:10px 0px 0px 0px;
-     z-index:100;
+     z-index:99;
  }
  .verde{
      width:300px;
@@ -164,7 +227,7 @@
      background:green;
      top:600px;
      border-radius:0px 0px 0px 10px;
-     z-index:100;
+     z-index:99;
  }
  .amarillo{
      width:300px;
@@ -174,7 +237,7 @@
      top:600px;
      left:600px;
      border-radius:0px 0px 10px 0px;
-     z-index: 100;
+     z-index: 99;
  }
  .azul{
      width:300px;
@@ -183,7 +246,7 @@
      background:blue;
      left:600px;
      border-radius:0px 10px 0px 0px;
-     z-index: 100;
+     z-index: 99;
  }
  
  
@@ -1488,4 +1551,85 @@
     font-size: 30px;
     margin-left:80%;
     margin-top:1%;
+  }
+
+  #fuegosArtificiales{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9998;
+  }
+
+  .infoTurnoAMARILLO{
+    background-color: yellow;
+    border: #fff 3px solid;
+    border-radius: 7px;
+    padding: 0.2%;
+    width: 11%;
+    font-size: 1.3em;
+    position: fixed;
+    text-align: center;
+    left:44.7%;
+    top:44%;
+    z-index: 9999;
+  }
+
+  .infoTurnoROJO{
+    background-color: rgb(255, 0, 0);
+    border: #fff 3px solid;
+    border-radius: 7px;
+    padding: 0.2%;
+    width: 11%;
+    font-size: 1.3em;
+    position: fixed;
+    text-align: center;
+    left:44.7%;
+    top:44%;
+    z-index: 9999;
+  }
+
+  .infoTurnoAZUL{
+    background-color: blue;
+    border: #fff 3px solid;
+    border-radius: 7px;
+    color: #fff;
+    padding: 0.2%;
+    width: 11%;
+    font-size: 1.3em;
+    position: fixed;
+    text-align: center;
+    left:44.7%;
+    top:44%;
+    z-index: 9999;
+  }
+  .infoTurnoVERDE{
+    background-color: green;
+    border: #fff 3px solid;
+    border-radius: 7px;
+    color: #fff;
+    padding: 0.2%;
+    width: 11%;
+    font-size: 1.3em;
+    position: fixed;
+    text-align: center;
+    left:44.7%;
+    top:44%;
+    z-index: 9999;
+  }
+
+  .infoPar{
+    background-color: rgb(41, 1, 42);
+    border: #fff 3px solid;
+    color: #fff;
+    border-radius: 7px;
+    padding: 0.2%;
+    width: 11%;
+    font-size: 1.3em;
+    position: fixed;
+    text-align: center;
+    left:44.7%;
+    top:44%;
+    z-index: 9999;  
   }

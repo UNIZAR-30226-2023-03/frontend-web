@@ -45,8 +45,8 @@ let estadoFichas = [
   {ficha:'ficha4VERDE',casilla:'inicio-VERDE-4'},
 ];
 let fichasdisponibles = [];
-const vectorAmarillo = [5,6,6,5,6,6,5,6,6,5,6,6,5,6,6,5,6,6];
-const vectorAzul = [5,6,6,5,5,6,6,5,1,1,1,1,1,1,1,2,2,2,2,2];
+const vectorAmarillo = [5,71,5,71,5,71,5,71,6,6,5,6,6,5,6,6,5,6,6];
+const vectorAzul = [5,71,5,71,5,71,5,71,5,71,1,1,1,1,1,1,2,2,2,2,2];
 
 
 function actualizarFicha(ficha,nuevaCasilla){
@@ -126,8 +126,18 @@ function moverFicha(numficha, numcasilla,colorficha,tipocasilla){
     casilla = casillasArray.find(c => c.id === numcasilla);
   }
   else if(tipocasilla ==="PASILLO"){
-    numcasilla = numficha+'-'+colorficha;
+    numcasilla = numcasilla+'-'+colorficha;
+    console.log("CASILLA DE PASILLO: "+numcasilla);
     casilla = casillasArray.find(c => c.id === numcasilla);
+    if(casilla.numfichas===0){
+      console.log("NUMCASILLA SIN FICHAS "+numcasilla);
+      casilla.numfichas = 1;
+    }
+    else{    
+      casilla = casillas.find(c => c.id === casilla.id+'-2');
+      numcasilla = numcasilla+'-2';
+      console.log("NUMCASILLA CON FICHAS "+numcasilla);
+    }
   }
   else if(tipocasilla ==="META"){
     numcasilla ='llegada-'+colorficha+'-'+numficha;
@@ -246,15 +256,15 @@ function Partida() {
   const cookies = useMemo(() => new Cookies(), []);
   const { state } = useLocation();
   const [idPartida, setIdPartida] = useState(null);
-  const [color, setColor] = useState(null);
+  const [color, setColor] = useState("");
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [usernameAmarillo, setUsernameAmarillo] = useState(null);
-  const [usernameAzul, setUsernameAzul] = useState(null);
-  const [usernameRojo, setUsernameRojo] = useState(null);
-  const [usernameVerde, setUsernameVerde] = useState(null);
+  const [usernameAMARILLO, setUsernameAMARILLO] = useState(null);
+  const [usernameAZUL, setUsernameAZUL] = useState(null);
+  const [usernameROJO, setUsernameROJO] = useState(null);
+  const [usernameVERDE, setUsernameVERDE] = useState(null);
   const [numjugadores,setNumjugadores]  = useState(0);
-  const [turno, setturno] = useState('');
+  const [turno, setturno] = useState("");
   const [numDado, setnumDado] = useState(0);
   const [primeravez, setprimeravez] = useState(true);
   const [partidaempezada, setpartidaempezada] = useState(false);
@@ -271,7 +281,8 @@ function Partida() {
   const [showChat, setShowChat] = useState(false);
   const miusername  = cookies.get('nombreUsuario');
   const [tipopart, settipopart] = useState("");
-
+  const [erroriniciarpartida, seterroriniciarpartida] = useState("");
+  
   useEffect(() => {
     function connectToSocket() {
       let numjug = 0;
@@ -286,17 +297,17 @@ function Partida() {
               let data = JSON.parse(response.body);
               if(data.color !== color){
                 if(data.color ==="ROJO"){
-                  setUsernameRojo(data.username);
+                  setUsernameROJO(data.username);
                   setNumjugadores(3);
                   numjug = 3;
                 }
                 else if(data.color ==="AZUL"){
-                  setUsernameAzul(data.username);
+                  setUsernameAZUL(data.username);
                   setNumjugadores(2);
                   numjug = 2;
                 }
                 else if(data.color ==="VERDE"){
-                  setUsernameVerde(data.username);
+                  setUsernameVERDE(data.username);
                   setNumjugadores(4);
                   numjug = 4;
                 }
@@ -340,6 +351,7 @@ function Partida() {
                   moverFicha(data.comida.numero,parseInt(data.destino.posicion)+1,data.comida.color,"CASA");
                   //enviarDado(20,setturno,idPartida,setnumDado,color,indice,setindice,setpartidafinalizada,juegoautomatico,setmostrartimer);
                 }
+                colorearFichas(color);
                 setjuegoautomatico(false);
                 setfichapulsada(false);
                 setbotondadopulsado(false);
@@ -401,24 +413,24 @@ function Partida() {
       const jugadores = state.jug;
       function comprobarUsernames(){
         if(state.col==="AMARILLO"){
-          setUsernameAmarillo(cookies.get('nombreUsuario'));
+          setUsernameAMARILLO(cookies.get('nombreUsuario'));
           setNumjugadores(1);
         }
         else if(state.col === "AZUL"){
-          setUsernameAmarillo(jugadores && jugadores[0].username);
-          setUsernameAzul(cookies.get('nombreUsuario'));
+          setUsernameAMARILLO(jugadores && jugadores[0].username);
+          setUsernameAZUL(cookies.get('nombreUsuario'));
           setNumjugadores(2);
         }else if(state.col ==="ROJO"){
-          setUsernameAmarillo(jugadores && jugadores[0].username);
-          setUsernameAzul(jugadores && jugadores[1].username);
-          setUsernameRojo(cookies.get('nombreUsuario'));
+          setUsernameAMARILLO(jugadores && jugadores[0].username);
+          setUsernameAZUL(jugadores && jugadores[1].username);
+          setUsernameROJO(cookies.get('nombreUsuario'));
           setNumjugadores(3);
         }else if(state.col ==="VERDE"){
           setpartidaempezada(true);
-          setUsernameAmarillo(jugadores && jugadores[0].username);
-          setUsernameAzul(jugadores && jugadores[1].username);
-          setUsernameRojo(jugadores && jugadores[2].username);
-          setUsernameVerde(cookies.get('nombreUsuario'));
+          setUsernameAMARILLO(jugadores && jugadores[0].username);
+          setUsernameAZUL(jugadores && jugadores[1].username);
+          setUsernameROJO(jugadores && jugadores[2].username);
+          setUsernameVERDE(cookies.get('nombreUsuario'));
           setNumjugadores(4);
         }
       }
@@ -428,28 +440,28 @@ function Partida() {
       else if(state.tipo === "torneo"){
         setNumjugadores(4);
         if(state.col === "AMARILLO"){
-          setUsernameAmarillo(cookies.get('nombreUsuario'));
-          setUsernameAzul(jugadores && jugadores[0].username);
-          setUsernameRojo(jugadores && jugadores[1].username);
-          setUsernameVerde(jugadores && jugadores[2].username);
+          setUsernameAMARILLO(cookies.get('nombreUsuario'));
+          setUsernameAZUL(jugadores && jugadores[0].username);
+          setUsernameROJO(jugadores && jugadores[1].username);
+          setUsernameVERDE(jugadores && jugadores[2].username);
         }
         else if(state.col === "AZUL"){
-          setUsernameAzul(cookies.get('nombreUsuario'));
-          setUsernameAmarillo(jugadores && jugadores[0].username);
-          setUsernameRojo(jugadores && jugadores[1].username);
-          setUsernameVerde(jugadores && jugadores[2].username);         
+          setUsernameAZUL(cookies.get('nombreUsuario'));
+          setUsernameAMARILLO(jugadores && jugadores[0].username);
+          setUsernameROJO(jugadores && jugadores[1].username);
+          setUsernameVERDE(jugadores && jugadores[2].username);         
         }
         else if(state.col === "ROJO"){
-          setUsernameRojo(cookies.get('nombreUsuario'));
-          setUsernameAmarillo(jugadores && jugadores[0].username);
-          setUsernameAzul(jugadores && jugadores[1].username);
-          setUsernameVerde(jugadores && jugadores[2].username);         
+          setUsernameROJO(cookies.get('nombreUsuario'));
+          setUsernameAMARILLO(jugadores && jugadores[0].username);
+          setUsernameAZUL(jugadores && jugadores[1].username);
+          setUsernameVERDE(jugadores && jugadores[2].username);         
         }
         else if(state.col === "VERDE"){
-          setUsernameVerde(cookies.get('nombreUsuario'));
-          setUsernameAmarillo(jugadores && jugadores[0].username);
-          setUsernameAzul(jugadores && jugadores[1].username);
-          setUsernameRojo(jugadores && jugadores[2].username);         
+          setUsernameVERDE(cookies.get('nombreUsuario'));
+          setUsernameAMARILLO(jugadores && jugadores[0].username);
+          setUsernameAZUL(jugadores && jugadores[1].username);
+          setUsernameROJO(jugadores && jugadores[2].username);         
         }
       }
     }
@@ -489,15 +501,21 @@ function Partida() {
   };
   
   async function enviarComienzopartida(){
-    const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/empezar/"+idPartida);
-    setturno(response.data);
+    await axios.post("https://lamesa-backend.azurewebsites.net/partida/empezar/"+idPartida)
+    .then(response => {
+      setturno(response.data);
+      setpartidaempezada(true);
+      const botonStart = document.querySelector('.empezarPartida');
+      botonStart.style.display = 'none';
+    })
+    .catch(error =>{
+      seterroriniciarpartida(error.response.data);
+    })
+    
   }
   function startpartida(){
-    setpartidaempezada(true);
     bloquearFichas(numjugadores,color);
     enviarComienzopartida();
-    const botonStart = document.querySelector('.empezarPartida');
-    botonStart.style.display = 'none';
   }
   async function gestionarenviodado(juegoautonomo){
     await handleStart();
@@ -573,15 +591,27 @@ function Partida() {
     setMessage("");
     console.log("MENSAJES: "+ messages);
   }
-
+  useEffect(() => {
+    const divFuegosArtificiales = document.getElementById("fuegosArtificiales");
+    if (divFuegosArtificiales) {
+      const scriptFuegosArtificiales = document.createElement("script");
+      scriptFuegosArtificiales.src = "https://dl.dropboxusercontent.com/s/qhmfmwu7ckig9l2/fartificiales.js";
+      divFuegosArtificiales.appendChild(scriptFuegosArtificiales);
+    }
+  }, []);
 
   return (  
     <>
-      <p>El id es {idPartida}</p>
-      <p>El color es {color}</p>
-      <p>Turno de {turno}</p>
-      {partidafinalizada && <p>LA PARTIDA SE ACABÓ!!!!</p>}
-      {color === turno && juegoautomatico && <p>JUGANDO AUTOMÁTICAMENTE DURANTE 1 TURNO</p>}
+    {erroriniciarpartida !== "" && <p className="mensajeErrorPartida">{erroriniciarpartida}</p>}
+      <button className="ajustesboton"></button>
+      {turno === color && partidaempezada && <p className={"infoTurno"+color}>¡ES TU TURNO!</p>}
+      {turno !== color && partidaempezada &&
+      // eslint-disable-next-line
+        <p className={"infoTurno"+turno}>Turno de {eval("username"+turno)}</p>
+      }     
+      {partidafinalizada && <p className="infoPar">¡LA PARTIDA SE ACABÓ!</p> &&
+      <div id="fuegosArtificiales"></div>}
+      {color === turno && juegoautomatico && <p className={"infoTurno"+color}>JUGANDO AUTOMÁTICAMENTE DURANTE 1 TURNO</p>}
      <div>
         {color === "AMARILLO" && 
         tipopart==="privada" &&
@@ -624,14 +654,14 @@ function Partida() {
           </form>
         </div>}
         
-        <h1 className="usernameVerde" >{usernameVerde}</h1>
-        <h1 className="usernameAmarillo">{usernameAmarillo}</h1> 
-        <h1 className="usernameRojo">{usernameRojo}</h1>
-        <h1 className="usernameAzul">{usernameAzul}</h1>
+        <h1 className="usernameVerde" >{usernameVERDE}</h1>
+        <h1 className="usernameAmarillo">{usernameAMARILLO}</h1> 
+        <h1 className="usernameRojo">{usernameROJO}</h1>
+        <h1 className="usernameAzul">{usernameAZUL}</h1>
       </div>    
       <div className="lamesa">
         <div className="icono"></div>
-        {usernameAzul && (
+        {usernameAZUL && (
           <>
           <button className="ficha1AZUL" onClick={partidaempezada ? fichaPulsada.bind(null, 1, "AZUL") : null}></button>
           <button className="ficha2AZUL" onClick={partidaempezada ? fichaPulsada.bind(null, 2, "AZUL") : null}></button>
@@ -639,7 +669,7 @@ function Partida() {
           <button className="ficha4AZUL" onClick={partidaempezada ? fichaPulsada.bind(null, 4, "AZUL") : null}></button>
           </>
         )}
-        {usernameRojo && (
+        {usernameROJO && (
           <>
           <button className="ficha1ROJO" onClick={partidaempezada ? fichaPulsada.bind(null, 1, "ROJO") : null}></button>
           <button className="ficha2ROJO" onClick={fichaPulsada.bind(null, 2, "ROJO")}></button>
@@ -647,7 +677,7 @@ function Partida() {
           <button className="ficha4ROJO" onClick={fichaPulsada.bind(null, 4, "ROJO")}></button>
           </>
         )}
-        {usernameAmarillo && (
+        {usernameAMARILLO && (
           <>
           <button className="ficha1AMARILLO"  onClick={partidaempezada ? fichaPulsada.bind(null, 1, "AMARILLO") : null}></button>
           <button className="ficha2AMARILLO"  onClick={partidaempezada ? fichaPulsada.bind(null, 2, "AMARILLO") : null}></button>
@@ -656,7 +686,7 @@ function Partida() {
           </>
         )}
 
-        {usernameVerde && (
+        {usernameVERDE && (
           <>
           <button className="ficha1VERDE" onClick={partidaempezada ? fichaPulsada.bind(null, 1, "VERDE") : null}></button>
           <button className="ficha2VERDE" onClick={fichaPulsada.bind(null, 2, "VERDE")}></button>
