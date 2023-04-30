@@ -40,7 +40,7 @@ function PartidaPrivada(){
     };
     
     const handleClick2 = () => {
-        setconfiguracionF("RAPIDA")
+        setconfiguracionF("RAPIDO")
     };
 
     const handleClick3 = () => {
@@ -61,8 +61,10 @@ function PartidaPrivada(){
             let id_part = response.data.id;
             let col = response.data.color;
             let jug = response.data.jugadores;
+            let num_fichas = response.data.cf;
             let tipo = "privada";
-            navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo } });
+            console.log(response.data.cf);
+            navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo, num_fichas } });
         })
         .catch(error => {
             if(error.response.data==="Ya estás jugando una partida"){
@@ -95,7 +97,8 @@ function PartidaPrivada(){
             let col = response.data.color;
             let jug = response.data.jugadores;
             let tipo = "privada";
-            navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo } }); 
+            let num_fichas = configuracionF;
+            navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo, num_fichas } }); 
         })
         .catch(error =>{
             if(error.response.data==="Nombre de sala no disponible: ya se está jugando una partida con ese nombre de sala"){
@@ -119,10 +122,10 @@ function PartidaPrivada(){
     return(
         <div className='all1'>
             <div className="back2">
-                <div class="breadcrumb">
-                <div class="breadcrumb-item"><a href="principal"><img className="casa" src={home} alt="" /></a></div>
-                <div class="breadcrumb-item">&gt;</div>
-                <div class="breadcrumb-item">Partida Privada</div>
+                <div className="breadcrumb">
+                <div className="breadcrumb-item"><a href="principal"><img className="casa" src={home} alt="" /></a></div>
+                <div className="breadcrumb-item">&gt;</div>
+                <div className="breadcrumb-item">Partida Privada</div>
                 </div>
             </div>
             <p className='tit'>UNIRSE A UN PARTIDA PRIVADA</p>
@@ -153,7 +156,7 @@ function PartidaPrivada(){
                         
             <div className="botonesRapida">
                 <button className={configuracionF==="NORMAL" ? 'BotonPartidaRapidaAc' : 'BotonPartidaRapidaIn'} onClick={handleClick1}>Partida normal</button> 
-                <button className={configuracionF==="RAPIDA" ? 'BotonPartidaRapidaAc' : 'BotonPartidaRapidaIn'} onClick={handleClick2}>Partida rápida</button> 
+                <button className={configuracionF==="RAPIDO" ? 'BotonPartidaRapidaAc' : 'BotonPartidaRapidaIn'} onClick={handleClick2}>Partida rápida</button> 
             </div>
 
             <div className="botonesBarrera">

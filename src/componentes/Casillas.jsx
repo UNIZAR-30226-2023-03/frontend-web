@@ -1,21 +1,21 @@
 export const casillas = [
-  //1: amarillo
-  //2: azul
-  //3: rojo
-  //4: verde
+
   {id:'llegada-AMARILLO-1', left:'54%', top:'58%',numfichas:0},
   {id:'llegada-AMARILLO-2', left:'49%', top:'58%',numfichas:0},
   {id:'llegada-AMARILLO-3', left:'43%', top:'58%',numfichas:0},
+  {id:'llegada-AMARILLO-4', left:'49%', top:'53%',numfichas:0},
   {id:'llegada-AZUL-1', left:'58%', top:'54%',numfichas:0},
   {id:'llegada-AZUL-2', left:'58%', top:'49%',numfichas:0},
   {id:'llegada-AZUL-3', left:'58%', top:'43%',numfichas:0},
+  {id:'llegada-AZUL-4', left:'53%', top:'48%',numfichas:0},
   {id:'llegada-ROJO-1', left:'54%', top:'39%',numfichas:0},
   {id:'llegada-ROJO-2', left:'49%', top:'39%',numfichas:0},
   {id:'llegada-ROJO-3', left:'43%', top:'39%',numfichas:0},
+  {id:'llegada-ROJO-4', left:'49%', top:'44%',numfichas:0},
   {id:'llegada-VERDE-1', left:'38%', top:'54%',numfichas:0},
   {id:'llegada-VERDE-2', left:'38%', top:'49%',numfichas:0},
   {id:'llegada-VERDE-3', left:'38%', top:'43%',numfichas:0},
-  
+  {id:'llegada-VERDE-4', left:'43%', top:'49%',numfichas:0},  
   {id:'inicio-AMARILLO-1', left:'77%', top:'77%',numfichas:0},
   {id:'inicio-AMARILLO-2', left:'86%', top:'77%',numfichas:0},
   {id:'inicio-AMARILLO-3', left:'77%', top:'87%',numfichas:0},

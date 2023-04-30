@@ -12,6 +12,22 @@
     top:3%;
     left:2%;
 }
+
+.custom-modal-partida{
+    width: 500px;
+    height: 300px;
+    background-color: #ffca57c6;
+    border: 5px solid #392004;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
 .partidaDado {
     position: absolute;
     bottom: 150px;

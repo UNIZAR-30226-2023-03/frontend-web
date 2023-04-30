@@ -63,17 +63,19 @@ function Torneos(){
 
   useEffect(() => {
     async function buscartorneosactivos() {
-      const response = await axios.get("https://lamesa-backend.azurewebsites.net/torneo");
-      const torneos = response.data;
-      console.log("torneos: ",torneos);
-      const torneosactivos = [];
-      torneos.forEach(torneo => {
-        if (torneo.estado ==="ESPERANDO_JUGADORES") {
-          torneosactivos.push(torneo);
-          console.log("torneo : "+torneo.nombre);
-        }
-      });
-      settorneosActivos(torneosactivos);
+      await axios.get("https://lamesa-backend.azurewebsites.net/torneo")
+      .then ( response => {
+        const torneos = response.data;
+        console.log("torneos: ",torneos);
+        const torneosactivos = [];
+        torneos.forEach(torneo => {
+          if (torneo.estado ==="ESPERANDO_JUGADORES") {
+            torneosactivos.push(torneo);
+            console.log("torneo : "+torneo.nombre);
+          }
+        });
+        settorneosActivos(torneosactivos);
+      })
     }
     buscartorneosactivos(); 
   }, []);
@@ -85,17 +87,10 @@ function Torneos(){
       settorneocreado(true);
       setshowcreartorneo(false);
       if(response.data.apuntado){
-        // hace falta el idTorneo
-        //esperarpartida(navigate,idTorneo);
+        esperarpartida(navigate,response.data.id);
       }
       else if(response.data.esjugador16){
-        // const response = await axios.post("https://lamesa-backend.azurewebsites.net/torneo/jugar", {usuario: idUsuario,torneo: idTorneo});
-        // //empezar partida
-        // let id_part = response.data.id;
-        // let col = response.data.color;
-        // let jug = response.data.jugadores;
-        // let tipo = "torneo";
-        // navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo } });
+        empezarpartidatorneo(idUsuario,response.data.id,navigate);
       }
     })
     .catch(error => {
@@ -133,21 +128,8 @@ function Torneos(){
             </table>
           </div>
         ))}
-          <div className="torneosdisponibles">
-            <table>
-            <tr>
-              <td colSpan="3" className="nombre-torneo">NOMBRE TORNEO</td>
-              <td rowSpan="2"><button className="apuntarseboton">Apuntarse</button></td>
-            </tr>
-            <tr>
-              <td>torneo.precioEntrada</td>
-              <td>torneo.configBarreras</td>
-              <td>torneo.configFichas</td>
-            </tr>
-            </table>
-          </div>
         <p className="mensajeError">{errorapuntarsetorneo}</p>
-        {jugadordesapuntado && <p className="mensajeConfirmacion">Has sido desapuntado del torneo con éxito</p>}
+        {jugadordesapuntado && <p className="mensajeConfirmacion">Desapuntado del torneo con éxito</p>}
         {showcreartorneo && <div className="fondo-negro"></div>}
         <Button className="creartorneoboton" onClick={() => setshowcreartorneo(true)}>Crear torneo</Button>
         <Modal 

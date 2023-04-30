@@ -37,7 +37,8 @@ function PartidaPublica(){
             let col = response.data.color;
             let jug = response.data.jugadores;
             let tipo = "publica";
-            navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo } });
+            let num_fichas = partidaMod;
+            navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo,num_fichas } });
         })
         .catch(error =>{
             setError(true)

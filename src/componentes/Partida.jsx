@@ -3,6 +3,7 @@ import "../styles/Partida.css";
 import Timer from './Timer';
 import {casillas} from './Casillas.jsx'
 import { useLocation } from 'react-router-dom';
+import { Button, Modal } from 'react-bootstrap';
 //import io from 'socket.io-client';
 
 import SockJS from 'sockjs-client';
@@ -16,7 +17,7 @@ import cuatro from "../imagenes/carasdado/cuatro.PNG";
 import cinco from "../imagenes/carasdado/cinco.PNG";
 import seis from "../imagenes/carasdado/seis.PNG";
 
-//enviar un 20 cuando matas
+
 
 const photos = [
   { id:1, name: "Foto 1", url: uno },
@@ -96,19 +97,20 @@ async function enviarDado(numdado,setturno,idPartida,setnumDado,color,indice,set
 async function enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada, setmostrartimer){
   //const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/movimiento", {partida: idPartida,ficha: numficha,dado: numDado});
   const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/movimiento", {partida: idPartida,ficha: numficha,dado: numDado});
+  console.log("PARTIDA ACABADA: "+response.data.acabada);
   if(!response.data.acabada){
     moverFicha(numficha,parseInt(response.data.destino.posicion)+1,color,response.data.destino.tipo);
     if(response.data.comida){
       console.log("FICHA COMIDA NUMERO "+response.data.comida.numero);
       console.log("FICHA COMIDA CASILLA "+parseInt(response.data.destino.posicion)+1);
       moverFicha(response.data.comida.numero,parseInt(response.data.destino.posicion)+1,response.data.comida.color,"CASA");
+      // enviarDado(20,...)
     }
     setturno(response.data.turno);
     if(response.data.turno === color){
       const botonStart = document.querySelector('.tirarDado');
       botonStart.style.display = 'block';
       setmostrartimer(true);
-      // ha tirado un 6, activar de nuevo el timer
     }
   }
   else{
@@ -282,6 +284,8 @@ function Partida() {
   const miusername  = cookies.get('nombreUsuario');
   const [tipopart, settipopart] = useState("");
   const [erroriniciarpartida, seterroriniciarpartida] = useState("");
+  const [numFichas, setnumFichas] = useState("");
+  const [showModalAjustes, setShowModalAjustes] = useState(false);
   
   useEffect(() => {
     function connectToSocket() {
@@ -340,6 +344,7 @@ function Partida() {
               // Un jugador ha hecho un movimiento -> Actualizar tablero
               let data = JSON.parse(response.body);
               //displayResponse(data);
+              console.log("PARTIDA ACABADA: "+data.acabada);
               if(!data.acabada){
                 if(color !== data.ficha.color){
                   console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO NUMCASILLA: "+data.destino.posicion+1);
@@ -349,6 +354,7 @@ function Partida() {
                 }
                 if(data.comida){
                   moverFicha(data.comida.numero,parseInt(data.destino.posicion)+1,data.comida.color,"CASA");
+                  // aqui igual no hace falta
                   //enviarDado(20,setturno,idPartida,setnumDado,color,indice,setindice,setpartidafinalizada,juegoautomatico,setmostrartimer);
                 }
                 colorearFichas(color);
@@ -410,6 +416,7 @@ function Partida() {
       setIdPartida(state.id_part);
       setColor(state.col);
       settipopart(state.tipo);
+      setnumFichas(state.num_fichas);
       const jugadores = state.jug;
       function comprobarUsernames(){
         if(state.col==="AMARILLO"){
@@ -514,6 +521,7 @@ function Partida() {
     
   }
   function startpartida(){
+    seterroriniciarpartida("");
     bloquearFichas(numjugadores,color);
     enviarComienzopartida();
   }
@@ -600,14 +608,17 @@ function Partida() {
     }
   }, []);
 
+  async function pausarPartida(){}
+  async function salirPartida(){}
+
   return (  
     <>
     {erroriniciarpartida !== "" && <p className="mensajeErrorPartida">{erroriniciarpartida}</p>}
-      <button className="ajustesboton"></button>
+      {/* <button className="ajustesboton"></button> */}
       {turno === color && partidaempezada && <p className={"infoTurno"+color}>¡ES TU TURNO!</p>}
       {turno !== color && partidaempezada &&
       // eslint-disable-next-line
-        <p className={"infoTurno"+turno}>Turno de {eval("username"+turno)}</p>
+        <p className={"infoTurno"+turno}>Turno de <br></br> {eval("username"+turno)}</p>
       }     
       {partidafinalizada && <p className="infoPar">¡LA PARTIDA SE ACABÓ!</p> &&
       <div id="fuegosArtificiales"></div>}
@@ -619,6 +630,25 @@ function Partida() {
         Comenzar Partida
         </button>
         }
+        <Button className="ajustesboton" onClick={() => {setShowModalAjustes(true);}}></Button>
+        <Modal 
+          show={showModalAjustes} 
+          onHide={() => setShowModalAjustes(false)} 
+          centered
+          className="custom-modal-partida"
+          >
+          <Modal.Header>
+            <Button className="cerrarModal" onClick={() => {
+              setShowModalAjustes(false);
+            }}>X</Button>
+            <Modal.Title className="modalTitle">AJUSTES</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <button onClick={() => pausarPartida()}>PAUSAR PARTIDA</button>
+            <button onClick={() => salirPartida()}>SALIR DE LA PARTIDA</button>
+          </Modal.Body>
+        </Modal>
+
         <button className="abrirChat"onClick={() => setShowChat(!showChat)}>
           CHAT
         </button>
@@ -663,37 +693,73 @@ function Partida() {
         <div className="icono"></div>
         {usernameAZUL && (
           <>
-          <button className="ficha1AZUL" onClick={partidaempezada ? fichaPulsada.bind(null, 1, "AZUL") : null}></button>
-          <button className="ficha2AZUL" onClick={partidaempezada ? fichaPulsada.bind(null, 2, "AZUL") : null}></button>
-          <button className="ficha3AZUL" onClick={partidaempezada ? fichaPulsada.bind(null, 3, "AZUL") : null}></button>
-          <button className="ficha4AZUL" onClick={partidaempezada ? fichaPulsada.bind(null, 4, "AZUL") : null}></button>
+            {numFichas === "NORMAL" ? (
+              <>
+              <button className="ficha1AZUL" onClick={partidaempezada ? fichaPulsada.bind(null, 1, "AZUL") : null}></button>
+              <button className="ficha2AZUL" onClick={partidaempezada ? fichaPulsada.bind(null, 2, "AZUL") : null}></button>
+              <button className="ficha3AZUL" onClick={partidaempezada ? fichaPulsada.bind(null, 3, "AZUL") : null}></button>
+              <button className="ficha4AZUL" onClick={partidaempezada ? fichaPulsada.bind(null, 4, "AZUL") : null}></button>
+              </>
+            ) : numFichas === "RAPIDO" ? (
+              <>
+                <button className="ficha1AZUL" onClick={partidaempezada ? fichaPulsada.bind(null, 1, "AZUL") : null}></button>
+                <button className="ficha2AZUL" onClick={partidaempezada ? fichaPulsada.bind(null, 2, "AZUL") : null}></button>
+              </>
+            ) : null}
           </>
         )}
         {usernameROJO && (
           <>
-          <button className="ficha1ROJO" onClick={partidaempezada ? fichaPulsada.bind(null, 1, "ROJO") : null}></button>
-          <button className="ficha2ROJO" onClick={fichaPulsada.bind(null, 2, "ROJO")}></button>
-          <button className="ficha3ROJO" onClick={fichaPulsada.bind(null, 3, "ROJO")}></button>
-          <button className="ficha4ROJO" onClick={fichaPulsada.bind(null, 4, "ROJO")}></button>
+            {numFichas === "NORMAL" ? (
+              <>
+                <button className="ficha1ROJO" onClick={partidaempezada ? fichaPulsada.bind(null, 1, "ROJO") : null}></button>
+                <button className="ficha2ROJO" onClick={partidaempezada ? fichaPulsada.bind(null, 2, "ROJO") : null}></button>
+                <button className="ficha3ROJO" onClick={partidaempezada ? fichaPulsada.bind(null, 3, "ROJO"): null}></button>
+                <button className="ficha4ROJO" onClick={partidaempezada ? fichaPulsada.bind(null, 4, "ROJO"): null}></button>
+              </>
+            ) : numFichas === "RAPIDO" ? (
+              <>
+                <button className="ficha1ROJO" onClick={partidaempezada ? fichaPulsada.bind(null, 1, "ROJO") : null}></button>
+                <button className="ficha2ROJO" onClick={partidaempezada ? fichaPulsada.bind(null, 2, "ROJO") : null}></button>
+              </>
+            ) : null}
           </>
         )}
         {usernameAMARILLO && (
           <>
-          <button className="ficha1AMARILLO"  onClick={partidaempezada ? fichaPulsada.bind(null, 1, "AMARILLO") : null}></button>
-          <button className="ficha2AMARILLO"  onClick={partidaempezada ? fichaPulsada.bind(null, 2, "AMARILLO") : null}></button>
-          <button className="ficha3AMARILLO" onClick={partidaempezada ? fichaPulsada.bind(null, 3, "AMARILLO") : null}></button>
-          <button className="ficha4AMARILLO"  onClick={partidaempezada ? fichaPulsada.bind(null, 4, "AMARILLO") : null}></button>
+            {numFichas === "NORMAL" ? (
+              <>
+                <button className="ficha1AMARILLO"  onClick={partidaempezada ? fichaPulsada.bind(null, 1, "AMARILLO") : null}></button>
+                <button className="ficha2AMARILLO"  onClick={partidaempezada ? fichaPulsada.bind(null, 2, "AMARILLO") : null}></button>
+                <button className="ficha3AMARILLO" onClick={partidaempezada ? fichaPulsada.bind(null, 3, "AMARILLO") : null}></button>
+                <button className="ficha4AMARILLO"  onClick={partidaempezada ? fichaPulsada.bind(null, 4, "AMARILLO") : null}></button>
+              </>
+            ) : numFichas === "RAPIDO" ? (
+              <>
+                <button className="ficha1AMARILLO"  onClick={partidaempezada ? fichaPulsada.bind(null, 1, "AMARILLO") : null}></button>
+                <button className="ficha2AMARILLO"  onClick={partidaempezada ? fichaPulsada.bind(null, 2, "AMARILLO") : null}></button>
+              </>
+            ) : null}
           </>
         )}
-
         {usernameVERDE && (
           <>
-          <button className="ficha1VERDE" onClick={partidaempezada ? fichaPulsada.bind(null, 1, "VERDE") : null}></button>
-          <button className="ficha2VERDE" onClick={fichaPulsada.bind(null, 2, "VERDE")}></button>
-          <button className="ficha3VERDE" onClick={fichaPulsada.bind(null, 3, "VERDE")}></button>
-          <button className="ficha4VERDE" onClick={fichaPulsada.bind(null, 4, "VERDE")}></button>
+            {numFichas === "NORMAL" ? (
+              <>
+                <button className="ficha1VERDE" onClick={partidaempezada ? fichaPulsada.bind(null, 1, "VERDE") : null}></button>
+                <button className="ficha2VERDE" onClick={partidaempezada ? fichaPulsada.bind(null, 2, "VERDE") : null}></button>
+                <button className="ficha3VERDE" onClick={partidaempezada ? fichaPulsada.bind(null, 3, "VERDE") : null}></button>
+                <button className="ficha4VERDE" onClick={partidaempezada ? fichaPulsada.bind(null, 4, "VERDE") : null}></button>
+              </>
+            ) : numFichas === "RAPIDO" ? (
+              <>
+                <button className="ficha1VERDE" onClick={partidaempezada ? fichaPulsada.bind(null, 1, "VERDE") : null}></button>
+                <button className="ficha2VERDE" onClick={partidaempezada ? fichaPulsada.bind(null, 2, "VERDE") : null}></button>
+              </>
+            ) : null}
           </>
         )}
+        
         <div className="azul"></div>
         <div className="rojo"></div>
         <div className="amarillo"></div>

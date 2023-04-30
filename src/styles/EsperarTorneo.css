@@ -1,0 +1,78 @@
+.esperaJugadores{
+    font-size: 1.5em;
+    text-align: center;
+    color: #532a02;
+}
+
+.salirTorneoBoton{
+    background-color: rgb(163, 9, 9);
+    border:#fff 2px solid;
+    border-radius: 15px;
+    color:#fff;
+    font-size: 1.2em;
+    height: 70px;
+    width: 140px;
+    cursor: pointer;
+    margin-left: 47%;
+    margin-top: 5%; 
+}
+.empezarTorneoBoton{
+    background-color: rgb(29, 100, 5);
+    border:#fff 2px solid;
+    border-radius: 15px;
+    color:#fff;
+    font-size: 1.2em;
+    height: 70px;
+    width: 140px;
+    cursor: pointer;
+    margin-left: 47%;
+    margin-top: 5%;    
+}
+
+.custom-modal-segurosalir{
+    width: 500px;
+    height: 300px;
+    background-color: #ffc957;
+    border: 5px solid #ffffff;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    display: inline-block; 
+}
+
+.siboton{
+    background-color: rgb(29, 100, 5);
+    border:#fff 2px solid;
+    border-radius: 15px;
+    color:#fff;
+    font-size: 1.2em;
+    height: 70px;
+    width: 140px;
+    cursor: pointer;
+    margin-top: 5%;
+    margin-right: 7%;
+     
+}
+
+.noboton{
+    background-color: rgb(163, 9, 9);
+    border:#fff 2px solid;
+    border-radius: 15px;
+    color:#fff;
+    font-size: 1.2em;
+    height: 70px;
+    width: 140px;
+    cursor: pointer;
+    margin-top: 5%;
+    margin-left: 7%;
+}
+
+.button-container {
+    display: flex;
+  }
