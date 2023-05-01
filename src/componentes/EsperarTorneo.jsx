@@ -17,17 +17,16 @@ function EsperarTorneo(){
     const [poderempezar, setpoderempezar] = useState(false);
     const [showModalSeguroSalir, setShowModalSeguroSalir] = useState(false);
    
+
     useEffect(() => {
         if (state) {
             setIdTorneo(state.idTorneo);
         }
-    }, [state]);
-
-    useEffect(() => {
         function connectToSocket() {
             const url = "https://lamesa-backend.azurewebsites.net"
             let socket = new SockJS(url + "/ws");
             let stompClient = Stomp.over(socket);
+            console.log("esperando en torneo: "+idTorneo);
             stompClient.connect({}, function (frame) {
                 stompClient.subscribe("/topic/torneo/" + idTorneo, function (response) {
                     setpoderempezar(true);
@@ -36,7 +35,7 @@ function EsperarTorneo(){
         }
         connectToSocket();
         // eslint-disable-next-line
-    }, []);
+    }, [state]);
 
     async function jugarTorneo(idUsuario,navigate){
         const response = await axios.post("https://lamesa-backend.azurewebsites.net/torneo/jugar", {usuario: idUsuario,torneo: idTorneo});
@@ -68,23 +67,22 @@ function EsperarTorneo(){
             {showModalSeguroSalir && <div className="fondo-negro"></div>}
             <Button className="salirTorneoBoton" onClick={() => setShowModalSeguroSalir(true)}>Salir del torneo</Button>
             <Modal 
-            show={showModalSeguroSalir} 
-            onHide={() => setShowModalSeguroSalir(false)} 
-            centered
-            className="custom-modal-segurosalir"
+                show={showModalSeguroSalir} 
+                onHide={() => setShowModalSeguroSalir(false)} 
+                centered
+                className="custom-modal-segurosalir"
             >
             <Modal.Header>
             <Button className="cerrarModal" onClick={() => {
                 setShowModalSeguroSalir(false);
             }}>X</Button>
             <Modal.Title className="modalTitle">¿Seguro que quieres abandonar el torneo?</Modal.Title>
-            <div className="button-container">
-                <button className="siboton" onClick={() => desapuntarTorneo(cookies.get('idUsuario'),navigate)}>Sí</button>
-                <button className="noboton" onClick={() => setShowModalSeguroSalir(false)} style={{ marginRight: "5%" }}>No</button>
-            </div>
             </Modal.Header>
             <Modal.Body>
-
+                <div className="button-container">
+                    <button className="siboton" onClick={() => desapuntarTorneo(cookies.get('idUsuario'),navigate)}>Sí</button>
+                    <button className="noboton" onClick={() => setShowModalSeguroSalir(false)} style={{ marginRight: "5%" }}>No</button>
+                </div>
             </Modal.Body>
             </Modal>
         </>

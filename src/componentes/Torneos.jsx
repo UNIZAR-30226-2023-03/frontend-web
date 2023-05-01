@@ -69,10 +69,10 @@ function Torneos(){
         console.log("torneos: ",torneos);
         const torneosactivos = [];
         torneos.forEach(torneo => {
-          if (torneo.estado ==="ESPERANDO_JUGADORES") {
-            torneosactivos.push(torneo);
-            console.log("torneo : "+torneo.nombre);
-          }
+          torneosactivos.push(torneo);
+          console.log("torneo : "+torneo.nombre);
+          console.log(torneo.cb);
+          console.log(torneo.cf);
         });
         settorneosActivos(torneosactivos);
       })
@@ -83,7 +83,7 @@ function Torneos(){
     settorneocreado(false);
     await axios.post("https://lamesa-backend.azurewebsites.net/torneo/crear", {usuario:idUsuario, nombre: nombrenuevotorneo, precio:monedas, configBarreas: configuracionB, configFichas: configuracionF})
     .then ( response => {
-      console.log("torneo creado");
+      console.log("torneo creado: "+response.data.id);
       settorneocreado(true);
       setshowcreartorneo(false);
       if(response.data.apuntado){
@@ -118,12 +118,20 @@ function Torneos(){
             <table>
               <tr>
                 <td colSpan="3" className="nombre-torneo">{torneo.nombre}</td>
-                <td rowSpan="2"><button className="apuntarseboton" onClick={() => apuntarseTorneo(torneo.id,cookies.get('idUsuario'),navigate,seterrorapuntarsetorneo)}>Apuntarse</button></td>
+                <td rowSpan="3"><button className="apuntarseboton" onClick={() => apuntarseTorneo(torneo.id,cookies.get('idUsuario'),navigate,seterrorapuntarsetorneo)}>Participar en el torneo {torneo.precioEntrada}</button></td>
               </tr>
               <tr>
-                <td>{torneo.precioEntrada}</td>
-                <td>{torneo.configBarreras}</td>
-                <td>{torneo.configFichas}</td>
+              <td colSpan="2" className="infoParTor">Modo de las partidas:</td>
+              </tr>
+              <tr>
+                {torneo.cf === "RAPIDO" &&
+                 <td className="infoTor">PARTIDAS CON 2 FICHAS</td>}
+                {torneo.cf === "NORMAL" &&
+                <td className="infoTor">PARTIDAS CON 4 FICHAS</td>}
+                {torneo.cb ==="SOLO_SEGUROS" &&
+                <td className="infoTor">BARRERAS SOLO EN SEGUROS</td>}
+                {torneo.cb ==="TODAS_CASILLAS" &&
+                <td className="infoTor">BARRERAS EN TODAS CASILLAS</td>}                
               </tr>
             </table>
           </div>
@@ -157,7 +165,7 @@ function Torneos(){
 
             <div className="botonesRapida">
                 <button className={configuracionF==="NORMAL" ? 'BotonPartidaRapidaAc' : 'BotonPartidaRapidaIn'} onClick={() =>  setconfiguracionF("NORMAL")}>Partida normal</button> 
-                <button className={configuracionF==="RAPIDA" ? 'BotonPartidaRapidaAc' : 'BotonPartidaRapidaIn'} onClick={() =>  setconfiguracionF("RAPIDA")}>Partida rápida</button> 
+                <button className={configuracionF==="RAPIDO" ? 'BotonPartidaRapidaAc' : 'BotonPartidaRapidaIn'} onClick={() =>  setconfiguracionF("RAPIDO")}>Partida rápida</button> 
             </div>
 
             <div className="botonesBarrera">

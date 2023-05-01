@@ -63,7 +63,7 @@ function PartidaPrivada(){
             let jug = response.data.jugadores;
             let num_fichas = response.data.cf;
             let tipo = "privada";
-            console.log(response.data.cf);
+            console.log("configuracion fichas: "+response.data.cf);
             navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo, num_fichas } });
         })
         .catch(error => {
