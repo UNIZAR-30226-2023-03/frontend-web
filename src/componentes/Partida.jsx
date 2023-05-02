@@ -46,8 +46,8 @@ let estadoFichas = [
   {ficha:'ficha4VERDE',casilla:'inicio-VERDE-4'},
 ];
 let fichasdisponibles = [];
-const vectorAmarillo = [5,71,5,71,5,71,5,71,6,6,5,6,6,5,6,6,5,6,6];
-const vectorAzul = [5,71,5,71,5,71,5,71,5,71,1,1,1,1,1,1,2,2,2,2,2];
+const vectorAmarillo = [5,5,63,3,5,63,3,5,71,5,71,5,71,6,6,5,6,6,5,6,6,5,6,6];
+const vectorAzul = [5,5,63,3,5,63,3,5,71,5,71,5,71,5,71,5,71,1,1,1,1,1,1,2,2,2,2,2];
 
 
 function actualizarFicha(ficha,nuevaCasilla){
@@ -96,6 +96,9 @@ async function enviarDado(numdado,setturno,idPartida,setnumDado,color,indice,set
 
 async function enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada, setmostrartimer){
   //const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/movimiento", {partida: idPartida,ficha: numficha,dado: numDado});
+  console.log("enviando dado a movimiento: "+numDado);
+  console.log("enviando ficha a movimiento: "+numficha);
+  console.log("enviando partida a movimiento: "+idPartida);
   const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/movimiento", {partida: idPartida,ficha: numficha,dado: numDado});
   console.log("PARTIDA ACABADA: "+response.data.acabada);
   if(!response.data.acabada){
