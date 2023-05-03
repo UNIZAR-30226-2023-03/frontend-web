@@ -25,8 +25,9 @@ function Rankings(){
   }
   useEffect(() => {
     async function buscarjugadores() {
-      await axios.get("https://lamesa-backend.azurewebsites.net/usuario/ranking?campo=pganadas")
+      await axios.get("https://lamesa-backend.azurewebsites.net/usuario/ranking?campo=partidasGanadas")
       .then ( response => {
+        console.log("ACTUALIZAR RANKING: "+response.data);
         actualizarRanking(response.data);
       })
       .catch(error => {
@@ -40,32 +41,31 @@ function Rankings(){
       <>
         <div>
           <div className="back5">
-            <div class="breadcrumb">
-              <div class="breadcrumb-item"><a href="principal"><img className="casa" src={home} alt="" /></a></div>
-              <div class="breadcrumb-item">&gt;</div>
-              <div class="breadcrumb-item">Rankings</div>
+            <div className="breadcrumb">
+              <div className="breadcrumb-item"><a href="principal"><img className="casa" src={home} alt="" /></a></div>
+              <div className="breadcrumb-item">&gt;</div>
+              <div className="breadcrumb-item">Rankings</div>
             </div>
           </div>             
         </div>
         <h1 className="tituloPag">RANKING</h1>
-        <p>{erroractualizacion}</p>
-        {jugadoresrank.map((jugador, index) => (
-          <div key={index}>
-            <table className="ranking-table">
+        <p>{erroractualizacion}</p>       
+            {/* <table className="ranking-table">
             <thead>
               <tr>
                 <th>Posición</th>
                 <th>Usuario</th>
-                <th>Partidas ganadas <button className="botonOrdenar" onClick={() => ordenarRanking("pganadas")}></button></th>
-                <th>Partidas jugadas<button className="botonOrdenar" onClick={() => ordenarRanking("pjugadas")}></button></th>
-                <th>Torneos ganados<button className="botonOrdenar" onClick={() => ordenarRanking("tjugados")}></button></th>
-                <th>Torneos jugados<button className="botonOrdenar" onClick={() => ordenarRanking("tganados")}></button></th>
-                <th>Fichas comidas<button className="botonOrdenar" onClick={() => ordenarRanking("mediaComidas")}></button></th>
-                <th>Fichas en meta<button className="botonOrdenar" onClick={() => ordenarRanking("mediaEnMeta")}></button></th>   
+                <th>Partidas ganadas <button className="botonOrdenar" onClick={() => ordenarRanking("partidasGanadas")}></button></th>
+                <th>Partidas jugadas<button className="botonOrdenar" onClick={() => ordenarRanking("partidasJugadas")}></button></th>
+                <th>Torneos ganados<button className="botonOrdenar" onClick={() => ordenarRanking("torneosJugados")}></button></th>
+                <th>Torneos jugados<button className="botonOrdenar" onClick={() => ordenarRanking("torneosGanados")}></button></th>
+                <th>Fichas comidas<button className="botonOrdenar" onClick={() => ordenarRanking("numComidas")}></button></th>
+                <th>Fichas en meta<button className="botonOrdenar" onClick={() => ordenarRanking("numEnMeta")}></button></th>   
               </tr>
             </thead>
             <tbody>
-              <tr>
+            {jugadoresrank.map((jugador) => (
+              <tr>      
                 <td>{posicion++}</td>
                 <td>{jugador.username}</td>
                 <td>{jugador.pjganadas}</td>
@@ -73,12 +73,39 @@ function Rankings(){
                 <td>{jugador.tganados}</td>
                 <td>{jugador.tjugados}</td>
                 <td>{jugador.mediaComidas}</td>
-                <td>{jugador.mediaEnMeta}</td>               
+                <td>{jugador.mediaEnMeta}</td>                            
+              </tr>
+            ))} 
+            </tbody>
+            </table> */}
+            <table className="ranking-table">
+            <thead>
+              <tr>
+                <th>Posición</th>
+                <th>Usuario</th>
+                <th>Partidas ganadas <button className="botonOrdenar" onClick={() => ordenarRanking("partidasGanadas")}></button></th>
+                <th>Partidas jugadas<button className="botonOrdenar" onClick={() => ordenarRanking("partidasJugadas")}></button></th>
+                <th>Torneos ganados<button className="botonOrdenar" onClick={() => ordenarRanking("torneosJugados")}></button></th>
+                <th>Torneos jugados<button className="botonOrdenar" onClick={() => ordenarRanking("torneosGanados")}></button></th>
+                <th>Fichas comidas<button className="botonOrdenar" onClick={() => ordenarRanking("numComidas")}></button></th>
+                <th>Fichas en meta<button className="botonOrdenar" onClick={() => ordenarRanking("numEnMeta")}></button></th>   
+              </tr>
+            </thead>
+            <tbody>
+              <tr>      
+                <td>2</td>
+                <td>1</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+                <td>7</td>
+                <td>8</td>                            
               </tr>
             </tbody>
             </table>
-          </div>
-        ))}
+        
+        
       </>
     );
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef} from "react";
 import "../styles/Partida.css";
 import Timer from './Timer';
+import { useNavigate } from 'react-router-dom';
 import {casillas} from './Casillas.jsx'
 import { useLocation } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
@@ -58,7 +59,7 @@ function buscarCasilla(ficha) {
   const casilla = estadoFichas.find(elem => elem.ficha === ficha)?.casilla;
   return casilla;
 }
-async function enviarDado(numdado,setturno,idPartida,setnumDado,color,indice,setindice,setpartidafinalizada,juegoautonomo,setmostrartimer,numFichas) {
+async function enviarDado(numdado,setturno,idPartida,setnumDado,color,indice,setindice,setpartidafinalizada,juegoautonomo,setmostrartimer,numFichas,setestadoTurno) {
   let vector;
   if(color === "AMARILLO"){
     vector = vectorAmarillo;
@@ -88,35 +89,40 @@ async function enviarDado(numdado,setturno,idPartida,setnumDado,color,indice,set
     if(numficha !== -1 && juegoautonomo){
       colorearFichas(color,numFichas);
       console.log("ENVIO FICHA AUTOMATICAMENTE "+numficha);
-      enviarFicha(numficha,idPartida,vector[indice],setturno,color,setpartidafinalizada,setmostrartimer);
+      enviarFicha(numficha,idPartida,vector[indice],setturno,color,setpartidafinalizada,setmostrartimer,setestadoTurno);
+    }
+    else{
+      setestadoTurno("Selecciona una ficha");
     }
   }
   setindice(indice+1);
 }
 
-async function enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada, setmostrartimer){
+async function enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada, setmostrartimer,setestadoTurno){
   //const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/movimiento", {partida: idPartida,ficha: numficha,dado: numDado});
   console.log("enviando dado a movimiento: "+numDado);
   console.log("enviando ficha a movimiento: "+numficha);
   console.log("enviando partida a movimiento: "+idPartida);
   const response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/movimiento", {partida: idPartida,ficha: numficha,dado: numDado});
   console.log("PARTIDA ACABADA: "+response.data.acabada);
+  moverFicha(numficha,parseInt(response.data.destino.posicion)+1,color,response.data.destino.tipo);
+  if(response.data.comida){
+    console.log("FICHA COMIDA NUMERO "+response.data.comida.numero);
+    console.log("FICHA COMIDA CASILLA "+parseInt(response.data.destino.posicion)+1);
+    moverFicha(response.data.comida.numero,parseInt(response.data.destino.posicion)+1,response.data.comida.color,"CASA");
+    // enviarDado(20,...)
+  }
   if(!response.data.acabada){
-    moverFicha(numficha,parseInt(response.data.destino.posicion)+1,color,response.data.destino.tipo);
-    if(response.data.comida){
-      console.log("FICHA COMIDA NUMERO "+response.data.comida.numero);
-      console.log("FICHA COMIDA CASILLA "+parseInt(response.data.destino.posicion)+1);
-      moverFicha(response.data.comida.numero,parseInt(response.data.destino.posicion)+1,response.data.comida.color,"CASA");
-      // enviarDado(20,...)
-    }
     setturno(response.data.turno);
     if(response.data.turno === color){
       const botonStart = document.querySelector('.tirarDado');
       botonStart.style.display = 'block';
       setmostrartimer(true);
+      setestadoTurno("Tira el dado");
     }
   }
   else{
+    console.log("partidafinalizada a true");
     setpartidafinalizada(true);
   }
 }
@@ -306,6 +312,11 @@ function Partida() {
   const [erroriniciarpartida, seterroriniciarpartida] = useState("");
   const [numFichas, setnumFichas] = useState("");
   const [showModalAjustes, setShowModalAjustes] = useState(false);
+  const [estadoTurno, setestadoTurno] = useState("Tira el dado");
+  const idUsuario = cookies.get('idUsuario');
+  const navigate = useNavigate();
+  const [showModalSeguroSalirPar, setShowModalSeguroSalirPar] = useState(false);
+  const [partidaenPausa, setpartidaenPausa] = useState(false);
   
   useEffect(() => {
     function connectToSocket() {
@@ -358,34 +369,41 @@ function Partida() {
             setjuegoautomatico(false);
             setfichapulsada(false);
             setbotondadopulsado(false);
+            if(data.turno === color){
+              setestadoTurno("Tira el dado");
+            }
             //displayResponse(data);
         })
           stompClient.subscribe("/topic/movimiento/" + idPartida, function (response) {
-              // Un jugador ha hecho un movimiento -> Actualizar tablero
-              let data = JSON.parse(response.body);
-              //displayResponse(data);
-              console.log("PARTIDA ACABADA: "+data.acabada);
-              if(!data.acabada){
-                if(color !== data.ficha.color){
-                  console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO NUMCASILLA: "+data.destino.posicion+1);
-                  console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO COLOR: "+data.ficha.color);
-                  console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO FICHA: "+data.ficha.numero);
-                  moverFicha(data.ficha.numero, parseInt(data.destino.posicion)+1,data.ficha.color,data.destino.tipo);  
-                }
-                if(data.comida){
-                  moverFicha(data.comida.numero,parseInt(data.destino.posicion)+1,data.comida.color,"CASA");
-                  // aqui igual no hace falta
-                  //enviarDado(20,setturno,idPartida,setnumDado,color,indice,setindice,setpartidafinalizada,juegoautomatico,setmostrartimer);
-                }
-                colorearFichas(color,numFichas);
-                setjuegoautomatico(false);
-                setfichapulsada(false);
-                setbotondadopulsado(false);
-                setturno(data.turno);                             
-              }
-              else{
-                setpartidafinalizada(true);
-              }
+            // Un jugador ha hecho un movimiento -> Actualizar tablero
+            let data = JSON.parse(response.body);
+            //displayResponse(data);
+            console.log("PARTIDA ACABADA: "+data.acabada);        
+            if(color !== data.ficha.color){
+              console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO NUMCASILLA: "+data.destino.posicion+1);
+              console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO COLOR: "+data.ficha.color);
+              console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO FICHA: "+data.ficha.numero);
+              moverFicha(data.ficha.numero, parseInt(data.destino.posicion)+1,data.ficha.color,data.destino.tipo);  
+            }
+            if(data.comida){
+              moverFicha(data.comida.numero,parseInt(data.destino.posicion)+1,data.comida.color,"CASA");
+              // aqui igual no hace falta
+              //enviarDado(20,setturno,idPartida,setnumDado,color,indice,setindice,setpartidafinalizada,juegoautomatico,setmostrartimer);
+            }
+            if(!data.acabada){
+              colorearFichas(color,numFichas);
+              setjuegoautomatico(false);
+              setfichapulsada(false);
+              setbotondadopulsado(false);
+              setturno(data.turno); 
+              if(data.turno === color){
+                setestadoTurno("Tira el dado");
+              }                            
+            }
+            else{
+              console.log("partidafinalizada a true");
+              setpartidafinalizada(true);
+            }
           })
           stompClient.subscribe("/topic/turno/" + idPartida, function (response) {
               // Mensaje de turno recibido
@@ -399,6 +417,9 @@ function Partida() {
               if(data !== color){
                 colorearFichas(color,numFichas);
                 bloquearFichas(numjug,color,numFichas);
+              }
+              else{
+                setestadoTurno("Tira el dado");
               }
               console.log("LLAMANDO A BLOQUEAR FICHAS CON "+color+" "+numjug);
           })
@@ -423,6 +444,24 @@ function Partida() {
               console.log("MENSAJE MIO, LO IGNORO");
             }
             
+        })
+        stompClient.subscribe("/topic/pausa/" + idPartida, function (response) {
+          // Alguien ha parado la partida
+          let data = JSON.parse(response.body);
+          setpartidaenPausa(data);
+        })
+        stompClient.subscribe("/topic/salir/" + idPartida, function (response) {
+          // Alguien ha salido de la partida
+          let data = JSON.parse(response.body);
+          console.log("ALGUIEN HA SALIDO DE LA PARTIDA: "+data);
+          // eslint-disable-next-line
+          eval(`setUsername${data}(null)`);
+
+        })
+        stompClient.subscribe("/topic/ultimo/" + idPartida, function (response) {
+          // Estoy yo solo en la partida, he ganado
+          //let data = JSON.parse(response.body);
+          setpartidafinalizada(true);
         })
       })
     }
@@ -531,6 +570,9 @@ function Partida() {
     await axios.post("https://lamesa-backend.azurewebsites.net/partida/empezar/"+idPartida)
     .then(response => {
       setturno(response.data);
+      if(response.data === color){
+        setestadoTurno("Tira el dado");
+      }
       setpartidaempezada(true);
       const botonStart = document.querySelector('.empezarPartida');
       botonStart.style.display = 'none';
@@ -548,9 +590,10 @@ function Partida() {
   async function gestionarenviodado(juegoautonomo){
     await handleStart();
     console.log("enviando y actualizando DADO: "+dadoRef.current);
-    enviarDado(dadoRef.current,setturno,idPartida,setnumDado,color,indice,setindice,setpartidafinalizada,juegoautonomo,setmostrartimer,numFichas); 
+    enviarDado(dadoRef.current,setturno,idPartida,setnumDado,color,indice,setindice,setpartidafinalizada,juegoautonomo,setmostrartimer,numFichas,setestadoTurno); 
   }
   const onClick = () => {
+    setestadoTurno("Espera por favor");
     const botonTirarDado = document.querySelector('.tirarDado');
     botonTirarDado.style.display = 'none';
     setbotondadopulsado(true);
@@ -560,6 +603,7 @@ function Partida() {
   };
 
   function handleTimeUp() {
+    setestadoTurno("");
     console.log("ENTRANDO EN HANDLETIMEUP");
     console.log("turno: "+turno);
     console.log("color: "+color);
@@ -581,13 +625,14 @@ function Partida() {
           console.log("FICHA A ENVIAR DESDE TIMEUP "+numficha);
           console.log("DADO A ENVIAR DESDE TIMEUP "+numDado);
           colorearFichas(color,numFichas);
-          enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada,setmostrartimer);
+          enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada,setmostrartimer,setestadoTurno);
         }
       }
     }
   }
 
   const fichaPulsada = (numficha, color) => {
+    setestadoTurno("");
     setfichapulsada(true);
     setjuegoautomatico(false);
     console.log("FICHA PULSADA");
@@ -598,7 +643,7 @@ function Partida() {
     bloquearFichas(numjugadores,color,numFichas);
     colorearFichas(color,numFichas);
     fichasdisponibles = [];
-    enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada,setmostrartimer);
+    enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada,setmostrartimer,setestadoTurno);
   };
   async function enviarmensaje(message){
     console.log("ENVIANDO MENSAJE: "+message);
@@ -628,21 +673,42 @@ function Partida() {
     }
   }, []);
 
-  async function pausarPartida(){}
-  async function salirPartida(){}
+  async function pausarPartida(){
+    await axios.post("https://lamesa-backend.azurewebsites.net/pausa/"+ idPartida)
+    .then(response => {
+      setpartidaenPausa(true);
+    })  
+  }
+  async function salirPartida(){
+    console.log("saliendo con: "+idUsuario);
+    console.log("saliendo con: "+idPartida);
+    await axios.post("https://lamesa-backend.azurewebsites.net/partida/salir", {jugador:idUsuario,partida:idPartida})
+    .then(response => {
+      navigate(process.env.PUBLIC_URL+'/principal');
+    })
+  }
+  function salirtrasParacabada(){
+    console.log("SALIENDO DE LA PARTIDA TRAS TERMINAR")
+    navigate(process.env.PUBLIC_URL+'/principal');
+  }
 
   return (  
     <>
-    {erroriniciarpartida !== "" && <p className="mensajeErrorPartida">{erroriniciarpartida}</p>}
-      {/* <button className="ajustesboton"></button> */}
-      {turno === color && partidaempezada && <p className={"infoTurno"+color}>¡ES TU TURNO!</p>}
-      {turno !== color && partidaempezada &&
+      {partidaenPausa && <button className="infopause">LA PARTIDA HA SIDO PARADA</button>}
+      {partidafinalizada && !partidaenPausa && <p className="infoParAcabada">
+      ¡LA PARTIDA SE ACABÓ!{turno === color ? <><br/><br/>¡FELICIDADES!</> : <><br/><br/>OTRA VEZ SERÁ</>}
+      </p>}
+      {partidafinalizada && !partidaenPausa && <button className="salirboton" onClick={() => salirtrasParacabada()} >SALIR DE LA PARTIDA</button>}
+      {/* {partidafinalizada && turno===color  && !partidaenPausa && <div id="fuegosArtificiales"></div>} */}
+      {erroriniciarpartida !== "" &&  <p className="mensajeErrorPartida">{erroriniciarpartida}</p>}
+      {turno === color && !partidaenPausa && partidaempezada && !partidafinalizada && <p className={"infoTurno"+color}>
+        ¡ES TU TURNO!<br></br> {estadoTurno}</p>}
+      {turno !== color && !partidaenPausa &&  partidaempezada && !partidafinalizada &&
       // eslint-disable-next-line
-        <p className={"infoTurno"+turno}>Turno de <br></br> {eval("username"+turno)}</p>
-      }     
-      {partidafinalizada && <p className="infoPar">¡LA PARTIDA SE ACABÓ!</p> &&
-      <div id="fuegosArtificiales"></div>}
-      {color === turno && juegoautomatico && <p className={"infoTurno"+color}>JUGANDO AUTOMÁTICAMENTE DURANTE 1 TURNO</p>}
+      <p className={"infoTurno"+turno}>Turno de <br></br> {eval("username"+turno)}</p>
+      } 
+      {color !== "AMARILLO" && !partidaenPausa && !partidaempezada && <p className="infoParAcabada">ESPERA A QUE EL ANFITRIÓN INICIE LA PARTIDA</p> }    
+      {color === turno && !partidaenPausa && !partidafinalizada && juegoautomatico && <p className={"infoTurno"+color}>JUGANDO AUTOMÁTICAMENTE DURANTE 1 TURNO</p>}
      <div>
         {color === "AMARILLO" && 
         tipopart==="privada" &&
@@ -664,11 +730,29 @@ function Partida() {
             <Modal.Title className="modalTitle">AJUSTES</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <button onClick={() => pausarPartida()}>PAUSAR PARTIDA</button>
-            <button onClick={() => salirPartida()}>SALIR DE LA PARTIDA</button>
+            <button className="botonpause" onClick={() => pausarPartida()}>PAUSAR PARTIDA</button>
+            <button className="botonexit" onClick={() => {setShowModalSeguroSalirPar(true);setShowModalAjustes(false)}}>SALIR DE LA PARTIDA</button>
           </Modal.Body>
         </Modal>
-
+        <Modal 
+            show={showModalSeguroSalirPar} 
+            onHide={() => setShowModalSeguroSalirPar(false)} 
+            centered
+            className="custom-modal-segurosalir"
+        >
+        <Modal.Header>
+        <Button className="cerrarModal" onClick={() => {
+            setShowModalSeguroSalirPar(false);
+        }}>X</Button>
+        <Modal.Title className="modalTitle">¿Seguro que quieres abandonar la partida?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <div className="button-container">
+                <button className="siboton" onClick={() => salirPartida()}>Sí</button>
+                <button className="noboton" onClick={() => setShowModalSeguroSalirPar(false)} style={{ marginRight: "5%" }}>No</button>
+            </div>
+        </Modal.Body>
+        </Modal>
         <button className="abrirChat"onClick={() => setShowChat(!showChat)}>
           CHAT
         </button>
@@ -951,8 +1035,8 @@ function Partida() {
         Tirar dado
       </button>}
     <div>
-      {!mostrartimer && color === turno && <Timer onTimeUp={handleTimeUp}></Timer>}
-      {mostrartimer && <Timer onTimeUp={handleTimeUp}></Timer>}
+      {!mostrartimer && !partidaenPausa && color === turno &&  !partidafinalizada && <Timer onTimeUp={handleTimeUp}></Timer>}
+      {mostrartimer && !partidaenPausa && !partidafinalizada && <Timer onTimeUp={handleTimeUp}></Timer>}
     </div>
     </>
   );

@@ -44,6 +44,7 @@
     transform: translate(-50%, -50%);
     z-index: 100;
     display: inline-block; 
+    z-index:9999;
 }
 
 .siboton{

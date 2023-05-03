@@ -87,10 +87,10 @@ function Principal(){
             <p> Partidas ganadas: {estadisticasjugador.pganadas}</p>
             <p> Torneos ganados: {estadisticasjugador.tganados}</p>
             <p> Torneos ganados: {estadisticasjugador.tganados}</p> */}
-             <p className="subtituloEstadisticas">Fichas comidas:&nbsp;&nbsp;</p>
+             <p className="subtituloEstadisticas">Fichas comidas:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
              <p className="resultadoEstadisticas">{estadisticasjugador.mediaComidas}</p>
              <br></br>
-             <p className="subtituloEstadisticas">Fichas en meta:&nbsp;&nbsp;</p>
+             <p className="subtituloEstadisticas">Fichas en meta:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
              <p className="resultadoEstadisticas">{estadisticasjugador.mediaEnMeta}</p>
              <br></br>
              <p className="subtituloEstadisticas">Partidas jugadas:&nbsp;&nbsp;</p>
