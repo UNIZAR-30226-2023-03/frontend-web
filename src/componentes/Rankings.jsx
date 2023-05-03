@@ -49,8 +49,9 @@ function Rankings(){
           </div>             
         </div>
         <h1 className="tituloPag">RANKING</h1>
-        <p>{erroractualizacion}</p>       
-            {/* <table className="ranking-table">
+        <p>{erroractualizacion}</p>
+        <div className="ranking-table">      
+          <table >
             <thead>
               <tr>
                 <th>Posición</th>
@@ -64,48 +65,21 @@ function Rankings(){
               </tr>
             </thead>
             <tbody>
-            {jugadoresrank.map((jugador) => (
-              <tr>      
-                <td>{posicion++}</td>
-                <td>{jugador.username}</td>
-                <td>{jugador.pjganadas}</td>
-                <td>{jugador.pjugadas}</td>
-                <td>{jugador.tganados}</td>
-                <td>{jugador.tjugados}</td>
-                <td>{jugador.mediaComidas}</td>
-                <td>{jugador.mediaEnMeta}</td>                            
-              </tr>
-            ))} 
+              {jugadoresrank.map((jugador) => (
+                <tr>      
+                  <td>{posicion++}</td>
+                  <td>{jugador.username}</td>
+                  <td>{jugador.pganadas}</td>
+                  <td>{jugador.pjugadas}</td>
+                  <td>{jugador.tganados}</td>
+                  <td>{jugador.tjugados}</td>
+                  <td>{jugador.mediaComidas}</td>
+                  <td>{jugador.mediaEnMeta}</td>                            
+                </tr>
+              ))} 
             </tbody>
-            </table> */}
-            <table className="ranking-table">
-            <thead>
-              <tr>
-                <th>Posición</th>
-                <th>Usuario</th>
-                <th>Partidas ganadas <button className="botonOrdenar" onClick={() => ordenarRanking("partidasGanadas")}></button></th>
-                <th>Partidas jugadas<button className="botonOrdenar" onClick={() => ordenarRanking("partidasJugadas")}></button></th>
-                <th>Torneos ganados<button className="botonOrdenar" onClick={() => ordenarRanking("torneosJugados")}></button></th>
-                <th>Torneos jugados<button className="botonOrdenar" onClick={() => ordenarRanking("torneosGanados")}></button></th>
-                <th>Fichas comidas<button className="botonOrdenar" onClick={() => ordenarRanking("numComidas")}></button></th>
-                <th>Fichas en meta<button className="botonOrdenar" onClick={() => ordenarRanking("numEnMeta")}></button></th>   
-              </tr>
-            </thead>
-            <tbody>
-              <tr>      
-                <td>2</td>
-                <td>1</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>                            
-              </tr>
-            </tbody>
-            </table>
-        
-        
+          </table>    
+        </div>    
       </>
     );
 }
