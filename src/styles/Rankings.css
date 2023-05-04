@@ -4,7 +4,6 @@
 }
 
 .botonOrdenar{
-  position: fixed;
   z-index: 100;
   background-color: rgba(119, 55, 3, 0);
   background-image: url('../imagenes/iconos/flechas.png');
@@ -48,4 +47,107 @@
     text-align: center;
     font-size: 1.4em;
     padding: 20px 0px 20px 0px;
+  }
+
+  .ordenarPG{
+    background-color: rgba(255, 255, 255, 0);
+    background-image: url('../imagenes/iconos/bocadillo.png');
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    width: 13%;
+    height: 11%;
+    padding-top: 1%;
+    text-align: center;
+    border: none;
+    position: absolute;
+    z-index: 9999;
+    font-size: 1.4em;
+    top:8%;
+    left:15%;
+  }
+  .ordenarPJ{
+    background-color: rgba(255, 255, 255, 0);
+    background-image: url('../imagenes/iconos/bocadillo.png');
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    width: 13%;
+    height: 11%;
+    padding-top: 1%;
+    text-align: center;
+    border: none;
+    position: absolute;
+    z-index: 9999;
+    font-size: 1.4em;
+    top:8%;
+    left:29.5%;
+  }
+  .ordenarTG{
+    background-color: rgba(255, 255, 255, 0);
+    background-image: url('../imagenes/iconos/bocadillo.png');
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    width: 13%;
+    height: 11%;
+    padding-top: 1%;
+    text-align: center;
+    border: none;
+    position: absolute;
+    z-index: 9999;
+    font-size: 1.4em;
+    top:8%;
+    left:44.5%;
+  }
+  .ordenarTJ{
+    background-color: rgba(255, 255, 255, 0);
+    background-image: url('../imagenes/iconos/bocadillo.png');
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    width: 13%;
+    height: 11%;
+    padding-top: 1%;
+    text-align: center;
+    border: none;
+    position: absolute;
+    z-index: 9999;
+    font-size: 1.4em;
+    top:8%;
+    left:59%;
+  }
+  .ordenarFC{
+    background-color: rgba(255, 255, 255, 0);
+    background-image: url('../imagenes/iconos/bocadillo.png');
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    width: 13%;
+    height: 11%;
+    padding-top: 1%;
+    text-align: center;
+    border: none;
+    position: absolute;
+    z-index: 9999;
+    font-size: 1.4em;
+    top:8%;
+    left:72.5%;
+  }
+  .ordenarFM{
+    background-color: rgba(255, 255, 255, 0);
+    background-image: url('../imagenes/iconos/bocadillo.png');
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    width: 13%;
+    height: 11%;
+    padding-top: 1%;
+    text-align: center;
+    border: none;
+    position: absolute;
+    z-index: 9999;
+    font-size: 1.4em;
+    top:8%;
+    left:86%;
   }

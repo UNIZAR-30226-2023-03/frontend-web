@@ -672,7 +672,23 @@ function Partida() {
       divFuegosArtificiales.appendChild(scriptFuegosArtificiales);
     }
   }, []);
-
+  
+  useEffect(() => {
+    const handleVisibilityChange = async () => {
+      if (document.visibilityState === 'hidden') {
+        console.log('La pestaña perdió el foco, ejecutando función...');
+        await salirPartida();
+      }
+    };
+  
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+  
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+    // eslint-disable-next-line
+  }, []);
+  
   async function pausarPartida(){
     await axios.post("https://lamesa-backend.azurewebsites.net/pausa/"+ idPartida)
     .then(response => {
