@@ -5,13 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 
 function Principal(){
-    // const [nombre, setNombre] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [configuracion, setConfig] = useState('');
     const [estadisticasjugador, setestadisticasjugador] = useState('');
     const navigate = useNavigate();
     const [mostrarPartidas, setMostrarPartidas] = useState(false);
-    //const [confPartada, setconfParitada] = useState('');
+    const [monedas, setmonedas] = useState(0);
     const cookies= new Cookies();
     const idUsuario = cookies.get('idUsuario');
     useEffect(() => {
@@ -23,6 +20,17 @@ function Principal(){
         })
       }
       buscarestadisticas(); 
+      // eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
+      async function buscarmonedas() {
+        await axios.get("https://lamesa-backend.azurewebsites.net/usuario/monedas/"+idUsuario)
+        .then ( response => {
+          setmonedas(response.data);
+        })
+      }
+      buscarmonedas(); 
       // eslint-disable-next-line
     }, []);
 
@@ -54,7 +62,8 @@ function Principal(){
     };
 
     return (
-        <>
+        <>       
+          <div class="monedasJugador" data-number={monedas}></div>
           <h1>BIENVENIDO {cookies.get('nombreUsuario')}</h1>
           <br></br><br></br><br></br><br></br><br></br>
          
@@ -81,29 +90,23 @@ function Principal(){
           <button className="botontienda" onClick={handleClick7}>Tienda</button>
           <div className="estadisticas">
             <p className="tituloEstadisticas">Estadísticas personales</p>
-            {/* <p> Fichas comidas: {estadisticasjugador.mediaComidas}</p>
-            <p> Fichas en meta: {estadisticasjugador.mediaEnMeta}</p>
-            <p> Partidas jugadas: {estadisticasjugador.pjugadas}</p>
-            <p> Partidas ganadas: {estadisticasjugador.pganadas}</p>
-            <p> Torneos ganados: {estadisticasjugador.tganados}</p>
-            <p> Torneos ganados: {estadisticasjugador.tganados}</p> */}
-             <p className="subtituloEstadisticas">Fichas comidas:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-             <p className="resultadoEstadisticas">{estadisticasjugador.mediaComidas}</p>
-             <br></br>
-             <p className="subtituloEstadisticas">Fichas en meta:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-             <p className="resultadoEstadisticas">{estadisticasjugador.mediaEnMeta}</p>
-             <br></br>
-             <p className="subtituloEstadisticas">Partidas jugadas:&nbsp;&nbsp;</p>
-             <p className="resultadoEstadisticas">{estadisticasjugador.pjugadas}</p>
-             <br></br>
-             <p className="subtituloEstadisticas">Partidas ganadas:&nbsp;</p>
-             <p className="resultadoEstadisticas">{estadisticasjugador.pganadas}</p>
-             <br></br>
-             <p className="subtituloEstadisticas">Torneos jugados:&nbsp;&nbsp;</p>
-             <p className="resultadoEstadisticas">{estadisticasjugador.tjugados}</p>
-             <br></br>
-             <p className="subtituloEstadisticas">Torneos ganados:&nbsp;</p>
-             <p className="resultadoEstadisticas">{estadisticasjugador.tganados}</p>
+            <p className="subtituloEstadisticas">Fichas comidas:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+            <p className="resultadoEstadisticas">{estadisticasjugador.mediaComidas}</p>
+            <br></br>
+            <p className="subtituloEstadisticas">Fichas en meta:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+            <p className="resultadoEstadisticas">{estadisticasjugador.mediaEnMeta}</p>
+            <br></br>
+            <p className="subtituloEstadisticas">Partidas jugadas:&nbsp;&nbsp;</p>
+            <p className="resultadoEstadisticas">{estadisticasjugador.pjugadas}</p>
+            <br></br>
+            <p className="subtituloEstadisticas">Partidas ganadas:&nbsp;</p>
+            <p className="resultadoEstadisticas">{estadisticasjugador.pganadas}</p>
+            <br></br>
+            <p className="subtituloEstadisticas">Torneos jugados:&nbsp;&nbsp;</p>
+            <p className="resultadoEstadisticas">{estadisticasjugador.tjugados}</p>
+            <br></br>
+            <p className="subtituloEstadisticas">Torneos ganados:&nbsp;</p>
+            <p className="resultadoEstadisticas">{estadisticasjugador.tganados}</p>
           </div>
         </>
       );

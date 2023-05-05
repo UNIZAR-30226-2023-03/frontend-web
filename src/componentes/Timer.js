@@ -44,8 +44,6 @@ const RenderTime = ({ remainingTime }) => {
   );
 };
 
-
-
 function Timer({ onTimeUp}) {
   const handleTimerComplete = () => {
     onTimeUp();
@@ -55,12 +53,12 @@ function Timer({ onTimeUp}) {
       <div className="timer-wrapper">
         <CountdownCircleTimer
           isPlaying
-          duration={59}
+          duration={25}
           colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-          colorsTime={[10, 6, 3, 0]}
+          colorsTime={[15, 9, 5, 0]}
           onComplete={handleTimerComplete} 
         >
-          {RenderTime}
+        {RenderTime}
         </CountdownCircleTimer>
       </div>
   );
