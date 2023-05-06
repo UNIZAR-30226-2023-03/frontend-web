@@ -8,8 +8,8 @@ import home from "../imagenes/iconos/home.svg";
 import { Button, Modal } from 'react-bootstrap';
 
 
-function esperarpartida(navigate,idTorneo){
-  navigate(process.env.PUBLIC_URL+'/esperartorneo',{ state: { idTorneo}});
+function esperarpartida(navigate,nombreTorneo, idTorneo){
+  navigate(process.env.PUBLIC_URL+'/esperartorneo',{ state: { idTorneo, nombreTorneo}});
 }
 
 async function empezarpartidatorneo(idUsuario, idTorneo,navigate){
@@ -21,17 +21,24 @@ async function empezarpartidatorneo(idUsuario, idTorneo,navigate){
   let tipo = "torneo";
   navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo } });
 }
-async function apuntarseTorneo(idTorneo,idUsuario,navigate, seterrorapuntarsetorneo){
+async function apuntarseTorneo(nombreTorneo,idTorneo,idUsuario,navigate, seterrorapuntarsetorneo){
+  console.log("apuntandome al torneo: "+nombreTorneo);
+  console.log("apuntandome al torneo: "+idTorneo);
+  console.log("apuntandome al torneo: "+idUsuario);
   await axios.post("https://lamesa-backend.azurewebsites.net/torneo/apuntar", {usuario: idUsuario,torneo: idTorneo})
   .then ( response => {
-    if(response.data.apuntado){
-      esperarpartida(navigate,idTorneo);
+    console.log("apuntado: "+response.data.apuntado);
+    console.log("jugador16: "+response.data.esjugador16);
+    if(response.data.esjugador16){
+      console.log("SOY EL 16, EMPEZAR PARTIDA");
+      empezarpartidatorneo(idUsuario,idTorneo,navigate);
     }
-    else if(response.data.esjugador16){
-      empezarpartidatorneo(idUsuario, idTorneo,navigate);
+    else if(response.data.apuntado){
+      esperarpartida(navigate,nombreTorneo,idTorneo);
     }
   })
   .catch(error => {
+    console.log("ERROR")
     seterrorapuntarsetorneo(error.response.data);
   })   
 }
@@ -51,7 +58,6 @@ function Torneos(){
   const [torneocreado, settorneocreado] = useState(false);
   const [errorcreartorneo, seterrorcreartorneo] = useState("");
   const [errorapuntarsetorneo, seterrorapuntarsetorneo] = useState("");
-  
   
   useEffect(() => {
     if (state) {
@@ -87,7 +93,7 @@ function Torneos(){
       settorneocreado(true);
       setshowcreartorneo(false);
       if(response.data.apuntado){
-        esperarpartida(navigate,response.data.id);
+        esperarpartida(navigate,nombrenuevotorneo,response.data.id);
       }
       else if(response.data.esjugador16){
         empezarpartidatorneo(idUsuario,response.data.id,navigate);
@@ -118,7 +124,7 @@ function Torneos(){
             <table>
               <tr>
                 <td colSpan="3" className="nombre-torneo">{torneo.nombre}</td>
-                <td rowSpan="3"><button className="apuntarseboton" onClick={() => apuntarseTorneo(torneo.id,cookies.get('idUsuario'),navigate,seterrorapuntarsetorneo)}>Participar en el torneo {torneo.precioEntrada}</button></td>
+                <td rowSpan="3"><button className="apuntarseboton" onClick={() => apuntarseTorneo(torneo.nombre,torneo.id,idUsuario,navigate,seterrorapuntarsetorneo)}>Participar en el torneo <br></br> {torneo.precioEntrada}</button></td>
               </tr>
               <tr>
               <td colSpan="2" className="infoParTor">Modo de las partidas:</td>

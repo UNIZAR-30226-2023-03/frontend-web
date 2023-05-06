@@ -39,15 +39,15 @@
   .empezarPartida{
     background-color: rgb(119, 55, 3);
     border-radius: 15px;
-    position: fixed;
+    position: absolute;
     color:#fff;
     height: 75px;
     width: 150px;
     cursor: pointer;
     font-size: 1.5em;
     z-index: 9999;
-    left:46.5%;
-    top:47%;
+    left:42%;
+    top:59%;
   }
   .mensajeErrorPartida{
     background-color: rgb(255, 0, 0);
@@ -55,13 +55,15 @@
     border-radius: 7px;
     color:#fff;
     padding: 0.2%;
-    width: 11%;
+    width: 16%;
+    max-width: 16%;
     font-size: 1.3em;
-    position: fixed;
+    position: absolute;
     text-align: center;
-    left:44.7%;
-    top:55%;
+    left:41.5%;
+    top:67%;
     z-index: 9999; 
+    overflow-wrap:anywhere;
   }
   .abrirChat{
     background-color: rgb(119, 55, 3);
@@ -153,50 +155,50 @@
   }
 
   .usernameAmarillo{
-    left:60%;
+    left:71%;
     top:66%;
     z-index:400;
-    position:fixed;
+    position:absolute;
     font-size: 1.9em;
     text-align: center;
-    width: 13%;
-    max-width: 15%;
+    width: 25%;
+    max-width: 45%;
     color:rgb(255, 128, 0);
     overflow-wrap:anywhere;
   }
   .usernameVerde{
     top:66%;
-    left:28%;
+    left:5%;
     z-index:9999;
-    position:fixed;
+    position:absolute;
     font-size: 1.9em;
     text-align: center;
-    width: 13%;
-    max-width: 15%;
+    width: 25%;
+    max-width: 45%;
     color:rgb(166, 255, 0);
     overflow-wrap:anywhere;
   }
   .usernameRojo{
-    top:4%;
-    left:28%;
+    top:1%;
+    left:5%;
     z-index:9999;
-    position:fixed;
+    position:absolute;
     font-size: 1.9em;
     text-align: center;
-    width: 13%;
-    max-width: 15%;
+    width: 25%;
+    max-width: 45%;
     color:rgb(79, 2, 2);
     overflow-wrap:anywhere;
   }
   .usernameAzul{
-    top:4%;
-    left:60%;
+    top:1%;
+    left:71%;
     z-index:200;
-    position:fixed;
+    position:absolute;
     font-size: 1.9em;
     text-align: center;
-    width: 13%;
-    max-width: 15%;
+    width: 25%;
+    max-width: 45%;
     color:rgb(8, 255, 255);
     overflow-wrap:anywhere;
   }
@@ -213,8 +215,8 @@
  .lamesa{
     width:900px;
     height:900px;
-    left:50vh;
-    top:5vh;
+    left:26.5%;
+    top:5%;
     position:absolute ;
     background:#fff;
     border-radius:20px;
@@ -397,7 +399,7 @@
  
  /*Fichas azules*/
  .ficha2AZUL{
-    position:absolute ;
+    position:absolute;
     background:rgb(8, 152, 249);
     top:10%;
     left:86%;
@@ -1583,15 +1585,17 @@
     background-color: yellow;
     border: #fff 3px solid;
     border-radius: 7px;
+    color:rgb(255, 128, 0);
     padding: 0.2%;
-    width: 11%;
-    max-width: 13%;
+    width: 25%;
+    max-width: 25%;
+    font-weight: bold;
     overflow-wrap:anywhere;
     font-size: 1.3em;
-    position: fixed;
+    position: absolute;
     text-align: center;
-    left:44.7%;
-    top:44%;
+    left:37%;
+    top:41%;
     z-index: 9999;
   }
 
@@ -1600,14 +1604,16 @@
     border: #fff 3px solid;
     border-radius: 7px;
     padding: 0.2%;
-    width: 11%;
-    max-width: 13%;
+    color:rgb(79, 2, 2);
+    font-weight: bold;
+    width: 25%;
+    max-width: 25%;
     overflow-wrap:anywhere;
     font-size: 1.3em;
-    position: fixed;
+    position: absolute;
     text-align: center;
-    left:44.7%;
-    top:44%;
+    left:37%;
+    top:41%;
     z-index: 9999;
   }
 
@@ -1615,32 +1621,34 @@
     background-color: blue;
     border: #fff 3px solid;
     border-radius: 7px;
-    color: #fff;
     padding: 0.2%;
-    width: 11%;
-    max-width: 13%;
+    width: 25%;
+    max-width: 25%;
+    color:rgb(8, 255, 255);
+    font-weight: bold;
     overflow-wrap:anywhere;
     font-size: 1.3em;
-    position: fixed;
+    position: absolute;
     text-align: center;
-    left:44.7%;
-    top:44%;
+    left:37%;
+    top:41%;
     z-index: 9999;
   }
   .infoTurnoVERDE{
     background-color: green;
     border: #fff 3px solid;
     border-radius: 7px;
-    color: #fff;
     padding: 0.2%;
-    width: 11%;
-    max-width: 13%;
+    font-weight: bold;
+    color:rgb(166, 255, 0);
+    width: 25%;
+    max-width: 25%;
     overflow-wrap:anywhere;
     font-size: 1.3em;
-    position: fixed;
+    position: absolute;
     text-align: center;
-    left:44.7%;
-    top:44%;
+    left:37%;
+    top:41%;
     z-index: 9999;
   }
 
@@ -1650,12 +1658,12 @@
     border-radius: 7px;
     color: #fff;
     padding: 0.2%;
-    width: 11%;
+    width: 20%;
     font-size: 1.3em;
-    position: fixed;
+    position: absolute;
     text-align: center;
-    left:44.9%;
-    top:44%;
+    left:40%;
+    top:41%;
     z-index: 9999; 
   }
 
@@ -1696,27 +1704,27 @@
     border: #fff 3px solid;
     border-radius: 7px;
     color: #fff;
-    padding-top: 5%;
-    width: 10%;
-    height: 18%;
+    padding-top: 15%;
+    width: 26%;
+    height: 26%;
     font-size: 1.3em;
-    position: fixed;
+    position: absolute;
     text-align: center;
-    left:45.5%;
-    top:40%;
+    left:37%;
+    top:37%;
     z-index: 9999; 
   }
 
   .salirboton{
     background-color: rgb(119, 55, 3);
     border-radius: 15px;
-    position: fixed;
+    position: absolute;
     color:#fff;
     height: 75px;
     width: 150px;
     cursor: pointer;
     font-size: 1.2em;
     z-index: 9999;
-    left:46.5%;
-    top:59%; 
+    left:42%;
+    top:63%; 
   }

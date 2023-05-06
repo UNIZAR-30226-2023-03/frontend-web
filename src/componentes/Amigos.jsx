@@ -167,7 +167,7 @@ function Amigos(){
           <Modal.Title className="modalTitle">Solicitudes pendientes</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          {solicitudes.length === 0 && <p className="sinContenido">No tienes ninguna <br></br> solicitud pendiente</p>}
+          {solicitudes.length === 0 && <p className="sinContenido">No tienes ninguna <br></br> solicitud de amistad <br></br> pendiente</p>}
           {solicitudes.map((solicitud, index) => (
             <div key={index} className="amigosdisponibles">
               <table className="solicitudes">

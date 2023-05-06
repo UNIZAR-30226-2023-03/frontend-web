@@ -13,7 +13,8 @@ function EsperarTorneo(){
     const cookies= new Cookies();
     const navigate = useNavigate();
     const { state } = useLocation();
-    const [idTorneo, setIdTorneo] = useState([]);
+    const [idTorneo, setIdTorneo] = useState("");
+    const [nombreTorneo, setnombreTorneo] = useState("");
     const [poderempezar, setpoderempezar] = useState(false);
     const [showModalSeguroSalir, setShowModalSeguroSalir] = useState(false);
    
@@ -21,21 +22,22 @@ function EsperarTorneo(){
     useEffect(() => {
         if (state) {
             setIdTorneo(state.idTorneo);
-        }
-        function connectToSocket() {
-            const url = "https://lamesa-backend.azurewebsites.net"
-            let socket = new SockJS(url + "/ws");
-            let stompClient = Stomp.over(socket);
-            console.log("esperando en torneo: "+idTorneo);
-            stompClient.connect({}, function (frame) {
-                stompClient.subscribe("/topic/torneo/" + idTorneo, function (response) {
-                    setpoderempezar(true);
+            setnombreTorneo(state.nombreTorneo);         
+            function connectToSocket() {
+                const url = "https://lamesa-backend.azurewebsites.net"
+                let socket = new SockJS(url + "/ws");
+                let stompClient = Stomp.over(socket);
+                console.log("esperando en torneo: "+state.idTorneo);
+                stompClient.connect({}, function (frame) {
+                    stompClient.subscribe("/topic/torneo/" + state.idTorneo, function (response) {
+                        setpoderempezar(true);
+                    })
                 })
-            })
+            }
+            connectToSocket();
         }
-        connectToSocket();
         // eslint-disable-next-line
-    }, [state]);
+    }, []);
 
     async function jugarTorneo(idUsuario,navigate){
         const response = await axios.post("https://lamesa-backend.azurewebsites.net/torneo/jugar", {usuario: idUsuario,torneo: idTorneo});
@@ -56,6 +58,7 @@ function EsperarTorneo(){
     
     return(
         <>
+            <h1>BIENVENIDO AL TORNEO {nombreTorneo}</h1>
             {!poderempezar &&
             <>
                 <div className="loading-container">

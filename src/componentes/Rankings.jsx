@@ -13,7 +13,7 @@ function Rankings(){
   const [mostrarBocadilloFC, setMostrarBocadilloFC] = useState(false);
   const [mostrarBocadilloFM, setMostrarBocadilloFM] = useState(false);
   const [mostrarTitulo, setmostrarTitulo] = useState(true);
-  let posicion = 0;
+  let posicion = 1;
   function actualizarRanking(jug){
     const jugadores = [];
     jug.forEach(jugador => {     
@@ -96,7 +96,10 @@ function Rankings(){
             <tbody>
               {jugadoresrank.map((jugador) => (
                 <tr>      
-                  <td>{posicion++}</td>
+                  <td>{posicion++ === 1 ? <img src='../imagenes/iconos/primero.png' alt=""/> :
+                    posicion++ === 2 ? <img src='../imagenes/iconos/segundo.png' alt=""/> :
+                    posicion++ === 3 ? <img src='../imagenes/iconos/tercero.png' alt=""/> :
+                    posicion++}</td>
                   <td>{jugador.username}</td>
                   <td>{jugador.pganadas}</td>
                   <td>{jugador.pjugadas}</td>

@@ -118,6 +118,9 @@ async function enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidaf
         setestadoTurno("Tira el dado");
       }
     }
+    else{
+      colorearFichas(color,numFichas);
+    }
   }
   else{
     console.log("partidafinalizada a true");
@@ -370,8 +373,13 @@ function Partida() {
             setfichapulsada(false);
             setbotondadopulsado(false);
             if(data.turno === color){
-              setestadoTurno("Tira el dado");
-            }
+              if(fichacomida || fichaenmeta){
+                setestadoTurno("Selecciona una ficha");
+              }
+              else{
+                setestadoTurno("Tira el dado");
+              }  
+            }  
         })
           stompClient.subscribe("/topic/movimiento/" + idPartida, function (response) {
             // Un jugador ha hecho un movimiento -> Actualizar tablero
@@ -395,7 +403,12 @@ function Partida() {
               setbotondadopulsado(false);
               setturno(data.turno);
               if(data.turno === color){
-                setestadoTurno("Tira el dado");
+                if(fichacomida || fichaenmeta){
+                  setestadoTurno("Selecciona una ficha");
+                }
+                else{
+                  setestadoTurno("Tira el dado");
+                }  
               }                        
             }
             else{
@@ -488,7 +501,9 @@ function Partida() {
           setUsernameROJO(cookies.get('nombreUsuario'));
           setNumjugadores(3);
         }else if(state.col ==="VERDE"){
-          setpartidaempezada(true);
+          if(state.tipo === "publica"){
+            setpartidaempezada(true);
+          }
           setUsernameAMARILLO(jugadores && jugadores[0].username);
           setUsernameAZUL(jugadores && jugadores[1].username);
           setUsernameROJO(jugadores && jugadores[2].username);
@@ -552,14 +567,9 @@ function Partida() {
   const handleStart = async() => {
     bloquearFichas(numjugadores,color,numFichas);
     setIsPlaying(true);
-    await new Promise(resolve => setTimeout(resolve, getRandomTime()));
+    await new Promise(resolve => setTimeout(resolve, 3500));
     setIsPlaying(false);
     return Promise.resolve();
-  };
-
-  // tiempo aleatorio entre 2 y 4 segundos
-  const getRandomTime = () => {
-    return Math.floor(Math.random() * 2000) + 2000;
   };
   
   async function enviarComienzopartida(){
@@ -605,7 +615,23 @@ function Partida() {
     console.log("turno: "+turno);
     console.log("color: "+color);
     if(turno === color){
-      if(!botondadopulsado){
+      if(fichacomida || fichaenmeta){
+        setfichapulsada(true);
+        setjuegoautomatico(true);
+        if(fichasdisponibles.length !== 0) {
+          let numficha = fichasdisponibles[0];
+          console.log("FICHA A ENVIAR DESDE TIMEUP "+numficha);
+          console.log("DADO A ENVIAR DESDE TIMEUP "+numDado);
+          colorearFichas(color,numFichas);
+          if(fichacomida){
+            enviarFicha(numficha,idPartida,20,setturno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautomatico,numFichas,setfichaenmeta,setfichacomida);
+          }
+          else if(fichaenmeta){
+            enviarFicha(numficha,idPartida,10,setturno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautomatico,numFichas,setfichaenmeta,setfichacomida);
+          }
+        }
+      }
+      else if(!botondadopulsado){
         console.log("JUGADOR NO HA TIRADO EL DADO");
         setbotondadopulsado(true);
         setjuegoautomatico(true);
@@ -629,7 +655,7 @@ function Partida() {
   }
 
   const fichaPulsada = (numficha, color) => {
-    setestadoTurno("");
+    setestadoTurno("Espera por favor");
     setfichapulsada(true);
     setjuegoautomatico(false);
     console.log("FICHA PULSADA");
@@ -714,31 +740,13 @@ function Partida() {
     console.log("SALIENDO DE LA PARTIDA TRAS TERMINAR")
     navigate(process.env.PUBLIC_URL+'/principal');
   }
+  function jugarFinalTorneo(){
+    
+  }
 
   return (  
     <>
-      {partidaenPausa && <button className="infopause">LA PARTIDA HA SIDO PARADA</button>}
-      {partidafinalizada && !partidaenPausa && <p className="infoParAcabada">
-      ¡LA PARTIDA SE ACABÓ!{turno === color ? <><br/><br/>¡FELICIDADES!</> : <><br/><br/>OTRA VEZ SERÁ</>}
-      </p>}
-      {partidafinalizada && !partidaenPausa && <button className="salirboton" onClick={() => salirtrasParacabada()} >SALIR DE LA PARTIDA</button>}
-      {/* {partidafinalizada && turno===color  && !partidaenPausa && <div id="fuegosArtificiales"></div>} */}
-      {erroriniciarpartida !== "" &&  <p className="mensajeErrorPartida">{erroriniciarpartida}</p>}
-      {turno === color && !partidaenPausa && partidaempezada && !partidafinalizada && <p className={"infoTurno"+color}>
-        ¡ES TU TURNO!<br></br> {estadoTurno}</p>}
-      {turno !== color && !partidaenPausa &&  partidaempezada && !partidafinalizada &&
-      // eslint-disable-next-line
-      <p className={"infoTurno"+turno}>Turno de <br></br> {eval("username"+turno)}</p>
-      } 
-      {color !== "AMARILLO" && !partidaenPausa && !partidaempezada && <p className="infoParAcabada">ESPERA A QUE EL ANFITRIÓN INICIE LA PARTIDA</p> }    
-      {color === turno && !partidaenPausa && !partidafinalizada && juegoautomatico && <p className={"infoTurno"+color}>JUGANDO AUTOMÁTICAMENTE DURANTE 1 TURNO</p>}
      <div>
-        {color === "AMARILLO" && 
-        tipopart==="privada" &&
-        <button className="empezarPartida" onClick={startpartida}>
-        Comenzar Partida
-        </button>
-        }
         <Button className="ajustesboton" onClick={() => {setShowModalAjustes(true);}}></Button>
         <Modal 
           show={showModalAjustes} 
@@ -810,14 +818,37 @@ function Partida() {
             <button>Enviar</button>
           </form>
         </div>}
-        
-        <h1 className="usernameVerde" >{usernameVERDE}</h1>
-        <h1 className="usernameAmarillo">{usernameAMARILLO}</h1> 
-        <h1 className="usernameRojo">{usernameROJO}</h1>
-        <h1 className="usernameAzul">{usernameAZUL}</h1>
       </div>    
       <div className="lamesa">
         <div className="icono"></div>
+          {color === "AMARILLO" && 
+          tipopart==="privada" &&
+          <button className="empezarPartida" onClick={startpartida}>
+          Comenzar Partida
+          </button>
+          }
+          {color !== "AMARILLO" && !partidaenPausa && !partidaempezada && <p className="infoParAcabada">ESPERA A QUE EL ANFITRIÓN INICIE LA PARTIDA</p> }
+          {partidaenPausa && <button className="infopause">LA PARTIDA HA SIDO PARADA</button>}
+        {partidafinalizada && !partidaenPausa && <p className="infoParAcabada">
+        ¡LA PARTIDA SE ACABÓ!{turno === color ? <><br/><br/>¡FELICIDADES!</> : <><br/><br/>OTRA VEZ SERÁ</>}
+        </p>}
+        {tipopart === "torneo" && turno === color && partidafinalizada && !partidaenPausa && <button className="salirboton" onClick={() => jugarFinalTorneo()} >JUGAR FINAL</button>}
+        {tipopart === "torneo" && turno !== color && partidafinalizada && !partidaenPausa && <button className="salirboton" onClick={() => salirtrasParacabada()} >SALIR DEL TORNEO</button>}
+        {tipopart !== "torneo" && partidafinalizada && !partidaenPausa && <button className="salirboton" onClick={() => salirtrasParacabada()} >SALIR DE LA PARTIDA</button>}
+        {/* {partidafinalizada && turno===color  && !partidaenPausa && <div id="fuegosArtificiales"></div>} */}
+        {erroriniciarpartida !== "" &&  <p className="mensajeErrorPartida">{erroriniciarpartida}</p>}
+        {turno === color && !partidaenPausa && partidaempezada && !partidafinalizada && <p className={"infoTurno"+color}>
+          ¡ES TU TURNO!<br></br> {estadoTurno}</p>}
+        {turno !== color && !partidaenPausa &&  partidaempezada && !partidafinalizada &&
+        // eslint-disable-next-line
+        <p className={"infoTurno"+turno}>Turno de <br></br> {eval("username"+turno)}</p>
+        }
+        {color === turno && !partidaenPausa && !partidafinalizada && juegoautomatico && <p className={"infoTurno"+color}>JUGANDO AUTOMÁTICAMENTE DURANTE 1 TURNO</p>}
+            
+          <h1 className="usernameVerde" >{usernameVERDE}</h1>
+          <h1 className="usernameAmarillo">{usernameAMARILLO}</h1> 
+          <h1 className="usernameRojo">{usernameROJO}</h1>
+          <h1 className="usernameAzul">{usernameAZUL}</h1>
         {usernameAZUL && (
           <>
             {numFichas === "NORMAL" ? (
