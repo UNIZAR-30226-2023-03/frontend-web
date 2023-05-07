@@ -17,24 +17,28 @@ function EsperarTorneo(){
     const [nombreTorneo, setnombreTorneo] = useState("");
     const [poderempezar, setpoderempezar] = useState(false);
     const [showModalSeguroSalir, setShowModalSeguroSalir] = useState(false);
-   
+    const [ultimojugador, setultimojugador] = useState(false);
+    
 
     useEffect(() => {
         if (state) {
             setIdTorneo(state.idTorneo);
-            setnombreTorneo(state.nombreTorneo);         
-            function connectToSocket() {
-                const url = "https://lamesa-backend.azurewebsites.net"
-                let socket = new SockJS(url + "/ws");
-                let stompClient = Stomp.over(socket);
-                console.log("esperando en torneo: "+state.idTorneo);
-                stompClient.connect({}, function (frame) {
-                    stompClient.subscribe("/topic/torneo/" + state.idTorneo, function (response) {
-                        setpoderempezar(true);
+            setnombreTorneo(state.nombreTorneo);
+            setultimojugador(state.soy16);
+            if(!state.soy16){         
+                function connectToSocket() {
+                    const url = "https://lamesa-backend.azurewebsites.net"
+                    let socket = new SockJS(url + "/ws");
+                    let stompClient = Stomp.over(socket);
+                    console.log("esperando en torneo: "+state.idTorneo);
+                    stompClient.connect({}, function (frame) {
+                        stompClient.subscribe("/topic/torneo/" + state.idTorneo, function (response) {
+                            setpoderempezar(true);
+                        })
                     })
-                })
+                }
+                connectToSocket();
             }
-            connectToSocket();
         }
         // eslint-disable-next-line
     }, []);
@@ -45,8 +49,10 @@ function EsperarTorneo(){
         let id_part = response.data.id;
         let col = response.data.color;
         let jug = response.data.jugadores;
+        let num_fichas = response.data.cf;
+        console.log("CONFIGURACION FICHAS: "+num_fichas);
         let tipo = "torneo";
-        navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo } });
+        navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo,num_fichas,nombreTorneo,idTorneo } });
     }
 
     async function desapuntarTorneo(idUsuario,navigate){
@@ -59,18 +65,18 @@ function EsperarTorneo(){
     return(
         <>
             <h1>BIENVENIDO AL TORNEO {nombreTorneo}</h1>
-            {!poderempezar &&
+            {!poderempezar && !ultimojugador &&
             <>
                 <div className="loading-container">
                     <div className="loading-circle"></div>
                 </div>
                 <p className="esperaJugadores">Esperando jugadores...</p>
             </>}
-            {poderempezar && <button className="empezarTorneoBoton" onClick={() => jugarTorneo(cookies.get('idUsuario'),navigate)}>¡Empezar a jugar!</button>}
+            {(poderempezar || ultimojugador) && <button className="empezarTorneoBoton" onClick={() => jugarTorneo(cookies.get('idUsuario'),navigate)}>¡Empezar a jugar!</button>}
             {showModalSeguroSalir && <div className="fondo-negro"></div>}
             <Button className="salirTorneoBoton" onClick={() => setShowModalSeguroSalir(true)}>Salir del torneo</Button>
             <Modal 
-                show={showModalSeguroSalir} 
+                show={showModalSeguroSalir && !ultimojugador} 
                 onHide={() => setShowModalSeguroSalir(false)} 
                 centered
                 className="custom-modal-segurosalir"

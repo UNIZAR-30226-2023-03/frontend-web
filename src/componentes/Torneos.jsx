@@ -8,19 +8,10 @@ import home from "../imagenes/iconos/home.svg";
 import { Button, Modal } from 'react-bootstrap';
 
 
-function esperarpartida(navigate,nombreTorneo, idTorneo){
-  navigate(process.env.PUBLIC_URL+'/esperartorneo',{ state: { idTorneo, nombreTorneo}});
+function esperarpartida(navigate,nombreTorneo, idTorneo,soy16){
+  navigate(process.env.PUBLIC_URL+'/esperartorneo',{ state: { idTorneo, nombreTorneo,soy16}});
 }
 
-async function empezarpartidatorneo(idUsuario, idTorneo,navigate){
-  const response = await axios.post("https://lamesa-backend.azurewebsites.net/torneo/jugar", {usuario: idUsuario,torneo: idTorneo});
-  //empezar partida
-  let id_part = response.data.id;
-  let col = response.data.color;
-  let jug = response.data.jugadores;
-  let tipo = "torneo";
-  navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo } });
-}
 async function apuntarseTorneo(nombreTorneo,idTorneo,idUsuario,navigate, seterrorapuntarsetorneo){
   console.log("apuntandome al torneo: "+nombreTorneo);
   console.log("apuntandome al torneo: "+idTorneo);
@@ -28,17 +19,19 @@ async function apuntarseTorneo(nombreTorneo,idTorneo,idUsuario,navigate, seterro
   await axios.post("https://lamesa-backend.azurewebsites.net/torneo/apuntar", {usuario: idUsuario,torneo: idTorneo})
   .then ( response => {
     console.log("apuntado: "+response.data.apuntado);
-    console.log("jugador16: "+response.data.esjugador16);
-    if(response.data.esjugador16){
-      console.log("SOY EL 16, EMPEZAR PARTIDA");
-      empezarpartidatorneo(idUsuario,idTorneo,navigate);
+    console.log("jugador16: "+response.data.esJugador16);
+    if(response.data.esJugador16){
+      console.log("SOY EL 16");
+      //empezarpartidatorneo(idUsuario,idTorneo,navigate);
+      esperarpartida(navigate,nombreTorneo,idTorneo,true);
     }
     else if(response.data.apuntado){
-      esperarpartida(navigate,nombreTorneo,idTorneo);
+      esperarpartida(navigate,nombreTorneo,idTorneo,false);
     }
   })
   .catch(error => {
-    console.log("ERROR")
+    console.log("ERROR");
+    console.log(error.response.data);
     seterrorapuntarsetorneo(error.response.data);
   })   
 }
@@ -87,16 +80,17 @@ function Torneos(){
   }, []);
   async function crearTorneo(){
     settorneocreado(false);
-    await axios.post("https://lamesa-backend.azurewebsites.net/torneo/crear", {usuario:idUsuario, nombre: nombrenuevotorneo, precio:monedas, configBarreas: configuracionB, configFichas: configuracionF})
+    await axios.post("https://lamesa-backend.azurewebsites.net/torneo/crear", {usuario:idUsuario, nombre: nombrenuevotorneo, precio:monedas, configBarreras: configuracionB, configFichas: configuracionF})
     .then ( response => {
       console.log("torneo creado: "+response.data.id);
       settorneocreado(true);
       setshowcreartorneo(false);
       if(response.data.apuntado){
-        esperarpartida(navigate,nombrenuevotorneo,response.data.id);
+        esperarpartida(navigate,nombrenuevotorneo,response.data.id,false);
       }
       else if(response.data.esjugador16){
-        empezarpartidatorneo(idUsuario,response.data.id,navigate);
+        //empezarpartidatorneo(idUsuario,response.data.id,navigate);
+        esperarpartida(navigate,nombrenuevotorneo,response.data.id,true);
       }
     })
     .catch(error => {

@@ -319,6 +319,8 @@ function Partida() {
   const navigate = useNavigate();
   const [showModalSeguroSalirPar, setShowModalSeguroSalirPar] = useState(false);
   const [partidaenPausa, setpartidaenPausa] = useState(false);
+  const [nombretorneo, setnombretorneo] = useState("");
+  const [idtorneo, setidtorneo] = useState("");
   
   useEffect(() => {
     function connectToSocket() {
@@ -485,6 +487,10 @@ function Partida() {
       setColor(state.col);
       settipopart(state.tipo);
       setnumFichas(state.num_fichas);
+      if(state.tipo === "torneo"){
+        setnombretorneo(state.nombreTorneo);
+        setidtorneo(state.idTorneo);
+      }
       const jugadores = state.jug;
       function comprobarUsernames(){
         if(state.col==="AMARILLO"){
@@ -511,36 +517,36 @@ function Partida() {
           setNumjugadores(4);
         }
       }
-      if(state.tipo ==="privada" || state.tipo === "publica"){
+      // if(state.tipo ==="privada" || state.tipo === "publica"){
         comprobarUsernames();
-      }
-      else if(state.tipo === "torneo"){
-        setNumjugadores(4);
-        if(state.col === "AMARILLO"){
-          setUsernameAMARILLO(cookies.get('nombreUsuario'));
-          setUsernameAZUL(jugadores && jugadores[0].username);
-          setUsernameROJO(jugadores && jugadores[1].username);
-          setUsernameVERDE(jugadores && jugadores[2].username);
-        }
-        else if(state.col === "AZUL"){
-          setUsernameAZUL(cookies.get('nombreUsuario'));
-          setUsernameAMARILLO(jugadores && jugadores[0].username);
-          setUsernameROJO(jugadores && jugadores[1].username);
-          setUsernameVERDE(jugadores && jugadores[2].username);         
-        }
-        else if(state.col === "ROJO"){
-          setUsernameROJO(cookies.get('nombreUsuario'));
-          setUsernameAMARILLO(jugadores && jugadores[0].username);
-          setUsernameAZUL(jugadores && jugadores[1].username);
-          setUsernameVERDE(jugadores && jugadores[2].username);         
-        }
-        else if(state.col === "VERDE"){
-          setUsernameVERDE(cookies.get('nombreUsuario'));
-          setUsernameAMARILLO(jugadores && jugadores[0].username);
-          setUsernameAZUL(jugadores && jugadores[1].username);
-          setUsernameROJO(jugadores && jugadores[2].username);         
-        }
-      }
+      // }
+      // else if(state.tipo === "torneo"){
+      //   setNumjugadores(4);
+      //   if(state.col === "AMARILLO"){
+      //     setUsernameAMARILLO(cookies.get('nombreUsuario'));
+      //     setUsernameAZUL(jugadores && jugadores[0].username);
+      //     setUsernameROJO(jugadores && jugadores[1].username);
+      //     setUsernameVERDE(jugadores && jugadores[2].username);
+      //   }
+      //   else if(state.col === "AZUL"){
+      //     setUsernameAZUL(cookies.get('nombreUsuario'));
+      //     setUsernameAMARILLO(jugadores && jugadores[0].username);
+      //     setUsernameROJO(jugadores && jugadores[1].username);
+      //     setUsernameVERDE(jugadores && jugadores[2].username);         
+      //   }
+      //   else if(state.col === "ROJO"){
+      //     setUsernameROJO(cookies.get('nombreUsuario'));
+      //     setUsernameAMARILLO(jugadores && jugadores[0].username);
+      //     setUsernameAZUL(jugadores && jugadores[1].username);
+      //     setUsernameVERDE(jugadores && jugadores[2].username);         
+      //   }
+      //   else if(state.col === "VERDE"){
+      //     setUsernameVERDE(cookies.get('nombreUsuario'));
+      //     setUsernameAMARILLO(jugadores && jugadores[0].username);
+      //     setUsernameAZUL(jugadores && jugadores[1].username);
+      //     setUsernameROJO(jugadores && jugadores[2].username);         
+      //   }
+      // }
     }
   }, [cookies,primeravez,state]);
  
@@ -741,7 +747,7 @@ function Partida() {
     navigate(process.env.PUBLIC_URL+'/principal');
   }
   function jugarFinalTorneo(){
-    
+    navigate(process.env.PUBLIC_URL+'/esperarfinal',{ state: { nombretorneo,idtorneo } });
   }
 
   return (  
@@ -827,7 +833,8 @@ function Partida() {
           Comenzar Partida
           </button>
           }
-          {color !== "AMARILLO" && !partidaenPausa && !partidaempezada && <p className="infoParAcabada">ESPERA A QUE EL ANFITRIÓN INICIE LA PARTIDA</p> }
+          {color !== "AMARILLO" && tipopart==="privada" && !partidaenPausa && !partidaempezada && <p className="infoParAcabada">ESPERA A QUE EL ANFITRIÓN INICIE LA PARTIDA</p> }
+          {tipopart!=="privada" && !partidaenPausa && !partidaempezada && <p className="infoParAcabada">ESPERANDO AL RESTO DE JUGADORES</p> }
           {partidaenPausa && <button className="infopause">LA PARTIDA HA SIDO PARADA</button>}
         {partidafinalizada && !partidaenPausa && <p className="infoParAcabada">
         ¡LA PARTIDA SE ACABÓ!{turno === color ? <><br/><br/>¡FELICIDADES!</> : <><br/><br/>OTRA VEZ SERÁ</>}
