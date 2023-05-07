@@ -355,6 +355,9 @@ function Partida() {
           stompClient.subscribe("/topic/dado/" + idPartida, function (response) {
             // Un jugador ha sacado ficha de casa -> Actualizar tablero
             let data = JSON.parse(response.body);
+            if(!partidaempezada){
+              setpartidaempezada(true);
+            }
             if(color !== data.fichas[0].color && data.sacar){
               console.log("ACTUALIZAR TABLERO POR EL MOVIMIENTO DE OTRO JUGADOR");
               moverFicha(data.fichas[0].numero, parseInt(data.casilla.posicion)+1,data.fichas[0].color,data.casilla.tipo);
@@ -364,7 +367,6 @@ function Partida() {
             if(data.vueltaACasa){
               moverFicha(data.fichas[0].numero,parseInt(data.casilla.posicion)+1,data.fichas[0].color,"CASA");
             }
-            setpartidaempezada(true);
             colorearFichas(color,numFichas);
             bloquearFichas(numjug,color,numFichas);
             console.log("LLEGA TURNO DESDE DADO: "+ data.turno);
@@ -386,6 +388,9 @@ function Partida() {
           stompClient.subscribe("/topic/movimiento/" + idPartida, function (response) {
             // Un jugador ha hecho un movimiento -> Actualizar tablero
             let data = JSON.parse(response.body);
+            if(!partidaempezada){
+              setpartidaempezada(true);
+            }
             console.log("PARTIDA ACABADA: "+data.acabada);        
             if(color !== data.ficha.color){
               console.log("OTRO JUGADOR HA HECHO UN MOVIMIENTO NUMCASILLA: "+data.destino.posicion+1);
@@ -421,12 +426,14 @@ function Partida() {
           stompClient.subscribe("/topic/turno/" + idPartida, function (response) {
               // Mensaje de turno recibido
               let data = JSON.parse(response.body);
+              if(!partidaempezada){
+                setpartidaempezada(true);
+              }
               console.log("LLEGA TURNO DESDE TURNO: "+ data);
               setturno(data);
               setjuegoautomatico(false);
               setfichapulsada(false);
               setbotondadopulsado(false);
-              setpartidaempezada(true);
               colorearFichas(color,numFichas);
               bloquearFichas(numjug,color,numFichas);
               if(data === color){
@@ -517,36 +524,7 @@ function Partida() {
           setNumjugadores(4);
         }
       }
-      // if(state.tipo ==="privada" || state.tipo === "publica"){
-        comprobarUsernames();
-      // }
-      // else if(state.tipo === "torneo"){
-      //   setNumjugadores(4);
-      //   if(state.col === "AMARILLO"){
-      //     setUsernameAMARILLO(cookies.get('nombreUsuario'));
-      //     setUsernameAZUL(jugadores && jugadores[0].username);
-      //     setUsernameROJO(jugadores && jugadores[1].username);
-      //     setUsernameVERDE(jugadores && jugadores[2].username);
-      //   }
-      //   else if(state.col === "AZUL"){
-      //     setUsernameAZUL(cookies.get('nombreUsuario'));
-      //     setUsernameAMARILLO(jugadores && jugadores[0].username);
-      //     setUsernameROJO(jugadores && jugadores[1].username);
-      //     setUsernameVERDE(jugadores && jugadores[2].username);         
-      //   }
-      //   else if(state.col === "ROJO"){
-      //     setUsernameROJO(cookies.get('nombreUsuario'));
-      //     setUsernameAMARILLO(jugadores && jugadores[0].username);
-      //     setUsernameAZUL(jugadores && jugadores[1].username);
-      //     setUsernameVERDE(jugadores && jugadores[2].username);         
-      //   }
-      //   else if(state.col === "VERDE"){
-      //     setUsernameVERDE(cookies.get('nombreUsuario'));
-      //     setUsernameAMARILLO(jugadores && jugadores[0].username);
-      //     setUsernameAZUL(jugadores && jugadores[1].username);
-      //     setUsernameROJO(jugadores && jugadores[2].username);         
-      //   }
-      // }
+      comprobarUsernames();
     }
   }, [cookies,primeravez,state]);
  
@@ -753,7 +731,7 @@ function Partida() {
   return (  
     <>
      <div>
-        <Button className="ajustesboton" onClick={() => {setShowModalAjustes(true);}}></Button>
+        {partidaempezada && <Button className="ajustesboton" onClick={() => {setShowModalAjustes(true);}}></Button>}
         <Modal 
           show={showModalAjustes} 
           onHide={() => setShowModalAjustes(false)} 
@@ -842,7 +820,7 @@ function Partida() {
         {tipopart === "torneo" && turno === color && partidafinalizada && !partidaenPausa && <button className="salirboton" onClick={() => jugarFinalTorneo()} >JUGAR FINAL</button>}
         {tipopart === "torneo" && turno !== color && partidafinalizada && !partidaenPausa && <button className="salirboton" onClick={() => salirtrasParacabada()} >SALIR DEL TORNEO</button>}
         {tipopart !== "torneo" && partidafinalizada && !partidaenPausa && <button className="salirboton" onClick={() => salirtrasParacabada()} >SALIR DE LA PARTIDA</button>}
-        {/* {partidafinalizada && turno===color  && !partidaenPausa && <div id="fuegosArtificiales"></div>} */}
+        {partidafinalizada && turno===color  && !partidaenPausa && <div id="fuegosArtificiales"></div>}
         {erroriniciarpartida !== "" &&  <p className="mensajeErrorPartida">{erroriniciarpartida}</p>}
         {turno === color && !partidaenPausa && partidaempezada && !partidafinalizada && <p className={"infoTurno"+color}>
           ¡ES TU TURNO!<br></br> {estadoTurno}</p>}

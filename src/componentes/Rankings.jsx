@@ -1,9 +1,11 @@
 import React, { useState, useEffect} from "react";
 import axios from 'axios';
 import "../styles/Rankings.css";
+import { useNavigate } from 'react-router-dom';
 import home from "../imagenes/iconos/home.svg"
 
 function Rankings(){
+  const navigate = useNavigate();
   const [jugadoresrank, setjugadoresrank] = useState([]);
   const [erroractualizacion, seterroractualizacion] = useState("");
   const [mostrarBocadilloPG, setMostrarBocadilloPG] = useState(false);
@@ -29,6 +31,19 @@ function Rankings(){
       seterroractualizacion(error.response.data); 
     })   
   }
+  async function buscaramigos(){
+    // await axios.get("https://lamesa-backend.azurewebsites.net/usuario/ranking?campo="+campo)
+    // .then ( response => {
+    //   actualizarRanking(response.data);
+    // })
+    // .catch(error => {
+    //   seterroractualizacion(error.response.data); 
+    // })   
+  }
+  const handleClick7 = () => {
+    navigate(process.env.PUBLIC_URL+'/tienda');
+  };
+
   useEffect(() => {
     async function buscarjugadores() {
       await axios.get("https://lamesa-backend.azurewebsites.net/usuario/ranking?campo=partidasGanadas")
@@ -54,12 +69,16 @@ function Rankings(){
             </div>
           </div>             
         </div>
-        {mostrarTitulo ? (
+        <button className="botontienda" onClick={handleClick7}>Tienda</button>
+        <h1 className="tituloPag">RANKING</h1>
+        <br></br><br></br><br></br>
+        {/* {mostrarTitulo ? (
           <h1 className="tituloPag">RANKING</h1>
         ) : (
           <h1 className="tituloPag" style={{ color: "rgba(119, 55, 3, 0)" }}>----</h1>
-        )}
+        )} */}
         <p>{erroractualizacion}</p>
+        {mostrarTitulo && <button className="amigosranking" onClick={() => buscaramigos()}>FILTRAR POR AMIGOS</button>}
         <div className="ranking-table">      
           <table >
             <thead>
@@ -76,20 +95,20 @@ function Rankings(){
                 onMouseLeave={() => setMostrarBocadilloPJ(false)}></button></th>
                 <th>Torneos ganados<button 
                 className="botonOrdenar" onClick={() => ordenarRanking("torneosGanados")}
-                onMouseEnter={() => {setMostrarBocadilloTG(true);setmostrarTitulo(false)}}
-                onMouseLeave={() => {setMostrarBocadilloTG(false);setmostrarTitulo(true)}}></button></th>
+                onMouseEnter={() => {setMostrarBocadilloTG(true)}}
+                onMouseLeave={() => {setMostrarBocadilloTG(false)}}></button></th>
                 <th>Torneos jugados<button 
                 className="botonOrdenar" onClick={() => ordenarRanking("torneosJugados")}
                 onMouseEnter={() => setMostrarBocadilloTJ(true)}
                 onMouseLeave={() => setMostrarBocadilloTJ(false)}></button></th>
                 <th>Fichas comidas<button
                  className="botonOrdenar" onClick={() => ordenarRanking("numComidas")}
-                 onMouseEnter={() => setMostrarBocadilloFC(true)}
-                 onMouseLeave={() => setMostrarBocadilloFC(false)}></button></th>
+                 onMouseEnter={() => {setMostrarBocadilloFC(true);setmostrarTitulo(false)}}
+                 onMouseLeave={() => {setMostrarBocadilloFC(false);setmostrarTitulo(true)}}></button></th>
                 <th>Fichas en meta<button 
                 className="botonOrdenar" onClick={() => ordenarRanking("numEnMeta")}
-                onMouseEnter={() => setMostrarBocadilloFM(true)}
-                onMouseLeave={() => setMostrarBocadilloFM(false)}></button></th>   
+                onMouseEnter={() => {setMostrarBocadilloFM(true);setmostrarTitulo(false)}}
+                onMouseLeave={() => {setMostrarBocadilloFM(false);setmostrarTitulo(true)}}></button></th>   
               </tr>
             </thead>
             <tbody>

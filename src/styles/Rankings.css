@@ -2,6 +2,19 @@
     margin-top: 4%;
     margin-left: 3%;
 }
+.amigosranking{
+  background-color: rgb(119, 55, 3);
+  border-radius: 15px;
+  position: absolute;
+  color:#fff;
+  height: 50px;
+  width: 300px;
+  cursor: pointer;
+  font-size: 1.5em;
+  left:75%;
+  top:21%;
+  margin-bottom: 2%;
+}
 .primero{
   position: relative;
   z-index: 100;
@@ -95,7 +108,7 @@
     position: absolute;
     z-index: 9999;
     font-size: 1.4em;
-    top:8%;
+    top:17%;
     left:15%;
   }
   .ordenarPJ{
@@ -112,7 +125,7 @@
     position: absolute;
     z-index: 9999;
     font-size: 1.4em;
-    top:8%;
+    top:17%;
     left:29.5%;
   }
   .ordenarTG{
@@ -129,7 +142,7 @@
     position: absolute;
     z-index: 9999;
     font-size: 1.4em;
-    top:8%;
+    top:17%;
     left:44.5%;
   }
   .ordenarTJ{
@@ -146,7 +159,7 @@
     position: absolute;
     z-index: 9999;
     font-size: 1.4em;
-    top:8%;
+    top:17%;
     left:59%;
   }
   .ordenarFC{
@@ -163,7 +176,7 @@
     position: absolute;
     z-index: 9999;
     font-size: 1.4em;
-    top:8%;
+    top:17%;
     left:72.5%;
   }
   .ordenarFM{
@@ -180,6 +193,9 @@
     position: absolute;
     z-index: 9999;
     font-size: 1.4em;
-    top:8%;
+    top:17%;
     left:86%;
+  }
+  .botonOrdenar:hover {
+    transform: scale(1.4);
   }
