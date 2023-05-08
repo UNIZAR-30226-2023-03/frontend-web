@@ -47,7 +47,7 @@ let estadoFichas = [
   {ficha:'ficha4VERDE',casilla:'inicio-VERDE-4'},
 ];
 let fichasdisponibles = [];
-
+let cambioturno = false;
 
 function actualizarFicha(ficha,nuevaCasilla){
   estadoFichas = estadoFichas.map((elem) =>
@@ -58,7 +58,7 @@ function buscarCasilla(ficha) {
   return casilla;
 }
 
-async function enviarDado(numdado,setturno,idPartida,color,setpartidafinalizada,juegoautonomo,setmostrartimer,numFichas,setestadoTurno,setfichaenmeta,setfichacomida){
+async function enviarDado(numdado,setturno,turno,idPartida,color,setpartidafinalizada,juegoautonomo,setmostrartimer,numFichas,setestadoTurno,setfichaenmeta,setfichacomida){
   let response;
   console.log("DADO: "+numdado);
   response = await axios.post("https://lamesa-backend.azurewebsites.net/partida/dado/"+idPartida + "?dado="+numdado);
@@ -78,15 +78,21 @@ async function enviarDado(numdado,setturno,idPartida,color,setpartidafinalizada,
     if(numficha !== -1 && juegoautonomo){
       colorearFichas(color,numFichas);
       console.log("ENVIO FICHA AUTOMATICAMENTE "+numficha);
-      enviarFicha(numficha,idPartida,numdado,setturno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautonomo,numFichas,setfichaenmeta,setfichacomida);
+      enviarFicha(numficha,idPartida,numdado,setturno,turno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautonomo,numFichas,setfichaenmeta,setfichacomida);
     }
     else{
       setestadoTurno("Selecciona una ficha");
     }
+    console.log("turno: "+turno);
+    console.log("color: "+color);
+    if(cambioturno){
+      cambioturno = false;
+      colorearFichas(color,numFichas);
+    }
   }
 }
 
-async function enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautonomo,numFichas,setfichaenmeta,setfichacomida){
+async function enviarFicha(numficha,idPartida,numDado,setturno,turno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautonomo,numFichas,setfichaenmeta,setfichacomida){
   console.log("enviando dado a movimiento: "+numDado);
   console.log("enviando ficha a movimiento: "+numficha);
   console.log("enviando partida a movimiento: "+idPartida);
@@ -104,12 +110,12 @@ async function enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidaf
       if(response.data.destino.tipo === "META"){
         setfichaenmeta(true);
         console.log("FICHA EN CASA, MANDANDO UN 10");
-        enviarDado(10,setturno,idPartida,color,setpartidafinalizada,juegoautonomo,setmostrartimer,numFichas,setestadoTurno,setfichaenmeta,setfichacomida);
+        enviarDado(10,setturno,turno,idPartida,color,setpartidafinalizada,juegoautonomo,setmostrartimer,numFichas,setestadoTurno,setfichaenmeta,setfichacomida);
       }
       else if(response.data.comida){
         setfichacomida(true);
         console.log("FICHA COMIDA, MANDANDO UN 20")
-        enviarDado(20,setturno,idPartida,color,setpartidafinalizada,juegoautonomo,setmostrartimer,numFichas,setestadoTurno,setfichaenmeta,setfichacomida);
+        enviarDado(20,setturno,turno,idPartida,color,setpartidafinalizada,juegoautonomo,setmostrartimer,numFichas,setestadoTurno,setfichaenmeta,setfichacomida);
       }
       else{
         const botonStart = document.querySelector('.tirarDado');
@@ -217,6 +223,7 @@ function mostrarFichasBloqueadas(fichas,color,juegoautonomo,numfichas){
 }
 
 function colorearFichas(color,numfichas){
+  console.log("COLOREANDO FICHAS");
   let ficha,fichacambiar,i,colorficha,maxfichas;
   if(numfichas === "RAPIDO"){
     maxfichas = 2;
@@ -377,12 +384,16 @@ function Partida() {
             setfichapulsada(false);
             setbotondadopulsado(false);
             if(data.turno === color){
+              cambioturno = false;
               if(fichacomida || fichaenmeta){
                 setestadoTurno("Selecciona una ficha");
               }
               else{
                 setestadoTurno("Tira el dado");
               }  
+            }
+            else{
+              cambioturno = true;
             }  
         })
           stompClient.subscribe("/topic/movimiento/" + idPartida, function (response) {
@@ -410,13 +421,17 @@ function Partida() {
               setbotondadopulsado(false);
               setturno(data.turno);
               if(data.turno === color){
+                cambioturno = false;
                 if(fichacomida || fichaenmeta){
                   setestadoTurno("Selecciona una ficha");
                 }
                 else{
                   setestadoTurno("Tira el dado");
                 }  
-              }                        
+              }
+              else{
+                cambioturno = true;
+              }                       
             }
             else{
               console.log("partidafinalizada a true");
@@ -437,8 +452,12 @@ function Partida() {
               colorearFichas(color,numFichas);
               bloquearFichas(numjug,color,numFichas);
               if(data === color){
+                cambioturno = false;
                 setestadoTurno("Tira el dado");
               }
+              else{
+                cambioturno = true;
+              } 
               console.log("LLAMANDO A BLOQUEAR FICHAS CON "+color+" "+numjug);
           })
           stompClient.subscribe("/topic/chat/" + idPartida, function (response) {
@@ -564,15 +583,18 @@ function Partida() {
         setestadoTurno("Tira el dado");
       }
       setpartidaempezada(true);
-      const botonStart = document.querySelector('.empezarPartida');
-      botonStart.style.display = 'none';
+
     })
     .catch(error =>{
+      const botonStart = document.querySelector('.empezarPartida');
+      botonStart.style.display = 'block';
       seterroriniciarpartida(error.response.data);
     })
     
   }
   function startpartida(){
+    const botonStart = document.querySelector('.empezarPartida');
+    botonStart.style.display = 'none';
     seterroriniciarpartida("");
     bloquearFichas(numjugadores,color,numFichas);
     enviarComienzopartida();
@@ -581,7 +603,7 @@ function Partida() {
     await handleStart();
     console.log("enviando y actualizando DADO: "+dadoRef.current);
     setnumDado(dadoRef.current);
-    enviarDado(dadoRef.current,setturno,idPartida,color,setpartidafinalizada,juegoautonomo,setmostrartimer,numFichas,setestadoTurno,setfichaenmeta,setfichacomida);
+    enviarDado(dadoRef.current,setturno,turno,idPartida,color,setpartidafinalizada,juegoautonomo,setmostrartimer,numFichas,setestadoTurno,setfichaenmeta,setfichacomida);
   }
   const onClick = () => {
     setestadoTurno("Espera por favor");
@@ -608,10 +630,10 @@ function Partida() {
           console.log("DADO A ENVIAR DESDE TIMEUP "+numDado);
           colorearFichas(color,numFichas);
           if(fichacomida){
-            enviarFicha(numficha,idPartida,20,setturno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautomatico,numFichas,setfichaenmeta,setfichacomida);
+            enviarFicha(numficha,idPartida,20,setturno,turno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautomatico,numFichas,setfichaenmeta,setfichacomida);
           }
           else if(fichaenmeta){
-            enviarFicha(numficha,idPartida,10,setturno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautomatico,numFichas,setfichaenmeta,setfichacomida);
+            enviarFicha(numficha,idPartida,10,setturno,turno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautomatico,numFichas,setfichaenmeta,setfichacomida);
           }
         }
       }
@@ -632,7 +654,7 @@ function Partida() {
           console.log("FICHA A ENVIAR DESDE TIMEUP "+numficha);
           console.log("DADO A ENVIAR DESDE TIMEUP "+numDado);
           colorearFichas(color,numFichas);
-          enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautomatico,numFichas,setfichaenmeta,setfichacomida);
+          enviarFicha(numficha,idPartida,numDado,setturno,turno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautomatico,numFichas,setfichaenmeta,setfichacomida);
         }
       }
     }
@@ -652,14 +674,14 @@ function Partida() {
     fichasdisponibles = [];
     if(fichacomida){
       setfichacomida(false);
-      enviarFicha(numficha,idPartida,20,setturno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautomatico,numFichas,setfichaenmeta,setfichacomida);
+      enviarFicha(numficha,idPartida,20,setturno,turno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautomatico,numFichas,setfichaenmeta,setfichacomida);
     }
     else if(fichaenmeta){
       setfichaenmeta(false);
-      enviarFicha(numficha,idPartida,10,setturno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautomatico,numFichas,setfichaenmeta,setfichacomida);
+      enviarFicha(numficha,idPartida,10,setturno,turno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautomatico,numFichas,setfichaenmeta,setfichacomida);
     }
     else{
-      enviarFicha(numficha,idPartida,numDado,setturno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautomatico,numFichas,setfichaenmeta,setfichacomida);
+      enviarFicha(numficha,idPartida,numDado,setturno,turno,color,setpartidafinalizada, setmostrartimer,setestadoTurno,juegoautomatico,numFichas,setfichaenmeta,setfichacomida);
     }
   };
   async function enviarmensaje(message){
