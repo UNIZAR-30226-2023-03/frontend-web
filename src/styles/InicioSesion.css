@@ -42,6 +42,7 @@ body {
     width: 400px;
     text-align: center;
     box-shadow: 20px 8px 7px rgba(0, 0, 0, 0.75);
+    color: #fff;
   }
   
   /* Texto blanco */
@@ -59,6 +60,27 @@ body {
     border-radius: 20px;
     cursor: pointer;
     margin-top: 10px;
+  }
+  .form-container input[type="text"] {
+    width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    border: 5px solid rgb(255, 255, 255); 
+    margin: 0;
+    padding: 0;
+  }
+  .form-container input[type="password"] {
+    width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    border: 5px solid rgb(255, 255, 255); 
+    margin: 0;
+    padding: 0;
+  }
+  .iraregistro{
+    font-size: 1.4em;
   }
   
   .form-container button:hover {

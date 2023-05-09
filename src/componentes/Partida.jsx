@@ -713,18 +713,9 @@ function Partida() {
   }, []);
   
   useEffect(() => {
-    const handleVisibilityChange = async () => {
-      if (document.visibilityState === 'hidden') {
-        console.log('La pestaña perdió el foco, ejecutando función...');
-        await salirPartida();
-      }
-    };
-  
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-  
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
+    window.onbeforeunload = function() {
+      salirPartida();
+  };
     // eslint-disable-next-line
   }, []);
   
