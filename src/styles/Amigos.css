@@ -27,7 +27,7 @@
   .modalTitle{
     font-size: 15px;
     text-align: center;
-    margin-top: 40px;
+    margin-top: 70px;
     font-weight: bold;
   }
   .cerrarModal {
@@ -57,10 +57,11 @@
     background-color: rgb(119, 55, 3);
     border-radius: 15px;
     color:#fff;
-    height: 50px;
-    width: 120px;
+    height: 70px;
+    width: 200px;
     cursor: pointer;
     margin:25px;
+    font-size: 1.3em;
     display:inline-block;
   }
 
@@ -140,12 +141,13 @@
   }
   
   .amigosDisponibles button {
-    background-color: #ffaa01; 
-    color: #000000;
+    background-color: #c08105; 
+    color: #ffffff;
     border: none;
     padding: 5px 10px;
     border-radius: 5px; 
     cursor: pointer; 
+    font-size: 1em;
   }
 
   .fondo-negro {

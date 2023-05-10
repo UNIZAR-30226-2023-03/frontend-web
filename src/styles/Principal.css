@@ -131,7 +131,21 @@
     display: block;
     margin-bottom: 30px;
 }
-
+.botonbaja{
+    background-color: rgb(205, 1, 1);
+    border-radius: 15px;
+    color:#fff;
+    text-align: center;
+    position: relative;
+    height: 60px;
+    width: 200px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 1.3em;
+    left:26.5%;
+    display: block;
+    margin-top: 70px;
+}
 .botontorneos{
     background-color: rgb(119, 55, 3);
     background-image: url('../imagenes/iconos/torneo.png');

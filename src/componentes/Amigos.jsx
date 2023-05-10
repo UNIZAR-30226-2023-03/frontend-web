@@ -50,6 +50,7 @@ function Amigos(){
   const [rechazarsolicitud, setrechazarsolicitud] = useState(false);
   const cookies= new Cookies();
   const idUsuario = cookies.get('idUsuario');
+  const nombreUsuario = cookies.get('nombreUsuario');
   const [amigoeliminado, setamigoeliminado] = useState(false);
   const [usernamebuscar, setusernamebuscar] = useState("");
   const [errorenviosolicitud, seterrorenviosolicitud] = useState("");
@@ -101,12 +102,16 @@ function Amigos(){
   const handleSubmit = (e) => {
     e.preventDefault();
     seterrorenviosolicitud(false);
-    enviarSolicitud(idUsuario,usernamebuscar,seterrorenviosolicitud);
+    if(usernamebuscar !== nombreUsuario){
+      enviarSolicitud(idUsuario,usernamebuscar,seterrorenviosolicitud);
+    }
+    else{
+      seterrorenviosolicitud("Nombre de usuario no válido");
+    }
     setusernamebuscar("");
     if(errorenviosolicitud === ""){
       setShowModalBuscarAmigo(false);
       setsolicitudcorrecta(true);
-      
     }
   }
 
@@ -202,7 +207,7 @@ function Amigos(){
             <form className="modalForm"  onSubmit={handleSubmit}>
               <input type="text" onChange={(e) => setusernamebuscar(e.target.value)}
                 value={usernamebuscar} placeholder="Escribir nombre de usuario..." />
-              <Button type="submit">Enviar solicitud de amistad</Button>
+              <Button type="submit">Enviar solicitud <br></br> de amistad</Button>
             </form>
             {errorenviosolicitud && <p className="mensajeError">El nombre de usuario introducido no existe</p>}
           </Modal.Body>

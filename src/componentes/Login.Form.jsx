@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link, useHistory } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import "../styles/InicioSesion.css";
 
@@ -11,6 +10,7 @@ function LoginForm() {
   const [password, setPassword] = useState('');
   const [error1, setError1] = useState(false);
   const [error2, setError2] = useState(false);
+
 
   const handleUsernameChange = (event) => {
     setLogin(event.target.value);

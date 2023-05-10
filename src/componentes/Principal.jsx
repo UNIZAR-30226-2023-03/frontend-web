@@ -3,11 +3,13 @@ import axios from 'axios';
 import "../styles/Principal.css";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import { Button, Modal } from 'react-bootstrap';
 
 function Principal(){
     const [estadisticasjugador, setestadisticasjugador] = useState('');
     const navigate = useNavigate();
     const [mostrarPartidas, setMostrarPartidas] = useState(false);
+    const [ShowModalSeguroBaja, setShowModalSeguroBaja] = useState(false);
     const [monedas, setmonedas] = useState(0);
     const cookies= new Cookies();
     const idUsuario = cookies.get('idUsuario');
@@ -60,6 +62,15 @@ function Principal(){
     const handleClick7 = () => {
       navigate(process.env.PUBLIC_URL+'/tienda');
     };
+    async function darbaja(){
+      await axios.post("https://lamesa-backend.azurewebsites.net/usuario/eliminar/"+idUsuario) 
+      .then ( response => {
+        navigate(process.env.PUBLIC_URL+'/');
+      }) 
+      .catch(error => {
+        setShowModalSeguroBaja(false);
+      })  
+    }
 
     return (
         <>       
@@ -87,6 +98,7 @@ function Principal(){
           <button className="botonAmigos" onClick={handleClick4}>Amigos</button>
           <button className="botontorneos" onClick={handleClick5}>Torneos</button>
           <button className="botonrankings" onClick={handleClick6}>Rankings</button>
+          <button className="botonbaja" onClick={() => setShowModalSeguroBaja(true)}>Darme de baja</button>
           <button className="botontienda" onClick={handleClick7}>Tienda</button>
           <div className="estadisticas">
             <p className="tituloEstadisticas">Estadísticas personales</p>
@@ -108,6 +120,26 @@ function Principal(){
             <p className="subtituloEstadisticas">Torneos ganados:&nbsp;</p>
             <p className="resultadoEstadisticas">{estadisticasjugador.tganados}</p>
           </div>
+          {ShowModalSeguroBaja && <div className="fondo-negro"></div>}
+          <Modal 
+            show={ShowModalSeguroBaja} 
+            onHide={() => setShowModalSeguroBaja(false)} 
+            centered
+            className="custom-modal-segurosalir"
+        >
+        <Modal.Header>
+        <Button className="cerrarModal" onClick={() => {
+            setShowModalSeguroBaja(false);
+        }}>X</Button>
+        <Modal.Title className="modalTitle">¿Seguro que quieres darte de baja?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <div className="button-container">
+                <button className="siboton" onClick={() => darbaja()}>Sí</button>
+                <button className="noboton" onClick={() => setShowModalSeguroBaja(false)} style={{ marginRight: "5%" }}>No</button>
+            </div>
+        </Modal.Body>
+        </Modal>
         </>
       );
       
