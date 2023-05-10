@@ -2,3 +2,38 @@
     margin-top: 4%;
     margin-left: 3%;
 }
+.compra{
+    width: 100%;
+    position: absolute;
+    margin: 200px 13%;
+}
+.botn{
+    width:290px ;
+    height: 110px;;
+    margin-left: 40px;
+    background-image: url('../imagenes/tablero/tablero.png');
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 140px 75px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 7%;
+}
+.botn1{
+    width:290px ;
+    height: 110px;;
+    margin-left: 40px;
+    background-image: url('../imagenes/tablero/tablero.png');
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 140px 75px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 7%;
+    filter: blur(2px);
+}
+

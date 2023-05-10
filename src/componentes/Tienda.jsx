@@ -1,34 +1,15 @@
 import "../styles/Tienda.css";
 import home from "../imagenes/iconos/home.svg"
 //import axios from "axios";
-import React, {useState} from "react";
+import React, {} from "react";
 
 
 function Tienda(){
 
-  const [tableros, setMostrarTableros]=useState(true)
-  const [fichas, setMostrarFichas]=useState(false)
   //const [cosas, setcosas] = useState([]);
 
 
-  function handleClick(){
-    if(tableros){
-      setMostrarTableros(false);
-    }
-    else{
-      setMostrarTableros(true);
-      setMostrarFichas(false);
-    }
-  }
-  function handleClick1(){
-    if(fichas){
-      setMostrarFichas(false);
-    }
-    else{
-      setMostrarFichas(true);
-      setMostrarTableros(false);
-    }
-  }
+  
   // useEffect(() => {
   //   async function obtenerTienda() {
   //     await axios.get("https://lamesa-backend.azurewebsites.net/tienda")
@@ -56,25 +37,26 @@ function Tienda(){
               <div className="breadcrumb-item">Tienda</div>
               </div>
           </div>
-          <div>
-            <button  onClick={handleClick}>Tableros</button>
-            <button  onClick={handleClick1}>Fichas</button>
+          <div className="compra">
+            <div className="container">
+              <button className="botn1">
+                Tablero de Navidad
+              </button>
+              </div>
+              <button className="botn">
+                Tablero de Halloween
+              </button>
+              <button className="botn">
+                Ficha de Navidad
+              </button>
+              <button className="botn">
+                Ficha de Halloween
+              </button>
+
+        
+
+
           </div>
-        {/* .map((torneo, index) => (
-          <div key={index}className="torneosdisponibles">
-            <table>
-            <tr>
-              <td colspan="3" className="nombre-torneo">{torneo.nombre}</td>
-              <td rowspan="2"><button onClick={() => apuntarseTorneo(torneo.id,cookies.get('idUsuario'),navigate)}>Apuntarse</button></td>
-            </tr>
-            <tr>
-              <td>{torneo.precioEntrada}</td>
-              <td>{torneo.configBarreras}</td>
-              <td>{torneo.configFichas}</td>
-            </tr>
-            </table>
-          </div>
-        ))} */}
       </div>
     );
 }
