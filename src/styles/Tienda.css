@@ -5,13 +5,18 @@
 .compra{
     width: 100%;
     position: absolute;
-    margin: 200px 13%;
+    margin: 100px 13%;
+    display: flex;
 }
+.asd{
+    margin-left: 12%;
+}
+
 .botn{
     width:290px ;
     height: 110px;;
     margin-left: 40px;
-    background-image: url('../imagenes/tablero/tablero.png');
+    background-image: url('../imagenes/tablero/tablero blur.png');
     background-size:cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -20,20 +25,72 @@
     border-radius: 4px;
     cursor: pointer;
     margin-bottom: 7%;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
 }
-.botn1{
+
+.botn:hover{
+    transform: scale(1.1);
+    transition: 0.1s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2)
+}
+.botn-no{
     width:290px ;
     height: 110px;;
     margin-left: 40px;
-    background-image: url('../imagenes/tablero/tablero.png');
+    background-image: url('../imagenes/tablero/tablero Negro.png');
     background-size:cover;
     background-repeat: no-repeat;
     background-position: center;
     padding: 140px 75px;
     border: none;
     border-radius: 4px;
-    cursor: pointer;
     margin-bottom: 7%;
-    filter: blur(2px);
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    pointer-events: none;
+}
+.txt{
+    margin-top: 50px;
+    margin-left: 15%;
+    font-size: 40px;
+    font-weight: bold;
+}
+.monedasJugador1 {
+    background-image: url('../imagenes/iconos/moneda.png');
+    background-repeat: no-repeat;
+    background-position: 10% 50%;
+    background-size: 20% 70%;
+    background-color: rgb(129, 98, 7);
+    border-radius: 15px;
+    font-size: 2em;
+    color: yellow;
+    width: 100px;
+    height: 50px;
+    padding-top: 0.5%;
+    padding-left: 3%;
+    padding-right: 1%;
+    margin-left: 83%;
+    margin-top: 5%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: absolute;
+}
+
+.monedasJugador1:after {
+    content: attr(data-number);
+    font-size: 2em;
+    display: inline-block;
+    visibility: hidden;
+}
+
+.monedasJugador1[data-number]:after {
+    visibility: visible;
+    font-size: calc(100% / var(--characters));
 }
 
