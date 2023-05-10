@@ -1,11 +1,14 @@
 import React, { useState, useEffect} from "react";
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 import "../styles/Rankings.css";
 import { useNavigate } from 'react-router-dom';
 import home from "../imagenes/iconos/home.svg"
 
 function Rankings(){
   const navigate = useNavigate();
+  const cookies= new Cookies();
+  const idUsuario = cookies.get('idUsuario');
   const [jugadoresrank, setjugadoresrank] = useState([]);
   const [erroractualizacion, seterroractualizacion] = useState("");
   const [mostrarBocadilloPG, setMostrarBocadilloPG] = useState(false);
@@ -14,7 +17,24 @@ function Rankings(){
   const [mostrarBocadilloTJ, setMostrarBocadilloTJ] = useState(false);
   const [mostrarBocadilloFC, setMostrarBocadilloFC] = useState(false);
   const [mostrarBocadilloFM, setMostrarBocadilloFM] = useState(false);
+  const [amigosactuales, setamigosactuales] = useState([]);
   const [mostrarTitulo, setmostrarTitulo] = useState(true);
+  const [filtradoamigos, setfiltradoamigos] = useState(false);
+
+  useEffect(() => {
+    async function buscaramigosactuales() {
+      const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuario/amigos/"+idUsuario);
+      const amigos = response.data;
+      console.log("amigos actuales",amigos)
+      const amigosact = [];
+      amigos.forEach(amigo => {
+        amigosact.push(amigo.username); 
+      });
+      setamigosactuales(amigosact);
+    }
+    buscaramigosactuales(); 
+  }, [idUsuario]);
+
   function actualizarRanking(jug){
     const jugadores = [];
     jug.forEach(jugador => {     
@@ -31,15 +51,7 @@ function Rankings(){
       seterroractualizacion(error.response.data); 
     })   
   }
-  async function buscaramigos(){
-    // await axios.get("https://lamesa-backend.azurewebsites.net/usuario/ranking?campo="+campo)
-    // .then ( response => {
-    //   actualizarRanking(response.data);
-    // })
-    // .catch(error => {
-    //   seterroractualizacion(error.response.data); 
-    // })   
-  }
+
   const handleClick7 = () => {
     navigate(process.env.PUBLIC_URL+'/tienda');
   };
@@ -72,13 +84,10 @@ function Rankings(){
         <button className="botontienda" onClick={handleClick7}>Tienda</button>
         <h1 className="tituloPag">RANKING</h1>
         <br></br><br></br><br></br>
-        {/* {mostrarTitulo ? (
-          <h1 className="tituloPag">RANKING</h1>
-        ) : (
-          <h1 className="tituloPag" style={{ color: "rgba(119, 55, 3, 0)" }}>----</h1>
-        )} */}
         <p>{erroractualizacion}</p>
-        {mostrarTitulo && <button className="amigosranking" onClick={() => buscaramigos()}>FILTRAR POR AMIGOS</button>}
+        {mostrarTitulo && <button className="amigosranking" onClick={() => setfiltradoamigos(!filtradoamigos)}>
+          {filtradoamigos ? 'QUITAR FILTRO' : 'FILTRAR POR AMIGOS'}
+        </button>}
         <div className="ranking-table">      
           <table >
             <thead>
@@ -112,22 +121,49 @@ function Rankings(){
               </tr>
             </thead>
             <tbody>
-              {jugadoresrank.map((jugador,index) => (
-                <tr>      
-                  <td>{index+1 === 1 ? <button className="primero"></button> :
-                    index+1 === 2 ? <button className="segundo"></button> :
-                    index+1 === 3 ? <button className="tercero"></button> :
-                    index+1}</td>
-                  <td>{jugador.username}</td>
-                  <td>{jugador.pganadas}</td>
-                  <td>{jugador.pjugadas}</td>
-                  <td>{jugador.tganados}</td>
-                  <td>{jugador.tjugados}</td>
-                  <td>{jugador.mediaComidas}</td>
-                  <td>{jugador.mediaEnMeta}</td>                            
-                </tr>
-              ))} 
+              {jugadoresrank.map((jugador, index) => {
+                if (filtradoamigos && amigosactuales.includes(jugador.username)) {
+                  return (
+                    <tr key={index}>
+                      <td>
+                        {index+1 === 1 ? <button className="primero"></button> :
+                          index+1 === 2 ? <button className="segundo"></button> :
+                          index+1 === 3 ? <button className="tercero"></button> :
+                          index+1}
+                      </td>
+                      <td>{jugador.username}</td>
+                      <td>{jugador.pganadas}</td>
+                      <td>{jugador.pjugadas}</td>
+                      <td>{jugador.tganados}</td>
+                      <td>{jugador.tjugados}</td>
+                      <td>{jugador.mediaComidas}</td>
+                      <td>{jugador.mediaEnMeta}</td>                            
+                    </tr>
+                  );
+                }
+                else if (!filtradoamigos) {
+                  return (
+                    <tr key={index}>
+                      <td>
+                        {index+1 === 1 ? <button className="primero"></button> :
+                          index+1 === 2 ? <button className="segundo"></button> :
+                          index+1 === 3 ? <button className="tercero"></button> :
+                          index+1}
+                      </td>
+                      <td>{jugador.username}</td>
+                      <td>{jugador.pganadas}</td>
+                      <td>{jugador.pjugadas}</td>
+                      <td>{jugador.tganados}</td>
+                      <td>{jugador.tjugados}</td>
+                      <td>{jugador.mediaComidas}</td>
+                      <td>{jugador.mediaEnMeta}</td>                            
+                    </tr>
+                  );
+                }
+                return null;
+              })} 
             </tbody>
+
           </table>    
         </div>
         {mostrarBocadilloPG && (
