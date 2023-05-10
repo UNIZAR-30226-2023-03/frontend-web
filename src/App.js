@@ -18,6 +18,7 @@ import PartidaPublica from './componentes/PartidaPublica';
 import EsperarTorneo from './componentes/EsperarTorneo';
 import EsperarFinal from './componentes/EsperarFinal';
 import Tienda from './componentes/Tienda';
+import EnviarCorreo from './componentes/EnviarCorreo';
 import RecuperarContrasegna from './componentes/RecuperarContrasegna';
 
 
@@ -39,7 +40,10 @@ function App() {
         <Route path='/esperartorneo' Component={EsperarTorneo}/>
         <Route path='/esperarfinal' Component={EsperarFinal}/>
         <Route path='/tienda' Component={Tienda}/>
-        <Route path='/recuperarContraseña' Component={RecuperarContrasegna}/>
+        <Route path='/enviaremail' Component={EnviarCorreo}/>
+        <Route path='/recuperar-contraseña' Component={RecuperarContrasegna}/>
+        
+        
     </Routes>
     </BrowserRouter>
     

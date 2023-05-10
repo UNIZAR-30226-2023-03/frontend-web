@@ -22,8 +22,6 @@ function Registrarse() {
   };
 
   const handlePassword2Change = (event) => {
-    if(password!==password_2){
-    }
     setPassword2(event.target.value);
   };
 

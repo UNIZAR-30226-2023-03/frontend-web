@@ -57,12 +57,10 @@ function LoginForm() {
         <p className="textoIniciarSesion">Contraseña:</p>
           <input className='inp' type="password" placeholder='Contraseña' required value={password} onChange={handlePasswordChange} />
           <p className={error2 ? 'error2' : 'error2In'}>La contraseña es incorrecta </p>
-        </label>
-        
-        
+        </label>        
         <button type="submit">Iniciar sesión</button>
         <p></p>
-        <Link to='/recuperarcontraseña'>¿Has olvidado la contraseña?</Link>
+        <Link to='/enviaremail'>¿Has olvidado la contraseña?</Link>
         <p></p>
         <p className="textoSinIniciarSesion">¿Aún no tienes cuenta?</p>
         <Link className="iraregistro" to='/registrarse'>Regístrate aquí</Link>

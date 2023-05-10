@@ -1,66 +1,79 @@
 .containerRegistro {
-    background-image: url("..//imagenes/tablero/tablero.png");
-    background-position: center;
-    background-size: 1000px;
-    background-repeat: no-repeat;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  background-image: url("..//imagenes/tablero/tablero.png");
+  background-position: center;
+  background-size: 1000px;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .formRegistro {
-    background-color: #000000;
-    padding: 20px;
-    border-radius: 10px;
-    width: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 20px 8px 7px rgba(0, 0, 0, 0.75);
-    color: #fff;
-    flex-direction: column;
-  }
-  .formRegistro input[type="text"] {
-    width: 300px;
-    height: 30px;
-    border-radius: 10px;
-    background-color: #ffffff;
-    border: 5px solid rgb(255, 255, 255); 
-    margin: 0 0;
-    padding: 0 0;
+.formRegistro {
+  background-color: #000000;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 20px 8px 7px rgba(0, 0, 0, 0.75);
+  color: #fff;
+  flex-direction: column;
+}
+.formRegistro input[type="text"] {
+  width: 300px;
+  height: 30px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  border: 5px solid rgb(255, 255, 255); 
+  margin: 0 0;
+  padding: 0 0;
 
-  }
-  .formRegistro input[type="password"] {
-    width: 300px;
-    height: 30px;
-    border-radius: 10px;
-    background-color: #ffffff;
-    border: 5px solid rgb(255, 255, 255); 
-    margin: 0;
-    padding: 0;
-  }
-  .formRegistro h1{
-    text-align: center;
-  }
+}
+.formRegistro input[type="password"] {
+  width: 300px;
+  height: 30px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  border: 5px solid rgb(255, 255, 255); 
+  margin: 0;
+  padding: 0;
+}
+.formRegistro h1{
+  text-align: center;
+}
+.formRegistro p{
+  text-align: center;
+}
+.formRegistro .confirmacion{
+  text-align: center;
+  font-size: 1.6em;
+}
+.formRegistro .volverInicioSesion{
+  text-align: center;
+  font-size: 1.6em;
+  color:#fff
+}
 
-  .textoRegistro{
-    color: #ffffff;
-    font-size: 25px;
-    text-align: center;
-  }
-  .botonRegistro[type="submit"] {
-    background-color: #ee7206;
-    border: 3px solid #ffffff;
-    color: #ffffff;
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    border-radius: 20px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .botonRegistro:hover {
-    background-color: #c14700;
-  }
+
+.textoRegistro{
+  color: #ffffff;
+  font-size: 25px;
+  text-align: center;
+}
+.botonRegistro[type="submit"] {
+  background-color: #ee7206;
+  border: 3px solid #ffffff;
+  color: #ffffff;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.botonRegistro:hover {
+  background-color: #c14700;
+}

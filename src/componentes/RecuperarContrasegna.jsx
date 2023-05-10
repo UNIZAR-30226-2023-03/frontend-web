@@ -1,55 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from "react";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import Cookies from 'universal-cookie';
+import {Link} from 'react-router-dom'
 import "../styles/Registrarse.css";
+import Cookies from 'universal-cookie';
+
+
 function RecuperarContrasegna() {
-  const navigate = useNavigate();
-  const [errorcambiocontrasegna, seterrorcambiocontrasegna] = useState("");
+  const cookies= new Cookies();
+  const [erroremail, seterroremail] = useState("");
   const [password1, setpassword1] = useState('');
   const [password2, setpassword2] = useState('');
-  const cookies= new Cookies();
-  const idUsuario = cookies.get('idUsuario');
-  let token;
+  const emailusuario = cookies.get('correoUsuario');
+  const [mostrarconfirmacion, setmostrarconfirmacion] = useState(false);
+  const [token, setToken] = useState(null);
+
+
+  useEffect(() => {
+    function getTokenFromUrl() {
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      return urlSearchParams.get('token');
+    }
+    setToken(getTokenFromUrl());
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if(password1!==password2){
-      seterrorcambiocontrasegna("Las contraseñas no coinciden");
+    if(password1 !== password2){
+      seterroremail("Las contraseñas no coinciden")
     }
     else{
-      await axios.post("https://lamesa-backend.azurewebsites.net/usuario/validar-codigo", {usuario: idUsuario, token:token, password: password1})
+      console.log("ENVIANDO email: "+emailusuario);
+      console.log("ENVIANDO token: "+token);
+      console.log("ENVIANDO password: "+password1);
+      await axios.post("https://lamesa-backend.azurewebsites.net/usuario/validar-codigo", {email:emailusuario, token: token,password: password1}) 
       .then ( response => {
-        navigate(process.env.PUBLIC_URL+'/recuperarcontraseña');
+        setmostrarconfirmacion(true);
       }) 
       .catch(error => {
-        seterrorcambiocontrasegna(error.response.data);
-      })
+        console.log("ERROR");
+        seterroremail(error.response.data);
+      })  
     }
-    
-
   };
 
   return (
     <div className="containerRegistro">
       <form onSubmit={handleSubmit} className="formRegistro">
         <h1>Recuperar contraseña</h1>
+        {mostrarconfirmacion ? (
+          <>
+        <p className="confirmacion">Constraseña cambiada correctamente</p>
+        <p></p>
+        <Link to='/' className="volverInicioSesion">Volver a de inicio de sesión</Link>
+          </>
+        ) : (
+        <>
         <label>
-        <p className="textoRegistro">Introduce la nueva contraseña:</p>
+        <p className="textoRegistro">Introduce tu <br></br> nueva contraseña:</p>
           <input type="text" value={password1} required onChange={(e) => setpassword1(e.target.value)} />
         </label>
-        <br/>
         <label>
-        <p className="textoRegistro">Repite la contraseña anterior:</p>
+        <p className="textoRegistro">Repita la <br></br> contraseña anterior:</p>
           <input type="text" value={password2} required onChange={(e) => setpassword2(e.target.value)} />
         </label>
-        <br/>
-        <p className="mensajeError">{errorcambiocontrasegna}</p>
-        <button type="submit" className="botonRegistro">Cambiar contraseña</button>
+        <br/> <br/> <br/>
+        <button type="submit" className="botonRegistro">Guardar contraseña</button>
+        <p className="mensajeError">{erroremail}</p>
+        </>
+        )}
       </form>
     </div>
   );
 }
 
 export default RecuperarContrasegna;
-
