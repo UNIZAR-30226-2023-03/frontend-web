@@ -3,6 +3,14 @@ import home from "../imagenes/iconos/home.svg"
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import Cookies from 'universal-cookie';
+import tablero1 from "../imagenes/tablero/tablero Halloween.png";
+import tablero2 from "../imagenes/tablero/tablero Navidad.png";
+import ficha1 from "../imagenes/tablero/Ficha Halloween.png";
+import ficha2 from "../imagenes/tablero/Ficha navidad.png";
+import tablero11 from "../imagenes/tablero/tablero Halloween NEGRO.png";
+import tablero21 from "../imagenes/tablero/tablero Navidad NEGRO.png";
+
+
 
 
 function Tienda(){
@@ -95,23 +103,27 @@ function Tienda(){
             <p>Seleccione el producto que desee comprar</p> 
           </div>
           <div className="compra">
-            <div className="bb">
-              <button className={obtenidos[0] ? "botn-no": "botn"} onClick={id0}></button>
-              <p className="asd">Despripcion del producto</p>
+            <div className="ass" >
+              {obtenidos[0] ? <img className="btn1" src={tablero11} alt="" /> : <img className="btn" src={tablero1} alt="" onClick={id0}/>}
+              <p className="asd">dssadasxxxxxxffffxasd</p>
             </div>
-            <div className="bb">
-              <button className={obtenidos[1] ? "botn-no1": "botn1"}  onClick={id1}></button>
-              <p className="asd">Despripcion del producto</p>
+            <div>
+              {obtenidos[1] ? <img className="btn1" src={tablero21} alt="" /> : <img className="btn" src={tablero2} alt="" onClick={id1}/>}
+              <p className="asd">dssadasdasdasd</p>
             </div>
-            <div className="bb">
-              <button className={obtenidos[2] ? "botn-no2": "botn2"}  onClick={id2}></button>
-              <p className="asd">Despripcion del producto</p>
-              </div>
-            <div className="bb">
-              <button className={obtenidos[3] ? "botn-no3": "botn3"}  onClick={id3}></button>
-              <p className="asd">Despripcion del producto</p>
-              </div>
+            <div>
+              {obtenidos[2] ? <img className="btn" src={ficha1} alt="" /> : <img className="btn1" src={ficha1} alt="" onClick={id2}/>}
+              <p className="asd">dssadasdasdasd</p>
+            </div>
+            <div>
+              {obtenidos[3] ? <img className="btn" src={ficha2} alt="" /> : <img className="btn1" src={ficha2} alt="" onClick={id3}/>}
+              <p className="asd">dssadasdasdasd</p>
+            </div>
+            
+            
+            
           </div>
+
       </div>
     );
 }

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, Link, useHistory } from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import "../styles/InicioSesion.css";
 
