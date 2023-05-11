@@ -136,7 +136,7 @@ function Amigos(){
             <table>
             <tr>
               <td>{amigo.username}</td>
-              {amigo.estado === "ESPERANDO JUGADORES" &&
+              {amigo.estado === "ESPERANDO_JUGADORES" &&
                <td><button onClick={() => apuntarseaPartida(idUsuario,amigo.idPartida)}>¡Únete a su partida!</button></td>
               }
               {amigo.estado === "EN_PROGRESO" &&
