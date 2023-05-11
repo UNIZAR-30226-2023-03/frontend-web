@@ -36,8 +36,26 @@ function Principal(){
       // eslint-disable-next-line
     }, []);
 
+    async function probarReconexion(){
+      await axios.post("https://lamesa-backend.azurewebsites.net/partida/reconectar/"+idUsuario) 
+      .then ( response => {
+        console.log("RECONEXION: ",response.data);
+        if(response.data === ""){
+          setMostrarPartidas(true);
+        }
+        else{
+          let id_part = response.data.id;
+          let col = response.data.color;
+          let jug = response.data.jugadores;
+          let tipo = "PRIVADA";
+          let num_fichas = response.data.cf;
+          console.log("configuracion de las fichas: "+num_fichas);
+          navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo,num_fichas } });
+        }
+      }) 
+    }
     const handleClick = () => {
-        setMostrarPartidas(true);
+      probarReconexion();
     };
 
     const handleClick1 = () => {

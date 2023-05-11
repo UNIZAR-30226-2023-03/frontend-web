@@ -492,6 +492,16 @@ function Partida() {
           // Alguien ha parado la partida
           let data = JSON.parse(response.body);
           setpartidaenPausa(data);
+          if(data === false){
+            let botonpausa = document.querySelector('.botonpause');
+            botonpausa.style.backgroundColor = 'rgb(255, 165, 91)';
+            botonpausa.disabled = true;
+          }
+          else{
+            let botonpausa = document.querySelector('.botonpause');
+            botonpausa.style.backgroundColor = "rgb(119, 55, 3)";
+            botonpausa.disabled = false;
+          }
         })
         stompClient.subscribe("/topic/salir/" + idPartida, function (response) {
           // Alguien ha salido de la partida
@@ -726,8 +736,12 @@ function Partida() {
   }, []);
   
   async function pausarPartida(){
-    await axios.post("https://lamesa-backend.azurewebsites.net/pausa/"+ idPartida)
+    setShowModalAjustes(false);
+    await axios.post("https://lamesa-backend.azurewebsites.net/partida/pausa/"+ idPartida)
     .then(response => {
+      const boton = document.querySelector('.botonpause');
+      boton.disabled = true;
+      boton.style.backgroundColor = 'gray'; 
       setpartidaenPausa(true);
     })  
   }
@@ -840,7 +854,7 @@ function Partida() {
           }
           {color !== "AMARILLO" && tipopart==="privada" && !partidaenPausa && !partidaempezada && <p className="infoParAcabada">ESPERA A QUE EL ANFITRIÓN INICIE LA PARTIDA</p> }
           {tipopart!=="privada" && !partidaenPausa && !partidaempezada && <p className="infoParAcabada">ESPERANDO AL RESTO DE JUGADORES</p> }
-          {partidaenPausa && <button className="infopause">LA PARTIDA HA SIDO PARADA</button>}
+          {partidaenPausa && <button className="infopause">LA PARTIDA HA SIDO PAUSADA</button>}
         {partidafinalizada && !partidaenPausa && <p className="infoParAcabada">
         ¡LA PARTIDA SE ACABÓ!{turno === color ? <><br/><br/>¡FELICIDADES!</> : <><br/><br/>OTRA VEZ SERÁ</>}
         </p>}
