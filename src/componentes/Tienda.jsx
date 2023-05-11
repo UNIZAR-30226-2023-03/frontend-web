@@ -3,14 +3,14 @@ import home from "../imagenes/iconos/home.svg"
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import Cookies from 'universal-cookie';
-import tablero1 from "../imagenes/tablero/tablero Halloween.png";
-import tablero2 from "../imagenes/tablero/tablero Navidad.png";
-import ficha1 from "../imagenes/tablero/Ficha Halloween.png";
-import ficha2 from "../imagenes/tablero/Ficha navidad.png";
-import tablero11 from "../imagenes/tablero/tablero Halloween NEGRO.png";
-import tablero21 from "../imagenes/tablero/tablero Navidad NEGRO.png";
-import ficha11 from "../imagenes/tablero/Ficha Halloween Negro.png";
-import ficha21 from "../imagenes/tablero/Ficha navidad Negro.png";
+import tablero1 from "../imagenes/tablero/tablero_Halloween.png";
+import tablero2 from "../imagenes/tablero/tablero_Navidad.png";
+import ficha1 from "../imagenes/tablero/ficha_Halloween.png";
+import ficha2 from "../imagenes/tablero/ficha_Navidad.png";
+import tablero11 from "../imagenes/tablero/tablero_Halloween_NEGRO.png";
+import tablero21 from "../imagenes/tablero/tablero_Navidad_NEGRO.png";
+import ficha11 from "../imagenes/tablero/Ficha_Halloween_Negro.png";
+import ficha21 from "../imagenes/tablero/Ficha_navidad_Negro.png";
 
 
 function Tienda(){

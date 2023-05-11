@@ -65,7 +65,9 @@ function Amigos(){
     let col = response.data.color;
     let jug = response.data.jugadores;
     let tipo = "PRIVADA";
-    navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo } });
+    let num_fichas = response.data.cf;
+    console.log("configuracion de las fichas: "+num_fichas);
+    navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo,num_fichas } });
   }
   useEffect(() => {
     async function buscaramigosactuales() {
