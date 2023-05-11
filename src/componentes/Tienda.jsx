@@ -9,8 +9,8 @@ import ficha1 from "../imagenes/tablero/Ficha Halloween.png";
 import ficha2 from "../imagenes/tablero/Ficha navidad.png";
 import tablero11 from "../imagenes/tablero/tablero Halloween NEGRO.png";
 import tablero21 from "../imagenes/tablero/tablero Navidad NEGRO.png";
-
-
+import ficha11 from "../imagenes/tablero/Ficha Halloween Negro.png";
+import ficha21 from "../imagenes/tablero/Ficha navidad Negro.png";
 
 
 function Tienda(){
@@ -112,11 +112,11 @@ function Tienda(){
               <p className="asd">dssadasdasdasd</p>
             </div>
             <div>
-              {obtenidos[2] ? <img className="btn" src={ficha1} alt="" /> : <img className="btn1" src={ficha1} alt="" onClick={id2}/>}
+              {obtenidos[2] ? <img className="btn1" src={ficha11} alt="" /> : <img className="btn1" src={ficha1} alt="" onClick={id2}/>}
               <p className="asd">dssadasdasdasd</p>
             </div>
             <div>
-              {obtenidos[3] ? <img className="btn" src={ficha2} alt="" /> : <img className="btn1" src={ficha2} alt="" onClick={id3}/>}
+              {obtenidos[3] ? <img className="btn1" src={ficha21} alt="" /> : <img className="btn1" src={ficha2} alt="" onClick={id3}/>}
               <p className="asd">dssadasdasdasd</p>
             </div>
             

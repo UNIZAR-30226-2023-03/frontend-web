@@ -3,17 +3,15 @@
     margin-left: 3%;
 }
 .compra{
-    width: 100%;
     position: absolute;
     margin: 100px 13%;
     display: flex;
-
+    width: 80%;
 }
 
 .asd{
     margin-left: 70px;
     font-size: 24px;
-   
 }
 
 
@@ -44,6 +42,9 @@
     margin-left: 15%;
     font-size: 40px;
     font-weight: bold;
+   
+    width: 70%;
+    
 }
 .monedasJugador1 {
     background-image: url('../imagenes/iconos/moneda.png');
@@ -66,6 +67,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     position: absolute;
+    
 }
 
 .monedasJugador1:after {
@@ -78,5 +80,6 @@
 .monedasJugador1[data-number]:after {
     visibility: visible;
     font-size: calc(100% / var(--characters));
+   
 }
 
