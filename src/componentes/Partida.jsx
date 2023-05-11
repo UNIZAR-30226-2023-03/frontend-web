@@ -17,10 +17,10 @@ import tres from "../imagenes/carasdado/tres.PNG";
 import cuatro from "../imagenes/carasdado/cuatro.PNG";
 import cinco from "../imagenes/carasdado/cinco.PNG";
 import seis from "../imagenes/carasdado/seis.PNG";
-import muercielago from "../imagenes/tablero/murcielagos.png";
-import casa from "../imagenes/tablero/casa.png"
-import arbol from "../imagenes/tablero/arbol.png";
-import noel from "../imagenes/tablero/papaNoel.png";
+// import muercielago from "../imagenes/tablero/murcielagos.png";
+// import casa from "../imagenes/tablero/casa.png"
+// import arbol from "../imagenes/tablero/arbol.png";
+// import noel from "../imagenes/tablero/papaNoel.png";
 
 
 
@@ -332,8 +332,8 @@ function Partida() {
   const [partidaenPausa, setpartidaenPausa] = useState(false);
   const [nombretorneo, setnombretorneo] = useState("");
   const [idtorneo, setidtorneo] = useState("");
-  const[halloween, setTab]=useState(false);
-  const[navidad, setTab1]=useState(false);
+  // const[halloween, setTab]=useState(false);
+  // const[navidad, setTab1]=useState(false);
   
   useEffect(() => {
     function connectToSocket() {
@@ -749,14 +749,14 @@ function Partida() {
 
   return (  
     <>
-      <div className={halloween? "show-hall":"no-show"} >
+      {/* <div className={halloween? "show-hall":"no-show"} >
         <img src={muercielago} alt="" />
         <img className="casa" src={casa} alt="" />
       </div>
       <div className={navidad? "show-nav":"no-show-nav"} >
         <img className="arbol" src={arbol} alt="" />
         <img className="noo" src={noel} alt="" />
-      </div>
+      </div> */}
      <div>
         {partidaempezada && <Button className="ajustesboton" onClick={() => {setShowModalAjustes(true);}}></Button>}
         <Modal 
