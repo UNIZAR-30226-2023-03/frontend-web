@@ -1725,3 +1725,23 @@
     left:42%;
     top:63%; 
   }
+
+  .no-show{
+    display: none;
+  }
+  .casa{
+    margin-left: 70%;
+    margin-top: -20%
+  }
+
+  .no-show-nav{
+    display: none;
+  }
+  .arbol{
+    margin-top: 10%
+  }
+  .noo{
+    margin-top: -20%;
+    margin-left: 70%;
+    width: 30%;
+  }
