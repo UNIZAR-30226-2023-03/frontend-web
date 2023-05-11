@@ -332,6 +332,8 @@ function Partida() {
   const [partidaenPausa, setpartidaenPausa] = useState(false);
   const [nombretorneo, setnombretorneo] = useState("");
   const [idtorneo, setidtorneo] = useState("");
+  const [mostrarBocadillo, setMostrarBocadillo] = useState(false);
+  
   // const[halloween, setTab]=useState(false);
   // const[navidad, setTab1]=useState(false);
   
@@ -492,16 +494,6 @@ function Partida() {
           // Alguien ha parado la partida
           let data = JSON.parse(response.body);
           setpartidaenPausa(data);
-          if(data === false){
-            let botonpausa = document.querySelector('.botonpause');
-            botonpausa.style.backgroundColor = 'rgb(255, 165, 91)';
-            botonpausa.disabled = true;
-          }
-          else{
-            let botonpausa = document.querySelector('.botonpause');
-            botonpausa.style.backgroundColor = "rgb(119, 55, 3)";
-            botonpausa.disabled = false;
-          }
         })
         stompClient.subscribe("/topic/salir/" + idPartida, function (response) {
           // Alguien ha salido de la partida
@@ -731,7 +723,7 @@ function Partida() {
   useEffect(() => {
     window.onbeforeunload = function() {
       salirPartida();
-  };
+    };
     // eslint-disable-next-line
   }, []);
   
@@ -739,9 +731,6 @@ function Partida() {
     setShowModalAjustes(false);
     await axios.post("https://lamesa-backend.azurewebsites.net/partida/pausa/"+ idPartida)
     .then(response => {
-      const boton = document.querySelector('.botonpause');
-      boton.disabled = true;
-      boton.style.backgroundColor = 'gray'; 
       setpartidaenPausa(true);
     })  
   }
@@ -786,8 +775,17 @@ function Partida() {
             <Modal.Title className="modalTitle">AJUSTES</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <button className="botonpause" onClick={() => pausarPartida()}>PAUSAR PARTIDA</button>
+            <button 
+                className="botonpause" onClick={() => pausarPartida()}
+                onMouseEnter={() => setMostrarBocadillo(true)}
+                onMouseLeave={() => setMostrarBocadillo(false)}>PAUSAR PARTIDA</button>
             <button className="botonexit" onClick={() => {setShowModalSeguroSalirPar(true);setShowModalAjustes(false)}}>SALIR DE LA PARTIDA</button>
+            {mostrarBocadillo && (
+              <p className="bocadillopause">
+                Este botón te permite pausar la partida y poder seguir jugando en otro dispositivo. <br></br>
+                Puedes utilizar este botón solo 2 veces a lo largo de la partida.
+              </p>
+            )} 
           </Modal.Body>
         </Modal>
         <Modal 

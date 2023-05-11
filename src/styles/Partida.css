@@ -15,7 +15,7 @@
 
 .custom-modal-partida{
     width: 500px;
-    height: 300px;
+    height: 350px;
     background-color: #ffca57ee;
     border: 5px solid #392004;
     border-radius: 10px;
@@ -1675,7 +1675,21 @@
     cursor: pointer;
     position: absolute;
     left:15%;
-    top:50%;
+    top:40%;
+  }
+  .bocadillopause{
+    background-color: rgba(255, 255, 255, 0);
+    width: 450px;
+    height: 230px;
+    padding-top: 1%;
+    text-align: center;
+    border: none;
+    position: absolute;
+    z-index: 9999;
+    font-size: 1.4em;
+    color:#392004;
+    top:60%;
+    left:5%;
   }
 
   .botonexit{
@@ -1689,7 +1703,7 @@
     cursor: pointer;
     position: absolute;
     left:55%;
-    top:50%;
+    top:40%;
   }
 
   .infopause{
