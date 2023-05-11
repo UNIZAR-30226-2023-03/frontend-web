@@ -16,7 +16,7 @@
     width:290px ;
     height: 110px;;
     margin-left: 40px;
-    background-image: url('../imagenes/tablero/tablero blur.png');
+    background-image: url('../imagenes/tablero/tablero Navidad.png');
     background-size:cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -40,7 +40,133 @@
     width:290px ;
     height: 110px;;
     margin-left: 40px;
-    background-image: url('../imagenes/tablero/tablero Negro.png');
+    background-image: url('../imagenes/tablero/tablero Navidad NEGRO.png');
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 140px 75px;
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 7%;
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    pointer-events: none;
+}
+
+
+.botn1{
+    width:290px ;
+    height: 110px;;
+    margin-left: 40px;
+    background-image: url('../imagenes/tablero/tablero Halloween.png');
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 140px 75px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 7%;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+
+.botn1:hover{
+    transform: scale(1.1);
+    transition: 0.1s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2)
+}
+.botn-no1{
+    width:290px ;
+    height: 110px;;
+    margin-left: 40px;
+    background-image: url('../imagenes/tablero/tablero\ Halloween\ NEGRO.png');
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 140px 75px;
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 7%;
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    pointer-events: none;
+}
+
+.botn2{
+    width:290px ;
+    height: 110px;
+    margin-left: 40px;
+    background-image: url('../imagenes/tablero/ficha\ Halloween.png');
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    border-radius: 200px;
+    cursor: pointer;
+    margin-bottom: 7%;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+
+.botn2:hover{
+    transform: scale(1.1);
+    transition: 0.1s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2)
+}
+.botn-no2{
+    width:290px ;
+    height: 110px;;
+    margin-left: 40px;
+    background-image: url('../imagenes/tablero/tablero\ Halloween\ NEGRO.png');
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 140px 75px;
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 7%;
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    pointer-events: none;
+}
+
+.botn3{
+    width:290px ;
+    height: 110px;;
+    margin-left: 40px;
+    background-image: url('../imagenes/tablero/ficha\ Navidad.png');
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 140px 75px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 7%;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+
+.botn3:hover{
+    transform: scale(1.1);
+    transition: 0.1s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2)
+}
+.botn-no3{
+    width:290px ;
+    height: 110px;;
+    margin-left: 40px;
+    background-image: url('../imagenes/tablero/tablero\ Halloween\ NEGRO.png');
     background-size:cover;
     background-repeat: no-repeat;
     background-position: center;

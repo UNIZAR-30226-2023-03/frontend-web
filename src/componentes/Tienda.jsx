@@ -100,15 +100,15 @@ function Tienda(){
               <p className="asd">Despripcion del producto</p>
             </div>
             <div className="bb">
-              <button className={obtenidos[1] ? "botn-no": "botn"}  onClick={id1}></button>
+              <button className={obtenidos[1] ? "botn-no1": "botn1"}  onClick={id1}></button>
               <p className="asd">Despripcion del producto</p>
             </div>
             <div className="bb">
-              <button className={obtenidos[2] ? "botn-no": "botn"}  onClick={id2}></button>
+              <button className={obtenidos[2] ? "botn-no2": "botn2"}  onClick={id2}></button>
               <p className="asd">Despripcion del producto</p>
               </div>
             <div className="bb">
-              <button className={obtenidos[3] ? "botn-no": "botn"}  onClick={id3}></button>
+              <button className={obtenidos[3] ? "botn-no3": "botn3"}  onClick={id3}></button>
               <p className="asd">Despripcion del producto</p>
               </div>
           </div>
