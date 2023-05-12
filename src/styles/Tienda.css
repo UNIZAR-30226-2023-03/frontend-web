@@ -20,10 +20,18 @@
     margin-left: 60px;
     cursor: pointer;
 }
+.btn11{
+    width:290px ;
+    margin-left: 60px;
+}
 .btn1{
     width: 290px;
     margin-left: 20px;
     cursor: pointer;
+}
+.btn12{
+    width: 290px;
+    margin-left: 20px;
 }
 .btn1:hover{
     transform: scale(1.1);

@@ -99,24 +99,24 @@ function Tienda(){
               <div className="breadcrumb-item">Tienda</div>
               </div>
           </div>
-          <div className="txt">
+          <div className="txt"> 
             <p>Seleccione el producto que desee comprar</p> 
           </div>
           <div className="compra">
             <div className="ass" >
-              {obtenidos[0] ? <img className="btn1" src={tablero11} alt="" /> : <img className="btn" src={tablero1} alt="" onClick={id0}/>}
+              {obtenidos[0] ? <img className="btn11" src={tablero11} alt="" /> : <img className="btn" src={tablero1} alt="" onClick={id0}/>}
               <p className="asd">dssadasxxxxxxffffxasd</p>
             </div>
             <div>
-              {obtenidos[1] ? <img className="btn1" src={tablero21} alt="" /> : <img className="btn" src={tablero2} alt="" onClick={id1}/>}
+              {obtenidos[1] ? <img className="btn11" src={tablero21} alt="" /> : <img className="btn" src={tablero2} alt="" onClick={id1}/>}
               <p className="asd">dssadasdasdasd</p>
             </div>
             <div>
-              {obtenidos[2] ? <img className="btn1" src={ficha11} alt="" /> : <img className="btn1" src={ficha1} alt="" onClick={id2}/>}
+              {obtenidos[2] ? <img className="btn12" src={ficha11} alt="" /> : <img className="btn1" src={ficha1} alt="" onClick={id2}/>}
               <p className="asd">dssadasdasdasd</p>
             </div>
             <div>
-              {obtenidos[3] ? <img className="btn1" src={ficha21} alt="" /> : <img className="btn1" src={ficha2} alt="" onClick={id3}/>}
+              {obtenidos[3] ? <img className="btn12" src={ficha21} alt="" /> : <img className="btn1" src={ficha2} alt="" onClick={id3}/>}
               <p className="asd">dssadasdasdasd</p>
             </div>
             

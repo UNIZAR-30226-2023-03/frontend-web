@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { Button, Modal } from 'react-bootstrap';
 import tablero from "../imagenes/tablero/tablero.png";
-import tablero01 from "../imagenes/tablero/tablero Negro.png";
 import tablero1 from "../imagenes/tablero/tablero_Halloween.png";
 import tablero2 from "../imagenes/tablero/tablero_Navidad.png";
 import ficha1 from "../imagenes/tablero/ficha_Halloween.png";
@@ -15,6 +14,7 @@ import tablero21 from "../imagenes/tablero/tablero_Navidad_NEGRO.png";
 import ficha11 from "../imagenes/tablero/Ficha_Halloween_Negro.png";
 import ficha21 from "../imagenes/tablero/Ficha_navidad_Negro.png";
 import cruz from "../imagenes/iconos/cruz.png";
+import tick from "../imagenes/iconos/tick.png";
 
 
 function Principal(){
@@ -26,8 +26,14 @@ function Principal(){
     const cookies= new Cookies();
     const idUsuario = cookies.get('idUsuario');
     const [mostrar, setMostrar]=useState(false);
-    const tabl = Array(3).fill(false);
-    const fichas = Array(3).fill(false);
+    const [mostablero, setTablero]=useState(false);
+    const [mostablero1, setTablero1]=useState(false);
+    const [mostablero2, setTablero2]=useState(false);
+    const [mosfich, setFich]=useState(false);
+    const [mosfich1, setFich1]=useState(false);
+    const [mosfich2, setFich2]=useState(false);
+    const obtenidos = Array(4).fill(false);
+    const [objetos, setTiend] = useState([]);
 
     useEffect(() => {
       async function buscarestadisticas() {
@@ -73,13 +79,47 @@ function Principal(){
     useEffect(()=>{
       async function consultarActivo(yo){
         //sacar que producto tiene activo
-        tabl[0]=true;
-        fichas[0]=true;
+
+        
       }
       consultarActivo(idUsuario)
-    }, [idUsuario,tabl,fichas])
+    }, [idUsuario])
+  
+    useEffect(()=>{
+      async function consultarTienda(yo){
+        const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuario/productos/"+yo);  
+        const objetos = response.data;
+        console.log("objetos",response.data);
+        const tiend = [];
+          objetos.forEach(objeto => {
+            tiend.push(objeto); 
+          });
+          setTiend(tiend);
+      }
+      consultarTienda(idUsuario)
+    }, [idUsuario])
   
   
+    useEffect(()=>{
+      async function recorrerVector(todos){
+        todos.forEach(objet=>{
+          if(objet==="1"){
+            obtenidos[0]=true;
+          }
+          else if (objet==="2"){
+            obtenidos[1]=true;
+          }
+          else if (objet==="3"){
+            obtenidos[2]=true;
+          }
+          else if (objet==="4"){
+            obtenidos[3]=true;
+          }
+          
+        });
+      }
+      recorrerVector(objetos)
+    }, [objetos,obtenidos])
   
     const handleClick = () => {
       probarReconexion();
@@ -123,8 +163,38 @@ function Principal(){
         setShowModalSeguroBaja(false);
       })  
     }
-    async function id0(){
+    function id0(){
+      setTablero(true);
+      setTablero1(false);
+      setTablero2(false);
+      //setear como tablero 1 en uso
+    }
+     function id1(){
+      setTablero(false);
+      setTablero1(true);
+      setTablero2(false);
 
+     }
+     function id2(){
+
+      setTablero(false);
+      setTablero1(false);
+      setTablero2(true);
+    }
+     function id3(){
+     setFich(true);
+     setFich1(false);
+     setFich2(false);
+    }
+     function id4(){
+      setFich(false);
+      setFich1(true);
+      setFich2(false);
+    }
+     function id5(){
+      setFich(false);
+      setFich1(false);
+      setFich2(true);
     }
 
     return (
@@ -134,12 +204,45 @@ function Principal(){
           <br></br><br></br><br></br><br></br><br></br>
           {mostrar?
             <div className="inv">
-              {tabl[0] ? <img className="btn1" src={tablero01} alt="" /> : <img className="btn" src={tablero} alt="" onClick={id0}/>}
-              {tabl[1] ? <img className="btn1" src={tablero11} alt="" /> : <img className="btn" src={tablero1} alt="" onClick={id0}/>}
-              {tabl[2] ? <img className="btn1" src={tablero21} alt="" /> : <img className="btn" src={tablero2} alt="" onClick={id0}/>}
-              {fichas[0] ? <img className="btn1" src={ficha11} alt="" /> : <img className="btn" src={ficha1} alt="" onClick={id0}/>}
-              {fichas[1] ? <img className="btn1" src={ficha21} alt="" /> : <img className="btn" src={ficha2} alt="" onClick={id0}/>}
-              {fichas[2] ? <img className="btn1" src={ficha11} alt="" /> : <img className="btn" src={ficha1} alt="" onClick={id0}/>}
+              <div className="tableros">
+        
+                <img className="btn" src={tablero} alt="" onClick={id0}/>
+                { mostablero?(
+                    <img className="tick" src={tick} alt="" />
+                    ):  (<img className="no-tick" src={tick} alt="" />)
+                }
+
+                {!obtenidos[0] ? <img className="btn11" src={tablero11} alt="" /> : <img className="btn" src={tablero1} alt="" onClick={id1}/>}
+                { mostablero1?(
+                    <img className="tick1" src={tick} alt="" />
+                    ):  (<img className="no-tick" src={tick} alt="" />)
+                }
+                {!obtenidos[1] ? <img className="btn11" src={tablero21} alt="" /> : <img className="btn" src={tablero2} alt="" onClick={id2}/>}
+                { mostablero2?(
+                    <img className="tick2" src={tick} alt="" />
+                    ):  (<img className="no-tick" src={tick} alt="" />)
+                }
+              </div>
+              <div className="fichas">
+
+                <img className="btn21" src={ficha1} alt="" onClick={id3}/>
+                { mosfich?(
+                    <img className="tick3" src={tick} alt="" />
+                    ):  (<img className="no-tick" src={tick} alt="" />)
+                }
+  
+                {!obtenidos[2] ? <img className="btn121" src={ficha21} alt="" /> : <img className="btn21" src={ficha2} alt="" onClick={id4}/>}
+                { mosfich1?(
+                    <img className="tick4" src={tick} alt="" />
+                    ):  (<img className="no-tick" src={tick} alt="" />)
+                }                
+                {!obtenidos[3] ? <img className="btn121" src={ficha11} alt="" /> : <img className="btn21" src={ficha1} alt="" onClick={id5}/>}
+                { mosfich2?(
+                    <img className="tick5" src={tick} alt="" />
+                    ):  (<img className="no-tick" src={tick} alt="" />)
+                }                
+              </div>
+           
               <div className="cruzcont"><img className="cruz" src={cruz} alt="" onClick={handleClick8}/></div>
                
             </div>

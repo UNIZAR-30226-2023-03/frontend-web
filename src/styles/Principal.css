@@ -224,11 +224,21 @@
     display: block;  
 }
 .inv{
-    position: fixed;
-    background-color: rgba(0, 0, 0, 0.5);
+    margin-left: 21%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.4);
     z-index: 9999;
     border-radius: 7px;
     border: 10px solid red;
+    transition: 0.3s ease-in-out;
+}
+.tableros{
+    margin-top: 30px;
+    margin-right: 60px;
+    margin-bottom: 90px;
+}
+.fichas{
+    margin-bottom: 20px;
 }
 .cruz{
     width: 35px;
@@ -243,6 +253,21 @@
     transform: scale(1.1);
     transition: 0.1s ease-in-out;
 
+}
+.btn21{
+    width: 290px;
+    margin-left: 25px;
+    cursor: pointer;
+    margin-right: 40px;
+}
+.btn21:hover{
+    transform: scale(1.1);
+    transition: 0.1s ease-in-out;
+}
+.btn121{
+    width: 290px;
+    margin-left: 25px;
+    margin-right: 40px;
 }
 
 .botonAmigos:hover,.botonDatosPersonales:hover,.botonJugar:hover,.botonJugarPrivada:hover,.botonJugarPublica:hover,.botonrankings:hover,.botontorneos:hover,.botontienda:hover, .botonInventario:hover{
@@ -286,4 +311,44 @@
 .resultadoEstadisticas {
   display: inline-block;
  
+}
+.tick{
+    position: absolute;
+    transform: scale(0.3);
+    top: -25%;
+    left: -16%;
+}
+.tick1{
+    position: absolute;
+    transform: scale(0.3);
+    top: -25%;
+    left: 17%;
+}
+.tick2{
+    position: absolute;
+    transform: scale(0.3);
+    top: -25%;
+    left: 49%;
+}
+.tick3{
+    position: absolute;
+    transform: scale(0.3);
+    top: 25%;
+    left: -16%;
+}
+.tick4{
+    position: absolute;
+    transform: scale(0.3);
+    top: 25%;
+    left: 16%;
+}
+.tick5{
+    position: absolute;
+    transform: scale(0.3);
+    top: 25%;
+    left: 48%;
+}
+
+.no-tick{
+    display: none;
 }
