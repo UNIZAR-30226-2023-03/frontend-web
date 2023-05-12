@@ -47,6 +47,17 @@ function Principal(){
       // eslint-disable-next-line
     }, []);
 
+    // useEffect(() => {
+    //   async function asignartableropordefecto() {
+    //     await axios.post("https://lamesa-backend.azurewebsites.net/usuario/activar", {usuario: idUsuario,producto: 1})
+    //     .then ( response => {
+    //       console.log("tablero asignado ",response.data)
+    //     })
+    //   }
+    //   asignartableropordefecto(); 
+    //   // eslint-disable-next-line
+    // }, []);
+
     useEffect(() => {
       async function buscarmonedas() {
         await axios.get("https://lamesa-backend.azurewebsites.net/usuario/monedas/"+idUsuario)

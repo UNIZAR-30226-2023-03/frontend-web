@@ -19,6 +19,7 @@ function Tienda(){
   const [objetos, setTiend] = useState([]);
   const obtenidos = Array(4).fill(false);
   const [monedas, setmonedas] = useState(0);
+
   useEffect(() => {
     async function buscarmonedas() {
       await axios.get("https://lamesa-backend.azurewebsites.net/usuario/monedas/"+idUsuario)
@@ -42,6 +43,14 @@ function Tienda(){
     }
     consultarTienda(idUsuario)
   }, [idUsuario])
+
+  useEffect(()=>{
+    async function buscarproductos(){
+      const response = await axios.get("https://lamesa-backend.azurewebsites.net/tienda");  
+      console.log("tienda",response.data);
+    }
+    buscarproductos();
+  }, [])
 
 
   useEffect(()=>{
@@ -118,10 +127,7 @@ function Tienda(){
             <div>
               {obtenidos[3] ? <img className="btn12" src={ficha21} alt="" /> : <img className="btn1" src={ficha2} alt="" onClick={id3}/>}
               <p className="asd">dssadasdasdasd</p>
-            </div>
-            
-            
-            
+            </div>   
           </div>
 
       </div>

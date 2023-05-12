@@ -336,7 +336,26 @@ function Partida() {
   
   // const[halloween, setTab]=useState(false);
   // const[navidad, setTab1]=useState(false);
-  
+  useEffect(() => {
+    async function asignartablero() {
+      await axios.get("https://lamesa-backend.azurewebsites.net/usuario/tablero-activo/"+idUsuario)
+      .then ( response => {
+        console.log("tablero activo: ",response.data)
+        
+      })
+    }
+    async function asignarfichas() {
+      await axios.get("https://lamesa-backend.azurewebsites.net/usuario/ficha-activa/"+idUsuario)
+      .then ( response => {
+        console.log("fichas activas: ",response.data)
+        
+      })
+    }
+    asignartablero();
+    asignarfichas(); 
+    // eslint-disable-next-line
+  }, []);
+
   useEffect(() => {
     function connectToSocket() {
       let numjug = 0;
