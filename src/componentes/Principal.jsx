@@ -4,6 +4,18 @@ import "../styles/Principal.css";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { Button, Modal } from 'react-bootstrap';
+import tablero from "../imagenes/tablero/tablero.png";
+import tablero01 from "../imagenes/tablero/tablero Negro.png";
+import tablero1 from "../imagenes/tablero/tablero_Halloween.png";
+import tablero2 from "../imagenes/tablero/tablero_Navidad.png";
+import ficha1 from "../imagenes/tablero/ficha_Halloween.png";
+import ficha2 from "../imagenes/tablero/ficha_Navidad.png";
+import tablero11 from "../imagenes/tablero/tablero_Halloween_NEGRO.png";
+import tablero21 from "../imagenes/tablero/tablero_Navidad_NEGRO.png";
+import ficha11 from "../imagenes/tablero/Ficha_Halloween_Negro.png";
+import ficha21 from "../imagenes/tablero/Ficha_navidad_Negro.png";
+import cruz from "../imagenes/iconos/cruz.png";
+
 
 function Principal(){
     const [estadisticasjugador, setestadisticasjugador] = useState('');
@@ -13,6 +25,10 @@ function Principal(){
     const [monedas, setmonedas] = useState(0);
     const cookies= new Cookies();
     const idUsuario = cookies.get('idUsuario');
+    const [mostrar, setMostrar]=useState(false);
+    const tabl = Array(3).fill(false);
+    const fichas = Array(3).fill(false);
+
     useEffect(() => {
       async function buscarestadisticas() {
         await axios.get("https://lamesa-backend.azurewebsites.net/usuario/estadisticas/"+idUsuario)
@@ -54,6 +70,17 @@ function Principal(){
         }
       }) 
     }
+    useEffect(()=>{
+      async function consultarActivo(yo){
+        //sacar que producto tiene activo
+        tabl[0]=true;
+        fichas[0]=true;
+      }
+      consultarActivo(idUsuario)
+    }, [idUsuario,tabl,fichas])
+  
+  
+  
     const handleClick = () => {
       probarReconexion();
     };
@@ -80,6 +107,13 @@ function Principal(){
     const handleClick7 = () => {
       navigate(process.env.PUBLIC_URL+'/tienda');
     };
+    const handleClick8 = () => {
+      if(mostrar){
+        setMostrar(false);
+      }
+      else {  setMostrar(true);}
+      
+    };
     async function darbaja(){
       await axios.post("https://lamesa-backend.azurewebsites.net/usuario/eliminar/"+idUsuario) 
       .then ( response => {
@@ -89,13 +123,27 @@ function Principal(){
         setShowModalSeguroBaja(false);
       })  
     }
+    async function id0(){
+
+    }
 
     return (
         <>       
           <div class="monedasJugador" data-number={monedas}></div>
           <h1>BIENVENIDO {cookies.get('nombreUsuario')}</h1>
           <br></br><br></br><br></br><br></br><br></br>
-         
+          {mostrar?
+            <div className="inv">
+              {tabl[0] ? <img className="btn1" src={tablero01} alt="" /> : <img className="btn" src={tablero} alt="" onClick={id0}/>}
+              {tabl[1] ? <img className="btn1" src={tablero11} alt="" /> : <img className="btn" src={tablero1} alt="" onClick={id0}/>}
+              {tabl[2] ? <img className="btn1" src={tablero21} alt="" /> : <img className="btn" src={tablero2} alt="" onClick={id0}/>}
+              {fichas[0] ? <img className="btn1" src={ficha11} alt="" /> : <img className="btn" src={ficha1} alt="" onClick={id0}/>}
+              {fichas[1] ? <img className="btn1" src={ficha21} alt="" /> : <img className="btn" src={ficha2} alt="" onClick={id0}/>}
+              {fichas[2] ? <img className="btn1" src={ficha11} alt="" /> : <img className="btn" src={ficha1} alt="" onClick={id0}/>}
+              <div className="cruzcont"><img className="cruz" src={cruz} alt="" onClick={handleClick8}/></div>
+               
+            </div>
+            : <div></div> }
           <button className="botonDatosPersonales" onClick={handleClick3}>Datos personales</button>         
           {mostrarPartidas ? (
               <div className="botones">
@@ -118,6 +166,7 @@ function Principal(){
           <button className="botonrankings" onClick={handleClick6}>Rankings</button>
           <button className="botonbaja" onClick={() => setShowModalSeguroBaja(true)}>Darme de baja</button>
           <button className="botontienda" onClick={handleClick7}>Tienda</button>
+          <button className="botonInventario" onClick={handleClick8}>Inventario</button>
           <div className="estadisticas">
             <p className="tituloEstadisticas">Estadísticas personales</p>
             <p className="subtituloEstadisticas">Fichas comidas:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
