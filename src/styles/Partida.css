@@ -13,6 +13,73 @@
     left:2%;
 }
 
+.hueso{
+    position: absolute;
+    left: 23%;
+    top: 65%;
+    z-index: 9999;
+}
+.hueso1{
+    position: absolute;
+    left: 65%;
+    top: 65%;
+    z-index: 9999;
+    transform: scaleY(-1);
+}
+.hueso2{
+    position: absolute;
+    left: 23%;
+    top: 23%;
+    z-index: 9999;
+    transform: scaleY(-1);
+}
+.hueso3{
+    position: absolute;
+    left: 65%;
+    top: 23%;
+    z-index: 9999;
+}
+.calavera{
+    position: absolute;
+    z-index: 9;
+    width: 140px;
+    top: 40%;
+    left: 42%;
+    opacity: 0.5;
+}
+.calabaza{
+    position: absolute;
+    z-index: 999;
+    width: 100px;
+    top: 89%;
+    left: 1%;
+    
+}
+.fantasma{
+    position: absolute;
+    z-index: 999;
+    width: 100px;
+    top: 84%;
+    left: 13%;
+    opacity: 0.6;
+    
+}
+.arbol{
+    position: absolute;
+    z-index: 999;
+    width: 100px;
+    top: 87%;
+    left: 1%;
+
+  }
+.regalo{
+    position: absolute;
+    z-index: 9;
+    width: 140px;
+    top: 43%;
+    left: 42%;
+    opacity: 0.9;
+}
 .custom-modal-partida{
     width: 500px;
     height: 350px;
@@ -1751,9 +1818,7 @@
   .no-show-nav{
     display: none;
   }
-  .arbol{
-    margin-top: 10%
-  }
+
   .noo{
     margin-top: -20%;
     margin-left: 70%;

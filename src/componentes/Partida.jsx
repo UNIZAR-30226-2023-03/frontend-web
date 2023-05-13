@@ -17,11 +17,14 @@ import tres from "../imagenes/carasdado/tres.PNG";
 import cuatro from "../imagenes/carasdado/cuatro.PNG";
 import cinco from "../imagenes/carasdado/cinco.PNG";
 import seis from "../imagenes/carasdado/seis.PNG";
-// import muercielago from "../imagenes/tablero/murcielagos.png";
-// import casa from "../imagenes/tablero/casa.png"
-// import arbol from "../imagenes/tablero/arbol.png";
-// import noel from "../imagenes/tablero/papaNoel.png";
 
+import hueso from "../imagenes/iconos/hueso.png";
+import calavera from "../imagenes/iconos/calavera.png";
+import calabaza from "../imagenes/iconos/calabaza.png";
+import fantasma from "../imagenes/iconos/fantasma.png";
+import arbol from "../imagenes/iconos/arbol.png";
+import regalo from "../imagenes/iconos/regalo.png";
+// import nieve from "../imagenes/iconos/nieve.png";
 
 
 const photos = [
@@ -333,26 +336,23 @@ function Partida() {
   const [nombretorneo, setnombretorneo] = useState("");
   const [idtorneo, setidtorneo] = useState("");
   const [mostrarBocadillo, setMostrarBocadillo] = useState(false);
-  
-  // const[halloween, setTab]=useState(false);
-  // const[navidad, setTab1]=useState(false);
+  const[halloween, sethalloween]=useState(false);
+  const[navidad, setnavidad]=useState(false);
+
   useEffect(() => {
     async function asignartablero() {
       await axios.get("https://lamesa-backend.azurewebsites.net/usuario/tablero-activo/"+idUsuario)
       .then ( response => {
         console.log("tablero activo: ",response.data)
-        
-      })
-    }
-    async function asignarfichas() {
-      await axios.get("https://lamesa-backend.azurewebsites.net/usuario/ficha-activa/"+idUsuario)
-      .then ( response => {
-        console.log("fichas activas: ",response.data)
-        
+        if(response.data.id === 2){
+          sethalloween(true);
+        }
+        else if(response.data.id === 3){
+          setnavidad(true);
+        }
       })
     }
     asignartablero();
-    asignarfichas(); 
     // eslint-disable-next-line
   }, []);
 
@@ -534,6 +534,38 @@ function Partida() {
   }, [color, idPartida]);
 
   useEffect(() => {
+    function dibujarfichas(color,numfichas){
+      let maxfichas,i,ficha;
+      if(numfichas === "RAPIDO"){
+        maxfichas = 2;
+      }
+      else{
+        maxfichas = 4;
+      }
+      for (i = 1; i <= maxfichas; i++) {
+        ficha = '.ficha'+i+color;
+        console.log("dibujando ficha"+ficha);
+        ficha = document.querySelector(ficha);
+        ficha.style.backgroundImage = `url(${calabaza})`;
+        
+      }
+    }
+    async function asignarfichas(color,numfichas) {
+      await axios.get("https://lamesa-backend.azurewebsites.net/usuario/ficha-activa/"+idUsuario)
+      .then ( response => {
+        console.log("fichas activas: ",response.data);
+        console.log("id de la ficha activa: "+response.data.id)
+
+        if(response.data.id === 5){
+          console.log("voy a dibujar fichas")
+          dibujarfichas(color,numfichas);
+        }
+        else if(response.data.id === 6){
+          dibujarfichas(color,numfichas);
+        }
+      })
+    }
+
     if (primeravez && state) {
       setprimeravez(false);
       setIdPartida(state.id_part);
@@ -571,7 +603,9 @@ function Partida() {
         }
       }
       comprobarUsernames();
+      asignarfichas(state.col,state.num_fichas);
     }
+    // eslint-disable-next-line
   }, [cookies,primeravez,state]);
  
   useEffect(() => {
@@ -771,14 +805,8 @@ function Partida() {
 
   return (  
     <>
-      {/* <div className={halloween? "show-hall":"no-show"} >
-        <img src={muercielago} alt="" />
-        <img className="casa" src={casa} alt="" />
-      </div>
-      <div className={navidad? "show-nav":"no-show-nav"} >
-        <img className="arbol" src={arbol} alt="" />
-        <img className="noo" src={noel} alt="" />
-      </div> */}
+
+
      <div>
         {partidaempezada && <Button className="ajustesboton" onClick={() => {setShowModalAjustes(true);}}></Button>}
         <Modal 
@@ -863,6 +891,22 @@ function Partida() {
       </div>    
       <div className="lamesa">
         <div className="icono"></div>
+          <div className={halloween? "show-hall":"no-show"} >
+            <img className="hueso" src={hueso} alt="" />  
+            <img className="hueso1" src={hueso} alt="" />  
+            <img className="hueso2" src={hueso} alt="" />  
+            <img className="hueso3" src={hueso} alt="" />  
+            <img className="calavera" src={calavera} alt="" />
+            <img className="calabaza" src={calabaza} alt="" />
+            <img className="fantasma" src={fantasma} alt="" />
+          </div>
+          <div className={navidad? "show-nav":"no-show-nav"} >
+                <img className="arbol" src={arbol} alt="" />
+                <img className="regalo" src={regalo} alt="" />
+              
+
+              
+          </div>
           {color === "AMARILLO" && 
           tipopart==="privada" &&
           <button className="empezarPartida" onClick={startpartida}>

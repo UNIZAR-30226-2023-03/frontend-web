@@ -26,14 +26,13 @@ function Principal(){
     const cookies= new Cookies();
     const idUsuario = cookies.get('idUsuario');
     const [mostrar, setMostrar]=useState(false);
-    const [mostablero, setTablero]=useState(false);
+    const [mostablero, setTablero0]=useState(false);
     const [mostablero1, setTablero1]=useState(false);
     const [mostablero2, setTablero2]=useState(false);
-    const [mosfich, setFich]=useState(false);
-    const [mosfich1, setFich1]=useState(false);
-    const [mosfich2, setFich2]=useState(false);
-    const obtenidos = Array(4).fill(false);
-    const [objetos, setTiend] = useState([]);
+    const [mosfich, setFich3]=useState(false);
+    const [mosfich1, setFich4]=useState(false);
+    const [mosfich2, setFich5]=useState(false);
+    const [obtenidos, setobtenidos] = useState([]);
 
     useEffect(() => {
       async function buscarestadisticas() {
@@ -87,50 +86,52 @@ function Principal(){
         }
       }) 
     }
-    useEffect(()=>{
-      async function consultarActivo(yo){
-        //sacar que producto tiene activo
+    useEffect(() => {
+      async function asignartablero() {
+        await axios.get("https://lamesa-backend.azurewebsites.net/usuario/tablero-activo/"+idUsuario)
+        .then ( response => {
+          console.log("tablero activo: ",response.data);
+          // eslint-disable-next-line
+          eval(`setTablero${response.data.id}(true)`);
 
-        
+        })
       }
-      consultarActivo(idUsuario)
-    }, [idUsuario])
+      async function asignarfichas() {
+        await axios.get("https://lamesa-backend.azurewebsites.net/usuario/ficha-activa/"+idUsuario)
+        .then ( response => {
+          console.log("fichas activas: ",response.data)
+          
+        })
+      }
+      asignartablero();
+      asignarfichas(); 
+      // eslint-disable-next-line
+    }, []);
   
     useEffect(()=>{
-      async function consultarTienda(yo){
-        const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuario/productos/"+yo);  
+       function recorrerVector(todos){
+        const obtenidos2 = [];
+        todos.forEach(objet=>{
+         obtenidos2[objet]=true;        
+        });
+        setobtenidos(obtenidos2);
+      }
+      async function consultarTienda(){
+        const response = await axios.get("https://lamesa-backend.azurewebsites.net/usuario/productos/"+idUsuario);  
         const objetos = response.data;
         console.log("objetos",response.data);
         const tiend = [];
           objetos.forEach(objeto => {
-            tiend.push(objeto); 
+            tiend.push(objeto.id); 
           });
-          setTiend(tiend);
+          recorrerVector(tiend);
       }
-      consultarTienda(idUsuario)
-    }, [idUsuario])
+      consultarTienda();
+      // eslint-disable-next-line
+    }, [])
   
   
-    useEffect(()=>{
-      async function recorrerVector(todos){
-        todos.forEach(objet=>{
-          if(objet==="1"){
-            obtenidos[0]=true;
-          }
-          else if (objet==="2"){
-            obtenidos[1]=true;
-          }
-          else if (objet==="3"){
-            obtenidos[2]=true;
-          }
-          else if (objet==="4"){
-            obtenidos[3]=true;
-          }
-          
-        });
-      }
-      recorrerVector(objetos)
-    }, [objetos,obtenidos])
+
   
     const handleClick = () => {
       probarReconexion();
@@ -174,38 +175,54 @@ function Principal(){
         setShowModalSeguroBaja(false);
       })  
     }
-    function id0(){
-      setTablero(true);
-      setTablero1(false);
-      setTablero2(false);
-      //setear como tablero 1 en uso
+    async function id0(){
+      await axios.post("https://lamesa-backend.azurewebsites.net/usuario/activar", {usuario: idUsuario,producto:1}) 
+      .then ( response => {
+        setTablero0(true);
+        setTablero1(false);
+        setTablero2(false);
+      })
     }
-     function id1(){
-      setTablero(false);
-      setTablero1(true);
-      setTablero2(false);
+    async function id1(){
+      await axios.post("https://lamesa-backend.azurewebsites.net/usuario/activar", {usuario: idUsuario,producto:2}) 
+      .then ( response => {
+        setTablero0(false);
+        setTablero1(true);
+        setTablero2(false);
+      })
 
      }
-     function id2(){
-
-      setTablero(false);
-      setTablero1(false);
-      setTablero2(true);
+    async function id2(){
+      await axios.post("https://lamesa-backend.azurewebsites.net/usuario/activar", {usuario: idUsuario,producto:3}) 
+      .then ( response => {
+        setTablero0(false);
+        setTablero1(false);
+        setTablero2(true);
+      }) 
     }
-     function id3(){
-     setFich(true);
-     setFich1(false);
-     setFich2(false);
+    async function id3(){
+      await axios.post("https://lamesa-backend.azurewebsites.net/usuario/activar", {usuario: idUsuario,producto:4}) 
+      .then ( response => {
+        setFich3(true);
+        setFich4(false);
+        setFich5(false);
+      }) 
     }
-     function id4(){
-      setFich(false);
-      setFich1(true);
-      setFich2(false);
+    async function id4(){
+      await axios.post("https://lamesa-backend.azurewebsites.net/usuario/activar", {usuario: idUsuario,producto:5}) 
+      .then ( response => {
+        setFich3(false);
+        setFich4(true);
+        setFich5(false);
+      })
     }
-     function id5(){
-      setFich(false);
-      setFich1(false);
-      setFich2(true);
+    async function id5(){
+      await axios.post("https://lamesa-backend.azurewebsites.net/usuario/activar", {usuario: idUsuario,producto:6}) 
+      .then ( response => {
+        setFich3(false);
+        setFich4(false);
+        setFich5(true);
+      })
     }
 
     return (
@@ -223,12 +240,12 @@ function Principal(){
                     ):  (<img className="no-tick" src={tick} alt="" />)
                 }
 
-                {!obtenidos[0] ? <img className="btn11" src={tablero11} alt="" /> : <img className="btn" src={tablero1} alt="" onClick={id1}/>}
+                {!obtenidos[2] ? <img className="btn11" src={tablero11} alt="" /> : <img className="btn" src={tablero1} alt="" onClick={id1}/>}
                 { mostablero1?(
                     <img className="tick1" src={tick} alt="" />
                     ):  (<img className="no-tick" src={tick} alt="" />)
                 }
-                {!obtenidos[1] ? <img className="btn11" src={tablero21} alt="" /> : <img className="btn" src={tablero2} alt="" onClick={id2}/>}
+                {!obtenidos[3] ? <img className="btn11" src={tablero21} alt="" /> : <img className="btn" src={tablero2} alt="" onClick={id2}/>}
                 { mostablero2?(
                     <img className="tick2" src={tick} alt="" />
                     ):  (<img className="no-tick" src={tick} alt="" />)
@@ -242,12 +259,12 @@ function Principal(){
                     ):  (<img className="no-tick" src={tick} alt="" />)
                 }
   
-                {!obtenidos[2] ? <img className="btn121" src={ficha21} alt="" /> : <img className="btn21" src={ficha2} alt="" onClick={id4}/>}
+                {!obtenidos[5] ? <img className="btn121" src={ficha21} alt="" /> : <img className="btn21" src={ficha2} alt="" onClick={id4}/>}
                 { mosfich1?(
                     <img className="tick4" src={tick} alt="" />
                     ):  (<img className="no-tick" src={tick} alt="" />)
                 }                
-                {!obtenidos[3] ? <img className="btn121" src={ficha11} alt="" /> : <img className="btn21" src={ficha1} alt="" onClick={id5}/>}
+                {!obtenidos[6] ? <img className="btn121" src={ficha11} alt="" /> : <img className="btn21" src={ficha1} alt="" onClick={id5}/>}
                 { mosfich2?(
                     <img className="tick5" src={tick} alt="" />
                     ):  (<img className="no-tick" src={tick} alt="" />)
