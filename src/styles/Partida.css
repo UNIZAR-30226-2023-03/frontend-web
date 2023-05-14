@@ -80,6 +80,23 @@
     left: 42%;
     opacity: 0.9;
 }
+.nieve{
+    position: absolute;
+    z-index: 9999;
+    top: 1%;
+    left: 1%;
+}
+.nieve1{
+    position: absolute;
+    z-index: 9999;
+    top: 70%;
+    left: 10%;
+}.nieve2{
+    position: absolute;
+    z-index: 9999;
+    top: 10%;
+    left: 30%;
+}
 .custom-modal-partida{
     width: 500px;
     height: 350px;

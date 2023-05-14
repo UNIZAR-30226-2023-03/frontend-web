@@ -24,7 +24,8 @@ import calabaza from "../imagenes/iconos/calabaza.png";
 import fantasma from "../imagenes/iconos/fantasma.png";
 import arbol from "../imagenes/iconos/arbol.png";
 import regalo from "../imagenes/iconos/regalo.png";
-// import nieve from "../imagenes/iconos/nieve.png";
+import nieve from "../imagenes/iconos/nieve.png";
+import nie from "../imagenes/iconos/nie.png";
 
 
 const photos = [
@@ -338,6 +339,8 @@ function Partida() {
   const [mostrarBocadillo, setMostrarBocadillo] = useState(false);
   const[halloween, sethalloween]=useState(false);
   const[navidad, setnavidad]=useState(false);
+  const[fichahalloween, setFhalloween]=useState(false);
+  const[fichanavidad, setFnavidad]=useState(false);
 
   useEffect(() => {
     async function asignartablero() {
@@ -353,6 +356,23 @@ function Partida() {
       })
     }
     asignartablero();
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    async function asignarficha() {
+      await axios.get("https://lamesa-backend.azurewebsites.net/usuario/ficha-activa/"+idUsuario)
+      .then ( response => {
+        console.log("ficha activa: ",response.data.id)
+        if(response.data.id === 5){
+          setFhalloween(true);
+        }
+        else if(response.data.id === 5){
+          setFnavidad(true);
+        }
+      })
+    }
+    asignarficha();
     // eslint-disable-next-line
   }, []);
 
@@ -546,7 +566,13 @@ function Partida() {
         ficha = '.ficha'+i+color;
         console.log("dibujando ficha"+ficha);
         ficha = document.querySelector(ficha);
-        ficha.style.backgroundImage = `url(${calabaza})`;
+        if(fichahalloween){
+          ficha.style.backgroundImage = `url(${calabaza})`;
+        }
+        else if (fichanavidad){
+          ficha.style.backgroundImage = `url(${nie})`;
+        }
+       
         
       }
     }
@@ -903,6 +929,9 @@ function Partida() {
           <div className={navidad? "show-nav":"no-show-nav"} >
                 <img className="arbol" src={arbol} alt="" />
                 <img className="regalo" src={regalo} alt="" />
+                <img className="nieve" src={nieve} alt="" />
+                <img className="nieve1" src={nieve} alt="" />
+                <img className="nieve2" src={nieve} alt="" />
               
 
               

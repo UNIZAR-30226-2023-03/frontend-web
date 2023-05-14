@@ -19,6 +19,7 @@ function Tienda(){
   const [obtenidos, setobtenidos] = useState([]);
   const [monedas, setmonedas] = useState(0);
   const [precio, setPrecio] = useState([]);
+  const [respuesta, setRespuesta]=useState(false);
 
   useEffect(() => {
     async function buscarmonedas() {
@@ -63,6 +64,7 @@ function Tienda(){
         prec.push(objeto.precio); 
       });
       setPrecio(prec);
+
     }
     buscarproductos();
   }, [])
@@ -72,33 +74,47 @@ function Tienda(){
 
 
   async function id0() {
-    const response =await axios.post("https://lamesa-backend.azurewebsites.net/tienda/comprar", {usuario: idUsuario,producto:"2"});
-    console.log(response.data)
+    const response =await axios.post("https://lamesa-backend.azurewebsites.net/tienda/comprar", {usuario: idUsuario,producto:"2"})
+    .then ( response => {
+      
+      setRespuesta(true);
+    })
+    console.log(response)
     console.log("comprado tablero1");
     window.location.reload(); 
   }
   async function id1() {
-    const response =await axios.post("https://lamesa-backend.azurewebsites.net/tienda/comprar", {usuario: idUsuario,producto:"3"});
-    console.log(response.data)
-    console.log("comprado tablero2");
+    await axios.post("https://lamesa-backend.azurewebsites.net/tienda/comprar", {usuario: idUsuario,producto:"3"})
+    .then ( response => {
+      setRespuesta(true);
+    })
+
+
+   
     window.location.reload(); 
   }
   async function id2() {
-    const response =await axios.post("https://lamesa-backend.azurewebsites.net/tienda/comprar", {usuario: idUsuario,producto:"5"});
-    console.log(response.data)
-    console.log("comprado ficha1");
+    await axios.post("https://lamesa-backend.azurewebsites.net/tienda/comprar", {usuario: idUsuario,producto:"5"})
+    .then ( response => {
+       
+      setRespuesta(true);
+    })
+   
     window.location.reload(); 
   }
   async function id3() {
-    const response =await axios.post("https://lamesa-backend.azurewebsites.net/tienda/comprar", {usuario: idUsuario,producto:"6"});
-    console.log(response.data)
-    console.log("comprado ficha2");
+   await axios.post("https://lamesa-backend.azurewebsites.net/tienda/comprar", {usuario: idUsuario,producto:"6"})
+    .then ( response => {
+      console.log(response.data); 
+      setRespuesta(true);
+    })
+
     window.location.reload();  
   }
     return(
       
       <div>
-          <div class="monedasJugador1" data-number={monedas}></div>
+          <div className="monedasJugador1" data-number={monedas}></div>
           <div className="back7">
               <div className="breadcrumb">
               <div className="breadcrumb-item"><a href="principal"><img className="casa" src={home} alt="" /></a></div>
@@ -113,21 +129,22 @@ function Tienda(){
             <div className="ass" >
               {console.log(obtenidos[2])}
               {obtenidos[2] ? <img className="btn11" src={tablero11} alt="" /> : <img className="btn" src={tablero1} alt="" onClick={id0}/>}
-              <p className="asd">{precio[2]}</p>
+              <p className="asd">{precio[1]}</p>
             </div>
             <div>
               {obtenidos[3] ? <img className="btn11" src={tablero21} alt="" /> : <img className="btn" src={tablero2} alt="" onClick={id1}/>}
-              <p className="asd">{precio[3]}</p>
+              <p className="asd">{precio[2]}</p>
             </div>
             <div>
               {obtenidos[5] ? <img className="btn12" src={ficha11} alt="" /> : <img className="btn1" src={ficha1} alt="" onClick={id2}/>}
-              <p className="asd">{precio[5]}</p>
+              <p className="asd">{precio[4]}</p>
             </div>
             <div>
               {obtenidos[6] ? <img className="btn12" src={ficha21} alt="" /> : <img className="btn1" src={ficha2} alt="" onClick={id3}/>}
-              <p className="asd">{precio[6]}</p>
+              <p className="asd">{precio[5]}</p>
             </div>   
           </div>
+          {respuesta ? <p className="comp">Articulo comprado y añadido al inventario</p> : <div></div> }
 
       </div>
     );

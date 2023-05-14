@@ -15,6 +15,7 @@ import ficha11 from "../imagenes/tablero/Ficha_Halloween_Negro.png";
 import ficha21 from "../imagenes/tablero/Ficha_navidad_Negro.png";
 import cruz from "../imagenes/iconos/cruz.png";
 import tick from "../imagenes/iconos/tick.png";
+import ficha from "../imagenes/tablero/Ficha.png";
 
 
 function Principal(){
@@ -26,12 +27,12 @@ function Principal(){
     const cookies= new Cookies();
     const idUsuario = cookies.get('idUsuario');
     const [mostrar, setMostrar]=useState(false);
-    const [mostablero, setTablero0]=useState(false);
-    const [mostablero1, setTablero1]=useState(false);
-    const [mostablero2, setTablero2]=useState(false);
-    const [mosfich, setFich3]=useState(false);
-    const [mosfich1, setFich4]=useState(false);
-    const [mosfich2, setFich5]=useState(false);
+    const [mostablero, setTablero1]=useState(false);
+    const [mostablero1, setTablero2]=useState(false);
+    const [mostablero2, setTablero3]=useState(false);
+    const [mosfich, setFich4]=useState(false);
+    const [mosfich1, setFich5]=useState(false);
+    const [mosfich2, setFich6]=useState(false);
     const [obtenidos, setobtenidos] = useState([]);
 
     useEffect(() => {
@@ -90,7 +91,7 @@ function Principal(){
       async function asignartablero() {
         await axios.get("https://lamesa-backend.azurewebsites.net/usuario/tablero-activo/"+idUsuario)
         .then ( response => {
-          console.log("tablero activo: ",response.data);
+          console.log("tablero activo: ",response.data.id);
           // eslint-disable-next-line
           eval(`setTablero${response.data.id}(true)`);
 
@@ -100,6 +101,8 @@ function Principal(){
         await axios.get("https://lamesa-backend.azurewebsites.net/usuario/ficha-activa/"+idUsuario)
         .then ( response => {
           console.log("fichas activas: ",response.data)
+           // eslint-disable-next-line
+           eval(`setFich${response.data.id}(true)`);
           
         })
       }
@@ -178,50 +181,50 @@ function Principal(){
     async function id0(){
       await axios.post("https://lamesa-backend.azurewebsites.net/usuario/activar", {usuario: idUsuario,producto:1}) 
       .then ( response => {
-        setTablero0(true);
-        setTablero1(false);
+        setTablero1(true);
         setTablero2(false);
+        setTablero3(false);
       })
     }
     async function id1(){
       await axios.post("https://lamesa-backend.azurewebsites.net/usuario/activar", {usuario: idUsuario,producto:2}) 
       .then ( response => {
-        setTablero0(false);
-        setTablero1(true);
-        setTablero2(false);
+        setTablero1(false);
+        setTablero2(true);
+        setTablero3(false);
       })
 
      }
     async function id2(){
       await axios.post("https://lamesa-backend.azurewebsites.net/usuario/activar", {usuario: idUsuario,producto:3}) 
       .then ( response => {
-        setTablero0(false);
         setTablero1(false);
-        setTablero2(true);
+        setTablero2(false);
+        setTablero3(true);
       }) 
     }
     async function id3(){
       await axios.post("https://lamesa-backend.azurewebsites.net/usuario/activar", {usuario: idUsuario,producto:4}) 
       .then ( response => {
-        setFich3(true);
-        setFich4(false);
+        setFich4(true);
         setFich5(false);
+        setFich6(false);
       }) 
     }
     async function id4(){
       await axios.post("https://lamesa-backend.azurewebsites.net/usuario/activar", {usuario: idUsuario,producto:5}) 
       .then ( response => {
-        setFich3(false);
-        setFich4(true);
-        setFich5(false);
+        setFich4(false);
+        setFich5(true);
+        setFich6(false);
       })
     }
     async function id5(){
       await axios.post("https://lamesa-backend.azurewebsites.net/usuario/activar", {usuario: idUsuario,producto:6}) 
       .then ( response => {
-        setFich3(false);
         setFich4(false);
-        setFich5(true);
+        setFich5(false);
+        setFich6(true);
       })
     }
 
@@ -253,18 +256,18 @@ function Principal(){
               </div>
               <div className="fichas">
 
-                <img className="btn21" src={ficha1} alt="" onClick={id3}/>
+                <img className="btn21" src={ficha} alt="" onClick={id3}/>
                 { mosfich?(
                     <img className="tick3" src={tick} alt="" />
                     ):  (<img className="no-tick" src={tick} alt="" />)
                 }
   
-                {!obtenidos[5] ? <img className="btn121" src={ficha21} alt="" /> : <img className="btn21" src={ficha2} alt="" onClick={id4}/>}
+                {!obtenidos[5] ? <img className="btn121" src={ficha11} alt="" /> : <img className="btn21" src={ficha1} alt="" onClick={id4}/>}
                 { mosfich1?(
                     <img className="tick4" src={tick} alt="" />
                     ):  (<img className="no-tick" src={tick} alt="" />)
                 }                
-                {!obtenidos[6] ? <img className="btn121" src={ficha11} alt="" /> : <img className="btn21" src={ficha1} alt="" onClick={id5}/>}
+                {!obtenidos[6] ? <img className="btn121" src={ficha21} alt="" /> : <img className="btn21" src={ficha2} alt="" onClick={id5}/>}
                 { mosfich2?(
                     <img className="tick5" src={tick} alt="" />
                     ):  (<img className="no-tick" src={tick} alt="" />)
