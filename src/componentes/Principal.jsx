@@ -237,18 +237,18 @@ function Principal(){
             <div className="inv">
               <div className="tableros">
         
-                <img className="btn" src={tablero} alt="" onClick={id0}/>
+                <img className="btn23" src={tablero} alt="" onClick={id0}/>
                 { mostablero?(
                     <img className="tick" src={tick} alt="" />
                     ):  (<img className="no-tick" src={tick} alt="" />)
                 }
 
-                {!obtenidos[2] ? <img className="btn11" src={tablero11} alt="" /> : <img className="btn" src={tablero1} alt="" onClick={id1}/>}
+                {!obtenidos[2] ? <img className="btn11" src={tablero11} alt="" /> : <img className="btn23" src={tablero1} alt="" onClick={id1}/>}
                 { mostablero1?(
                     <img className="tick1" src={tick} alt="" />
                     ):  (<img className="no-tick" src={tick} alt="" />)
                 }
-                {!obtenidos[3] ? <img className="btn11" src={tablero21} alt="" /> : <img className="btn" src={tablero2} alt="" onClick={id2}/>}
+                {!obtenidos[3] ? <img className="btn11" src={tablero21} alt="" /> : <img className="btn23" src={tablero2} alt="" onClick={id2}/>}
                 { mostablero2?(
                     <img className="tick2" src={tick} alt="" />
                     ):  (<img className="no-tick" src={tick} alt="" />)

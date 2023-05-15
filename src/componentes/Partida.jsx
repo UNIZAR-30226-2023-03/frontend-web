@@ -21,6 +21,7 @@ import seis from "../imagenes/carasdado/seis.PNG";
 import hueso from "../imagenes/iconos/hueso.png";
 import calavera from "../imagenes/iconos/calavera.png";
 import calabaza from "../imagenes/iconos/calabaza.png";
+import calabaza1 from "../imagenes/tablero/calabaza1.png";
 import fantasma from "../imagenes/iconos/fantasma.png";
 import arbol from "../imagenes/iconos/arbol.png";
 import regalo from "../imagenes/iconos/regalo.png";
@@ -339,8 +340,6 @@ function Partida() {
   const [mostrarBocadillo, setMostrarBocadillo] = useState(false);
   const[halloween, sethalloween]=useState(false);
   const[navidad, setnavidad]=useState(false);
-  const[fichahalloween, setFhalloween]=useState(false);
-  const[fichanavidad, setFnavidad]=useState(false);
 
   useEffect(() => {
     async function asignartablero() {
@@ -356,23 +355,6 @@ function Partida() {
       })
     }
     asignartablero();
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    async function asignarficha() {
-      await axios.get("https://lamesa-backend.azurewebsites.net/usuario/ficha-activa/"+idUsuario)
-      .then ( response => {
-        console.log("ficha activa: ",response.data.id)
-        if(response.data.id === 5){
-          setFhalloween(true);
-        }
-        else if(response.data.id === 5){
-          setFnavidad(true);
-        }
-      })
-    }
-    asignarficha();
     // eslint-disable-next-line
   }, []);
 
@@ -554,7 +536,7 @@ function Partida() {
   }, [color, idPartida]);
 
   useEffect(() => {
-    function dibujarfichas(color,numfichas){
+    function dibujarfichas(color,numfichas,tematica){
       let maxfichas,i,ficha;
       if(numfichas === "RAPIDO"){
         maxfichas = 2;
@@ -564,16 +546,21 @@ function Partida() {
       }
       for (i = 1; i <= maxfichas; i++) {
         ficha = '.ficha'+i+color;
-        console.log("dibujando ficha"+ficha);
         ficha = document.querySelector(ficha);
-        if(fichahalloween){
-          ficha.style.backgroundImage = `url(${calabaza})`;
+        if(tematica === "halloween"){
+          console.log("dibujando ficha de halloween");
+          ficha.style.backgroundImage = `url(${calabaza1})`;
+          ficha.style.backgroundPosition = "center";
+          ficha.style.backgroundRepeat = "no-repeat";
+          ficha.style.backgroundSize = "30px 30px";
         }
-        else if (fichanavidad){
+        else if (tematica === "navidad"){
+          console.log("dibujando ficha de halloween");
           ficha.style.backgroundImage = `url(${nie})`;
+          ficha.style.backgroundPosition = "center";
+          ficha.style.backgroundRepeat = "no-repeat";
+          ficha.style.backgroundSize = "30px 30px";
         }
-       
-        
       }
     }
     async function asignarfichas(color,numfichas) {
@@ -584,10 +571,10 @@ function Partida() {
 
         if(response.data.id === 5){
           console.log("voy a dibujar fichas")
-          dibujarfichas(color,numfichas);
+          dibujarfichas(color,numfichas,"halloween");
         }
         else if(response.data.id === 6){
-          dibujarfichas(color,numfichas);
+          dibujarfichas(color,numfichas,"navidad");
         }
       })
     }

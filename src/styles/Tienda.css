@@ -7,22 +7,26 @@
     margin: 100px 13%;
     display: flex;
     width: 80%;
+    flex-wrap: wrap;
+
 }
 
-.asd{
-    margin-left: 70px;
-    font-size: 24px;
+.mensajeErrorTienda{
+    text-align: center;
+    color: red;
+    font-size: 25px;
+    font-weight: bold;
 }
 
 .comp{
     position: relative;
-    margin-top: 30%;
+    margin-top: 40%;
     left: 40%;
-    width: 20%;
+    width: 60%;
     font-size: larger;
     font-weight: bold;
 }
-.btn{
+.btn23{
     width:290px ;
     margin-left: 60px;
     cursor: pointer;
@@ -30,6 +34,30 @@
 .btn11{
     width:290px ;
     margin-left: 60px;
+}
+.mon{
+    width: 40px;
+    height: 40px;
+    margin-top: 22px;
+    position: absolute;
+    margin-left: 180px;
+}
+.poo{
+    margin-top: 15px;
+    display: flex;
+    border: 3px solid black;
+    width: 80%;
+    margin-left: 18%;
+    border-radius: 4px;
+    text-align: center;
+    background-color: rgb(106, 69, 25);
+}
+.asd{
+    font-size: 26px;
+    text-align: center;
+    width: 100%;
+    color: yellow;
+    font-weight: bold;
 }
 .btn1{
     width: 290px;
@@ -44,7 +72,7 @@
     transform: scale(1.1);
     transition: 0.1s ease-in-out;
 }
-.btn:hover{
+.btn23:hover{
     transform: scale(1.1);
     transition: 0.1s ease-in-out;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2)
