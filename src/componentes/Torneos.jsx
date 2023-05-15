@@ -159,7 +159,8 @@ function Torneos(){
 
             <p className="Titulobody">Cuota de entrada</p>
             <input type="number" onChange={(e) => setmonedas(e.target.value)}
-              value={monedas}  min="0" /> monedas
+              value={monedas}  min="0" />
+              <button className="monedaCuota"></button>
             
             <p className="Titulobody">Personalización de las partidas</p>
 
