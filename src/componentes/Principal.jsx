@@ -47,17 +47,6 @@ function Principal(){
       // eslint-disable-next-line
     }, []);
 
-    // useEffect(() => {
-    //   async function asignartableropordefecto() {
-    //     await axios.post("https://lamesa-backend.azurewebsites.net/usuario/activar", {usuario: idUsuario,producto: 1})
-    //     .then ( response => {
-    //       console.log("tablero asignado ",response.data)
-    //     })
-    //   }
-    //   asignartableropordefecto(); 
-    //   // eslint-disable-next-line
-    // }, []);
-
     useEffect(() => {
       async function buscarmonedas() {
         await axios.get("https://lamesa-backend.azurewebsites.net/usuario/monedas/"+idUsuario)
@@ -82,8 +71,11 @@ function Principal(){
           let jug = response.data.jugadores;
           let tipo = "PRIVADA";
           let num_fichas = response.data.cf;
+          let reconexion = "reconexion";
+          let fichas_en_tablero = response.data.fichas;
+          let turno = response.data.turno;
           console.log("configuracion de las fichas: "+num_fichas);
-          navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo,num_fichas } });
+          navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo,num_fichas,reconexion,fichas_en_tablero,turno } });
         }
       }) 
     }
@@ -94,7 +86,6 @@ function Principal(){
           console.log("tablero activo: ",response.data.id);
           // eslint-disable-next-line
           eval(`setTablero${response.data.id}(true)`);
-
         })
       }
       async function asignarfichas() {
@@ -132,9 +123,6 @@ function Principal(){
       consultarTienda();
       // eslint-disable-next-line
     }, [])
-  
-  
-
   
     const handleClick = () => {
       probarReconexion();
@@ -278,7 +266,7 @@ function Principal(){
                
             </div>
             : <div></div> }
-          <button className="botonDatosPersonales" onClick={handleClick3}>Datos personales</button>         
+          <button className="botonDatosPersonales" onClick={handleClick3}>Datos <br></br> personales</button>         
           {mostrarPartidas ? (
               <div className="botones">
                 <button className="botonJugarPublica" onClick={handleClick1}>
@@ -300,7 +288,7 @@ function Principal(){
           <button className="botonrankings" onClick={handleClick6}>Rankings</button>
           <button className="botonbaja" onClick={() => setShowModalSeguroBaja(true)}>Darme de baja</button>
           <button className="botontienda" onClick={handleClick7}>Tienda</button>
-          <button className="botonInventario" onClick={handleClick8}>Inventario</button>
+          <button className="botonInventario" onClick={handleClick8}>Mis tableros <br></br> y fichas</button>
           <div className="estadisticas">
             <p className="tituloEstadisticas">Estadísticas personales</p>
             <p className="subtituloEstadisticas">Fichas comidas:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>

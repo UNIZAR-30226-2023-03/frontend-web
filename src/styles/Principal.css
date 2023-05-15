@@ -206,11 +206,11 @@
 }
 .botonInventario{
     background-color: rgb(119, 55, 3);
-    background-image: url('../imagenes/iconos/inventario.png');
+    background-image: url('../imagenes/tablero/tablero.png');
     background-repeat: no-repeat;
     background-position: 85% 50%;
     background-size: 25% 65%;
-    padding-right: 4%;
+    padding-right: 5%;
     border-radius: 15px;
     color:#fff;
     position: absolute;
