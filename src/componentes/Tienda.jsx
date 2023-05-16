@@ -127,7 +127,7 @@ function Tienda(){
               </div>
           </div>
           <div className="txt"> 
-            <p>Seleccione el producto que desee comprar</p> 
+            <p>Seleccione el producto que desees comprar</p> 
           </div>
           <div className="compra">
             <div className="ass" >

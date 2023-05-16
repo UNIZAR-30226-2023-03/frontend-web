@@ -111,8 +111,8 @@ function Torneos(){
           </div>              
         </div>
         <br></br>
-        <h1>TORNEOS</h1>
-        <h2>Torneos disponibles</h2>
+        <h1 className="tituloPag" >TORNEOS</h1>
+        <h2 className="tituloPag">Torneos disponibles</h2>
         {torneosActivos.map((torneo, index) => (
           <div key={index}className="torneosdisponibles">
             <table>

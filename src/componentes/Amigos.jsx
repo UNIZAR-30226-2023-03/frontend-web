@@ -132,7 +132,7 @@ function Amigos(){
         {amigosactuales.length === 0 &&
             <p className="sinContenido">Parece que todavía no tienen ningún amigo agregado.
             <br></br><br></br>
-           Busca a tus amigos aqui:</p>}
+           ¡Busca a tus amigos!</p>}
         {amigosactuales.map((amigo, index) => (
           <div key={index} className="amigosDisponibles">
             <table>
