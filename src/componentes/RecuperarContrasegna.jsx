@@ -57,11 +57,11 @@ function RecuperarContrasegna() {
         <>
         <label>
         <p className="textoRegistro">Introduce tu <br></br> nueva contraseña:</p>
-          <input type="text" value={password1} required onChange={(e) => setpassword1(e.target.value)} />
+          <input type="password" value={password1} required onChange={(e) => setpassword1(e.target.value)} />
         </label>
         <label>
         <p className="textoRegistro">Repita la <br></br> contraseña anterior:</p>
-          <input type="text" value={password2} required onChange={(e) => setpassword2(e.target.value)} />
+          <input type="password" value={password2} required onChange={(e) => setpassword2(e.target.value)} />
         </label>
         <br/> <br/> <br/>
         <button type="submit" className="botonRegistro">Guardar contraseña</button>
