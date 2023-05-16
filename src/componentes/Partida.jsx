@@ -524,15 +524,17 @@ function Partida() {
           let data = JSON.parse(response.body);
           console.log("ALGUIEN HA SALIDO DE LA PARTIDA: "+data);
           reconexion = false;
-          setsoyultimofinalista(true);
           // eslint-disable-next-line
           eval(`setUsername${data}(null)`);
 
         })
         stompClient.subscribe("/topic/ultimo/" + idPartida, function (response) {
           // Estoy yo solo en la partida, he ganado
-          //let data = JSON.parse(response.body);
+          let data = JSON.parse(response.body);
           setpartidafinalizada(true);
+          if(idtorneo && data){
+            setsoyultimofinalista(true);
+          }
         })
       })
     }
