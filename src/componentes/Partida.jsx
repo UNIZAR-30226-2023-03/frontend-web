@@ -343,7 +343,7 @@ function Partida() {
   const[navidad, setnavidad]=useState(false);
   const[fichasTablero, setfichasTablero]=useState([]);
   const[soyultimofinalista, setsoyultimofinalista]=useState(false);
-
+  
   useEffect(() => {
     async function asignartablero() {
       await axios.get("https://lamesa-backend.azurewebsites.net/usuario/tablero-activo/"+idUsuario)
@@ -593,7 +593,7 @@ function Partida() {
       settipopart(state.tipo);
       setnumFichas(state.num_fichas);
       const jugadores = state.jug;
-      if(state.tipo === "torneo"){
+      if(state.tipo === "torneo" || state.tipo === "torneoFinal"){
         setnombretorneo(state.nombreTorneo);
         setidtorneo(state.idTorneo);
       }
@@ -998,6 +998,7 @@ function Partida() {
         ¡LA PARTIDA SE ACABÓ!{turno === color ? <><br/><br/>¡FELICIDADES!</> : <><br/><br/>OTRA VEZ SERÁ</>}
         </p>}
         {tipopart === "torneo" && turno === color && partidafinalizada && !partidaenPausa && <button className="salirboton" onClick={() => jugarFinalTorneo()} >JUGAR FINAL</button>}
+        
         {tipopart === "torneo" && turno !== color && partidafinalizada && !partidaenPausa && <button className="salirboton" onClick={() => salirtrasParacabada()} >SALIR DEL TORNEO</button>}
         {tipopart !== "torneo" && partidafinalizada && !partidaenPausa && <button className="salirboton" onClick={() => salirtrasParacabada()} >SALIR DE LA PARTIDA</button>}
         {partidafinalizada && turno===color  && !partidaenPausa && <div id="fuegosArtificiales"></div>}

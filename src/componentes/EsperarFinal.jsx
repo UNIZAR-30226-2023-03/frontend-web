@@ -48,7 +48,7 @@ function EsperarFinal(){
         let jug = response.data.jugadores;
         let num_fichas = response.data.cf;
         console.log("CONFIGURACION FICHAS: "+num_fichas);
-        let tipo = "torneo";
+        let tipo = "torneoFinal";
         navigate(process.env.PUBLIC_URL+'/partida', { state: { id_part,col,jug,tipo,num_fichas,nombreTorneo,idTorneo } });
     }
 
