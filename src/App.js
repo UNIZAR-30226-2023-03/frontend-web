@@ -41,7 +41,7 @@ function App() {
         <Route path='/esperarfinal' Component={EsperarFinal}/>
         <Route path='/tienda' Component={Tienda}/>
         <Route path='/enviaremail' Component={EnviarCorreo}/>
-        <Route path='/recuperar-contraseña' Component={RecuperarContrasegna}/>
+        <Route path='/recuperar-contrasena' Component={RecuperarContrasegna}/>
         
         
     </Routes>
