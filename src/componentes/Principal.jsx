@@ -34,6 +34,15 @@ function Principal(){
     const [mosfich1, setFich5]=useState(false);
     const [mosfich2, setFich6]=useState(false);
     const [obtenidos, setobtenidos] = useState([]);
+    
+
+
+    let mediaComidas= estadisticasjugador.mediaComidas;
+    let mediaEnMeta =estadisticasjugador.mediaEnMeta;
+    let pjugadas =estadisticasjugador.pjugadas;
+    let pganadas =estadisticasjugador.pganadas;
+    let tjugados =estadisticasjugador.tjugados;
+    let tganados =estadisticasjugador.tganados;
 
     useEffect(() => {
       async function buscarestadisticas() {
@@ -41,6 +50,7 @@ function Principal(){
         .then ( response => {
           console.log("estadisticas: "+response.data)
           setestadisticasjugador(response.data);
+
         })
       }
       buscarestadisticas(); 
@@ -217,7 +227,9 @@ function Principal(){
     }
 
     return (
-        <>       
+      
+        <>    
+   
           <div class="monedasJugador" data-number={monedas}></div>
           <h1>BIENVENIDO {cookies.get('nombreUsuario')}</h1>
           <br></br><br></br><br></br><br></br><br></br>
@@ -292,22 +304,22 @@ function Principal(){
           <div className="estadisticas">
             <p className="tituloEstadisticas">Estadísticas personales</p>
             <p className="subtituloEstadisticas">Fichas comidas:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-            <p className="resultadoEstadisticas">{estadisticasjugador.mediaComidas}</p>
+            <p className="resultadoEstadisticas">{mediaComidas.toFixed(2)}</p>
             <br></br>
             <p className="subtituloEstadisticas">Fichas en meta:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-            <p className="resultadoEstadisticas">{estadisticasjugador.mediaEnMeta}</p>
+            <p className="resultadoEstadisticas">{mediaEnMeta.toFixed(2)}</p>
             <br></br>
             <p className="subtituloEstadisticas">Partidas jugadas:&nbsp;&nbsp;</p>
-            <p className="resultadoEstadisticas">{estadisticasjugador.pjugadas}</p>
+            <p className="resultadoEstadisticas">{pjugadas}</p>
             <br></br>
             <p className="subtituloEstadisticas">Partidas ganadas:&nbsp;</p>
-            <p className="resultadoEstadisticas">{estadisticasjugador.pganadas}</p>
+            <p className="resultadoEstadisticas">{pganadas}</p>
             <br></br>
             <p className="subtituloEstadisticas">Torneos jugados:&nbsp;&nbsp;</p>
-            <p className="resultadoEstadisticas">{estadisticasjugador.tjugados}</p>
+            <p className="resultadoEstadisticas">{tjugados}</p>
             <br></br>
             <p className="subtituloEstadisticas">Torneos ganados:&nbsp;</p>
-            <p className="resultadoEstadisticas">{estadisticasjugador.tganados}</p>
+            <p className="resultadoEstadisticas">{tganados}</p>
           </div>
           {ShowModalSeguroBaja && <div className="fondo-negro"></div>}
           <Modal 
