@@ -81,7 +81,7 @@ function Rankings(){
             </div>
           </div>             
         </div>
-        <button className="botontienda" onClick={handleClick7}>Tienda</button>
+        <button className="botontienda1" onClick={handleClick7}>Tienda</button>
         <h1 className="tituloPag">RANKING</h1>
         <br></br><br></br><br></br>
         <p>{erroractualizacion}</p>
