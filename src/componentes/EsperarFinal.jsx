@@ -15,23 +15,27 @@ function EsperarFinal(){
     const [idTorneo, setIdTorneo] = useState("");
     const [nombreTorneo, setnombreTorneo] = useState("");
     const [poderempezar, setpoderempezar] = useState(false);
+    const [ultimojugador, setultimojugador] = useState(false);
 
     useEffect(() => {
         if (state) {
             setIdTorneo(state.idtorneo);
-            setnombreTorneo(state.nombretorneo);         
-            function connectToSocket() {
-                const url = "https://lamesa-backend.azurewebsites.net"
-                let socket = new SockJS(url + "/ws");
-                let stompClient = Stomp.over(socket);
-                console.log("esperando en final torneo: "+state.idtorneo);
-                stompClient.connect({}, function (frame) {
-                    stompClient.subscribe("/topic/final/" + state.idtorneo, function (response) {
-                        setpoderempezar(true);
+            setnombreTorneo(state.nombretorneo); 
+            setultimojugador(state.soy16);
+            if(!state.soy16){         
+                function connectToSocket() {
+                    const url = "https://lamesa-backend.azurewebsites.net"
+                    let socket = new SockJS(url + "/ws");
+                    let stompClient = Stomp.over(socket);
+                    console.log("esperando en final torneo: "+state.idtorneo);
+                    stompClient.connect({}, function (frame) {
+                        stompClient.subscribe("/topic/final/" + state.idtorneo, function (response) {
+                            setpoderempezar(true);
+                        })
                     })
-                })
+                }
+                connectToSocket();
             }
-            connectToSocket();
         }
         // eslint-disable-next-line
     }, []);
@@ -53,14 +57,14 @@ function EsperarFinal(){
     return(
         <>
             <h1>BIENVENIDO A LA FINAL DEL TORNEO {nombreTorneo}</h1>
-            {!poderempezar &&
+            {!poderempezar && !ultimojugador &&
             <>
                 <div className="loading-container">
                     <div className="loading-circle"></div>
                 </div>
                 <p className="esperaJugadores">Esperando finalistas...</p>
             </>}
-            {poderempezar && <button className="empezarTorneoBoton" onClick={() => jugarFinal(cookies.get('idUsuario'),navigate)}>¡Empezar a jugar!</button>}
+            {(poderempezar || ultimojugador) && <button className="empezarTorneoBoton" onClick={() => jugarFinal(cookies.get('idUsuario'),navigate)}>¡Empezar a jugar!</button>}
         </>
     );
 }

@@ -342,6 +342,7 @@ function Partida() {
   const[halloween, sethalloween]=useState(false);
   const[navidad, setnavidad]=useState(false);
   const[fichasTablero, setfichasTablero]=useState([]);
+  const[soyultimofinalista, setsoyultimofinalista]=useState(false);
 
   useEffect(() => {
     async function asignartablero() {
@@ -523,6 +524,7 @@ function Partida() {
           let data = JSON.parse(response.body);
           console.log("ALGUIEN HA SALIDO DE LA PARTIDA: "+data);
           reconexion = false;
+          setsoyultimofinalista(true);
           // eslint-disable-next-line
           eval(`setUsername${data}(null)`);
 
@@ -870,7 +872,8 @@ function Partida() {
     navigate(process.env.PUBLIC_URL+'/principal');
   }
   function jugarFinalTorneo(){
-    navigate(process.env.PUBLIC_URL+'/esperarfinal',{ state: { nombretorneo,idtorneo } });
+    let soy16 = soyultimofinalista;
+    navigate(process.env.PUBLIC_URL+'/esperarfinal',{ state: { nombretorneo,idtorneo, soy16 } });
   }
 
   return (  
