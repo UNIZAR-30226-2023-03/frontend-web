@@ -26,7 +26,7 @@ function EsperarFinal(){
                 let stompClient = Stomp.over(socket);
                 console.log("esperando en final torneo: "+state.idtorneo);
                 stompClient.connect({}, function (frame) {
-                    stompClient.subscribe("/topic/final/" + state.idTorneo, function (response) {
+                    stompClient.subscribe("/topic/final/" + state.idtorneo, function (response) {
                         setpoderempezar(true);
                     })
                 })
