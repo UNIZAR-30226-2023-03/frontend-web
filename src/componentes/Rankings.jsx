@@ -9,6 +9,7 @@ function Rankings(){
   const navigate = useNavigate();
   const cookies= new Cookies();
   const idUsuario = cookies.get('idUsuario');
+  const nombreUsuario = cookies.get('nombreUsuario');
   const [jugadoresrank, setjugadoresrank] = useState([]);
   const [erroractualizacion, seterroractualizacion] = useState("");
   const [mostrarBocadilloPG, setMostrarBocadilloPG] = useState(false);
@@ -122,7 +123,7 @@ function Rankings(){
             </thead>
             <tbody>
               {jugadoresrank.map((jugador, index) => {
-                if (filtradoamigos && amigosactuales.includes(jugador.username)) {
+                if ((filtradoamigos && amigosactuales.includes(jugador.username)) || jugador.username === nombreUsuario) {
                   return (
                     <tr key={index}>
                       <td>
