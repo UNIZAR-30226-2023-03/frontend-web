@@ -30,8 +30,9 @@
     color: black;
     padding: 12px 24px;
     border-radius: 4px;
-
+    margin-right: 30px;
 }
+
 .BotonPartidaRapidaAc:hover {
     transform: scale(1.1);
     transition: 0.1s ease-in-out;
@@ -45,6 +46,7 @@
     border: none;
     padding: 12px 24px;
     border-radius: 4px;
+    margin-right: 30px;
 }
 .BotonPartidaRapidaIn:hover {
     transform: scale(1.1);
@@ -67,6 +69,7 @@
     color: black;
     padding: 12px 20px;
     border-radius: 4px;
+    margin-right: 30px;
     
 }
 .BotonPartidaBarAc:hover {
@@ -83,6 +86,7 @@
     border: none;
     padding: 12px 24px;
     border-radius: 4px;
+    margin-right: 30px;
 }
 .BotonPartidaBarIn:hover {
     transform: scale(1.1);
@@ -97,7 +101,7 @@
 }
 
 .bott{
-    background-color: black;
+    background-color: rgb(119, 55, 3);
     border: none;
     color: white;
     padding: 12px 24px;

@@ -11,6 +11,7 @@ import tablero11 from "../imagenes/tablero/tablero_Halloween_NEGRO.png";
 import tablero21 from "../imagenes/tablero/tablero_Navidad_NEGRO.png";
 import ficha11 from "../imagenes/tablero/Ficha_Halloween_Negro.png";
 import ficha21 from "../imagenes/tablero/Ficha_navidad_Negro.png";
+import moneda from "../imagenes/iconos/moneda.png"
 
 
 function Tienda(){
@@ -19,7 +20,7 @@ function Tienda(){
   const [obtenidos, setobtenidos] = useState([]);
   const [monedas, setmonedas] = useState(0);
   const [precio, setPrecio] = useState([]);
-  const [respuesta, setRespuesta]=useState(false);
+  const [errorcomprar, seterrorcomprar] = useState("");
 
   useEffect(() => {
     async function buscarmonedas() {
@@ -74,42 +75,45 @@ function Tienda(){
 
 
   async function id0() {
-    const response =await axios.post("https://lamesa-backend.azurewebsites.net/tienda/comprar", {usuario: idUsuario,producto:"2"})
+    await axios.post("https://lamesa-backend.azurewebsites.net/tienda/comprar", {usuario: idUsuario,producto:"2"})
     .then ( response => {
-      
-      setRespuesta(true);
+      seterrorcomprar("");
+      window.location.reload(); 
     })
-    console.log(response)
-    console.log("comprado tablero1");
-    window.location.reload(); 
+    .catch(error =>{
+      seterrorcomprar(error.response.data);
+    })
   }
   async function id1() {
     await axios.post("https://lamesa-backend.azurewebsites.net/tienda/comprar", {usuario: idUsuario,producto:"3"})
     .then ( response => {
-      setRespuesta(true);
+      seterrorcomprar("");
+      window.location.reload(); 
     })
-
-
-   
-    window.location.reload(); 
+    .catch(error =>{
+      seterrorcomprar(error.response.data);
+    })
   }
   async function id2() {
     await axios.post("https://lamesa-backend.azurewebsites.net/tienda/comprar", {usuario: idUsuario,producto:"5"})
     .then ( response => {
-       
-      setRespuesta(true);
+      seterrorcomprar("");
+      window.location.reload(); 
     })
-   
-    window.location.reload(); 
+    .catch(error =>{
+      seterrorcomprar(error.response.data);
+    })
   }
   async function id3() {
    await axios.post("https://lamesa-backend.azurewebsites.net/tienda/comprar", {usuario: idUsuario,producto:"6"})
     .then ( response => {
-      console.log(response.data); 
-      setRespuesta(true);
+      seterrorcomprar("");
+      window.location.reload(); 
     })
-
-    window.location.reload();  
+    .catch(error =>{
+      seterrorcomprar(error.response.data);
+    })
+     
   }
     return(
       
@@ -128,24 +132,37 @@ function Tienda(){
           <div className="compra">
             <div className="ass" >
               {console.log(obtenidos[2])}
-              {obtenidos[2] ? <img className="btn11" src={tablero11} alt="" /> : <img className="btn" src={tablero1} alt="" onClick={id0}/>}
-              <p className="asd">{precio[1]}</p>
+              {obtenidos[2] ? 
+              <img className="btn11" src={tablero11} alt="" /> 
+              : (<img className="btn23" src={tablero1} alt="" onClick={id0}/>)}
+              <div className="poo">
+                <p className="asd">{precio[1]}</p>
+                <img className="mon" src={moneda} alt="" />
+              </div>
             </div>
             <div>
-              {obtenidos[3] ? <img className="btn11" src={tablero21} alt="" /> : <img className="btn" src={tablero2} alt="" onClick={id1}/>}
-              <p className="asd">{precio[2]}</p>
+              {obtenidos[3] ? <img className="btn11" src={tablero21} alt="" /> : <img className="btn23" src={tablero2} alt="" onClick={id1}/>}
+              <div className="poo">
+                <p className="asd">{precio[2]}</p>
+                <img className="mon" src={moneda} alt="" />
+              </div>
             </div>
             <div>
               {obtenidos[5] ? <img className="btn12" src={ficha11} alt="" /> : <img className="btn1" src={ficha1} alt="" onClick={id2}/>}
-              <p className="asd">{precio[4]}</p>
+              <div className="poo">
+                <p className="asd">{precio[4]}</p>
+                <img className="mon" src={moneda} alt="" />
+              </div>
             </div>
             <div>
               {obtenidos[6] ? <img className="btn12" src={ficha21} alt="" /> : <img className="btn1" src={ficha2} alt="" onClick={id3}/>}
-              <p className="asd">{precio[5]}</p>
+              <div className="poo">
+                <p className="asd">{precio[5]}</p>
+                <img className="mon" src={moneda} alt="" />
+              </div>
             </div>   
           </div>
-          {respuesta ? <p className="comp">Articulo comprado y añadido al inventario</p> : <div></div> }
-
+          <p className="mensajeErrorTienda">{errorcomprar}</p>
       </div>
     );
 }

@@ -50,41 +50,21 @@
 
 .botonesRapida {
  
-  width: 50%;
+  width: 75%;
   justify-content: space-between;
   display: flex;
   margin-bottom: 5%;
 }
   
-.BotonPartidaRapidaAc {
-    background-color: #ad4a03;
-    color: white;
-}
-  
-.BotonPartidaRapidaIn {
-    background-color: #ddd;
-    color: #aaa;
- 
-}
-
 
 .botonesBarrera {
 
-  width: 80%;
+  width: 85%;
   justify-content: space-between;
   display: flex;
 
 }
   
-.BotonPartidaBarAc{
-    background-color: #ad4a03;
-    color: white;
-}
-  
-.BotonPartidaBarIn {
-    background-color: #ddd;
-    color: #aaa;
-}
 
 .error1In{
     display: none;

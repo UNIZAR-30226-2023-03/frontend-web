@@ -150,6 +150,11 @@
   }
   .abrirChat{
     background-color: rgb(119, 55, 3);
+    background-image: url('../imagenes/iconos/chat.png');
+    background-repeat: no-repeat;
+    background-position: 85% 50%;
+    background-size: 25% 65%;
+    padding-right: 4%;
     border-radius: 15px;
     position: fixed;
     color:#fff;

@@ -21,6 +21,7 @@ import seis from "../imagenes/carasdado/seis.PNG";
 import hueso from "../imagenes/iconos/hueso.png";
 import calavera from "../imagenes/iconos/calavera.png";
 import calabaza from "../imagenes/iconos/calabaza.png";
+import calabaza1 from "../imagenes/tablero/calabaza1.png";
 import fantasma from "../imagenes/iconos/fantasma.png";
 import arbol from "../imagenes/iconos/arbol.png";
 import regalo from "../imagenes/iconos/regalo.png";
@@ -56,6 +57,7 @@ let estadoFichas = [
 ];
 let fichasdisponibles = [];
 let cambioturno = false;
+let reconexion = false;
 
 function actualizarFicha(ficha,nuevaCasilla){
   estadoFichas = estadoFichas.map((elem) =>
@@ -339,8 +341,7 @@ function Partida() {
   const [mostrarBocadillo, setMostrarBocadillo] = useState(false);
   const[halloween, sethalloween]=useState(false);
   const[navidad, setnavidad]=useState(false);
-  const[fichahalloween, setFhalloween]=useState(false);
-  const[fichanavidad, setFnavidad]=useState(false);
+  const[fichasTablero, setfichasTablero]=useState([]);
 
   useEffect(() => {
     async function asignartablero() {
@@ -356,23 +357,6 @@ function Partida() {
       })
     }
     asignartablero();
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    async function asignarficha() {
-      await axios.get("https://lamesa-backend.azurewebsites.net/usuario/ficha-activa/"+idUsuario)
-      .then ( response => {
-        console.log("ficha activa: ",response.data.id)
-        if(response.data.id === 5){
-          setFhalloween(true);
-        }
-        else if(response.data.id === 5){
-          setFnavidad(true);
-        }
-      })
-    }
-    asignarficha();
     // eslint-disable-next-line
   }, []);
 
@@ -538,6 +522,7 @@ function Partida() {
           // Alguien ha salido de la partida
           let data = JSON.parse(response.body);
           console.log("ALGUIEN HA SALIDO DE LA PARTIDA: "+data);
+          reconexion = false;
           // eslint-disable-next-line
           eval(`setUsername${data}(null)`);
 
@@ -551,10 +536,10 @@ function Partida() {
     }
     connectToSocket();
     // eslint-disable-next-line
-  }, [color, idPartida]);
+  }, [idPartida]);
 
   useEffect(() => {
-    function dibujarfichas(color,numfichas){
+    function dibujarfichas(color,numfichas,tematica){
       let maxfichas,i,ficha;
       if(numfichas === "RAPIDO"){
         maxfichas = 2;
@@ -564,16 +549,21 @@ function Partida() {
       }
       for (i = 1; i <= maxfichas; i++) {
         ficha = '.ficha'+i+color;
-        console.log("dibujando ficha"+ficha);
         ficha = document.querySelector(ficha);
-        if(fichahalloween){
-          ficha.style.backgroundImage = `url(${calabaza})`;
+        if(tematica === "halloween"){
+          console.log("dibujando ficha de halloween");
+          ficha.style.backgroundImage = `url(${calabaza1})`;
+          ficha.style.backgroundPosition = "center";
+          ficha.style.backgroundRepeat = "no-repeat";
+          ficha.style.backgroundSize = "30px 30px";
         }
-        else if (fichanavidad){
+        else if (tematica === "navidad"){
+          console.log("dibujando ficha de halloween");
           ficha.style.backgroundImage = `url(${nie})`;
+          ficha.style.backgroundPosition = "center";
+          ficha.style.backgroundRepeat = "no-repeat";
+          ficha.style.backgroundSize = "30px 30px";
         }
-       
-        
       }
     }
     async function asignarfichas(color,numfichas) {
@@ -584,10 +574,10 @@ function Partida() {
 
         if(response.data.id === 5){
           console.log("voy a dibujar fichas")
-          dibujarfichas(color,numfichas);
+          dibujarfichas(color,numfichas,"halloween");
         }
         else if(response.data.id === 6){
-          dibujarfichas(color,numfichas);
+          dibujarfichas(color,numfichas,"navidad");
         }
       })
     }
@@ -598,42 +588,96 @@ function Partida() {
       setColor(state.col);
       settipopart(state.tipo);
       setnumFichas(state.num_fichas);
+      const jugadores = state.jug;
       if(state.tipo === "torneo"){
         setnombretorneo(state.nombreTorneo);
         setidtorneo(state.idTorneo);
       }
-      const jugadores = state.jug;
-      function comprobarUsernames(){
-        if(state.col==="AMARILLO"){
-          setUsernameAMARILLO(cookies.get('nombreUsuario'));
-          setNumjugadores(1);
+      if(state.reconexion === "reconexion"){
+        setpartidaempezada(true);
+        setpartidaenPausa(true);
+        setturno(state.turno);
+        reconexion = true;
+        let miusername = cookies.get('nombreUsuario');
+        if(state.col === "AMARILLO"){
+          setUsernameAMARILLO(miusername);
         }
         else if(state.col === "AZUL"){
-          setUsernameAMARILLO(jugadores && jugadores[0].username);
-          setUsernameAZUL(cookies.get('nombreUsuario'));
-          setNumjugadores(2);
-        }else if(state.col ==="ROJO"){
-          setUsernameAMARILLO(jugadores && jugadores[0].username);
-          setUsernameAZUL(jugadores && jugadores[1].username);
-          setUsernameROJO(cookies.get('nombreUsuario'));
-          setNumjugadores(3);
-        }else if(state.col ==="VERDE"){
-          if(state.tipo === "publica"){
-            setpartidaempezada(true);
-          }
-          setUsernameAMARILLO(jugadores && jugadores[0].username);
-          setUsernameAZUL(jugadores && jugadores[1].username);
-          setUsernameROJO(jugadores && jugadores[2].username);
-          setUsernameVERDE(cookies.get('nombreUsuario'));
-          setNumjugadores(4);
+          setUsernameAZUL(miusername);
         }
+        else if (state.col === "ROJO"){
+          setUsernameROJO(miusername);
+        }
+        else if(state.col === "VERDE"){
+          setUsernameVERDE(miusername);
+        }
+        
+        for(let i =0; i< jugadores.length;i++){
+          if(jugadores[i].color === "AMARILLO"){
+            setUsernameAMARILLO(jugadores[i].username);
+          }
+          else if(jugadores[i].color === "AZUL"){
+            setUsernameAZUL(jugadores[i].username);
+          }
+          else if (jugadores[i].color === "ROJO"){
+            setUsernameROJO(jugadores[i].username);
+          }
+          else if(jugadores[i].color === "VERDE"){
+            setUsernameVERDE(jugadores[i].username);
+          }
+        }
+        setfichasTablero(state.fichas_en_tablero);
       }
-      comprobarUsernames();
+      else{
+        reconexion = false;
+        function comprobarUsernames(){
+          if(state.col==="AMARILLO"){
+            setUsernameAMARILLO(cookies.get('nombreUsuario'));
+            setNumjugadores(1);
+          }
+          else if(state.col === "AZUL"){
+            setUsernameAMARILLO(jugadores && jugadores[0].username);
+            setUsernameAZUL(cookies.get('nombreUsuario'));
+            setNumjugadores(2);
+          }else if(state.col ==="ROJO"){
+            setUsernameAMARILLO(jugadores && jugadores[0].username);
+            setUsernameAZUL(jugadores && jugadores[1].username);
+            setUsernameROJO(cookies.get('nombreUsuario'));
+            setNumjugadores(3);
+          }else if(state.col ==="VERDE"){
+            if(state.tipo === "publica"){
+              setpartidaempezada(true);
+            }
+            setUsernameAMARILLO(jugadores && jugadores[0].username);
+            setUsernameAZUL(jugadores && jugadores[1].username);
+            setUsernameROJO(jugadores && jugadores[2].username);
+            setUsernameVERDE(cookies.get('nombreUsuario'));
+            setNumjugadores(4);
+          }
+        }
+        comprobarUsernames();
+      }
       asignarfichas(state.col,state.num_fichas);
     }
     // eslint-disable-next-line
   }, [cookies,primeravez,state]);
- 
+
+  useEffect(() => {
+    if(reconexion){      
+      for(let i = 0; i<fichasTablero.length;i++){
+        const listaInterna = fichasTablero[i];
+        console.log("listaInerna",listaInterna);
+        for (let j = 0; j < listaInterna.length; j++) {
+          const ficha = listaInterna[j];
+          console.log("usernameamarillo: "+usernameAMARILLO);
+          console.log("usernameazul: "+usernameAZUL);
+          moverFicha(ficha.numero,parseInt(ficha.casilla.posicion)+1,ficha.color,ficha.casilla.tipo);
+        }          
+      }
+    }
+    // eslint-disable-next-line
+  },[usernameAMARILLO,usernameAZUL,usernameROJO,usernameVERDE]);
+
   useEffect(() => {
     let intervalId = null, dado = 0;
     if(isPlaying){
@@ -848,10 +892,10 @@ function Partida() {
             <Modal.Title className="modalTitle">AJUSTES</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <button 
+            {color === turno && <button 
                 className="botonpause" onClick={() => pausarPartida()}
                 onMouseEnter={() => setMostrarBocadillo(true)}
-                onMouseLeave={() => setMostrarBocadillo(false)}>PAUSAR PARTIDA</button>
+                onMouseLeave={() => setMostrarBocadillo(false)}>PAUSAR PARTIDA</button>}
             <button className="botonexit" onClick={() => {setShowModalSeguroSalirPar(true);setShowModalAjustes(false)}}>SALIR DE LA PARTIDA</button>
             {mostrarBocadillo && (
               <p className="bocadillopause">
@@ -944,7 +988,7 @@ function Partida() {
           }
           {color !== "AMARILLO" && tipopart==="privada" && !partidaenPausa && !partidaempezada && <p className="infoParAcabada">ESPERA A QUE EL ANFITRIÓN INICIE LA PARTIDA</p> }
           {tipopart!=="privada" && !partidaenPausa && !partidaempezada && <p className="infoParAcabada">ESPERANDO AL RESTO DE JUGADORES</p> }
-          {partidaenPausa && <button className="infopause">LA PARTIDA HA SIDO PAUSADA</button>}
+          {partidaenPausa && <button className="infopause">LA PARTIDA HA SIDO PAUSADA <br></br> Duración de 1 minuto</button>}
         {partidafinalizada && !partidaenPausa && <p className="infoParAcabada">
         ¡LA PARTIDA SE ACABÓ!{turno === color ? <><br/><br/>¡FELICIDADES!</> : <><br/><br/>OTRA VEZ SERÁ</>}
         </p>}
@@ -1201,7 +1245,7 @@ function Partida() {
         ))
         }
         </div>
-      {color === turno && <button className="tirarDado" onClick={onClick}>
+      {color === turno  && !partidaenPausa  &&  !partidafinalizada && <button className="tirarDado" onClick={onClick}>
         Tirar dado
       </button>}
     <div>
